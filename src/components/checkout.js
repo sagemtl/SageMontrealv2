@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
-import {
-  CardElement,
-  useStripe,
-  useElements
-} from "@stripe/react-stripe-js";
-import "./checkout.css";
+import React, { useState, useEffect } from 'react';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import './checkout.css';
 
 export default function CheckoutForm() {
   const [succeeded, setSucceeded] = useState(false);
@@ -18,44 +14,44 @@ export default function CheckoutForm() {
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     window
-      .fetch("/create-payment-intent", {
-        method: "POST",
+      .fetch('/create-payment-intent', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
+        body: JSON.stringify({ items: [{ id: 'xl-tshirt' }] }),
       })
-      .then(res => {
+      .then((res) => {
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         setClientSecret(data.clientSecret);
       });
   }, []);
   const cardStyle = {
     style: {
       base: {
-        color: "#32325d",
+        color: '#32325d',
         fontFamily: 'Arial, sans-serif',
-        fontSmoothing: "antialiased",
-        fontSize: "16px",
-        "::placeholder": {
-          color: "#32325d"
-        }
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#32325d',
+        },
       },
       invalid: {
-        color: "#fa755a",
-        iconColor: "#fa755a"
-      }
-    }
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    },
   };
   const handleChange = async (event) => {
     // Listen for changes in the CardElement
     // and display any errors as the customer types their card details
     setDisabled(event.empty);
-    setError(event.error ? event.error.message : "");
+    setError(event.error ? event.error.message : '');
   };
-  const handleSubmit = async ev => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
     const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -63,9 +59,9 @@ export default function CheckoutForm() {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: ev.target.name.value
-        }
-      }
+          name: ev.target.name.value,
+        },
+      },
     });
     if (payload.error) {
       setError(`Payment failed ${payload.error.message}`);
@@ -84,17 +80,18 @@ export default function CheckoutForm() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter email address"
       />
-      <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
+      <CardElement
+        id="card-element"
+        options={cardStyle}
+        onChange={handleChange}
+      />
       <button
         disabled={processing || disabled || succeeded}
         id="submit"
+        type="submit"
       >
         <span id="button-text">
-          {processing ? (
-            <div className="spinner" id="spinner"></div>
-          ) : (
-            "Pay"
-          )}
+          {processing ? <div className="spinner" id="spinner" /> : 'Pay'}
         </span>
       </button>
       {/* Show any error that happens when processing the payment */}
@@ -104,14 +101,13 @@ export default function CheckoutForm() {
         </div>
       )}
       {/* Show a success message upon completion */}
-      <p className={succeeded ? "result-message" : "result-message hidden"}>
+      <p className={succeeded ? 'result-message' : 'result-message hidden'}>
         Payment succeeded, see the result in your
-        <a
-          href={`https://dashboard.stripe.com/test/payments`}
-        >
-          {" "}
+        <a href="https://dashboard.stripe.com/test/payments">
+          {' '}
           Stripe dashboard.
-        </a> Refresh the page to pay again.
+        </a>{' '}
+        Refresh the page to pay again.
       </p>
     </form>
   );
