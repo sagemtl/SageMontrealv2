@@ -1,5 +1,7 @@
 node_modules/
 .cache/
+.env.production
+.env.development
 
 # Ignore DS_Store
 .DS_Store
