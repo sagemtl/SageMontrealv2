@@ -1,8 +1,12 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Sage Montreal`,
+    description: `ONLINE FLEA MARKET. REPPIN ASIA ONE CULTURE AT A TIME. SAGE MONTREAL.`,
+    author: `@sagetech`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -26,6 +30,21 @@ module.exports = {
         theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    {
+      resolve: 'gatsby-source-mongodb',
+      options: {
+        dbName: 'heroku_8pxd36bk',
+        collection: ['moodboards', 'stickers', 'products'],
+        server: {
+          address: 'ds163764.mlab.com',
+          port: 63764,
+        },
+        auth: {
+          user: process.env.DB_USER,
+          password: process.env.DB_PASSWORD,
+        },
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
