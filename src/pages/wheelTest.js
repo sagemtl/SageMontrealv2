@@ -1,21 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Layout from '../components/layout';
 import '../styles/wheelTest.scss';
 
 const wheelTest = () => {
+  const [paused, setPaused] = useState(false);
+
+  const products = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+    'Item 6',
+    'Item 7',
+    'Item 8',
+  ];
+
   return (
     <Layout>
       <div className="container">
         <div className="inner">
-          <div className="item">Item 1</div>
-          <div className="item">Item 2</div>
-          <div className="item">Item 3</div>
-          <div className="item">Item 4</div>
-          <div className="item">Item 5</div>
-          <div className="item">Item 6</div>
-          <div className="item">Item 7</div>
-          <div className="item">Item 8</div>
+          {products.map((product) => {
+            return (
+              <div
+                className="item"
+                style={paused ? { animationPlayState: 'paused' } : {}}
+                onMouseEnter={() => {
+                  setPaused(true);
+                }}
+                onMouseLeave={() => {
+                  setPaused(false);
+                }}
+              >
+                {product}
+              </div>
+            );
+          })}
         </div>
       </div>
     </Layout>

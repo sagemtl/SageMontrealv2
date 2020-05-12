@@ -1,6 +1,6 @@
 .container{
-  width:1000px;
-  height:510px;
+  width:1200px;
+  height:700px;
   border:1px solid black;
   overflow: hidden;
 }
@@ -12,55 +12,58 @@
   position: relative;
 }
 
-.inner:hover .item {
-  animation-play-state:paused;
-  -webkit-animation-play-state:paused;
-  }
-
 .item {
-  width:800px;
-  height:150px;
+  width:90%;
+  height:200px;
   background:#E4E4E4;
   border: 2px solid black;
   border-radius: 10px;
   position:absolute;
-  top:100px; bottom:0; left:-450px;right:0;
+  top:100px; bottom:50px; left:-60%;right:0;
   display: flex;
   align-items: center;
   justify-content: center;
   animation: circle 20s linear infinite;
   animation-direction: reverse;
+  transition: all 1s;
+
+  &:hover {
+    cursor: pointer;
+    width: 93%;
+    height: 230px;
+    left: -63%;
+  }
 }
 
 @keyframes circle {
-  from { transform: rotate(0deg) translateX(550px) rotate(0deg); }
-  to   { transform: rotate(360deg) translateX(550px) rotate(-360deg); }
+  from { transform: rotate(0deg) translateX(800px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(800px) rotate(-360deg); }
 }
 
 .item:nth-child(2n){
-  animation-delay: 2.5s;
+  animation-delay: -2.5s;
 }
 
 .item:nth-child(3n){
-  animation-delay: 5s;
+  animation-delay: -5s;
 }
 
 .item:nth-child(4n){
-  animation-delay: 7.5s;
+  animation-delay: -7.5s;
 }
 
 .item:nth-child(5n){
-  animation-delay: 10s;
+  animation-delay: -10s;
 }
 
 .item:nth-child(6n){
-  animation-delay: 12.5s;
+  animation-delay: -12.5s;
 }
 
 .item:nth-child(7n){
-  animation-delay: 15s;
+  animation-delay: -15s;
 }
 
 .item:nth-child(8n){
-  animation-delay: 17.5s;
+  animation-delay: -17.5s;
 }
