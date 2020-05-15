@@ -21,7 +21,6 @@ return (
     <h2>Products</h2>
     {data.allStripeProduct.edges.map(({ node })=>(
       <div>
-        {/* <img src={node.image}/> */}
         <p>{node.name}</p>
       </div>
     ))}

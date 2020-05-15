@@ -4,12 +4,20 @@ import { graphql } from "gatsby"
 
 const Item = ({data}) => {
   const item = data.stripeProduct
+  const skus = data.allStripeSku
   console.log(data);
   return (
 
       <div>
         <h1>{item.name}</h1>
-        <h2>{item.id}</h2>
+        <h2>Product ID: {item.id}</h2>
+        <h3>Associated SKUs</h3>
+        {skus.edges.map(({ node })=>(
+          <div>
+            <img src={node.image}/>
+            <p>{node.attributes.name}</p>
+          </div>
+        ))}
       </div>
 
   )
@@ -23,5 +31,15 @@ export const query = graphql`
         id
         name
       }
+    allStripeSku(filter: {product: {id: {eq: $id}}}) {
+      edges {
+        node {
+          image
+          attributes {
+            name
+          }
+        }
+      }
+    }
   }
 `
