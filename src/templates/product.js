@@ -2,7 +2,7 @@ import React from "react"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 
-const Item = ({data}) => {
+const Product = ({data}) => {
   const item = data.stripeProduct
   const skus = data.allStripeSku
   console.log(data);
@@ -11,11 +11,12 @@ const Item = ({data}) => {
       <div>
         <h1>{item.name}</h1>
         <h2>Product ID: {item.id}</h2>
+        <p>Product description: {item.description}</p>
         <h3>Associated SKUs</h3>
         {skus.edges.map(({ node })=>(
           <div>
-            <img src={node.image}/>
             <p>{node.attributes.name}</p>
+            <img src={node.image}/>
           </div>
         ))}
       </div>
@@ -23,13 +24,14 @@ const Item = ({data}) => {
   )
 }
 
-export default Item
+export default Product
 
 export const query = graphql`
   query($id: String!) {
     stripeProduct(id: {eq: $id}) {
         id
         name
+        description
       }
     allStripeSku(filter: {product: {id: {eq: $id}}}) {
       edges {

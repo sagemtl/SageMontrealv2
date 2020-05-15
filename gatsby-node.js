@@ -35,12 +35,12 @@ exports.createPages = async ({ graphql, actions }) => {
           }
       }
     `)
-    console.log(JSON.stringify(result, null, 4))
+    // console.log(JSON.stringify(result, null, 4))
 
     result.data.allStripeProduct.edges.forEach(({ node }) => {
         createPage({
-          path: node.id,
-          component: path.resolve(`./src/templates/item.js`),
+          path: "/shop/"+node.id,
+          component: path.resolve(`./src/templates/product.js`),
           context: {
             // Data passed to context is available
             // in page queries as GraphQL variables.

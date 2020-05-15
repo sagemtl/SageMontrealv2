@@ -11,17 +11,13 @@ return (
   <Layout>
     <SEO title="Shop" />
     <h1>Shop</h1>
-    <h2>SKUs</h2>
-    {data.allStripeSku.edges.map(({ node })=>(
-      <div>
-        <img src={node.image}/>
-        <p>{node.attributes.name}</p>
-      </div>
-    ))}
     <h2>Products</h2>
     {data.allStripeProduct.edges.map(({ node })=>(
       <div>
-        <p>{node.name}</p>
+        <p>{node.name}; product id: {node.id}</p>
+        {node.images.map((i)=>(
+          <img src={i}/>
+        ))}
       </div>
     ))}
     <h2> MONGODB products </h2>
@@ -46,7 +42,7 @@ query MyQuery {
       node {
         id
         name
-        object
+        images
       }
     }
   }
