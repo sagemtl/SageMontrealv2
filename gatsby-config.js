@@ -47,8 +47,12 @@ module.exports = {
         },
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gats;by-plugin-offline`,
+    {
+      resolve: 'gatsby-source-stripe',
+      options: {
+        objects: ['Sku', 'Product'],
+        secretKey: process.env.STRIPE_SECRET,
+      },
+    },
   ],
 };

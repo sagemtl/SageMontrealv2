@@ -5,11 +5,22 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import '../styles/shop.scss';
 
-const shop = ({ data }) => {
+const Shop = ({ data }) => {
   const [paused, setPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  const products = data.allMongodbHeroku8Pxd36BkProducts.edges;
+  const getProducts = () => {
+    const stripeProducts = data.allStripeProduct.edges;
+    const products = [];
+    let factor = Math.floor(16 / stripeProducts.length);
+    const remainder = 16 % stripeProducts.length;
+    while (factor > 0) {
+      products.push(...stripeProducts);
+      factor -= 1;
+    }
+    products.push(...stripeProducts.slice(0, remainder));
+    return products;
+  };
 
   useEffect(() => {
     const updateWindow = () => {
@@ -25,7 +36,7 @@ const shop = ({ data }) => {
     <Layout>
       <div className="shop">
         <div className="shop-wheel">
-          {products.map((product, index) => {
+          {getProducts().map((product, index) => {
             if (index < 16) {
               const delay = `${0 - index * 1.25}s`;
 
@@ -45,30 +56,30 @@ const shop = ({ data }) => {
                   }}
                 >
                   <img
-                    src={product.node.imagePath}
+                    src={product.node.images[0]}
                     className="shop-wheel__image"
                     alt={`Product-${index}`}
                   />
                   <img
-                    src={product.node.imagePath}
+                    src={product.node.images[0]}
                     className="shop-wheel__image"
                     alt={`Product-${index}`}
                   />
                   <img
-                    src={product.node.imagePath}
+                    src={product.node.images[0]}
                     className="shop-wheel__image"
                     alt={`Product-${index}`}
                   />
                   {windowWidth > 1200 && (
                     <img
-                      src={product.node.imagePath}
+                      src={product.node.images[0]}
                       className="shop-wheel__image"
                       alt={`Product-${index}`}
                     />
                   )}
                   {windowWidth > 1500 && (
                     <img
-                      src={product.node.imagePath}
+                      src={product.node.images[0]}
                       className="shop-wheel__image"
                       alt={`Product-${index}`}
                     />
@@ -83,20 +94,41 @@ const shop = ({ data }) => {
   );
 };
 
-shop.propTypes = {
+Shop.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
-export default shop;
+export default Shop;
 
-export const pageQuery = graphql`
+export const query = graphql`
   query MyQuery {
-    allMongodbHeroku8Pxd36BkProducts {
+    allStripeProduct {
       edges {
         node {
           id
+          name
+          images
+        }
+      }
+    }
+    allStripeSku {
+      edges {
+        node {
+          id
+          attributes {
+            name
+          }
+          product {
+            id
+          }
+          image
+        }
+      }
+    }
+    allMongodbHeroku8Pxd36BkProducts {
+      edges {
+        node {
           imagePath
-          title
         }
       }
     }

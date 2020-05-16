@@ -15,7 +15,7 @@
     width:80%;
     min-width: 700px;
     height:240px;
-    background:#F1F1F1;
+    // background:#F1F1F1;
     border: 2px solid #5A5A5A;
     border-radius: 10px;
     position:absolute;
@@ -38,7 +38,7 @@
   }
 
   &__image {
-    max-height: 85%;
+    max-height: 60%;
     width: auto;
   }
 }
