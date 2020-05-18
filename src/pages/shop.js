@@ -1,37 +1,101 @@
-import React from 'react';
-import { Link, graphql } from 'gatsby';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
+
 import Layout from '../components/layout';
-import SEO from '../components/seo';
-import Image from '../components/image';
+import '../styles/shop.scss';
 
 const Shop = ({ data }) => {
-  console.log(data);
+  const [paused, setPaused] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const getProducts = () => {
+    const stripeProducts = data.allStripeProduct.edges;
+    const products = [];
+    let factor = Math.floor(16 / stripeProducts.length);
+    const remainder = 16 % stripeProducts.length;
+    while (factor > 0) {
+      products.push(...stripeProducts);
+      factor -= 1;
+    }
+    products.push(...stripeProducts.slice(0, remainder));
+    return products;
+  };
+
+  useEffect(() => {
+    const updateWindow = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', updateWindow);
+
+    return () => window.removeEventListener('resize', updateWindow);
+  }, []);
 
   return (
     <Layout>
-      <SEO title="Shop" />
-      <h1>Shop</h1>
-      <h2>Products</h2>
-      {data.allStripeProduct.edges.map(({ node }) => (
-        <div>
-          <p>
-            {node.name}; product id: {node.id}
-          </p>
-          {node.images.map((i) => (
-            <img src={i} />
-          ))}
-        </div>
-      ))}
-      <h2> MONGODB products </h2>
-      {data.allMongodbHeroku8Pxd36BkProducts.edges.map(({ node }) => (
-        <div>
-          <img src={node.imagePath} />
-        </div>
-      ))}
+      <div className="shop">
+        <div className="shop-wheel">
+          {getProducts().map((product, index) => {
+            if (index < 16) {
+              const delay = `${0 - index * 1.25}s`;
 
-      <Link to="/">Home</Link>
+              return (
+                <div
+                  className="shop-wheel__item"
+                  style={
+                    paused
+                      ? { animationPlayState: 'paused', animationDelay: delay }
+                      : { animationDelay: delay }
+                  }
+                  onMouseEnter={() => {
+                    setPaused(true);
+                  }}
+                  onMouseLeave={() => {
+                    setPaused(false);
+                  }}
+                >
+                  <img
+                    src={product.node.images[0]}
+                    className="shop-wheel__image"
+                    alt={`Product-${index}`}
+                  />
+                  <img
+                    src={product.node.images[0]}
+                    className="shop-wheel__image"
+                    alt={`Product-${index}`}
+                  />
+                  <img
+                    src={product.node.images[0]}
+                    className="shop-wheel__image"
+                    alt={`Product-${index}`}
+                  />
+                  {windowWidth > 1200 && (
+                    <img
+                      src={product.node.images[0]}
+                      className="shop-wheel__image"
+                      alt={`Product-${index}`}
+                    />
+                  )}
+                  {windowWidth > 1500 && (
+                    <img
+                      src={product.node.images[0]}
+                      className="shop-wheel__image"
+                      alt={`Product-${index}`}
+                    />
+                  )}
+                </div>
+              );
+            }
+          })}
+        </div>
+      </div>
     </Layout>
   );
+};
+
+Shop.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default Shop;

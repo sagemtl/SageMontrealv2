@@ -45,6 +45,7 @@ const styles = {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 0,
+    marginTop: 0,
   },
 };
 

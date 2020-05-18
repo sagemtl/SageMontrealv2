@@ -10,6 +10,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -51,7 +52,7 @@ module.exports = {
       options: {
         objects: ['Sku', 'Product'],
         secretKey: process.env.STRIPE_SECRET,
-      }
+      },
     },
   ],
 };
