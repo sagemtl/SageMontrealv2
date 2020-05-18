@@ -2,6 +2,7 @@ node_modules/
 .cache/
 .env.production
 .env.development
+public/
 
 # Ignore DS_Store
 .DS_Store
