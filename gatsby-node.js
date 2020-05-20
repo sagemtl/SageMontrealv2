@@ -9,16 +9,22 @@
 // const { createFilePath } = require(`gatsby-source-filesystem`)
 const path = require(`path`)
 
-// exports.onCreateNode = ({ node, getNode, actions }) => {
-//     const {createNodeField} = actions
-//   if (node.internal.type === `MarkdownRemark`) {
-//     const slug = createFilePath({ node, getNode, basePath: `pages` })
-//     createNodeField({
-//       node,
-//       name: `slug`,
-//       value: slug,
-//     })  }
-// }
+exports.onCreateNode = ({ node, getNode, actions }) => {
+    const {createNodeField} = actions
+  if (node.internal.type === `StripeProduct`) {
+    const slug = generateSlug(node.name);
+    createNodeField({
+      node,
+      name: `slug`,
+      value: slug,
+    })  }
+}
+
+const generateSlug = (name) => {
+  //global replacement of space
+  var slug = name.replace(/ /g, "-");
+  return slug;
+}
 
 exports.createPages = async ({ graphql, actions }) => {
     // **Note:** The graphql function call returns a Promise
@@ -30,6 +36,9 @@ exports.createPages = async ({ graphql, actions }) => {
             edges {
               node {
                 id
+                fields {
+                  slug
+                }
               }
             }
           }
@@ -39,7 +48,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     result.data.allStripeProduct.edges.forEach(({ node }) => {
         createPage({
-          path: "/shop/"+node.id,
+          path: "/shop/"+node.fields.slug,
           component: path.resolve(`./src/templates/product.js`),
           context: {
             // Data passed to context is available
