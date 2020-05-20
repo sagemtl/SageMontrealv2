@@ -8,7 +8,7 @@ import '../styles/shop.scss';
 const Shop = ({ data }) => {
   const [paused, setPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
+  console.log(data);
   const getProducts = () => {
     const stripeProducts = data.allStripeProduct.edges;
     const products = [];

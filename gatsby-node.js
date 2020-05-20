@@ -49,3 +49,38 @@ exports.createPages = async ({ graphql, actions }) => {
         })
       })
   }
+
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+
+//attempt to download images for stripe sku object
+exports.downloadMediaFiles = ({ nodes, getCache, createNode, createNodeId }) => {
+    nodes.map(async node => {
+      let fileNode;
+      // Ensures we are only processing Media Files
+      // `wordpress__wp_media` is the media file type name for Wordpress
+      if (node.internal.type === `StripeSku`) {
+        try {
+          fileNode = await createRemoteFileNode({
+            url: node.image,
+            parentNodeId: node.id,
+            // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
+            getCache,
+            // The action used to create nodes
+            createNode,
+            // A helper function for creating node Ids
+            createNodeId,
+          });
+          console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+        } catch (e) {
+          // Ignore
+          console.log("error downloading media files: " + e);
+        }
+      }
+  
+      // Adds a field `localFile` to the node
+      // ___NODE appendix tells Gatsby that this field will link to another node
+      if (fileNode) {
+        node.localFile___NODE = fileNode.id;
+      }
+    });
+  };
