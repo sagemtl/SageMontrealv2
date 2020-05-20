@@ -9,7 +9,7 @@ import CheckoutForm from '../components/checkout';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC);
+const stripePromise = loadStripe(process.env.STRIPE_PUBLIC);
 
 const IndexPage = (props) => {
   const moods = props.data.allMongodbHeroku8Pxd36BkMoodboards.edges;
