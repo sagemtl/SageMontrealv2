@@ -5,7 +5,8 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import '../styles/shop.scss';
 
-const Shop = ({ data }) => {
+const Shop = (props) => {
+  const { data, uri } = props;
   const [paused, setPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -33,7 +34,7 @@ const Shop = ({ data }) => {
   }, []);
 
   return (
-    <Layout>
+    <Layout current={uri}>
       <div className="shop">
         <div className="shop-wheel">
           {getProducts().map((product, index) => {
@@ -96,6 +97,7 @@ const Shop = ({ data }) => {
 
 Shop.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  uri: PropTypes.string.isRequired,
 };
 
 export default Shop;
