@@ -2,8 +2,29 @@
   width:80%;
   max-width: 1300px;
   height:700px;
-  border:3px solid black;
+  border:2px solid black;
+  border-radius: 10px;
   overflow: hidden;
+  margin-top: 5%;
+  position: fixed;
+  bottom: 8em;
+
+  &__button {
+    width: 130px;
+    position: absolute;
+    right: 2%;
+    bottom: 2%;
+    border-radius: 5px;
+    outline: none;
+    background: #113903;
+    box-shadow: 0 5px #565656;
+    z-index: 5;
+
+    &:active {
+      box-shadow: 0 2px #565656;
+      transform: translateY(4px);
+    }
+  }
 }
 
 .shop-wheel {
@@ -30,10 +51,10 @@
   
     &:hover {
       cursor: pointer;
-      width: 93%;
-      height: 270px;
-      top: 70px;
-      left: -58%;
+      width: 87%;
+      height: 260px;
+      top: 80px;
+      left: -52%;
     }
   }
 
@@ -46,4 +67,9 @@
 @keyframes circle {
   from { transform: rotate(0deg) translateX(800px) rotate(0deg); }
   to   { transform: rotate(360deg) translateX(800px) rotate(-360deg); }
+}
+
+::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
 }
