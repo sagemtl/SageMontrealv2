@@ -59,15 +59,7 @@ const Shop = ({ data }) => {
 
   return (
     <Layout>
-      <div
-        onScroll={console.log9}
-        style={{
-          height: 2000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+      <div className="shop-scroll">
         <div className="shop">
           <div className="shop-wheel">
             <button
