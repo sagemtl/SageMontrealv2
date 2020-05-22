@@ -14,7 +14,8 @@
   overflow: hidden;
   margin-top: 5%;
   position: fixed;
-  bottom: 8em;
+  bottom: 6em;
+  animation: fadein 5s;
 
   &__button {
     width: 130px;
@@ -39,40 +40,15 @@
   height:100%;
   position: relative;
 
-  &__item {
-    width:80%;
-    min-width: 700px;
-    height:240px;
-    border: 2px solid #5A5A5A;
-    border-radius: 10px;
-    position:absolute;
-    top:100px; bottom:50px; left:-650px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    animation: circle 20s linear infinite;
-    animation-direction: reverse;
-    transition: all 1s;
-    flex-shrink: 0.5;
-  
-    &:hover {
-      cursor: pointer;
-      width: 87%;
-      height: 260px;
-      top: 80px;
-      left: -52%;
-    }
-  }
-
   &__image {
     max-height: 60%;
     width: auto;
   }
 }
 
-@keyframes circle {
-  from { transform: rotate(0deg) translateX(800px) rotate(0deg); }
-  to   { transform: rotate(360deg) translateX(800px) rotate(-360deg); }
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 ::-webkit-scrollbar {

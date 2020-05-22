@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
 import Layout from '../components/layout';
+import ShopItem from '../components/ShopItem';
 import '../styles/shop.scss';
 
 const Shop = ({ data }) => {
@@ -46,7 +47,7 @@ const Shop = ({ data }) => {
       const scrolled = winScroll / height;
 
       setScroll(scrolled);
-      setExtra((window.scrollY / 50) % 20);
+      setExtra((window.scrollY / 60) % 20);
     };
     window.addEventListener('resize', updateWindow);
     window.addEventListener('scroll', updateDelay);
@@ -74,53 +75,14 @@ const Shop = ({ data }) => {
                 const delay = `${0 - index * 1.25 - extra}s`;
 
                 return (
-                  <div
-                    className="shop-wheel__item"
-                    style={
-                      paused || buttonPaused
-                        ? {
-                            animationPlayState: 'paused',
-                            animationDelay: delay,
-                          }
-                        : { animationDelay: delay }
-                    }
-                    onMouseEnter={() => {
-                      setPaused(true);
-                    }}
-                    onMouseLeave={() => {
-                      setPaused(false);
-                    }}
-                  >
-                    <img
-                      src={product.node.images[0]}
-                      className="shop-wheel__image"
-                      alt={`Product-${index}`}
-                    />
-                    <img
-                      src={product.node.images[0]}
-                      className="shop-wheel__image"
-                      alt={`Product-${index}`}
-                    />
-                    <img
-                      src={product.node.images[0]}
-                      className="shop-wheel__image"
-                      alt={`Product-${index}`}
-                    />
-                    {windowWidth > 1200 && (
-                      <img
-                        src={product.node.images[0]}
-                        className="shop-wheel__image"
-                        alt={`Product-${index}`}
-                      />
-                    )}
-                    {windowWidth > 1500 && (
-                      <img
-                        src={product.node.images[0]}
-                        className="shop-wheel__image"
-                        alt={`Product-${index}`}
-                      />
-                    )}
-                  </div>
+                  <ShopItem
+                    buttonPaused={buttonPaused}
+                    delay={delay}
+                    paused={paused}
+                    setPaused={setPaused}
+                    windowWidth={windowWidth}
+                    product={product}
+                  />
                 );
               }
             })}
