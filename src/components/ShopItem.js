@@ -12,8 +12,10 @@ const ShopItem = ({
   windowWidth,
   product,
 }) => {
+  const { node } = product;
+
   return (
-    <Link to="/shop/product">
+    <Link to={`/shop/${node.id}`}>
       <div
         className="shop-item"
         style={
@@ -32,32 +34,32 @@ const ShopItem = ({
         }}
       >
         <img
-          src={product.node.images[0]}
+          src={node.images[0]}
           className="shop-wheel__image"
-          alt={`Product-${product.id}`}
+          alt={`Product-${node.id}`}
         />
         <img
-          src={product.node.images[0]}
+          src={node.images[0]}
           className="shop-wheel__image"
-          alt={`Product-${product.id}`}
+          alt={`Product-${node.id}`}
         />
         <img
-          src={product.node.images[0]}
+          src={node.images[0]}
           className="shop-wheel__image"
-          alt={`Product-${product.id}`}
+          alt={`Product-${node.id}`}
         />
         {windowWidth > 1200 && (
           <img
-            src={product.node.images[0]}
+            src={node.images[0]}
             className="shop-wheel__image"
-            alt={`Product-${product.id}`}
+            alt={`Product-${node.id}`}
           />
         )}
         {windowWidth > 1500 && (
           <img
-            src={product.node.images[0]}
+            src={node.images[0]}
             className="shop-wheel__image"
-            alt={`Product-${product.id}`}
+            alt={`Product-${node.id}`}
           />
         )}
       </div>
