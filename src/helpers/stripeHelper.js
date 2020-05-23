@@ -1,4 +1,3 @@
-// const stripe = require('stripe')("sk_test_steF95pSmUvXb9cdcfdwektV");
 
 // export function updateProduct(prod_id, productContent) {
 //     // var product_info = 
@@ -23,7 +22,8 @@
 //     // )
 // }
 
-export const getProductInfo = (prod_id) => {
+
+export const getProductInfo = async (prod_id) => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer sk_test_steF95pSmUvXb9cdcfdwektV");
 
@@ -33,8 +33,15 @@ export const getProductInfo = (prod_id) => {
     redirect: 'follow'
     };
 
-    fetch("https://api.stripe.com/v1/products/"+prod_id, requestOptions)
+    return fetch("https://api.stripe.com/v1/products/"+prod_id, requestOptions)
     .then(response => response.text())
-    .then(result => console.log("result:::: "+result))
+    .then(result => { 
+        debugger;
+        return result;
+    })
     .catch(error => console.log('error', error));
+}
+
+export const updateProduct = async (product) =>{
+    
 }
