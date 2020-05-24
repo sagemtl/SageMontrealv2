@@ -1,6 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
+import Img from "gatsby-image"
 
 const Product = ({ data }) => {
   const item = data.stripeProduct;
@@ -16,7 +17,7 @@ const Product = ({ data }) => {
         {skus.edges.map(({ node }) => (
           <div>
             <p>{node.attributes.name}</p>
-            <img src={node.image} />
+            <img src={node.featuredImg.childImageSharp.fixed.src} />
           </div>
         ))}
       </div>
@@ -36,9 +37,15 @@ export const query = graphql`
     allStripeSku(filter: { product: { id: { eq: $id } } }) {
       edges {
         node {
-          image
           attributes {
             name
+          }
+          featuredImg {
+            childImageSharp {
+              fixed {
+                src
+              }
+            }
           }
         }
       }
