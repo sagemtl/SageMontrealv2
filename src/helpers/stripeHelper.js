@@ -45,3 +45,9 @@ export const getProductInfo = async (prod_id) => {
 export const updateProduct = async (product) =>{
     
 }
+
+export const generateSlug = (name) => {
+    //global replacement of space
+    var slug = name.replace(/ /g, "-");
+    return slug;
+}
