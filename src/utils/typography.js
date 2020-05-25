@@ -10,7 +10,7 @@ const typography = new Typography({
     'Arial',
     'sans-serif',
   ],
-  bodyFontFamily: ['Georgia', 'serif'],
+  bodyFontFamily: ['Helvetica Neue', 'serif'],
 });
 
 export default typography;

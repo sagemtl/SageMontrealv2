@@ -1,24 +1,65 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useState } from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
+
+import './styles/product.scss';
 
 const Product = ({ data }) => {
   const item = data.stripeProduct;
   const skus = data.allStripeSku;
-  console.log(data);
+
+  const sizes = ['S', 'M', 'L', 'XL'];
+
+  const [selectedSize, setSelectedSize] = useState('');
+
   return (
     <Layout>
-      <div>
-        <h1>{item.name}</h1>
-        <h2>Product ID: {item.id}</h2>
-        <p>Product description: {item.description}</p>
-        <h3>Associated SKUs</h3>
-        {skus.edges.map(({ node }) => (
-          <div>
-            <p>{node.attributes.name}</p>
-            <img src={node.image} />
+      <div className="product">
+        <div className="product-images">
+          {skus.edges.map(({ node }) => (
+            <div>
+              <img
+                src={node.image}
+                alt={node.attributes.name}
+                className="product-images__image"
+              />
+            </div>
+          ))}
+        </div>
+        <div className="product-details">
+          <h1>{item.name}</h1>
+          <p className="product-details__point">260g/sm French Terry Cotton</p>
+          <p className="product-details__point">
+            Double-needle sleeve and side-seams
+          </p>
+          <p className="product-details__point">Embroidered Logo</p>
+          <p className="product-details__point">Relaxed Fit</p>
+          <div className="product-details-sizes">
+            {sizes.map((size, index) => {
+              return (
+                <div
+                  className="product-details-sizes__size"
+                  style={index === 0 ? { marginLeft: 0 } : {}}
+                >
+                  <input
+                    type="radio"
+                    id={size}
+                    value={size}
+                    checked={selectedSize === size}
+                    onClick={() => setSelectedSize(size)}
+                  />
+                  <label htmlFor={size} className="cursor">
+                    {size}
+                  </label>
+                </div>
+              );
+            })}
           </div>
-        ))}
+          <button className="product-details__button" type="button">
+            Add To Cart
+          </button>
+        </div>
       </div>
     </Layout>
   );
