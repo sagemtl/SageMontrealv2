@@ -54,5 +54,13 @@ module.exports = {
         secretKey: process.env.STRIPE_SECRET,
       },
     },
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        stylesProvider: {
+          injectFirst: true,
+        },
+      },
+    },
   ],
 };

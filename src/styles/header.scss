@@ -15,6 +15,38 @@
     z-index: 10px;
     margin-bottom: 5px;
     box-shadow: 3px 3px #999;
+    &__amount{
+      position: absolute;
+      left: 10px;
+      top: 28px;
+      font-family: 'Helvetica Neue';
+      font-size: 12px;
+    }
+    &__image{
+      margin-top: 10px;
+      margin-left: 30px;
+    }
+    &__size{
+      position: absolute;
+      left: 115px;
+      top: 28px;
+      font-family: 'Helvetica Neue';
+      font-size: 12px;
+    }
+    &__price{
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-family: 'Helvetica Neue';
+      font-size: 12px;
+    }
+    &__close{
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      color: black;
+      font-size: 16px;
+    } 
   }
 
   &__button{
