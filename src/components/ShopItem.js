@@ -15,7 +15,7 @@ const ShopItem = ({
   const { node } = product;
 
   return (
-    <Link to={`/shop/${node.id}`}>
+    <Link to={`/shop/${node.fields.slug}`}>
       <div
         className="shop-item"
         style={

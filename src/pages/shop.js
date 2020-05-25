@@ -107,6 +107,9 @@ export const query = graphql`
           id
           name
           images
+          fields {
+            slug
+          }
         }
       }
     }
