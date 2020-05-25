@@ -12,7 +12,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     type StripeSku implements Node {
       featuredImg: File @link(from: "featuredImg___NODE")
     }
+    type StripeProduct implements Node {
+      featuredImgs: [File] @link(from: "featuredImg___NODE")
+    }
   `)
+  
 }
 
 exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeId }) => {
@@ -42,9 +46,36 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
       // Ignore
       console.log("*** error downloading media files: " + e);
     }
+    // if the file was created, attach the new node to the parent node
     if (fileNode) {
       node.featuredImg___NODE = fileNode.id;
       // console.log("fileNode is valid, attaching to parent node at: " + node.id);
+    }
+  }
+  if (node.internal.type === `StripeProduct`) {
+    for(const img of node.images){
+      try {
+        fileNode = await createRemoteFileNode({
+          url: img,
+          parentNodeId: node.id,
+          // The action used to create nodes
+          createNode,
+          // A helper function for creating node Ids
+          createNodeId,
+          cache,
+          store,
+          ext:".jpg",
+        });
+        // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+      } catch (e) {
+        // Ignore
+        console.log("*** error downloading media files: " + e);
+      }
+      // if the file was created, attach the new node to the parent node
+      if (fileNode) {
+        node.featuredImg___NODE = fileNode.id;
+        // console.log("fileNode is valid, attaching to parent node at: " + node.id);
+      }
     }
   }
 }
