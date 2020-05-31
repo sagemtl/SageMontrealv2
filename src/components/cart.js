@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CartItem from './cartItem';
 
+import { GlobalContext } from '../context/Provider';
+
 const Cart = () => {
+  const { state } = useContext(GlobalContext);
+  const { checkoutItems } = state;
+
   return (
     <div className="cart">
-      <CartItem
+      {/* <CartItem
         amount="1"
         price="59"
         size="L"
@@ -21,10 +26,23 @@ const Cart = () => {
         price="59"
         size="M"
         image="https://files.stripe.com/links/fl_test_3970bNWJvc6btCo5qp2yiizZ"
-      />
-      <button type="submit" onClick="" className="cart__button">
-        Checkout
-      </button>
+      /> */}
+      {checkoutItems.map((item) => {
+        return (
+          <CartItem
+            id={item.id}
+            amount={item.amount}
+            price={item.price}
+            size={item.size}
+            image={item.image}
+          />
+        );
+      })}
+      {checkoutItems.length > 0 && (
+        <button type="submit" onClick="" className="cart__button">
+          Checkout
+        </button>
+      )}
     </div>
   );
 };

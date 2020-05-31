@@ -69,7 +69,7 @@ const Shop = (props) => {
               type="button"
               className="shop__button"
             >
-              {buttonPaused ? 'RESUME' : 'PAUSE'}
+              {buttonPaused ? 'Resume' : 'Pause'}
             </button>
             {getProducts().map((product, index) => {
               if (index < 16) {

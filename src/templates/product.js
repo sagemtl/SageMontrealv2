@@ -1,17 +1,44 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
+import { GlobalContext } from '../context/Provider';
 
 import './styles/product.scss';
 
 const Product = ({ data }) => {
   const item = data.stripeProduct;
   const skus = data.allStripeSku;
-
   const sizes = ['S', 'M', 'L', 'XL'];
 
   const [selectedSize, setSelectedSize] = useState('');
+  const { state, dispatch } = useContext(GlobalContext);
+
+  const addToCart = () => {
+    const itemsCopy = Array.from(state.checkoutItems);
+    const itemId = item.id + selectedSize;
+    const itemIndex = itemsCopy.findIndex((i) => i.id === itemId);
+
+    if (itemIndex !== -1) {
+      itemsCopy[itemIndex].amount += 1;
+    } else {
+      itemsCopy.push({
+        id: itemId,
+        amount: 1,
+        price: 50,
+        size: selectedSize,
+        image: skus.edges[0].node.image,
+      });
+    }
+
+    dispatch({
+      type: 'SET_CHECKOUT_ITEMS',
+      payload: {
+        checkoutItems: itemsCopy,
+      },
+    });
+  };
 
   return (
     <Layout>
@@ -56,13 +83,22 @@ const Product = ({ data }) => {
               );
             })}
           </div>
-          <button className="product-details__button" type="button">
+          <button
+            className="product-details__button"
+            type="button"
+            onClick={addToCart}
+            disabled={selectedSize.length <= 0}
+          >
             Add To Cart
           </button>
         </div>
       </div>
     </Layout>
   );
+};
+
+Product.propTypes = {
+  data: PropTypes.shape().isRequired,
 };
 
 export default Product;
