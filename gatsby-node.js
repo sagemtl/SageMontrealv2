@@ -13,14 +13,16 @@ exports.createSchemaCustomization = ({ actions }) => {
       featuredImg: File @link(from: "featuredImg___NODE")
     }
     type StripeProduct implements Node {
-      featuredImgs: [File] @link(from: "featuredImg___NODE")
+      featuredImgs: File @link(from: "featuredImgs___NODE")
     }
   `)
   
 }
 
+
+
 exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeId }) => {
-  const {createNodeField, createNode} = actions;
+  const {createNodeField, createNode, createParentChildLink} = actions;
   if (node.internal.type === `StripeProduct`) {
     const slug = generateSlug(node.name);
     createNodeField({
@@ -73,11 +75,16 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
       }
       // if the file was created, attach the new node to the parent node
       if (fileNode) {
-        node.featuredImg___NODE = fileNode.id;
+        // node.featuredImgs.children.push(fileNode.id);
+        node.featuredImgs = fileNode.id;
+        createParentChildLink({parent:node, child:fileNode});
         // console.log("fileNode is valid, attaching to parent node at: " + node.id);
       }
     }
+    console.log("*** type of featuredImgs___NODE: " + typeof(node.featuredImgs___NODE));
+    console.log("*** " + node.featuredImgs.children);
   }
+  
 }
 
 const generateSlug = (name) => {
@@ -89,7 +96,7 @@ const generateSlug = (name) => {
 exports.createPages = async ({ graphql, actions }) => {
     // **Note:** The graphql function call returns a Promise
     // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
-    const {createPage} = actions
+    const {createPage} = actions;
     const result = await graphql(`
       query {
         allStripeProduct {
