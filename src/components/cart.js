@@ -1,25 +1,30 @@
 import React from 'react';
-
-const styles = {
-  cart: {
-    position: 'fixed',
-    right: 30,
-    top: 30,
-    width: 175,
-    height: 225,
-    border: '2px solid black',
-    borderRadius: 15,
-    backgroundColor: 'white',
-    zIndex: 10,
-  },
-};
+import CartItem from './cartItem';
 
 const Cart = () => {
   return (
-    <div style={styles.cart}>
-      <hr
-        style={{ marginTop: 45, marginBottom: 0, height: 2, color: 'black' }}
+    <div className="cart">
+      <CartItem
+        amount="1"
+        price="59"
+        size="L"
+        image="https://files.stripe.com/links/fl_test_3970bNWJvc6btCo5qp2yiizZ"
       />
+      <CartItem
+        amount="1"
+        price="35"
+        size="L"
+        image="https://files.stripe.com/links/fl_test_3970bNWJvc6btCo5qp2yiizZ"
+      />
+      <CartItem
+        amount="1"
+        price="59"
+        size="M"
+        image="https://files.stripe.com/links/fl_test_3970bNWJvc6btCo5qp2yiizZ"
+      />
+      <button type="submit" onClick="" className="cart__button">
+        Checkout
+      </button>
     </div>
   );
 };

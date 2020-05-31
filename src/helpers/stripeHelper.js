@@ -1,25 +1,20 @@
-
-
 export const getProductInfo = async (prod_id) => {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer sk_test_steF95pSmUvXb9cdcfdwektV");
+  const myHeaders = new Headers();
+  myHeaders.append('Authorization', 'Bearer sk_test_steF95pSmUvXb9cdcfdwektV');
 
-    var requestOptions = {
+  const requestOptions = {
     method: 'GET',
     headers: myHeaders,
-    redirect: 'follow'
-    };
+    redirect: 'follow',
+  };
 
-    return fetch("https://api.stripe.com/v1/products/"+prod_id, requestOptions)
-    .then(response => response.text())
-    .then(result => { 
-        debugger;
-        return result;
+  return fetch(`https://api.stripe.com/v1/products/${prod_id}`, requestOptions)
+    .then((response) => response.text())
+    .then((result) => {
+      debugger;
+      return result;
     })
-    .catch(error => console.log('error', error));
-}
+    .catch((error) => console.log('error', error));
+};
 
-export const updateProduct = async (product) =>{
-    
-}
-
+export const updateProduct = async (product) => {};
