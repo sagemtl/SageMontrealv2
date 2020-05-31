@@ -9,28 +9,11 @@ const Cart = () => {
 
   return (
     <div className="cart">
-      {/* <CartItem
-        amount="1"
-        price="59"
-        size="L"
-        image="https://files.stripe.com/links/fl_test_3970bNWJvc6btCo5qp2yiizZ"
-      />
-      <CartItem
-        amount="1"
-        price="35"
-        size="L"
-        image="https://files.stripe.com/links/fl_test_3970bNWJvc6btCo5qp2yiizZ"
-      />
-      <CartItem
-        amount="1"
-        price="59"
-        size="M"
-        image="https://files.stripe.com/links/fl_test_3970bNWJvc6btCo5qp2yiizZ"
-      /> */}
       {checkoutItems.map((item) => {
         return (
           <CartItem
             id={item.id}
+            name={item.name}
             amount={item.amount}
             price={item.price}
             size={item.size}

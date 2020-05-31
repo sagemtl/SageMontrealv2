@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
+import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import { GlobalContext } from '../context/Provider';
 
-const CartItem = ({ amount, size, price, image, id }) => {
+const CartItem = ({ name, amount, size, price, image, id }) => {
   const { state, dispatch } = useContext(GlobalContext);
 
-  const removeItem = () => {
+  const removeItem = (e) => {
+    e.stopPropagation();
     const itemsCopy = Array.from(state.checkoutItems);
     itemsCopy.splice(
       itemsCopy.findIndex((item) => {
@@ -24,7 +26,7 @@ const CartItem = ({ amount, size, price, image, id }) => {
   };
 
   return (
-    <div className="cart__item">
+    <div className="cart__item" onClick={() => navigate('/')}>
       <div className="cart__item__amount">
         <b>{amount}x</b>
       </div>
@@ -45,6 +47,7 @@ const CartItem = ({ amount, size, price, image, id }) => {
 };
 
 CartItem.propTypes = {
+  name: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   size: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
