@@ -26,7 +26,10 @@ const CartItem = ({ name, amount, size, price, image, id }) => {
   };
 
   return (
-    <div className="cart__item" onClick={() => navigate('/')}>
+    <div
+      className="cart__item"
+      onClick={() => navigate(`/shop/${name.replace(/ +/g, '-')}`)}
+    >
       <div className="cart__item__amount">
         <b>{amount}x</b>
       </div>
