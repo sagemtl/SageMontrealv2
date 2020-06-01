@@ -13,7 +13,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       featuredImg: File @link(from: "featuredImg___NODE")
     }
     type StripeProduct implements Node {
-      featuredImgs: File @link(from: "featuredImgs___NODE")
+      otherImgs: String
+      featuredImg: File @link(from: "featuredImg___NODE")
     }
   `)
   
@@ -81,8 +82,32 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
         // console.log("fileNode is valid, attaching to parent node at: " + node.id);
       }
     }
-    console.log("*** type of featuredImgs___NODE: " + typeof(node.featuredImgs___NODE));
-    console.log("*** " + node.featuredImgs.children);
+    if(node.metadata["featuredImg"]){
+      try {
+        fileNode = await createRemoteFileNode({
+          url: node.metadata["featuredImg"],
+          parentNodeId: node.id,
+          // The action used to create nodes
+          createNode,
+          // A helper function for creating node Ids
+          createNodeId,
+          cache,
+          store,
+          ext:".jpg",
+        });
+        // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+      } catch (e) {
+        // Ignore
+        console.log("*** error downloading media files: " + e);
+      }
+      // if the file was created, attach the new node to the parent node
+      if (fileNode) {
+        node.featuredImg___NODE = fileNode.id;
+        // console.log("fileNode is valid, attaching to parent node at: " + node.id);
+      }
+    } else {
+        
+    }
   }
   
 }
