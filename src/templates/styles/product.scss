@@ -2,9 +2,11 @@
   width: 80%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   padding: 2em 1em;
   max-width: 1500px;
+  height: 100vh;
 }
 
 .product-images {
