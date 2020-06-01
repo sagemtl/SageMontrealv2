@@ -130,6 +130,7 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
   
 }
 
+
 const generateSlug = (name) => {
   //global replacement of space
   var slug = name.replace(/ /g, "-");

@@ -18,6 +18,15 @@ const Product = ({ data }) => {
     <Layout>
       <div className="product">
         <div className="product-images">
+        {item.children.map(({ childImageSharp }) => (
+            <div>
+              <img
+                src={childImageSharp.fixed.src}
+                alt={item.name}
+                className="product-images__image"
+              />
+            </div>
+          ))}
           {skus.edges.map(({ node }) => (
             <div>
               <img
@@ -74,6 +83,16 @@ export const query = graphql`
       id
       name
       description
+      children {
+        ... on File {
+          name
+          childImageSharp {
+            fixed {
+              src
+            }
+          }
+        }
+      }
     }
     allStripeSku(filter: { product: { id: { eq: $id } } }) {
       edges {

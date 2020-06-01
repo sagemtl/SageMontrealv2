@@ -110,20 +110,13 @@ export const query = graphql`
           fields {
             slug
           }
-        }
-      }
-    }
-    allStripeSku {
-      edges {
-        node {
-          id
-          attributes {
-            name
+          featuredImg {
+            childImageSharp {
+              fixed {
+                src
+              }
+            }
           }
-          product {
-            id
-          }
-          image
         }
       }
     }
