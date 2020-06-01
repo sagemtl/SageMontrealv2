@@ -21,19 +21,7 @@ const Layout = ({ children, current }) => {
     <>
       <Header siteTitle={data.site.siteMetadata.title} current={current} />
       <Cart />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          alignItems: 'center',
-          margin: '0 auto',
-          padding: '0 1.0875rem 1.45rem',
-          width: '100%',
-        }}
-      >
-        {children}
-      </div>
+      <div className="layout">{children}</div>
     </>
   );
 };

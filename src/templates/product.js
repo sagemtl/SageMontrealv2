@@ -26,6 +26,7 @@ const Product = ({ data }) => {
     } else {
       itemsCopy.push({
         id: itemId,
+        name: item.name,
         amount: 1,
         price: 50,
         size: selectedSize,
@@ -99,7 +100,7 @@ const Product = ({ data }) => {
             onClick={addToCart}
             disabled={selectedSize.length <= 0}
           >
-            Add To Cart
+            Add to cart
           </button>
         </div>
       </div>
