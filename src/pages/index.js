@@ -13,8 +13,9 @@ const stripePromise = loadStripe(process.env.STRIPE_PUBLIC);
 
 const IndexPage = (props) => {
   const moods = props.data.allMongodbHeroku8Pxd36BkMoodboards.edges;
+  const { uri } = props;
   return (
-    <Layout>
+    <Layout current={uri}>
       <SEO title="Home" />
       <h1>Hi people</h1>
       <p>Welcome to your new Gatsby site.</p>

@@ -27,10 +27,11 @@
     outline: none;
     color: white;
     border-color: black;
-    background: #113903;
+    background: #154734;
     box-shadow: 0 5px #000;
     z-index: 5;
     cursor: pointer;
+    font-weight: bold;
 
     &:active {
       box-shadow: 0 2px #000;

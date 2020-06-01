@@ -132,29 +132,29 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
 
 
 const generateSlug = (name) => {
-  //global replacement of space
-  var slug = name.replace(/ /g, "-");
+  // global replacement of space
+  const slug = name.replace(/ /g, '-');
   return slug;
-}
+};
 
 exports.createPages = async ({ graphql, actions }) => {
-    // **Note:** The graphql function call returns a Promise
-    // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
-    const {createPage} = actions;
-    const result = await graphql(`
-      query {
-        allStripeProduct {
-            edges {
-              node {
-                id
-                fields {
-                  slug
-                }
-              }
+  // **Note:** The graphql function call returns a Promise
+  // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
+  const { createPage } = actions;
+  const result = await graphql(`
+    query {
+      allStripeProduct {
+        edges {
+          node {
+            id
+            fields {
+              slug
             }
           }
+        }
       }
-    `)
+    }
+  `)
 
     const path = require(`path`)
 

@@ -6,7 +6,8 @@ import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import '../styles/shop.scss';
 
-const Shop = ({ data }) => {
+const Shop = (props) => {
+  const { data, uri } = props;
   const [paused, setPaused] = useState(false);
   const [buttonPaused, setButtonPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -68,7 +69,7 @@ const Shop = ({ data }) => {
               type="button"
               className="shop__button"
             >
-              {buttonPaused ? 'RESUME' : 'PAUSE'}
+              {buttonPaused ? 'Resume' : 'Pause'}
             </button>
             {getProducts().map((product, index) => {
               if (index < 16) {
@@ -95,6 +96,7 @@ const Shop = ({ data }) => {
 
 Shop.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  uri: PropTypes.string.isRequired,
 };
 
 export default Shop;

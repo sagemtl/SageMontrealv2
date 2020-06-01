@@ -68,5 +68,13 @@ module.exports = {
         downloadFiles: true
       },
     },
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        stylesProvider: {
+          injectFirst: true,
+        },
+      },
+    },
   ],
 };
