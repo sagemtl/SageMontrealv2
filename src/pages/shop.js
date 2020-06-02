@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import PauseIcon from '@material-ui/icons/Pause';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import '../styles/shop.scss';
 
 const Shop = (props) => {
-  const { data, uri } = props;
+  const { data } = props;
   const [paused, setPaused] = useState(false);
   const [buttonPaused, setButtonPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [extra, setExtra] = useState(0);
   const [scroll, setScroll] = useState(window.pageYOffset);
+  const [mobile, setMobile] = useState(window.innerWidth < 1200);
 
   const getProducts = () => {
     const stripeProducts = data.allStripeProduct.edges;
@@ -30,9 +33,11 @@ const Shop = (props) => {
   useEffect(() => {
     if (scroll === 0) window.scrollTo(0, 1000);
     else if (scroll === 1) window.scrollTo(0, 0);
-  }, [scroll]);
+  });
 
   useEffect(() => {
+    setMobile(windowWidth < 1200);
+
     const updateWindow = () => {
       setWindowWidth(window.innerWidth);
     };
@@ -46,9 +51,8 @@ const Shop = (props) => {
         document.documentElement.clientHeight;
 
       const scrolled = winScroll / height;
-
       setScroll(scrolled);
-      setExtra((window.scrollY / 60) % 20);
+      if (window.scrollY) setExtra((window.scrollY + extra) / 50);
     };
     window.addEventListener('resize', updateWindow);
     window.addEventListener('scroll', updateDelay);
@@ -57,23 +61,19 @@ const Shop = (props) => {
       window.removeEventListener('resize', updateWindow);
       window.removeEventListener('scroll', updateDelay);
     };
-  }, [buttonPaused, extra, scroll]);
+  }, [buttonPaused, extra, scroll, windowWidth]);
 
   return (
     <Layout>
       <div className="shop-scroll">
-        <div className="shop">
-          <div className="shop-wheel">
-            <button
-              onClick={() => setButtonPaused(!buttonPaused)}
-              type="button"
-              className="shop__button"
-            >
-              {buttonPaused ? 'Resume' : 'Pause'}
-            </button>
+        <div className={mobile ? 'shop-mobile' : 'shop'}>
+          <div
+            className={mobile ? 'shop-track' : 'shop-wheel'}
+            style={buttonPaused ? { animationPlayState: 'paused' } : {}}
+          >
             {getProducts().map((product, index) => {
               if (index < 16) {
-                const delay = `${0 - index * 1.25 - extra}s`;
+                const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
 
                 return (
                   <ShopItem
@@ -88,6 +88,17 @@ const Shop = (props) => {
               }
             })}
           </div>
+          <button
+            onClick={() => setButtonPaused(!buttonPaused)}
+            type="button"
+            className="shop__button"
+          >
+            {buttonPaused ? (
+              <PlayArrowIcon />
+            ) : (
+              <PauseIcon style={{ verticalAlign: 'center' }} />
+            )}
+          </button>
         </div>
       </div>
     </Layout>

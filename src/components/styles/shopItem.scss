@@ -15,11 +15,33 @@
   flex-shrink: 0.5;
 
   &:hover {
-    cursor: pointer;
-    width: 87%;
+    width: 86%;
     height: 260px;
-    top: 80px;
-    left: -52%;
+    left: calc(-650px - 3%);
+    right: 3%;
+    top: 90px;
+    bottom: 40px;
+  }
+}
+
+.shop-item-mobile {
+  width:90%;
+  height:240px;
+  border: 2px solid #5A5A5A;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  transition: all 1s;
+  margin: 3em auto;
+
+  &:hover {
+    width: 96%;
+    height: 260px;
+    left: calc(-650px - 3%);
+    right: 3%;
+    top: 90px;
+    bottom: 40px;
   }
 }
 

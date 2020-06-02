@@ -14,17 +14,19 @@ const ShopItem = ({
 }) => {
   const { node } = product;
 
+  const actualDelay = windowWidth >= 1200 ? delay : 'unset';
+
   return (
     <Link to={`/shop/${node.fields.slug}`}>
       <div
-        className="shop-item"
+        className={windowWidth >= 1200 ? 'shop-item' : 'shop-item-mobile'}
         style={
           paused || buttonPaused
             ? {
                 animationPlayState: 'paused',
-                animationDelay: delay,
+                animationDelay: actualDelay,
               }
-            : { animationDelay: delay }
+            : { animationDelay: actualDelay }
         }
         onMouseEnter={() => {
           setPaused(true);
@@ -38,16 +40,20 @@ const ShopItem = ({
           className="shop-wheel__image"
           alt={`Product-${node.id}`}
         />
-        <img
-          src={node.images[0]}
-          className="shop-wheel__image"
-          alt={`Product-${node.id}`}
-        />
-        <img
-          src={node.images[0]}
-          className="shop-wheel__image"
-          alt={`Product-${node.id}`}
-        />
+        {windowWidth > 400 && (
+          <img
+            src={node.images[0]}
+            className="shop-wheel__image"
+            alt={`Product-${node.id}`}
+          />
+        )}
+        {windowWidth > 700 && (
+          <img
+            src={node.images[0]}
+            className="shop-wheel__image"
+            alt={`Product-${node.id}`}
+          />
+        )}
         {windowWidth > 1200 && (
           <img
             src={node.images[0]}
