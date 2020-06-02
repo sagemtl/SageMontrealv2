@@ -34,30 +34,30 @@ const ShopItem = ({
         }}
       >
         <img
-          src={node.images[0]}
+          src={node.featuredImg.childImageSharp.fixed.src}
           className="shop-wheel__image"
           alt={`Product-${node.id}`}
         />
         <img
-          src={node.images[0]}
+          src={node.featuredImg.childImageSharp.fixed.src}
           className="shop-wheel__image"
           alt={`Product-${node.id}`}
         />
         <img
-          src={node.images[0]}
+          src={node.featuredImg.childImageSharp.fixed.src}
           className="shop-wheel__image"
           alt={`Product-${node.id}`}
         />
         {windowWidth > 1200 && (
           <img
-            src={node.images[0]}
+            src={node.featuredImg.childImageSharp.fixed.src}
             className="shop-wheel__image"
             alt={`Product-${node.id}`}
           />
         )}
         {windowWidth > 1500 && (
           <img
-            src={node.images[0]}
+            src={node.featuredImg.childImageSharp.fixed.src}
             className="shop-wheel__image"
             alt={`Product-${node.id}`}
           />

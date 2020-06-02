@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import initialState from './initialState';
 import globalReducer from './reducer';
 
-const localState = JSON.parse(localStorage.getItem('cart-items'));
+let localState;
+
+if (typeof window !== `undefined`) {
+  JSON.parse(localStorage.getItem('cart-items'));
+}
 
 export const GlobalContext = createContext(initialState);
 
