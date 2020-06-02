@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import Header from './header';
+import Footer from './footer';
 import Cart from './cart';
 import './styles/layout.scss';
 
@@ -22,6 +23,7 @@ const Layout = ({ children, current }) => {
       <Header siteTitle={data.site.siteMetadata.title} current={current} />
       <Cart />
       <div className="layout">{children}</div>
+      <Footer />
     </>
   );
 };

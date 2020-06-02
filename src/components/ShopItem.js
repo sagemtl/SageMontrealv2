@@ -14,17 +14,20 @@ const ShopItem = ({
 }) => {
   const { node } = product;
 
+  const actualDelay = windowWidth >= 1200 ? delay : 'unset';
+  const productImage = node.featuredImg.childImageSharp.fixed.src;
+
   return (
     <Link to={`/shop/${node.fields.slug}`}>
       <div
-        className="shop-item"
+        className={windowWidth >= 1200 ? 'shop-item' : 'shop-item-mobile'}
         style={
           paused || buttonPaused
             ? {
                 animationPlayState: 'paused',
-                animationDelay: delay,
+                animationDelay: actualDelay,
               }
-            : { animationDelay: delay }
+            : { animationDelay: actualDelay }
         }
         onMouseEnter={() => {
           setPaused(true);
@@ -34,30 +37,34 @@ const ShopItem = ({
         }}
       >
         <img
-          src={node.featuredImg.childImageSharp.fixed.src}
+          src={productImage}
           className="shop-wheel__image"
           alt={`Product-${node.id}`}
         />
-        <img
-          src={node.featuredImg.childImageSharp.fixed.src}
-          className="shop-wheel__image"
-          alt={`Product-${node.id}`}
-        />
-        <img
-          src={node.featuredImg.childImageSharp.fixed.src}
-          className="shop-wheel__image"
-          alt={`Product-${node.id}`}
-        />
+        {windowWidth > 400 && (
+          <img
+            src={productImage}
+            className="shop-wheel__image"
+            alt={`Product-${node.id}`}
+          />
+        )}
+        {windowWidth > 700 && (
+          <img
+            src={productImage}
+            className="shop-wheel__image"
+            alt={`Product-${node.id}`}
+          />
+        )}
         {windowWidth > 1200 && (
           <img
-            src={node.featuredImg.childImageSharp.fixed.src}
+            src={productImage}
             className="shop-wheel__image"
             alt={`Product-${node.id}`}
           />
         )}
         {windowWidth > 1500 && (
           <img
-            src={node.featuredImg.childImageSharp.fixed.src}
+            src={productImage}
             className="shop-wheel__image"
             alt={`Product-${node.id}`}
           />
