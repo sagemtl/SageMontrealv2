@@ -15,6 +15,7 @@ const ShopItem = ({
   const { node } = product;
 
   const actualDelay = windowWidth >= 1200 ? delay : 'unset';
+  const productImage = node.featuredImg.childImageSharp.fixed.src;
 
   return (
     <Link to={`/shop/${node.fields.slug}`}>
@@ -36,34 +37,34 @@ const ShopItem = ({
         }}
       >
         <img
-          src={node.images[0]}
+          src={productImage}
           className="shop-wheel__image"
           alt={`Product-${node.id}`}
         />
         {windowWidth > 400 && (
           <img
-            src={node.images[0]}
+            src={productImage}
             className="shop-wheel__image"
             alt={`Product-${node.id}`}
           />
         )}
         {windowWidth > 700 && (
           <img
-            src={node.images[0]}
+            src={productImage}
             className="shop-wheel__image"
             alt={`Product-${node.id}`}
           />
         )}
         {windowWidth > 1200 && (
           <img
-            src={node.images[0]}
+            src={productImage}
             className="shop-wheel__image"
             alt={`Product-${node.id}`}
           />
         )}
         {windowWidth > 1500 && (
           <img
-            src={node.images[0]}
+            src={productImage}
             className="shop-wheel__image"
             alt={`Product-${node.id}`}
           />

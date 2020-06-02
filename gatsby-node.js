@@ -4,22 +4,132 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-// You can delete this file if you're not using it
 
-// const { createFilePath } = require(`gatsby-source-filesystem`)
-const path = require(`path`);
+// need this schema customization to add the link node for images onto stripe objects
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  createTypes(`
+    type StripeSku implements Node {
+      featuredImg: File @link(from: "featuredImg___NODE")
+    }
+    type StripeProduct implements Node {
+      featuredImg: File @link(from: "featuredImg___NODE")
+    }
+  `)
+  
+}
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions;
+
+
+exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeId }) => {
+  const {createNodeField, createNode, createParentChildLink} = actions;
   if (node.internal.type === `StripeProduct`) {
     const slug = generateSlug(node.name);
     createNodeField({
       node,
       name: `slug`,
       value: slug,
-    });
+    })  }
+  if (node.internal.type === `StripeSku`) {
+    if(node.image){
+      try {
+        fileNode = await createRemoteFileNode({
+          url: node.image,
+          parentNodeId: node.id,
+          // The action used to create nodes
+          createNode,
+          // A helper function for creating node Ids
+          createNodeId,
+          cache,
+          store,
+          ext:".jpg",
+        });
+        // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+      } catch (e) {
+        // Ignore
+        console.log("*** error downloading media files: " + e);
+      }
+      // if the file was created, attach the new node to the parent node
+      if (fileNode) {
+        node.featuredImg___NODE = fileNode.id;
+        // console.log("fileNode is valid, attaching to parent node at: " + node.id);
+      }
+    }
   }
-};
+  if (node.internal.type === `StripeProduct`) {
+    for(const img of node.images){
+      try {
+        fileNode = await createRemoteFileNode({
+          url: img,
+          parentNodeId: node.id,
+          // The action used to create nodes
+          createNode,
+          // A helper function for creating node Ids
+          createNodeId,
+          cache,
+          store,
+          ext:".jpg",
+        });
+        // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+      } catch (e) {
+        // Ignore
+        console.log("*** error downloading media files: " + e);
+      }
+      // if the file was created, attach the new node to the parent node
+      if (fileNode) {
+        createParentChildLink({parent:node, child:fileNode});
+        // console.log("fileNode is valid, attaching to parent node at: " + node.id);
+      }
+    }
+    if(node.metadata["featuredImg"]){
+      try {
+        fileNode = await createRemoteFileNode({
+          url: node.metadata["featuredImg"],
+          parentNodeId: node.id,
+          // The action used to create nodes
+          createNode,
+          // A helper function for creating node Ids
+          createNodeId,
+          cache,
+          store,
+          ext:".jpg",
+        });
+        // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+      } catch (e) {
+        // Ignore
+        console.log("*** error downloading media files: " + e);
+      }
+      // if the file was created, attach the new node to the parent node
+      if (fileNode) {
+        node.featuredImg___NODE = fileNode.id;
+      }
+    } else {
+      try {
+        fileNode = await createRemoteFileNode({
+          url: node.images[0],
+          parentNodeId: node.id,
+          // The action used to create nodes
+          createNode,
+          // A helper function for creating node Ids
+          createNodeId,
+          cache,
+          store,
+          ext:".jpg",
+        });
+        // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+      } catch (e) {
+        // Ignore
+        console.log("*** error downloading media files: " + e);
+      }
+      // if the file was created, attach the new node to the parent node
+      if (fileNode) {
+        node.featuredImg___NODE = fileNode.id;
+      }
+    }
+  }
+  
+}
+
 
 const generateSlug = (name) => {
   // global replacement of space
@@ -44,18 +154,23 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `);
-  // console.log(JSON.stringify(result, null, 4))
+  `)
 
-  result.data.allStripeProduct.edges.forEach(({ node }) => {
-    createPage({
-      path: `/shop/${node.fields.slug}`,
-      component: path.resolve(`./src/templates/product.js`),
-      context: {
-        // Data passed to context is available
-        // in page queries as GraphQL variables.
-        id: node.id,
-      },
-    });
-  });
-};
+    const path = require(`path`)
+
+    result.data.allStripeProduct.edges.forEach(({ node }) => {
+      // console.log("creating page: " + node.fields.slug);
+        createPage({
+          path: "/shop/"+node.fields.slug,
+          component: path.resolve(`./src/templates/product.js`),
+          context: {
+            // Data passed to context is available
+            // in page queries as GraphQL variables.
+            id: node.id,
+          },
+        })
+      })
+  }
+
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+

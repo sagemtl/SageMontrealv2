@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
+import Img from "gatsby-image"
 import { GlobalContext } from '../context/Provider';
 
 import './styles/product.scss';
@@ -45,10 +46,19 @@ const Product = ({ data }) => {
     <Layout>
       <div className="product">
         <div className="product-images">
+        {item.children.map(({ childImageSharp }) => (
+            <div>
+              <img
+                src={childImageSharp.fixed.src}
+                alt={item.name}
+                className="product-images__image"
+              />
+            </div>
+          ))}
           {skus.edges.map(({ node }) => (
             <div>
               <img
-                src={node.image}
+                src={node.featuredImg.childImageSharp.fixed.src}
                 alt={node.attributes.name}
                 className="product-images__image"
               />
@@ -110,13 +120,29 @@ export const query = graphql`
       id
       name
       description
+      children {
+        ... on File {
+          name
+          childImageSharp {
+            fixed {
+              src
+            }
+          }
+        }
+      }
     }
     allStripeSku(filter: { product: { id: { eq: $id } } }) {
       edges {
         node {
-          image
           attributes {
             name
+          }
+          featuredImg {
+            childImageSharp {
+              fixed {
+                src
+              }
+            }
           }
         }
       }
