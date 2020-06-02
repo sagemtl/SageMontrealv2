@@ -1,0 +1,23 @@
+.footer {
+  position: fixed;
+  right: 30px;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 230px;
+
+  &__header {
+    font-size: 0.8rem;
+  }
+
+  &__icon {
+    height: 30px;
+    width: 30px;
+    transition: all 1s;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}

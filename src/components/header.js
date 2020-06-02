@@ -2,7 +2,7 @@ import { Link, useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Img from 'gatsby-image';
-import '../styles/header.scss';
+import './styles/header.scss';
 
 const Header = (props) => {
   const { siteTitle, current } = props;
