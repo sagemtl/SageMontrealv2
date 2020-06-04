@@ -11,7 +11,7 @@ gatsby build
 
 ## Notes
 * Need ".env.development" and ".env.production" files for credentials
-* When getting "...directly does not exist" errors, do ```gatsby clean```
+* When getting "...directory does not exist" errors, do ```gatsby clean```
 
 ## GraphQL
 ### stripeProduct
