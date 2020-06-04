@@ -30,7 +30,7 @@ const Product = ({ data }) => {
         amount: 1,
         price: 50,
         size: selectedSize,
-        image: skus.edges[0].node.image,
+        image: item.children[0].childImageSharp.fixed.src,
       });
     }
 
