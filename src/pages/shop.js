@@ -122,7 +122,6 @@ const Shop = (props) => {
 
 Shop.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  uri: PropTypes.string.isRequired,
 };
 
 export default Shop;
