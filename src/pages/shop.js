@@ -69,7 +69,9 @@ const Shop = (props) => {
         <div className={mobile ? 'shop-mobile' : 'shop'}>
           <div
             className={mobile ? 'shop-track' : 'shop-wheel'}
-            style={buttonPaused ? { animationPlayState: 'paused' } : {}}
+            style={
+              buttonPaused || paused ? { animationPlayState: 'paused' } : {}
+            }
           >
             {getProducts().map((product, index) => {
               if (index < 16) {
