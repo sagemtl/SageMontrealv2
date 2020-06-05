@@ -87,6 +87,21 @@ const Shop = (props) => {
                 );
               }
             })}
+            {mobile &&
+              getProducts().map((product, index) => {
+                if (index < 16) {
+                  return (
+                    <ShopItem
+                      buttonPaused={buttonPaused}
+                      delay={0}
+                      paused={paused}
+                      setPaused={setPaused}
+                      windowWidth={windowWidth}
+                      product={product}
+                    />
+                  );
+                }
+              })}
           </div>
           <button
             onClick={() => setButtonPaused(!buttonPaused)}
