@@ -8,7 +8,7 @@ const Header = (props) => {
   const { siteTitle, current } = props;
   const data = useStaticQuery(graphql`
     query {
-      placeholderImage: file(relativePath: { eq: "LOGO.png" }) {
+      placeholderImage: file(relativePath: { eq: "sage-icon.png" }) {
         childImageSharp {
           fluid(maxWidth: 300) {
             ...GatsbyImageSharpFluid
