@@ -86,10 +86,7 @@ const Shop = (props) => {
     <Layout>
       <div className="shop-scroll">
         <div className={shopClasses}>
-          <div
-            className={shopAnimationClasses}
-            style={mobile ? { top: extra * 50 } : {}}
-          >
+          <div className={shopAnimationClasses}>
             {getProducts().map((product, index) => {
               if (index < 16) {
                 const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
