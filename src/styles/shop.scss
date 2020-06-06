@@ -85,10 +85,12 @@
 }
 
 .shop-track {
-  height: calc(240px * 16);
+  height: calc(300px * 32);
   display: flex;
   flex-direction: column;
-  animation: straight 20s linear infinite;
+  animation: straight 25s linear infinite;
+  position: relative;
+  top: 600px;
 }
 
 @keyframes fadein {
@@ -98,7 +100,7 @@
 
 @keyframes straight {
 	0% { transform: translateY(0); }
-	100% { transform: translateY(calc(-240px * 16))}
+	100% { transform: translateY(calc(-300px * 16))}
 }
 
 ::-webkit-scrollbar {

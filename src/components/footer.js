@@ -7,10 +7,18 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="footer-icons">
-        <a href="https://www.instagram.com/sagemtl/" target="_blank">
+        <a
+          href="https://www.instagram.com/sagemtl/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img src={InstagramIcon} alt="Instagram" className="footer__icon" />
         </a>
-        <a href="https://addmeonqq.tumblr.com/post/184841955797/amp" target="_blank">
+        <a
+          href="https://addmeonqq.tumblr.com/post/184841955797/amp"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img src={TumblrIcon} alt="Tumblr" className="footer__icon" />
         </a>
       </div>
