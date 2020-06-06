@@ -8,6 +8,8 @@ import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import '../styles/shop.scss';
 
+const classNames = require('classnames');
+
 const Shop = (props) => {
   const { data } = props;
   const [paused, setPaused] = useState(false);
@@ -63,15 +65,19 @@ const Shop = (props) => {
     };
   }, [buttonPaused, extra, scroll, windowWidth]);
 
+  const shopClasses = classNames({
+    'shop-track': mobile,
+    'shop-wheel': !mobile,
+    'shop-paused': buttonPaused || paused,
+  });
+
   return (
     <Layout>
       <div className="shop-scroll">
         <div className={mobile ? 'shop-mobile' : 'shop'}>
           <div
-            className={mobile ? 'shop-track' : 'shop-wheel'}
-            style={
-              buttonPaused || paused ? { animationPlayState: 'paused' } : {}
-            }
+            className={shopClasses}
+            style={mobile ? { top: extra * 50 } : {}}
           >
             {getProducts().map((product, index) => {
               if (index < 16) {

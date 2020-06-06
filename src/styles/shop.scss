@@ -93,6 +93,10 @@
   top: 600px;
 }
 
+.shop-paused {
+  animation-play-state: paused;
+}
+
 @keyframes fadein {
   from { opacity: 0; }
   to { opacity: 1; }

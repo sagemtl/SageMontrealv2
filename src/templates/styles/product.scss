@@ -14,10 +14,30 @@
   width: 50%;
   max-width: 550px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  &__image {
+  &__image--main {
     margin: 0;
+    width: auto;
+    height: 350px;
   }
+
+  &__image--secondary {
+    margin: 0;
+    width: 20%;
+    height: auto;
+    margin: 20px;
+    cursor: pointer;
+  }
+}
+
+.product-images-secondary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .product-details {

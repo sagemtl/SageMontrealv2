@@ -3,7 +3,6 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
-import Img from "gatsby-image"
 import { GlobalContext } from '../context/Provider';
 
 import './styles/product.scss';
@@ -14,6 +13,9 @@ const Product = ({ data }) => {
   const sizes = ['S', 'M', 'L', 'XL'];
 
   const [selectedSize, setSelectedSize] = useState('');
+  const [selectedImage, setSelectedImage] = useState(
+    item.children[0].childImageSharp.fixed.src,
+  );
   const { state, dispatch } = useContext(GlobalContext);
 
   const addToCart = () => {
@@ -46,24 +48,33 @@ const Product = ({ data }) => {
     <Layout>
       <div className="product">
         <div className="product-images">
-        {item.children.map(({ childImageSharp }) => (
-            <div>
-              <img
-                src={childImageSharp.fixed.src}
-                alt={item.name}
-                className="product-images__image"
-              />
-            </div>
-          ))}
-          {skus.edges.map(({ node }) => (
-            <div>
+          <div>
+            <img
+              src={selectedImage}
+              alt={item.name}
+              className="product-images__image--main"
+            />
+          </div>
+          <div className="product-images-secondary">
+            <img
+              src={item.children[0].childImageSharp.fixed.src}
+              alt={item.name}
+              className="product-images__image--secondary"
+              onClick={() =>
+                setSelectedImage(item.children[0].childImageSharp.fixed.src)
+              }
+            />
+            {skus.edges.map(({ node }) => (
               <img
                 src={node.featuredImg.childImageSharp.fixed.src}
                 alt={node.attributes.name}
-                className="product-images__image"
+                className="product-images__image--secondary"
+                onClick={() =>
+                  setSelectedImage(node.featuredImg.childImageSharp.fixed.src)
+                }
               />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         <div className="product-details">
           <h1>{item.name}</h1>
