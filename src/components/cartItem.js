@@ -25,10 +25,17 @@ const CartItem = ({ name, amount, size, price, image, id }) => {
     });
   };
 
+  const handleClick = () => {
+    navigate(`/shop/${name.replace(/ +/g, '-')}`);
+  };
+
   return (
     <div
       className="cart__item"
-      onClick={() => navigate(`/shop/${name.replace(/ +/g, '-')}`)}
+      onClick={() => handleClick()}
+      onKeyDown={() => handleClick()}
+      role="button"
+      tabIndex={0}
     >
       <div className="cart__item__amount">
         <b>{amount}x</b>

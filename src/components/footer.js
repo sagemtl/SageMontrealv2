@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useLocation } from '@reach/router';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import InstagramIcon from '../images/instagram.svg';
@@ -6,11 +7,14 @@ import TumblrIcon from '../images/tumblr.svg';
 import './styles/footer.scss';
 import { GlobalContext } from '../context/Provider';
 
+const classNames = require('classnames');
+
 const Footer = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { state, dispatch } = useContext(GlobalContext);
   const { buttonPaused } = state;
   const mobile = windowWidth < 1200;
+  const { pathname } = useLocation();
 
   const handleClick = () => {
     dispatch({
@@ -25,8 +29,13 @@ const Footer = () => {
     window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
   }, []);
 
+  const footerClasses = classNames({
+    footer: !mobile,
+    'footer-mobile': mobile,
+  });
+
   return (
-    <div className={mobile ? 'footer-mobile' : 'footer'}>
+    <div className={footerClasses}>
       <div className="footer-icons">
         <a
           href="https://www.instagram.com/sagemtl/"
@@ -43,7 +52,7 @@ const Footer = () => {
           <img src={TumblrIcon} alt="Tumblr" className="footer__icon" />
         </a>
       </div>
-      {mobile && (
+      {mobile && pathname === '/shop' && (
         <button
           type="button"
           className="footer__button"

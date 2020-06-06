@@ -72,17 +72,22 @@ const Shop = (props) => {
   }, [extra, scroll, windowWidth]);
 
   const shopClasses = classNames({
-    'shop-track': mobile,
+    shop: !mobile,
+    'shop-mobile': mobile,
+  });
+
+  const shopAnimationClasses = classNames({
     'shop-wheel': !mobile,
+    'shop-track': mobile,
     'shop-paused': buttonPaused || paused,
   });
 
   return (
     <Layout>
       <div className="shop-scroll">
-        <div className={mobile ? 'shop-mobile' : 'shop'}>
+        <div className={shopClasses}>
           <div
-            className={shopClasses}
+            className={shopAnimationClasses}
             style={mobile ? { top: extra * 50 } : {}}
           >
             {getProducts().map((product, index) => {

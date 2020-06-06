@@ -56,7 +56,7 @@
 .shop-mobile {
   @include shop();
   width: 80%;
-  z-index: -100;
+  z-index: 10;
 
   &__button {
     @include shop-button();
