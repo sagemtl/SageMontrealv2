@@ -7,8 +7,6 @@ import TumblrIcon from '../images/tumblr.svg';
 import './styles/footer.scss';
 import { GlobalContext } from '../context/Provider';
 
-const classNames = require('classnames');
-
 const Footer = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { state, dispatch } = useContext(GlobalContext);
@@ -29,13 +27,8 @@ const Footer = () => {
     window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
   }, []);
 
-  const footerClasses = classNames({
-    footer: !mobile,
-    'footer-mobile': mobile,
-  });
-
   return (
-    <div className={footerClasses}>
+    <div className="footer">
       <div className="footer-icons">
         <a
           href="https://www.instagram.com/sagemtl/"
@@ -52,7 +45,7 @@ const Footer = () => {
           <img src={TumblrIcon} alt="Tumblr" className="footer__icon" />
         </a>
       </div>
-      {mobile && pathname === '/shop' && (
+      {pathname === '/shop' && (
         <button
           type="button"
           className="footer__button"

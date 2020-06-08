@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
-import { GlobalContext } from '../context/Provider';
 import Img from 'gatsby-image';
+import { GlobalContext } from '../context/Provider';
 
 const CartItem = ({ name, amount, size, price, image, id }) => {
   const { state, dispatch } = useContext(GlobalContext);

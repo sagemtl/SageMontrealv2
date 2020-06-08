@@ -5,7 +5,7 @@ import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import Layout from '../components/layout';
-import ShopItem from '../components/ShopItem';
+import ShopItem from '../components/shopitem';
 import '../styles/shop.scss';
 import { GlobalContext } from '../context/Provider';
 
@@ -119,19 +119,6 @@ const Shop = (props) => {
                 }
               })}
           </div>
-          {!mobile && (
-            <button
-              onClick={() => handleClick()}
-              type="button"
-              className="shop__button"
-            >
-              {buttonPaused ? (
-                <PlayArrowIcon />
-              ) : (
-                <PauseIcon style={{ verticalAlign: 'center' }} />
-              )}
-            </button>
-          )}
         </div>
       </div>
     </Layout>
@@ -157,7 +144,7 @@ export const query = graphql`
           }
           featuredImg {
             childImageSharp {
-              fixed(width:160) {
+              fixed(width: 160) {
                 ...GatsbyImageSharpFixed
               }
             }

@@ -37,43 +37,18 @@ const ShopItem = ({
           setPaused(false);
         }}
       >
-          <Img
-            fixed={productImage}
-            className="shop-wheel__image"
-            alt={`Product-${node.id}`}
-            key={0}
-          />
+        <Img fixed={productImage} alt={`Product-${node.id}`} key={0} />
         {windowWidth > 400 && (
-          <Img
-          fixed={productImage}
-            className="shop-wheel__image"
-            alt={`Product-${node.id}`}
-            key={1}
-          />
+          <Img fixed={productImage} alt={`Product-${node.id}`} key={1} />
         )}
         {windowWidth > 700 && (
-          <Img
-            fixed={productImage}
-            className="shop-wheel__image"
-            alt={`Product-${node.id}`}
-            key={2}
-          />
+          <Img fixed={productImage} alt={`Product-${node.id}`} key={2} />
         )}
         {windowWidth > 1200 && (
-          <Img
-            fixed={productImage}
-            className="shop-wheel__image"
-            alt={`Product-${node.id}`}
-            key={3}
-          />
-         )} 
+          <Img fixed={productImage} alt={`Product-${node.id}`} key={3} />
+        )}
         {windowWidth > 1500 && (
-          <Img
-            fixed={productImage}
-            className="shop-wheel__image"
-            alt={`Product-${node.id}`}
-            key={4}
-          />
+          <Img fixed={productImage} alt={`Product-${node.id}`} key={4} />
         )}
       </div>
     </Link>
