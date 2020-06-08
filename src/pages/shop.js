@@ -83,7 +83,7 @@ const Shop = (props) => {
   });
 
   return (
-    <Layout>
+    <Layout current="/shop">
       <div className="shop-scroll">
         <div className={shopClasses}>
           <div className={shopAnimationClasses}>
@@ -157,18 +157,11 @@ export const query = graphql`
           }
           featuredImg {
             childImageSharp {
-              fixed {
-                src
+              fixed(width:160) {
+                ...GatsbyImageSharpFixed
               }
             }
           }
-        }
-      }
-    }
-    allMongodbHeroku8Pxd36BkProducts {
-      edges {
-        node {
-          imagePath
         }
       }
     }
