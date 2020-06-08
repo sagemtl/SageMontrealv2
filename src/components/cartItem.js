@@ -3,6 +3,7 @@ import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import { GlobalContext } from '../context/Provider';
+import Img from 'gatsby-image';
 
 const CartItem = ({ name, amount, size, price, image, id }) => {
   const { state, dispatch } = useContext(GlobalContext);
@@ -33,7 +34,7 @@ const CartItem = ({ name, amount, size, price, image, id }) => {
       <div className="cart__item__amount">
         <b>{amount}x</b>
       </div>
-      <img className="cart__item__image" height="50" src={image} alt="test" />
+      <Img className="cart__item__image" height="50" fixed={image} alt="test" />
       <div className="cart__item__size">
         <b>{size}</b>
       </div>

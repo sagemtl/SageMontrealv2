@@ -64,7 +64,7 @@ const Shop = (props) => {
   }, [buttonPaused, extra, scroll, windowWidth]);
 
   return (
-    <Layout>
+    <Layout current="/shop">
       <div className="shop-scroll">
         <div className={mobile ? 'shop-mobile' : 'shop'}>
           <div
@@ -141,18 +141,11 @@ export const query = graphql`
           }
           featuredImg {
             childImageSharp {
-              fixed {
-                src
+              fixed(width:160) {
+                ...GatsbyImageSharpFixed
               }
             }
           }
-        }
-      }
-    }
-    allMongodbHeroku8Pxd36BkProducts {
-      edges {
-        node {
-          imagePath
         }
       }
     }

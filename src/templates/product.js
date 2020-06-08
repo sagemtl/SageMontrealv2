@@ -30,7 +30,7 @@ const Product = ({ data }) => {
         amount: 1,
         price: 50,
         size: selectedSize,
-        image: item.children[0].childImageSharp.fixed.src,
+        image: item.featuredImg.childImageSharp.fixed,
       });
     }
 
@@ -43,13 +43,13 @@ const Product = ({ data }) => {
   };
 
   return (
-    <Layout>
+    <Layout current={"/shop/"+item.fields.slug}>
       <div className="product">
         <div className="product-images">
         {item.children.map(({ childImageSharp }) => (
             <div>
-              <img
-                src={childImageSharp.fixed.src}
+              <Img
+                fixed={childImageSharp.fixed}
                 alt={item.name}
                 className="product-images__image"
               />
@@ -57,8 +57,8 @@ const Product = ({ data }) => {
           ))}
           {skus.edges.map(({ node }) => (
             <div>
-              <img
-                src={node.featuredImg.childImageSharp.fixed.src}
+              <Img
+                fixed={node.featuredImg.childImageSharp.fixed}
                 alt={node.attributes.name}
                 className="product-images__image"
               />
@@ -120,12 +120,22 @@ export const query = graphql`
       id
       name
       description
+      fields{
+        slug
+      }
+      featuredImg {
+        childImageSharp {
+          fixed(height: 50) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
       children {
         ... on File {
           name
           childImageSharp {
             fixed {
-              src
+              ...GatsbyImageSharpFixed
             }
           }
         }
@@ -140,7 +150,7 @@ export const query = graphql`
           featuredImg {
             childImageSharp {
               fixed {
-                src
+                ...GatsbyImageSharpFixed
               }
             }
           }
