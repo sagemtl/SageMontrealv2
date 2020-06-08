@@ -7,7 +7,7 @@ import globalReducer from './reducer';
 let localState;
 
 if (typeof window !== `undefined`) {
-  JSON.parse(localStorage.getItem('cart-items'));
+  localState = JSON.parse(localStorage.getItem('cart-items'));
 }
 
 export const GlobalContext = createContext(initialState);
