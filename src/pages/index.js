@@ -20,11 +20,6 @@ const IndexPage = ({ data, uri }) => {
       <h1>Hi people</h1>
       <p>Welcome to your new Gatsby site.</p>
       <p>Now go build something great.</p>
-      <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-        <Elements stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
-      </div>
       <div>
         {moods.map((mood) => (
           <div key={mood.node.id}>
