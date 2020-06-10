@@ -1,114 +1,183 @@
-import React, { useState, useEffect } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import './styles/checkout.css';
+import React, { useState } from "react";
+// Stripe
 
-export default function CheckoutForm() {
-  const [succeeded, setSucceeded] = useState(false);
-  const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState('');
-  const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState('');
-  const [email, setEmail] = useState('');
-  const stripe = useStripe();
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+
+// UI
+import {
+  Container,
+  Form,
+  FormGroup,
+  FormControl,
+  Row,
+  Col,
+  Card,
+  Button,
+} from "react-bootstrap";
+
+function Payment() {
+  const [formData, setFormData] = useState({});
   const elements = useElements();
-  useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    window
-      .fetch('/create-payment-intent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ items: [{ id: 'xl-tshirt' }] }),
-      })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setClientSecret(data.clientSecret);
-      });
-  }, []);
-  const cardStyle = {
-    style: {
-      base: {
-        color: '#32325d',
-        fontFamily: 'Arial, sans-serif',
-        fontSmoothing: 'antialiased',
-        fontSize: '16px',
-        '::placeholder': {
-          color: '#32325d',
-        },
-      },
-      invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a',
-      },
-    },
+  const stripe = useStripe();
+
+  const change = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleChange = async (event) => {
-    // Listen for changes in the CardElement
-    // and display any errors as the customer types their card details
-    setDisabled(event.empty);
-    setError(event.error ? event.error.message : '');
-  };
-  const handleSubmit = async (ev) => {
-    ev.preventDefault();
-    setProcessing(true);
-    const payload = await stripe.confirmCardPayment(clientSecret, {
-      receipt_email: email,
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: ev.target.name.value,
-        },
+
+  const submit = async (e) => {
+    e.preventDefault();
+
+    // Billing Details
+    const billing_details = {
+      name: formData.name,
+      email: formData.email,
+      address: {
+        city: formData.city,
+        line1: formData.address,
+        state: formData.state,
+        postal_code: formData.postal_code,
       },
+    };
+
+    // Request Client Secret to Server
+    const res = await fetch("http://localhost:5000/payment_intent", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ price: 20 * 100, receipt_email: formData.email}),
     });
-    if (payload.error) {
-      setError(`Payment failed ${payload.error.message}`);
-      setProcessing(false);
-    } else {
-      setError(null);
-      setProcessing(false);
-      setSucceeded(true);
-    }
+
+    const data = await res.json();
+    const client_secret = data.client_secret;
+
+    // Create cardElement
+    const cardElement = elements.getElement(CardElement);
+
+    // Create Payment Request
+    const paymentReqMethod = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+      billing_details: billing_details,
+    });
+
+    // Confirm the Payment
+    const confirmCardPayment = await stripe.confirmCardPayment(client_secret, {
+      payment_method: paymentReqMethod.paymentMethod.id,
+    }).then(function(result) {
+      if (result.error) {
+          // Show error to your customer (e.g., insufficient funds)
+          console.log(result.error.message);
+          window.alert(result.error.message)
+      } else {
+          // The payment has been processed!
+          if (result.paymentIntent.status === 'succeeded') {
+              // Show a success message to your customer
+              // There's a risk of the customer closing the window before callback
+              // execution. Set up a webhook or plugin to listen for the
+              // payment_intent.succeeded event that handles any business critical
+              // post-payment actions.
+              console.log(result.receipt_url)
+              window.alert('Payment Succeeded')
+          }
+      }
+  });
+
+    // Acknowledgement
+    console.log(confirmCardPayment);
+
+    // if (confirmCardPayment.paymentIntent.status) {
+    //   console.log("Payment Successful");
+    // } else {
+    //   console.log("Payment Failed ");
+    // }
   };
+
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter email address"
-      />
-      <CardElement
-        id="card-element"
-        options={cardStyle}
-        onChange={handleChange}
-      />
-      <button
-        disabled={processing || disabled || succeeded}
-        id="submit"
-        type="submit"
-      >
-        <span id="button-text">
-          {processing ? <div className="spinner" id="spinner" /> : 'Pay'}
-        </span>
-      </button>
-      {/* Show any error that happens when processing the payment */}
-      {error && (
-        <div className="card-error" role="alert">
-          {error}
-        </div>
-      )}
-      {/* Show a success message upon completion */}
-      <p className={succeeded ? 'result-message' : 'result-message hidden'}>
-        Payment succeeded, see the result in your
-        <a href="https://dashboard.stripe.com/test/payments">
-          {' '}
-          Stripe dashboard.
-        </a>{' '}
-        Refresh the page to pay again.
-      </p>
-    </form>
+    <Container className='py-4'>
+      <Card>
+        <Card.Body>
+          <Form method='POST' onSubmit={submit}>
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Form.Label> Name on Card </Form.Label>
+                  <FormControl
+                    type='text'
+                    placeholder='Enter name on card'
+                    name='name'
+                    onChange={change}
+                  />
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Form.Label> Email </Form.Label>
+                  <FormControl
+                    type='text'
+                    name='email'
+                    placeholder='xinruili07@gmail.com'
+                    onChange={change}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Form.Label> City </Form.Label>
+                  <FormControl
+                    type='text'
+                    name='city'
+                    placeholder='Montreal'
+                    onChange={change}
+                  />
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Form.Label> Address </Form.Label>
+                  <FormControl type='text' name='address' onChange={change} />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Form.Label> State </Form.Label>
+                  <FormControl
+                    type='text'
+                    name='state'
+                    placeholder='Quebec'
+                    onChange={change}
+                  />
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Form.Label> Postal Code </Form.Label>
+                  <FormControl
+                    type='text'
+                    name='postal_code'
+                    placeholder='Postal Code '
+                    onChange={change}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <FormGroup>
+              <Form.Label> Card Details </Form.Label>
+              <CardElement> </CardElement>
+            </FormGroup>
+            <Button type='submit'> Pay</Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
+
+export default Payment;
