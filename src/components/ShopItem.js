@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
+import Img from 'gatsby-image';
 
 import './styles/shopItem.scss';
 
@@ -15,7 +16,7 @@ const ShopItem = ({
   const { node } = product;
 
   const actualDelay = windowWidth >= 1200 ? delay : 'unset';
-  const productImage = node.featuredImg.childImageSharp.fixed.src;
+  const productImage = node.featuredImg.childImageSharp.fixed;
 
   return (
     <Link to={`/shop/${node.fields.slug}`}>
@@ -36,38 +37,18 @@ const ShopItem = ({
           setPaused(false);
         }}
       >
-        <img
-          src={productImage}
-          className="shop-wheel__image"
-          alt={`Product-${node.id}`}
-        />
+        <Img fixed={productImage} alt={`Product-${node.id}`} key={0} />
         {windowWidth > 400 && (
-          <img
-            src={productImage}
-            className="shop-wheel__image"
-            alt={`Product-${node.id}`}
-          />
+          <Img fixed={productImage} alt={`Product-${node.id}`} key={1} />
         )}
         {windowWidth > 700 && (
-          <img
-            src={productImage}
-            className="shop-wheel__image"
-            alt={`Product-${node.id}`}
-          />
+          <Img fixed={productImage} alt={`Product-${node.id}`} key={2} />
         )}
         {windowWidth > 1200 && (
-          <img
-            src={productImage}
-            className="shop-wheel__image"
-            alt={`Product-${node.id}`}
-          />
+          <Img fixed={productImage} alt={`Product-${node.id}`} key={3} />
         )}
         {windowWidth > 1500 && (
-          <img
-            src={productImage}
-            className="shop-wheel__image"
-            alt={`Product-${node.id}`}
-          />
+          <Img fixed={productImage} alt={`Product-${node.id}`} key={4} />
         )}
       </div>
     </Link>

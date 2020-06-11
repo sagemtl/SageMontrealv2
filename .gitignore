@@ -4,6 +4,7 @@ public/
 .env.production
 .env.development
 public/
+.vscode/
 
 # Ignore DS_Store
 .DS_Store

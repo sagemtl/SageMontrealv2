@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 
 import { Elements } from '@stripe/react-stripe-js';
@@ -11,9 +12,8 @@ import CheckoutForm from '../components/checkout';
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.STRIPE_PUBLIC);
 
-const IndexPage = (props) => {
-  const moods = props.data.allMongodbHeroku8Pxd36BkMoodboards.edges;
-  const { uri } = props;
+const IndexPage = ({ data, uri }) => {
+  const moods = data.allMongodbHeroku8Pxd36BkMoodboards.edges;
   return (
     <Layout current={uri}>
       <SEO title="Home" />
@@ -37,6 +37,11 @@ const IndexPage = (props) => {
       <Link to="/page-2/">Go to page 2</Link>
     </Layout>
   );
+};
+
+IndexPage.propTypes = {
+  data: PropTypes.shape().isRequired,
+  uri: PropTypes.string.isRequired,
 };
 
 export default IndexPage;
