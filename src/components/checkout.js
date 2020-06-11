@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 // Stripe
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+
+import { GlobalContext } from '../context/Provider';
 
 // UI
 import {
@@ -16,6 +18,9 @@ import {
 } from "react-bootstrap";
 
 function Payment() {
+  const { state } = useContext(GlobalContext);
+  const { checkoutItems } = state;
+
   const [formData, setFormData] = useState({});
   const elements = useElements();
   const stripe = useStripe();
@@ -23,6 +28,15 @@ function Payment() {
   const change = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const getTotal = () => {
+    var i
+    var totalPrice = 0;
+    for (i = 0; i < checkoutItems.length; i += 1) {
+      totalPrice += (checkoutItems[i].amount * checkoutItems[i].price)
+    }
+    return totalPrice;
+  }
 
   const submit = async (e) => {
     e.preventDefault();
@@ -45,7 +59,7 @@ function Payment() {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ price: 20 * 100, receipt_email: formData.email}),
+      body: JSON.stringify({ price: getTotal() * 100, receipt_email: formData.email}),
     });
 
     const data = await res.json();
@@ -172,7 +186,7 @@ function Payment() {
               <Form.Label> Card Details </Form.Label>
               <CardElement> </CardElement>
             </FormGroup>
-            <Button type='submit'> Pay</Button>
+              <Button type='submit'> Pay {getTotal()}$</Button>
           </Form>
         </Card.Body>
       </Card>

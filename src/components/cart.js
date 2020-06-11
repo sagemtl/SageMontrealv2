@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'gatsby';
 import CartItem from './cartItem';
 
 import { GlobalContext } from '../context/Provider';
@@ -22,9 +23,11 @@ const Cart = () => {
         );
       })}
       {checkoutItems.length > 0 && (
-        <button type="submit" onClick="" className="cart__button">
-          Checkout
-        </button>
+         <Link to="/checkout">
+          <button type="submit" className="cart__button">
+            Checkout
+          </button>
+        </Link>
       )}
     </div>
   );
