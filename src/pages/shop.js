@@ -9,7 +9,7 @@ import ShopItem from '../components/ShopItem';
 import '../styles/shop.scss';
 
 const Shop = (props) => {
-  const { data } = props;
+  const { data, uri } = props;
   const [paused, setPaused] = useState(false);
   const [buttonPaused, setButtonPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -64,7 +64,7 @@ const Shop = (props) => {
   }, [buttonPaused, extra, scroll, windowWidth]);
 
   return (
-    <Layout>
+    <Layout current={uri}>
       <div className="shop-scroll">
         <div className={mobile ? 'shop-mobile' : 'shop'}>
           <div
