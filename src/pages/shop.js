@@ -12,7 +12,7 @@ import { GlobalContext } from '../context/Provider';
 const classNames = require('classnames');
 
 const Shop = (props) => {
-  const { data } = props;
+  const { data, uri } = props;
   const [paused, setPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [extra, setExtra] = useState(0);
@@ -83,7 +83,7 @@ const Shop = (props) => {
   });
 
   return (
-    <Layout current="/shop">
+    <Layout current={uri}>
       <div className="shop-scroll">
         <div className={shopClasses}>
           <div className={shopAnimationClasses}>

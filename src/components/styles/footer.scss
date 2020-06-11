@@ -16,13 +16,16 @@
   @include footer();
 
   &__header {
+    position: fixed;
+    right: 20px;
+    bottom: 15px;
     font-size: 0.8rem;
     margin: 0;
   }
 
   &__icon {
-    height: 30px;
-    width: 30px;
+    height: 20px;
+    width: 20px;
     transition: all 1s;
     margin: 0;
 
@@ -57,7 +60,9 @@
 }
 
 .footer-icons {
-  width: 70px;
+  position: fixed;
+  width: 50px;
   display: flex;
   justify-content: space-between;
+  bottom: 5px;
 }
