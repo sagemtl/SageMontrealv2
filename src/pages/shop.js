@@ -7,7 +7,6 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Layout from '../components/layout';
 import ShopItem from '../components/shopitem';
 import '../styles/shop.scss';
-import { GlobalContext } from '../context/Provider';
 
 const classNames = require('classnames');
 
@@ -18,9 +17,6 @@ const Shop = (props) => {
   const [extra, setExtra] = useState(0);
   const [scroll, setScroll] = useState(window.pageYOffset);
   const mobile = windowWidth < 1200;
-
-  const { state, dispatch } = useContext(GlobalContext);
-  const { buttonPaused } = state;
 
   const getProducts = () => {
     const stripeProducts = data.allStripeProduct.edges;
@@ -33,15 +29,6 @@ const Shop = (props) => {
     }
     products.push(...stripeProducts.slice(0, remainder));
     return products;
-  };
-
-  const handleClick = () => {
-    dispatch({
-      type: 'SET_BUTTON_PAUSED',
-      payload: {
-        buttonPaused: !buttonPaused,
-      },
-    });
   };
 
   useEffect(() => {

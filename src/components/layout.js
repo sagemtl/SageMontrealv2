@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import Header from './header';
+import HeaderMobile from './headerMobile';
 import Footer from './footer';
 import Cart from './cart';
 import './styles/layout.scss';
@@ -18,9 +19,19 @@ const Layout = ({ children, current }) => {
     }
   `);
 
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setWidth(window.innerWidth));
+  }, []);
+
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} current={current} />
+      {width >= 900 ? (
+        <Header siteTitle={data.site.siteMetadata.title} current={current} />
+      ) : (
+        <HeaderMobile />
+      )}
       <Cart />
       <div className="layout">{children}</div>
       <Footer />
