@@ -1,11 +1,13 @@
 @mixin lookbook {
   position: relative;
   display: inline-block;
-  border: 2px solid black;
+  border: 8px solid black;
   border-radius: 24px;
   margin-right: 100px;
   transform: translateX(10%);
   background-color: #154734;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .lookbook-front {
@@ -13,12 +15,52 @@
   width: 450px;
   height: 650px;
   top: 110px;
+
+  &__header {
+    color: white;
+    vertical-align: middle;
+    text-align: center;
+    margin-top: 50%;
+
+    &:after {
+      display:block;
+      content: '';
+      border-bottom: solid 3px white;  
+      transform: scaleX(0);  
+      transition: transform 250ms ease-in-out;
+    }
+
+    &:hover:after {
+      transform: scaleX(1);
+    }
+  }
+
+  &__image {
+    width: auto;
+    max-width: 100%;
+  }
 }
 
 .lookbook-front-mobile {
   @include lookbook();
   width: 400px;
   height: 600px;
-  border: 2px solid black;
   top: calc(10vw + 70px);
+}
+
+.lookbook-modal {
+  position: absolute;
+  overflow: scroll;
+  height: 100vh;
+}
+
+.lookbook-modal-content {
+  width: 90%;
+  max-width: 800px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: scroll;
+  margin: 0 auto;
 }
