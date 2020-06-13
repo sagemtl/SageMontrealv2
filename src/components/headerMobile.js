@@ -5,8 +5,9 @@ import './styles/headerMobile.scss';
 import StoreIcon from '@material-ui/icons/Store';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import CloseIcon from '@material-ui/icons/Close';
 
-const HeaderMobile = () => {
+const HeaderMobile = ({ cart, setCart }) => {
   const data = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "sage-icon.png" }) {
@@ -33,8 +34,12 @@ const HeaderMobile = () => {
       <Link to="/lookbook" className="header-mobile__button">
         <VisibilityIcon fontSize="large" className="header-mobile__icon" />
       </Link>
-      <div className="header-mobile__button">
-        <ShoppingCartIcon fontSize="large" className="header-mobile__icon" />
+      <div className="header-mobile__button" onClick={() => setCart(!cart)}>
+        {cart ? (
+          <CloseIcon fontSize="large" className="header-mobile__icon" />
+        ) : (
+          <ShoppingCartIcon fontSize="large" className="header-mobile__icon" />
+        )}
       </div>
     </div>
   );

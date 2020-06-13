@@ -2,26 +2,12 @@ import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Img from 'gatsby-image';
-import './styles/header.scss';
+import './styles/lookbookFront.scss';
 
-const LookbookFront = (props) => {
-  const { image, link } = props;
+const LookbookFront = ({ image, link, isMobile }) => {
   return (
     <Link to={link}>
-      <div
-        style={{
-          position: 'relative',
-          display: 'inline-block',
-          width: 450,
-          height: 650,
-          border: '2px solid black',
-          borderRadius: '24px',
-          top: '50%',
-          transform: `translate(70%, -50%)`,
-          backgroundColor: '#154734',
-          marginRight: 100,
-        }}
-      >
+      <div className={isMobile ? 'lookbook-front-mobile' : 'lookbook-front'}>
         {/*         
         <Img className="" fluid={image} alt="Sage Lookbook" />
       */}

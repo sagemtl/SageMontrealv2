@@ -19,20 +19,23 @@ const Layout = ({ children, current }) => {
     }
   `);
 
+  const [cart, setCart] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     window.addEventListener('resize', () => setWidth(window.innerWidth));
   }, []);
 
+  const isMobile = width < 900;
+
   return (
     <>
-      {width >= 900 ? (
-        <Header siteTitle={data.site.siteMetadata.title} current={current} />
+      {isMobile ? (
+        <HeaderMobile setCart={setCart} cart={cart} />
       ) : (
-        <HeaderMobile />
+        <Header siteTitle={data.site.siteMetadata.title} current={current} />
       )}
-      <Cart />
+      {(!isMobile || cart) && <Cart />}
       <div className="layout">{children}</div>
       <Footer />
     </>

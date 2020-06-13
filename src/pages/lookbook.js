@@ -13,13 +13,18 @@ const LookbookMenu = ({ uri }) => {
     window.addEventListener('resize', () => setWidth(window.innerWidth));
   }, []);
 
+  const isMobile = width < 900;
+
   return (
     <Layout current={uri}>
-      <div className={width >= 900 ? 'lookbook' : 'lookbook-mobile'}>
-        {[0, 0, 0, 0, 0].map(() => {
-          return <LookbookFront link="/shop" image="test" />;
-        })}
-        <div className="lookbook-block" />
+      <div className={isMobile ? 'lookbook-mobile' : 'lookbook'}>
+        <div className="lookbook-scroll">
+          {[0, 0, 0, 0, 0].map(() => {
+            return (
+              <LookbookFront link="/shop" image="test" isMobile={isMobile} />
+            );
+          })}
+        </div>
       </div>
     </Layout>
   );

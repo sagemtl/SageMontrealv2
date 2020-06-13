@@ -1,26 +1,22 @@
 .lookbook {
-  width: 100vw;
-  height: 100vh;
-  display: inline-block;
-  white-space: nowrap;
-  position: relative;
+  width: 100%;
+  position: absolute;
   overflow-y: hidden;
+  max-height: 100vh;
+  padding: 0 1em;
 }
 
 .lookbook-mobile {
-  width: 100vw;
-  height: 100vh;
-  display: inline-block;
-  white-space: nowrap;
-  position: relative;
-  right: 290px;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%;
+  overflow-y: hidden;
+  transform: none;
+  padding: 0 1.5em;
 }
 
-.lookbook-block {
-  position: relative;
-  display: inline-block;
-  width: 200px;
-  height: 650px;
+.lookbook-scroll {
+  white-space: nowrap;
+  height: 100vh;
   top: 50%;
-  transform: translate(70%, -50%);
 }
