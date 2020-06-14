@@ -91,20 +91,11 @@ function Payment() {
               // execution. Set up a webhook or plugin to listen for the
               // payment_intent.succeeded event that handles any business critical
               // post-payment actions.
-              console.log(result.receipt_url)
+              console.log(result)
               window.alert('Payment Succeeded')
           }
       }
-  });
-
-    // Acknowledgement
-    console.log(confirmCardPayment);
-
-    // if (confirmCardPayment.paymentIntent.status) {
-    //   console.log("Payment Successful");
-    // } else {
-    //   console.log("Payment Failed ");
-    // }
+    });
   };
 
   return (
