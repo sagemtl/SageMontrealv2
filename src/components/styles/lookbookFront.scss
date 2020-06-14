@@ -10,6 +10,16 @@
   cursor: pointer;
 }
 
+@mixin header {
+  color: white;
+  margin-top: 50%;
+  background-position: right bottom;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .lookbook-front {
   @include lookbook();
   width: 450px;
@@ -17,27 +27,43 @@
   top: 110px;
 
   &__header {
-    color: white;
-    vertical-align: middle;
-    text-align: center;
-    margin-top: 50%;
-
-    &:after {
-      display:block;
-      content: '';
-      border-bottom: solid 3px white;  
-      transform: scaleX(0);  
-      transition: transform 250ms ease-in-out;
+    &--placeholder {
+      @include header();
+      position: absolute;
+      width: 100%;
     }
 
-    &:hover:after {
-      transform: scaleX(1);
+    &--animation {
+      @include header();
+      max-width: 0%;
+      overflow: hidden;
+      border-bottom: 2px solid white;
+      border-top: 2px solid white;
     }
   }
 
   &__image {
     width: auto;
     max-width: 100%;
+  }
+
+  &__icon {
+    color: white;
+    transform: rotate(90deg);
+  }
+
+  &:hover .lookbook-front__header--animation {
+    transition: all 0.5s;
+    background-color: #154734;
+    max-width: 100%;
+  }
+
+  &:hover .lookbook-front__header--placeholder {
+    visibility: hidden;
+  }
+
+  &:hover .lookbook-front-icons {
+    visibility: hidden;
   }
 }
 
@@ -46,6 +72,18 @@
   width: 400px;
   height: 600px;
   top: calc(10vw + 70px);
+}
+
+.lookbook-front-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 100px;
+  animation: 1.5s arrow infinite linear;
+  width: 100%;
+  margin: auto;
 }
 
 .lookbook-modal {
@@ -63,4 +101,22 @@
   justify-content: center;
   overflow-y: scroll;
   margin: 0 auto;
+}
+
+@-webkit-keyframes arrow {
+  0%, 100% {
+    bottom: 50px;
+  }
+  50% {
+    bottom: 70px;
+  }
+}
+
+@keyframes arrow {
+  0%, 100% {
+    bottom: 50px;
+  }
+  50% {
+    bottom: 70px;
+  }
 }

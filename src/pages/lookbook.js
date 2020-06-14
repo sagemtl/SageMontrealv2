@@ -68,6 +68,7 @@ const LookbookMenu = ({ uri }) => {
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
       ],
+      position: 'bottom',
     },
   ];
 
@@ -81,12 +82,13 @@ const LookbookMenu = ({ uri }) => {
     <Layout current={uri}>
       <div className={isMobile ? 'lookbook-mobile' : 'lookbook'}>
         <div className="lookbook-scroll">
-          {collections.map(({ label, images }) => {
+          {collections.map(({ label, images, position }) => {
             return (
               <LookbookFront
                 images={images}
                 label={label}
                 isMobile={isMobile}
+                position={position}
               />
             );
           })}
