@@ -35,7 +35,7 @@ const Layout = ({ children, current }) => {
       ) : (
         <Header siteTitle={data.site.siteMetadata.title} current={current} />
       )}
-      {(!isMobile || cart) && <Cart />}
+      {(!isMobile || cart) && <Cart isMobile={isMobile} />}
       <div className="layout">{children}</div>
       <Footer />
     </>
