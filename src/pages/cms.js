@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { graphql } from 'gatsby';
-import { render } from 'react-dom';
-import { Checkbox, Form } from 'semantic-ui-react';
+import { Checkbox, Form, TextArea, Select } from 'semantic-ui-react';
 import { getProductInfo } from '../helpers/stripeHelper';
 import Layout from '../components/layout';
 
@@ -16,7 +14,8 @@ const CMS = () => {
   // allow editing of product info
   const [edit, setEdit] = useState(false);
 
-  const handleGetProduct = async () => {
+  const handleGetProduct = async (e) => {
+    e.preventDefault();
     var prod = await getProductInfo(prod_id);
     var prod = JSON.parse(prod);
     console.log(prod);
@@ -25,6 +24,7 @@ const CMS = () => {
     setDesc(prod.description);
     setImages(prod.images);
     console.log(`infos: ${desc}`);
+    console.log(images);
   };
 
   return (
@@ -40,20 +40,37 @@ const CMS = () => {
         <button type="submit">Get Product</button>
       </Form>
 
-      <Form onSubmit={() => handleGetProduct()}>
-        <Form.Input
+      <Form >
+        <Form.Group>
+        <Form.Field
           label="Description"
           placeholder="Description"
           onChange={(e) => setDesc(e.target.value)}
           value={desc || ''}
         />
+
         <Form.Field
           label="Active"
-          control={Checkbox}
-          onChange={(e) => setActive(e.target.value)}
-          checked={active === 'true'}
+          placeholder="true/false"
+          onChange={(e) => {
+            e.target.value == "true"? setActive(true) : setActive(false)
+          }}
+          value={active || ''}
         />
-      </Form>
+
+        <Form.Field
+          control={TextArea}
+          label="Images URL"
+          placeholder="comma seperated URLs"
+          onChange={(e) => setImages(e.target.value)}
+          value={images.toString() || ''}
+        />
+        
+        {/* {images? (images.map((url)=>{
+            <img src={url} alt="product images"/>
+          })) : null} */}
+          </Form.Group>
+        </Form>
     </div>
   );
 };

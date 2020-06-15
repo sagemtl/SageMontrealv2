@@ -7,11 +7,10 @@ export const getProductInfo = async (prod_id) => {
     headers: myHeaders,
     redirect: 'follow',
   };
-
   return fetch(`https://api.stripe.com/v1/products/${prod_id}`, requestOptions)
     .then((response) => response.text())
     .then((result) => {
-      debugger;
+      console.log(result);
       return result;
     })
     .catch((error) => console.log('error', error));
