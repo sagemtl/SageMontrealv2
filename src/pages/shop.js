@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import PauseIcon from '@material-ui/icons/Pause';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import Layout from '../components/layout';
 import ShopItem from '../components/shopitem';
@@ -11,15 +9,14 @@ import { GlobalContext } from '../context/Provider';
 
 const classNames = require('classnames');
 
-const Shop = (props) => {
-  const { data, uri } = props;
+const Shop = ({ data, uri }) => {
   const [paused, setPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [extra, setExtra] = useState(0);
   const [scroll, setScroll] = useState(window.pageYOffset);
   const mobile = windowWidth < 1200;
 
-  const { state, dispatch } = useContext(GlobalContext);
+  const { state } = useContext(GlobalContext);
   const { buttonPaused } = state;
 
   const getProducts = () => {
@@ -33,15 +30,6 @@ const Shop = (props) => {
     }
     products.push(...stripeProducts.slice(0, remainder));
     return products;
-  };
-
-  const handleClick = () => {
-    dispatch({
-      type: 'SET_BUTTON_PAUSED',
-      payload: {
-        buttonPaused: !buttonPaused,
-      },
-    });
   };
 
   useEffect(() => {
