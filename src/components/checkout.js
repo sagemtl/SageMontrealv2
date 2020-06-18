@@ -208,3 +208,4 @@ function Payment() {
 }
 
 export default Payment;
+// export const getTotal = () => {};
