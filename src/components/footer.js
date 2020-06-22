@@ -10,7 +10,6 @@ import { GlobalContext } from '../context/Provider';
 import classNames from 'classnames';
 
 const Footer = ({ transparent, color }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { state, dispatch } = useContext(GlobalContext);
   const { buttonPaused } = state;
   const { pathname } = useLocation();
@@ -28,10 +27,6 @@ const Footer = ({ transparent, color }) => {
       },
     });
   };
-
-  useEffect(() => {
-    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
-  }, []);
 
   return (
     <div className={transparent ? 'footer-transparent' : 'footer'}>
