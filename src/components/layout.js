@@ -8,7 +8,7 @@ import Footer from './footer';
 import Cart from './cart';
 import './styles/layout.scss';
 
-const Layout = ({ children, current }) => {
+const Layout = ({ children, current, footerTransparent, hideCart }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -35,9 +35,9 @@ const Layout = ({ children, current }) => {
       ) : (
         <Header siteTitle={data.site.siteMetadata.title} current={current} />
       )}
-      {(!isMobile || cart) && <Cart isMobile={isMobile} />}
+      {(!isMobile || cart) && !hideCart && <Cart isMobile={isMobile} />}
       <div className="layout">{children}</div>
-      <Footer />
+      <Footer transparent={footerTransparent} />
     </>
   );
 };
@@ -45,6 +45,13 @@ const Layout = ({ children, current }) => {
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   current: PropTypes.string.isRequired,
+  footerTransparent: PropTypes.bool,
+  hideCart: PropTypes.bool,
+};
+
+Layout.defaultProps = {
+  footerTransparent: false,
+  hideCart: false,
 };
 
 export default Layout;

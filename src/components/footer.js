@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useLocation } from '@reach/router';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -7,7 +8,7 @@ import TumblrIcon from '../images/tumblr.svg';
 import './styles/footer.scss';
 import { GlobalContext } from '../context/Provider';
 
-const Footer = () => {
+const Footer = ({ transparent }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { state, dispatch } = useContext(GlobalContext);
   const { buttonPaused } = state;
@@ -28,7 +29,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <div className="footer">
+    <div className={transparent ? 'footer-transparent' : 'footer'}>
       <div className="footer-icons">
         <a
           href="https://www.instagram.com/sagemtl/"
@@ -61,6 +62,10 @@ const Footer = () => {
       <h3 className="footer__header">© Sage Montreal 2020</h3>
     </div>
   );
+};
+
+Footer.propTypes = {
+  transparent: PropTypes.bool.isRequired,
 };
 
 export default Footer;
