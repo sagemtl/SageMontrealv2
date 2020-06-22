@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import '../styles/index.scss';
-import classNames from 'classnames';
 
 const IndexPage = ({ uri }) => {
   const [swap, setSwap] = useState(true);
+  const [footerColor, setFooterColor] = useState('black');
 
   const indexClass = classNames({
     index: swap,
     'index-flip': !swap,
   });
 
+  const handleClick = () => {
+    setSwap(!swap);
+    setFooterColor(footerColor === 'white' ? 'black' : 'white');
+  };
+
   return (
-    <Layout current={uri} footerTransparent hideCart>
+    <Layout current={uri} footerTransparent hideCart footerColor={footerColor}>
       <SEO title="Home" />
       <div className={indexClass}>
         <label className="index-toggle">
           <input type="checkbox" />
           <span
-            onClick={() => setSwap(!swap)}
+            onClick={() => handleClick()}
             className="index-toggle__slider"
           />
         </label>
