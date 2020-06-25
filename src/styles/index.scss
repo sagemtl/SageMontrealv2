@@ -1,0 +1,218 @@
+@mixin index {
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  transition: 3s ease-in-out;
+  animation: fadeIn 3s ease-in-out 0s; 
+}
+
+@mixin text {
+  position: fixed;
+  color: white;
+  top: -20%;
+  text-shadow: 2px 2px black;
+}
+
+.index {
+  @include index();
+  background-image: url('../images/sage-background.jpg');
+}
+
+.index-flip {
+  @include index();
+  background-image: url('../images/sage-background-2.jpg');
+}
+
+.index-toggle {
+  position: absolute;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  right: 20px;
+  top: 4.5%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 34px;
+
+  & input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .index-toggle__slider {
+      background-color: white;
+    }
+
+    &:focus + .index-toggle__slider {
+      box-shadow: 0 0 1px white;
+    }
+
+    &:checked + .index-toggle__slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+  }
+
+  &__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      border: 1px solid #154734;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    &:before {
+      border-radius: 50%;
+    }
+  }
+}
+
+.index-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  &__header {
+    &--main {
+      font-size: 0px;
+      color: white;
+      text-shadow: 2px 2px black;
+      animation: updown 1.5s ease-in-out infinite, zoomInOut 4s ease-in-out 1.5s;
+    }
+
+    &--1 {
+      @include text();
+      display: inline-block;
+      white-space:nowrap;
+      left: 50%;
+      transform: rotate(10deg) translate(-50%);
+      animation: falldown-main 6s ease-in-out 6s;
+    }
+
+    &--2 {
+      @include text();
+      left: 20%;
+      transform: rotate(-35deg);
+      animation: falldown 6s ease-in-out 4.5s;
+    }
+
+    &--3 {
+      @include text();
+      right: 20%;
+      transform: rotate(45deg);
+      animation: falldown 6s ease-in-out 7.5s;
+    }
+
+    &--4 {
+      @include text();
+      left: 20%;
+      transform: rotate(-45deg);
+      animation: falldown 6s ease-in-out 7s;
+    }
+
+    &--5 {
+      @include text();
+      right: 20%;
+      transform: rotate(25deg);
+      animation: falldown 6s ease-in-out 5s;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes updown {
+  0%, 100% {
+    transform: translatey(1rem); 
+  }
+  50% {
+    transform: translatey(-1rem);
+  }
+} 
+
+@keyframes falldown {
+  0% {
+    top: -20%;
+  }
+  50% {
+    top: 50%;
+    transform: rotate(0deg);
+  }
+  100% {
+    top: 120%;
+  }
+} 
+@keyframes falldown-main {
+  0% {
+    top: -20%;
+  }
+  50% {
+    top: 50%;
+    transform: rotate(0deg) translate(-50%);
+  }
+  100% {
+    top: 120%;
+  }
+} 
+
+@media screen and (max-width: 800px)and (min-width: 300px) {
+  @keyframes zoomInOut {
+    0%, 100% {
+      font-size: 0px;
+    }
+    5%, 95% {
+      font-size: 32px;
+    }
+  }
+
+  #message1, #message2, #message3, #message4, #message5 {
+    font-size: 24px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  @keyframes zoomInOut {
+    0%, 100% {
+      font-size: 0px;
+    }
+    10%, 90% {
+      font-size: 72px;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .index-toggle {
+    top: 9%;
+  }
+}

@@ -1,62 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, graphql } from 'gatsby';
-
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import classNames from 'classnames';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import CheckoutForm from '../components/checkout';
+import '../styles/index.scss';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(process.env.STRIPE_PUBLIC);
+const IndexPage = ({ uri }) => {
+  const [swap, setSwap] = useState(true);
+  const [footerColor, setFooterColor] = useState('black');
 
-const IndexPage = ({ data, uri }) => {
-  const moods = data.allMongodbHeroku8Pxd36BkMoodboards.edges;
+  const indexClass = classNames({
+    index: swap,
+    'index-flip': !swap,
+  });
+
+  const handleClick = () => {
+    setSwap(!swap);
+    setFooterColor(footerColor === 'white' ? 'black' : 'white');
+  };
+
   return (
-    <Layout current={uri}>
+    <Layout current={uri} footerTransparent hideCart footerColor={footerColor}>
       <SEO title="Home" />
-      <h1>Hi people</h1>
-      <p>Welcome to your new Gatsby site.</p>
-      <p>Now go build something great.</p>
-      <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-        <Elements stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
+      <div className={indexClass}>
+        <label className="index-toggle">
+          <input type="checkbox" />
+          <span
+            onClick={() => handleClick()}
+            className="index-toggle__slider"
+          />
+        </label>
+        <div className="index-text">
+          <h1 className="index-text__header--main">
+            <b>Sage Montreal</b>
+          </h1>
+          <h2 className="index-text__header--1">We'll be back soon!</h2>
+          <h2 className="index-text__header--2">66666</h2>
+          <h2 className="index-text__header--3">66666</h2>
+          <h2 className="index-text__header--4">仙仙仙</h2>
+          <h2 className="index-text__header--5">仙仙仙</h2>
+        </div>
       </div>
-      <div>
-        {moods.map((mood) => (
-          <div key={mood.node.id}>
-            <img width="300px" src={mood.node.imagePath} alt="Sage mood" />
-            <h2>{mood.node.name}</h2>
-            <p>{mood.node.instagram}</p>
-          </div>
-        ))}
-      </div>
-      <Link to="/page-2/">Go to page 2</Link>
     </Layout>
   );
 };
 
 IndexPage.propTypes = {
-  data: PropTypes.shape().isRequired,
   uri: PropTypes.string.isRequired,
 };
 
 export default IndexPage;
-
-export const pageQuery = graphql`
-  query {
-    allMongodbHeroku8Pxd36BkMoodboards {
-      edges {
-        node {
-          id
-          name
-          instagram
-          imagePath
-        }
-      }
-    }
-  }
-`;

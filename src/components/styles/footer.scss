@@ -7,13 +7,21 @@
   width: 100%;
   height: 60px;
   padding: 0 1em;
-  border-top: 2px solid black;
-  background: white;
   z-index: 100;
+}
+
+@mixin icon {
+  height: 30px;
+  width: 30px;
+  margin: 0;
+  margin-right: 10px;
+  transition: filter 3s ease-in-out;
 }
 
 .footer {
   @include footer();
+  border-top: 2px solid black;
+  background: white;
 
   &__header {
     right: 20px;
@@ -21,16 +29,25 @@
     font-size: 0.8rem;
     margin: 0;
     width: 155px;
+    transition: 3s ease-in-out;
   }
 
   &__icon {
-    height: 30px;
-    width: 30px;
-    margin: 0;
-    margin-right: 10px;
-    
-    &:hover {
-      opacity: 0.5;
+    &--dark {
+      @include icon();
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+
+    &--light {
+      @include icon();
+      filter: invert(1);
+
+      &:hover {
+        opacity: 0.5;
+      }
     }
   }
 
@@ -54,6 +71,10 @@
       transform: translateY(3px);
     }
   }
+}
+
+.footer-transparent {
+  @include footer();
 }
 
 .footer-icons {
