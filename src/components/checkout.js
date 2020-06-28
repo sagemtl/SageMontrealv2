@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 // Stripe
+import { navigate } from 'gatsby'
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
@@ -18,7 +19,7 @@ import {
 } from "react-bootstrap";
 
 function Payment() {
-  const { state } = useContext(GlobalContext);
+  const { state, dispatch} = useContext(GlobalContext);
   const { checkoutItems } = state;
 
   const [formData, setFormData] = useState({});
@@ -27,6 +28,16 @@ function Payment() {
 
   const change = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // After checkout, reset the cart state
+  const resetCart = () => {
+    dispatch({
+      type: 'RESET_CHECKOUT_ITEMS',
+      payload: {
+        checkoutItems: [],
+      },
+    });
   };
 
   const getTotal = () => {
@@ -93,6 +104,14 @@ function Payment() {
               // post-payment actions.
               console.log(result)
               window.alert('Payment Succeeded')
+              navigate('/success',
+              {
+                state: {
+                  userEmail: formData.email,
+                  purchase: checkoutItems
+                },
+              });
+              resetCart()
           }
       }
     });
