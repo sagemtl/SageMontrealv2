@@ -73,7 +73,7 @@ function Payment() {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ price: getTotal() * 100, receipt_email: formData.email}),
+      body: JSON.stringify({ price: (getTotal() + 15) * 100, receipt_email: formData.email}),
     });
 
     const data = await res.json();
@@ -121,8 +121,8 @@ function Payment() {
   };
 
   return (
-    <Container className='py-4'>
-      <div className="cart-checkout">
+    <div className="flexbox-checkout">
+    <div className="cart-checkout">
         {checkoutItems.map((item) => {
           return (
             <CartItem
@@ -140,7 +140,8 @@ function Payment() {
           <p>Shipping: 15$</p>
           <b>Total: {getTotal()+15}$</b>
         </div>} 
-      </div>
+    </div>
+    <Container className='py-4'>
       <Card>
         <Card.Body>
           <Form method='POST' onSubmit={submit}>
@@ -218,11 +219,12 @@ function Payment() {
               <Form.Label> Card Details </Form.Label>
               <CardElement> </CardElement>
             </FormGroup>
-              <Button type='submit'> Pay {getTotal()}$</Button>
+              <Button type='submit'> Pay {getTotal() + 15}$</Button>
           </Form>
         </Card.Body>
       </Card>
     </Container>
+    </div>
   );
 }
 
