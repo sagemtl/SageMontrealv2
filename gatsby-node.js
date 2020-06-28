@@ -4,10 +4,9 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-
 // need this schema customization to add the link node for images onto stripe objects
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createTypes } = actions;
   createTypes(`
     type StripeSku implements Node {
       featuredImg: File @link(from: "featuredImg___NODE")
@@ -15,23 +14,28 @@ exports.createSchemaCustomization = ({ actions }) => {
     type StripeProduct implements Node {
       featuredImg: File @link(from: "featuredImg___NODE")
     }
-  `)
-  
-}
+  `);
+};
 
-
-
-exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeId }) => {
-  const {createNodeField, createNode, createParentChildLink} = actions;
+exports.onCreateNode = async ({
+  node,
+  getNode,
+  actions,
+  store,
+  cache,
+  createNodeId,
+}) => {
+  const { createNodeField, createNode, createParentChildLink } = actions;
   if (node.internal.type === `StripeProduct`) {
     const slug = generateSlug(node.name);
     createNodeField({
       node,
       name: `slug`,
       value: slug,
-    })  }
+    });
+  }
   if (node.internal.type === `StripeSku`) {
-    if(node.image){
+    if (node.image) {
       try {
         fileNode = await createRemoteFileNode({
           url: node.image,
@@ -42,12 +46,12 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
           createNodeId,
           cache,
           store,
-          ext:".jpg",
+          ext: '.jpg',
         });
         // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
       } catch (e) {
         // Ignore
-        console.log("*** error downloading media files: " + e);
+        console.log(`*** error downloading media files: ${e}`);
       }
       // if the file was created, attach the new node to the parent node
       if (fileNode) {
@@ -57,7 +61,7 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
     }
   }
   if (node.internal.type === `StripeProduct`) {
-    for(const img of node.images){
+    for (const img of node.images) {
       try {
         fileNode = await createRemoteFileNode({
           url: img,
@@ -68,23 +72,23 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
           createNodeId,
           cache,
           store,
-          ext:".jpg",
+          ext: '.jpg',
         });
         // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
       } catch (e) {
         // Ignore
-        console.log("*** error downloading media files: " + e);
+        console.log(`*** error downloading media files: ${e}`);
       }
       // if the file was created, attach the new node to the parent node
       if (fileNode) {
-        createParentChildLink({parent:node, child:fileNode});
+        createParentChildLink({ parent: node, child: fileNode });
         // console.log("fileNode is valid, attaching to parent node at: " + node.id);
       }
     }
-    if(node.metadata["featuredImg"]){
+    if (node.metadata.featuredImg) {
       try {
         fileNode = await createRemoteFileNode({
-          url: node.metadata["featuredImg"],
+          url: node.metadata.featuredImg,
           parentNodeId: node.id,
           // The action used to create nodes
           createNode,
@@ -92,12 +96,12 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
           createNodeId,
           cache,
           store,
-          ext:".jpg",
+          ext: '.jpg',
         });
         // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
       } catch (e) {
         // Ignore
-        console.log("*** error downloading media files: " + e);
+        console.log(`*** error downloading media files: ${e}`);
       }
       // if the file was created, attach the new node to the parent node
       if (fileNode) {
@@ -114,12 +118,12 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
           createNodeId,
           cache,
           store,
-          ext:".jpg",
+          ext: '.jpg',
         });
         // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
       } catch (e) {
         // Ignore
-        console.log("*** error downloading media files: " + e);
+        console.log(`*** error downloading media files: ${e}`);
       }
       // if the file was created, attach the new node to the parent node
       if (fileNode) {
@@ -127,9 +131,7 @@ exports.onCreateNode = async ({ node, getNode, actions,store, cache, createNodeI
       }
     }
   }
-  
-}
-
+};
 
 const generateSlug = (name) => {
   // global replacement of space
@@ -154,23 +156,22 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `)
+  `);
 
-    const path = require(`path`)
+  const path = require(`path`);
 
-    result.data.allStripeProduct.edges.forEach(({ node }) => {
-      // console.log("creating page: " + node.fields.slug);
-        createPage({
-          path: "/shop/"+node.fields.slug,
-          component: path.resolve(`./src/templates/product.js`),
-          context: {
-            // Data passed to context is available
-            // in page queries as GraphQL variables.
-            id: node.id,
-          },
-        })
-      })
-  }
+  result.data.allStripeProduct.edges.forEach(({ node }) => {
+    // console.log("creating page: " + node.fields.slug);
+    createPage({
+      path: `/shop/${node.fields.slug}`,
+      component: path.resolve(`./src/templates/product.js`),
+      context: {
+        // Data passed to context is available
+        // in page queries as GraphQL variables.
+        id: node.id,
+      },
+    });
+  });
+};
 
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
-
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`);

@@ -31,7 +31,7 @@ const Product = ({ data }) => {
         id: itemId,
         name: item.name,
         amount: 1,
-        price: 50,
+        price: skus.edges[0].node.price / 100,
         size: selectedSize,
         image: item.featuredImg.childImageSharp.fixed,
       });
@@ -156,6 +156,7 @@ export const query = graphql`
     allStripeSku(filter: { product: { id: { eq: $id } } }) {
       edges {
         node {
+          price
           attributes {
             name
           }

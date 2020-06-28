@@ -58,7 +58,14 @@ const Header = (props) => {
         }}
       />
       <div>
-        <Link className="navbox__link" to="/shop">
+        <Link
+          className={
+            current.substring(0, 9) === '/lookbook'
+              ? 'navbox__selected'
+              : 'navbox__link'
+          }
+          to="/lookbook"
+        >
           <h2 className="navbox__text">Lookbook</h2>
         </Link>
       </div>
