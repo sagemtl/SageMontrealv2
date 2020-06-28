@@ -6,6 +6,9 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 import { GlobalContext } from '../context/Provider';
 
+import CartItem from './cartItem';
+
+
 // UI
 import {
   Container,
@@ -119,6 +122,25 @@ function Payment() {
 
   return (
     <Container className='py-4'>
+      <div className="cart-checkout">
+        {checkoutItems.map((item) => {
+          return (
+            <CartItem
+              id={item.id}
+              name={item.name}
+              amount={item.amount}
+              price={item.price}
+              size={item.size}
+              image={item.image}
+            />
+          );
+      })}
+      {getTotal() === 0 ? <div/> : <div className="summary" >
+          <b>Price: {getTotal()}$</b>
+          <p>Shipping: 15$</p>
+          <b>Total: {getTotal()+15}$</b>
+        </div>} 
+      </div>
       <Card>
         <Card.Body>
           <Form method='POST' onSubmit={submit}>
@@ -205,3 +227,4 @@ function Payment() {
 }
 
 export default Payment;
+// export const getTotal = () => {};
