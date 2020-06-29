@@ -24,6 +24,30 @@
     color: white;
 }
 
+.empty-Cart{
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    background-color: white;
+}
+
+.empty-Cart-Link:hover{
+    text-decoration: none;
+    color: #154734;
+}
+
+.empty-Cart-Link:link{
+    text-decoration: none;
+    color: black;
+}
+
 .cart-checkout{
     position: absolute;
     left: 5%;

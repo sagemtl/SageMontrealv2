@@ -30,11 +30,19 @@ const CheckoutPage = () => {
   }
   if(getTotal() == 0){
     return(
-      <div style={{textAlign: "center", position: "absolute", top: "0", left: "0", bottom: "0", right: "0", margin: "auto"}}>
-        <Link to="/shop">
-          <p>cart empty, click to go back to shop</p>
-        </Link> 
+      <div>
+        <div style={{zIndex: "2", position:"absolute", width:"100%", height:"100%", top: "0px", left: "0px", textAlign: "center"}}>
+          <a className="empty-Cart-Link" href="/shop" style={{position: "relative", top: "30vh", fontWeight:"bold"}}>
+            <p>CART EMPTY, CLICK TO RETURN TO SHOP</p>
+          </a> 
+          <img style={{height:"100px", display:"inline-block"}} src="https://res.cloudinary.com/sage-montreal/image/upload/v1588341601/LOGO_x1kbox.png"></img>
         </div>
+        <div className="empty-Cart" >
+          <Elements stripe={stripePromise}>
+            <Payment />
+          </Elements>
+        </div>
+      </div>
     );
   }
   else{
