@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { getProductInfo } from '../helpers/stripeHelper';
+import { updateProduct, getProduct } from '../helpers/stripeHelper';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import '../styles/cms.scss';
+import { createJsxAttribute } from 'typescript';
 
 const CMS = () => {
   // Product fields
 
   const [productId, setProductId] = useState('');
+  const [name, setName] = useState('');
   const [active, setActive] = useState(false);
   const [desc, setDesc] = useState('');
   // for the separated images url thingy, i was thinking we
@@ -14,27 +18,66 @@ const CMS = () => {
   // separate urls once we send the request using split(',')
   const [images, setImages] = useState('');
   const [shippable, setShippable] = useState(false);
-  const [type, setType] = useState('');
-
+  const [featuredImg, setFeaturedImg] = useState('');
   // Lookbook fields
-
   const [title, setTitle] = useState('');
   const [coverUrl, setCoverUrl] = useState('');
   const [lookbookImages, setLookbookImages] = useState('');
-
   // allow editing of product info
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(false); 
+  //snackbar
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackSeverity, setSnackSeverity] = useState('info');
+  const [snackMessage, setSnackMessage] = useState('');
+
+  const setSnack =(open, sev, msg)=>{
+    setSnackbarOpen(open);
+    setSnackSeverity(sev);
+    setSnackMessage(msg);
+  }
 
   const handleGetProduct = async (e) => {
-    e.preventDefault();
-    var prod = await getProductInfo(productId);
-    var prod = JSON.parse(prod);
-    console.log(prod);
+    // e.preventDefault();
+    var prod = await getProduct(productId);
+    if(prod.statusCode){
+      if(prod.statusCode==404){
+        setSnack(true, 'error', 'The product does not exist');
+        return;
+      }
+      setSnack(true, 'error', 'There has been an error getting the product');
+      return;
+    }
     setActive(prod.active);
     setDesc(prod.description);
-    setImages(prod.images);
-    console.log(`infos: ${desc}`);
-    console.log(images);
+    setImages(prod.images.join(',')); //turn array into comma seperated array
+    setName(prod.name);
+    prod.metadata.featuredImg? setFeaturedImg(prod.metadata.featuredImg) : null;
+  };
+
+  const handleUpdateProduct = async()=>{
+    //handle images
+    setImages(images.trim());
+    setImages(images.replace(/\s/g, ''));
+    var imgArr = images.split(',');
+    var count = (images.match(/http/g) || []).length;
+    if(count != imgArr.length){
+      setSnack(true, 'error', "URLs are incorrect in format, must be seperated by commas");
+      return;
+    }
+
+    var newProduct = new Object;
+    newProduct.active = active;
+    newProduct.description = desc;
+    newProduct.name = name;
+    newProduct.images = imgArr;
+    newProduct.metadata = {featuredImg:featuredImg};
+    var prod = await updateProduct(productId, newProduct);
+    prod.statusCode? setSnack(true, 'error', "There has been an error updating the product")
+                     : setSnack(true, 'success', "Product is successfully updated");
+  }
+  
+  const Alert = props => {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 
   return (
@@ -50,12 +93,35 @@ const CMS = () => {
             className="cms__input"
           />
           <button
-            onClick={() => handleGetProduct()}
+            onClick={(e) => handleGetProduct(e)}
             type="button"
             className="cms__button"
           >
             Get Product
           </button>
+          <br/>
+          <button
+            onClick={() => setEdit(true)}
+            type="button"
+            className="cms__button"
+          >
+            Edit
+          </button>
+        </div>
+
+        <div className="cms__field">
+          <p className="cms__label">Name</p>
+          <div>
+            <input
+              placeholder="Name of item"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              value={name}
+              disabled={!edit}
+              className="cms__input"
+            />
+          </div>
         </div>
 
         <div className="cms__field">
@@ -66,20 +132,21 @@ const CMS = () => {
               onChange={(e) => setDesc(e.target.value)}
               value={desc}
               rows={4}
+              disabled={!edit}
               className="cms__input-area"
             />
           </div>
         </div>
 
         <div className="cms__field">
-          <p className="cms__label">True/False?</p>
+          <p className="cms__label">Active</p>
           <div>
             <input
               placeholder="true/false"
-              onChange={(e) => {
-                setActive(e.target.value === 'true');
-              }}
-              value={active}
+              type="checkbox"
+              checked={active}
+              onChange={()=>{setActive(!active)}}
+              disabled={!edit}
               className="cms__input"
             />
           </div>
@@ -88,17 +155,32 @@ const CMS = () => {
         <div className="cms__field">
           <p className="cms__label">Images URL</p>
           <div>
-            <input
+            <textarea
               placeholder="Comma seperated URLs"
               onChange={(e) => setImages(e.target.value)}
               value={images}
+              rows={4}
+              disabled={!edit}
+              className="cms__input-area"
+            />
+          </div>
+        </div>
+
+        <div className="cms__field">
+          <p className="cms__label">Featured Image URL</p>
+          <div>
+            <input
+              placeholder="Image to be displayed on shop page"
+              onChange={(e) => setFeaturedImg(e.target.value)}
+              value={featuredImg}
+              disabled={!edit}
               className="cms__input"
             />
           </div>
         </div>
 
-        <button type="button" className="cms__button">
-          Add Product
+        <button type="button" className="cms__button" onClick={()=>handleUpdateProduct()}>
+          Update Product
         </button>
       </div>
 
@@ -144,6 +226,17 @@ const CMS = () => {
           Add lookbook
         </button>
       </div>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={()=>setSnackbarOpen(false)}
+        >
+        <Alert severity={snackSeverity}>
+          {snackMessage}
+        </Alert>
+      </Snackbar>
+
     </div>
   );
 };
