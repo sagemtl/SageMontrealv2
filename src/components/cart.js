@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import CartItem from './cartItem';
 
@@ -23,9 +24,11 @@ const Cart = ({ isMobile }) => {
         );
       })}
       {checkoutItems.length > 0 && (
-        <button type="submit" onClick="" className="cart__button">
-          Checkout
-        </button>
+         <Link to="/checkout">
+          <button type="submit" className="cart__button">
+            Checkout
+          </button>
+        </Link>
       )}
     </div>
   );

@@ -1,0 +1,94 @@
+.App {
+    text-align: center;
+}
+  
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.empty-Cart{
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    background-color: white;
+}
+
+.empty-Cart-Link:hover{
+    text-decoration: none;
+    color: #154734;
+}
+
+.empty-Cart-Link:link{
+    text-decoration: none;
+    color: black;
+}
+
+.cart-checkout{
+    position: relative;
+    left: 5%;
+    overflow-y: scroll;
+    height: 400px;
+    top: 10%;
+    padding-bottom: 1.5rem!important;
+    padding-top: 1.5rem!important;
+    padding-right: 12%;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.summary{
+    position: fixed;
+    margin-top: 30px
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+label {
+    display: flex;
+    justify-content: center;
+    width: auto !important;
+    height: 30px;
+    background-color: white;
+    cursor: pointer;
+}
+.flexbox-checkout {
+    display: flex;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+  

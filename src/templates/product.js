@@ -44,7 +44,7 @@ const Product = ({ data }) => {
       },
     });
   };
-
+  
   return (
     <Layout current={`/shop/${item.fields.slug}`}>
       <div className="product">
