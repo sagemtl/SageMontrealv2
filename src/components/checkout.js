@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 // Stripe
+import { navigate } from 'gatsby'
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
@@ -21,7 +22,7 @@ import {
 } from "react-bootstrap";
 
 function Payment() {
-  const { state } = useContext(GlobalContext);
+  const { state, dispatch} = useContext(GlobalContext);
   const { checkoutItems } = state;
 
   const [formData, setFormData] = useState({});
@@ -30,6 +31,16 @@ function Payment() {
 
   const change = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // After checkout, reset the cart state
+  const resetCart = () => {
+    dispatch({
+      type: 'RESET_CHECKOUT_ITEMS',
+      payload: {
+        checkoutItems: [],
+      },
+    });
   };
 
   const getTotal = () => {
@@ -62,7 +73,7 @@ function Payment() {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ price: getTotal() * 100, receipt_email: formData.email}),
+      body: JSON.stringify({ price: (getTotal() + 15) * 100, receipt_email: formData.email}),
     });
 
     const data = await res.json();
@@ -96,14 +107,22 @@ function Payment() {
               // post-payment actions.
               console.log(result)
               window.alert('Payment Succeeded')
+              navigate('/success',
+              {
+                state: {
+                  userEmail: formData.email,
+                  purchase: checkoutItems
+                },
+              });
+              resetCart()
           }
       }
     });
   };
 
   return (
-    <Container className='py-4'>
-      <div className="cart-checkout">
+    <div className="flexbox-checkout">
+    <div className="cart-checkout">
         {checkoutItems.map((item) => {
           return (
             <CartItem
@@ -121,7 +140,8 @@ function Payment() {
           <p>Shipping: 15$</p>
           <b>Total: {getTotal()+15}$</b>
         </div>} 
-      </div>
+    </div>
+    <Container className='py-4'>
       <Card>
         <Card.Body>
           <Form method='POST' onSubmit={submit}>
@@ -199,11 +219,12 @@ function Payment() {
               <Form.Label> Card Details </Form.Label>
               <CardElement> </CardElement>
             </FormGroup>
-              <Button type='submit'> Pay {getTotal()}$</Button>
+              <Button type='submit'> Pay {getTotal() + 15}$</Button>
           </Form>
         </Card.Body>
       </Card>
     </Container>
+    </div>
   );
 }
 

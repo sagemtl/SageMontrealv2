@@ -1,0 +1,23 @@
+.lookbook {
+  width: 100%;
+  position: absolute;
+  overflow-y: hidden;
+  max-height: 100vh;
+  padding: 0 1em;
+}
+
+.lookbook-mobile {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%;
+  overflow-y: hidden;
+  transform: none;
+  padding: 0 1.5em;
+}
+
+.lookbook-scroll {
+  white-space: nowrap;
+  height: 100vh;
+  top: 50%;
+  margin: 0 auto;
+}

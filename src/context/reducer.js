@@ -12,6 +12,12 @@ const globalReducer = (state, action) => {
         buttonPaused: action.payload.buttonPaused,
       };
     }
+    case 'RESET_CHECKOUT_ITEMS': {
+      return {
+        ...state,
+        checkoutItems: action.payload.checkoutItems,
+      };
+    }
     default:
       return state;
   }
