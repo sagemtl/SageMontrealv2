@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import CartItem from './cartItem';
 
 import { GlobalContext } from '../context/Provider';
 
-const Cart = () => {
+const Cart = ({ isMobile }) => {
   const { state } = useContext(GlobalContext);
   const { checkoutItems } = state;
 
   return (
-    <div className="cart">
+    <div className="cart" style={isMobile ? { right: 20, top: 80 } : {}}>
       {checkoutItems.map((item) => {
         return (
           <CartItem
@@ -28,6 +29,10 @@ const Cart = () => {
       )}
     </div>
   );
+};
+
+Cart.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
 };
 
 export default Cart;

@@ -1,38 +1,85 @@
-import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
-import React from 'react';
-import Img from 'gatsby-image';
-import './styles/header.scss';
+import React, { useState } from 'react';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import './styles/lookbookFront.scss';
+import Fade from '@material-ui/core/Fade';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-const LookbookFront = (props) => {
-  const { image, link } = props;
+const LookbookFront = ({ label, images, isMobile, position }) => {
+  const [open, setOpen] = useState(false);
+  const [hover, setHover] = useState(false);
+
+  const modalContent = (
+    <Fade in={open}>
+      <div className="lookbook-modal-content">
+        {images.map((image, index) => {
+          return (
+            <img
+              src={image}
+              className="lookbook-front__image"
+              alt={`${label}-${index}`}
+            />
+          );
+        })}
+      </div>
+    </Fade>
+  );
+
   return (
-    <Link to={link}>
+    <>
       <div
-        style={{
-          position: 'relative',
-          display: 'inline-block',
-          width: 450,
-          height: 650,
-          border: '2px solid black',
-          borderRadius: '24px',
-          top: '50%',
-          transform: `translate(70%, -50%)`,
-          backgroundColor: '#154734',
-          marginRight: 100,
+        className={isMobile ? 'lookbook-front-mobile' : 'lookbook-front'}
+        onClick={() => setOpen(true)}
+        onMouseOver={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={
+          hover
+            ? {
+                backgroundImage: `url(${images[0]})`,
+                backgroundPosition: `center ${position}`,
+              }
+            : {}
+        }
+      >
+        <h1 className="lookbook-front__header--placeholder">{label}</h1>
+        <h1
+          className="lookbook-front__header--animation"
+          onMouseOver={(e) => e.preventDefault}
+        >
+          {label}
+        </h1>
+        <div className="lookbook-front-icons">
+          <ArrowForwardIosIcon className="lookbook-front__icon" />
+          <ArrowForwardIosIcon className="lookbook-front__icon" />
+        </div>
+      </div>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        className="lookbook-modal"
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
         }}
       >
-        {/*         
-        <Img className="" fluid={image} alt="Sage Lookbook" />
-      */}
-      </div>
-    </Link>
+        {modalContent}
+      </Modal>
+    </>
   );
 };
 
 LookbookFront.propTypes = {
-  link: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isMobile: PropTypes.bool.isRequired,
+  position: PropTypes.string,
+};
+
+LookbookFront.defaultProps = {
+  position: 'top',
 };
 
 export default LookbookFront;
