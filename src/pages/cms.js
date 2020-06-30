@@ -27,7 +27,7 @@ const CMS = () => {
   const [edit, setEdit] = useState(false); 
   //snackbar
   const [snackbarOpen, setSnackbarOpen] = useState(false)
-  const [snackSeverity, setSnackSeverity] = useState('info');
+  const [snackSeverity, setSnackSeverity] = useState('info'); //one of 'info', 'error', 'success', 'warning'
   const [snackMessage, setSnackMessage] = useState('');
 
   const setSnack =(open, sev, msg)=>{
@@ -49,7 +49,7 @@ const CMS = () => {
     }
     setActive(prod.active);
     setDesc(prod.description);
-    setImages(prod.images.join(',')); //turn array into comma seperated array
+    setImages(prod.images.join(',')); //turn array into comma seperated string
     setName(prod.name);
     prod.metadata.featuredImg? setFeaturedImg(prod.metadata.featuredImg) : null;
   };
