@@ -1,0 +1,53 @@
+.cms {
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2em;
+  flex-wrap: wrap;
+
+  &__label {
+    margin: 10px 0;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input {
+    width: 300px;
+    height: 40px;
+    margin-right: 20px;
+    border: 1px solid black;
+  }
+
+  &__input-area {
+    width: 300px;
+    resize: none;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 12px;
+  }
+
+  &__button {
+    width: 150px;
+    outline: none;
+    background: #154734;
+    color: white;
+    border-radius: 5px;
+    height: 40px;
+    margin-top: 10px;
+  }
+}
+
+.cms-product {
+  padding: 30px 0;
+  min-width: 350px;
+}
+
+.cms-lookbook {
+  padding: 30px 0;
+  min-width: 350px;
+}
