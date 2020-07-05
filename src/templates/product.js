@@ -79,12 +79,8 @@ const Product = ({ data }) => {
         </div>
         <div className="product-details">
           <h1>{item.name}</h1>
-          <p className="product-details__point">260g/sm French Terry Cotton</p>
-          <p className="product-details__point">
-            Double-needle sleeve and side-seams
-          </p>
-          <p className="product-details__point">Embroidered Logo</p>
-          <p className="product-details__point">Relaxed Fit</p>
+          <p className="product-details__point">{item.description}</p>
+          <p>$ {skus.edges[0].node.price/100}</p>
           <div className="product-details-sizes">
             {sizes.map((size, index) => {
               return (
