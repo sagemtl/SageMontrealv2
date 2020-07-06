@@ -29,15 +29,13 @@ const Footer = ({ transparent, color }) => {
 
   return (
     <div className={transparent ? 'footer-transparent' : 'footer'}>
-      <div className="footer-icons">
-        <a
-          href="https://www.instagram.com/sagemtl/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <InstagramIcon className={iconClass} />
-        </a>
-      </div>
+      <a
+        href="https://www.instagram.com/sagemtl/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <InstagramIcon className={iconClass} />
+      </a>
       {pathname === '/shop' && (
         <button
           type="button"
@@ -51,9 +49,7 @@ const Footer = ({ transparent, color }) => {
           )}
         </button>
       )}
-      <h3 className="footer__header" style={{ color }}>
-        © Sage Montreal 2020
-      </h3>
+      <h3 className="footer__header">© Sage Montreal 2020</h3>
     </div>
   );
 };

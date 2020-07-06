@@ -22,12 +22,11 @@
   @include footer();
 
   &__header {
-    right: 20px;
-    bottom: 15px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     margin: 0;
     width: 155px;
     transition: 3s ease-in-out;
+    text-align: right;
   }
 
   &__icon {
@@ -50,10 +49,10 @@
   }
 
   &__button {
-    width: 80px;
-    padding: 3px 6px;
-    border-radius: 5px;
+    padding: 6px 8px;
+    border-radius: 50%;
     outline: none;
+    border: none;
     color: white;
     border-color: black;
     background: #154734;
@@ -63,22 +62,23 @@
     font-weight: 500;
     display: flex;
     justify-content: center;
+    position: absolute;
+    right: 1em;
+    bottom: 70px;
 
     &:active {
       box-shadow: 0 2px #000;
       transform: translateY(3px);
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 }
 
 .footer-transparent {
   @include footer();
-}
-
-.footer-icons {
-  width: 155px;
-  display: flex;
-  align-items: center;
 }
 
 @keyframes rotate {
