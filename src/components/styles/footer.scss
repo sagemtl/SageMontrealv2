@@ -11,17 +11,15 @@
 }
 
 @mixin icon {
-  height: 30px;
-  width: 30px;
   margin: 0;
   margin-right: 10px;
   transition: filter 3s ease-in-out;
+  color: black;
+  animation: rotate 5s infinite linear, rainbow 5s infinite linear;
 }
 
 .footer {
   @include footer();
-  border-top: 2px solid black;
-  background: white;
 
   &__header {
     right: 20px;
@@ -81,4 +79,44 @@
   width: 155px;
   display: flex;
   align-items: center;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    color: red;
+  }
+
+  16.67% {
+    color: orange;
+  }
+
+  33.33% {
+    color: yellow;
+  }
+
+  50% {
+    color: green;
+  }
+
+  66.67% {
+    color: blue;
+  }
+
+  83.33% {
+    color: purple;
+  }
+
+  100% {
+    color: red;
+  }
 }
