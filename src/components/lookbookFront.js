@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import './styles/lookbookFront.scss';
@@ -9,6 +9,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 const LookbookFront = ({ label, images, isMobile, position }) => {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
+  const [index, setIndex] = useState(0);
 
   const modalContent = (
     <Fade in={open}>
@@ -26,6 +27,21 @@ const LookbookFront = ({ label, images, isMobile, position }) => {
     </Fade>
   );
 
+  useEffect(() => {
+    if (hover) {
+      setTimeout(() => {
+        if (images.length > 1) {
+          setIndex(index + 1);
+          if (index === images.length - 1) {
+            setIndex(0);
+          }
+        }
+      }, 1500);
+    } else {
+      setIndex(0);
+    }
+  }, [hover, images.length, index]);
+
   return (
     <>
       <div
@@ -33,14 +49,10 @@ const LookbookFront = ({ label, images, isMobile, position }) => {
         onClick={() => setOpen(true)}
         onMouseOver={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        style={
-          hover
-            ? {
-                backgroundImage: `url(${images[0]})`,
-                backgroundPosition: `center ${position}`,
-              }
-            : {}
-        }
+        style={{
+          backgroundImage: `url(${images[index]})`,
+          backgroundPosition: `center ${position}`,
+        }}
       >
         <h1 className="lookbook-front__header--placeholder">{label}</h1>
         <h1
