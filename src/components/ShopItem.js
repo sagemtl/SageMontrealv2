@@ -38,17 +38,14 @@ const ShopItem = ({
         }}
       >
         <Img fixed={productImage} alt={`Product-${node.id}`} key={0} />
-        {windowWidth > 400 && (
+        {windowWidth > 700 && (
           <Img fixed={productImage} alt={`Product-${node.id}`} key={1} />
         )}
-        {windowWidth > 700 && (
+        {windowWidth > 1100 && (
           <Img fixed={productImage} alt={`Product-${node.id}`} key={2} />
         )}
-        {windowWidth > 1200 && (
+        {windowWidth > 1400 && (
           <Img fixed={productImage} alt={`Product-${node.id}`} key={3} />
-        )}
-        {windowWidth > 1500 && (
-          <Img fixed={productImage} alt={`Product-${node.id}`} key={4} />
         )}
       </div>
     </Link>
