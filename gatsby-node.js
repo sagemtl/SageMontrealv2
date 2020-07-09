@@ -34,31 +34,31 @@ exports.onCreateNode = async ({
       value: slug,
     });
   }
-  if (node.internal.type === `StripeSku`) {
-    if (node.image) {
-      try {
-        fileNode = await createRemoteFileNode({
-          url: node.image,
-          parentNodeId: node.id,
-          // The action used to create nodes
-          createNode,
-          // A helper function for creating node Ids
-          createNodeId,
-          cache,
-          store,
-          ext: '.jpg',
-        });
-        // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
-      } catch (e) {
-        // Ignore
-        console.log(`*** error downloading media files: ${e}`);
-      }
-      // if the file was created, attach the new node to the parent node
-      if (fileNode) {
-        node.featuredImg___NODE = fileNode.id;
-        // console.log("fileNode is valid, attaching to parent node at: " + node.id);
-      }
-    }
+  if (node.internal.type === `StripeSku`) { // not pulling imgs for Skus
+    // if (node.image) {
+    //   try {
+    //     fileNode = await createRemoteFileNode({
+    //       url: node.image,
+    //       parentNodeId: node.id,
+    //       // The action used to create nodes
+    //       createNode,
+    //       // A helper function for creating node Ids
+    //       createNodeId,
+    //       cache,
+    //       store,
+    //       ext: '.jpg',
+    //     });
+    //     // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+    //   } catch (e) {
+    //     // Ignore
+    //     console.log(`*** error downloading media files: ${e}`);
+    //   }
+    //   // if the file was created, attach the new node to the parent node
+    //   if (fileNode) {
+    //     node.featuredImg___NODE = fileNode.id;
+    //     // console.log("fileNode is valid, attaching to parent node at: " + node.id);
+    //   }
+    // }
   }
   if (node.internal.type === `StripeProduct`) {
     for (const img of node.images) {
