@@ -65,7 +65,8 @@ const Product = ({ data }) => {
                 setSelectedImage(item.children[0].childImageSharp.fixed.src)
               }
             />
-            {skus.edges.map(({ node }) => (
+            {/* not pulling images from skus anymore */}
+            {/* {skus.edges.map(({ node }) => (
               <img
                 src={node.featuredImg.childImageSharp.fixed.src}
                 alt={node.attributes.name}
@@ -74,7 +75,7 @@ const Product = ({ data }) => {
                   setSelectedImage(node.featuredImg.childImageSharp.fixed.src)
                 }
               />
-            ))}
+            ))} */}
           </div>
         </div>
         <div className="product-details">
