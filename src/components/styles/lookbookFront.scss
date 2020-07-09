@@ -1,7 +1,7 @@
 @mixin lookbook {
   position: relative;
   display: inline-block;
-  border: 8px solid black;
+  border: 8px solid #352315;
   border-radius: 24px;
   margin-right: 100px;
   transform: translateX(10%);
@@ -71,13 +71,6 @@
   }
 }
 
-.lookbook-front-mobile {
-  @include lookbook();
-  width: 400px;
-  height: 600px;
-  top: calc(10vw + 70px);
-}
-
 .lookbook-front-icons {
   display: flex;
   flex-direction: column;
@@ -122,5 +115,21 @@
   }
   50% {
     bottom: 70px;
+  }
+}
+
+@media (max-width: 450px) {
+  .lookbook-front {
+    @include lookbook();
+    width: 85%;
+    height: 75vh;
+    max-height: 550px;
+    top: 15vh;
+
+    &__header {
+      &--placeholder {
+        font-size: 1.8rem;
+      }
+    }
   }
 }

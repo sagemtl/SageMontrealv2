@@ -1,15 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 // Stripe
-import { navigate } from 'gatsby'
+import { navigate } from 'gatsby';
 
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
-import { GlobalContext } from '../context/Provider';
-
-import CartItem from './cartItem';
-
-
-// UI
 import {
   Container,
   Form,
@@ -19,10 +13,15 @@ import {
   Col,
   Card,
   Button,
-} from "react-bootstrap";
+} from 'react-bootstrap';
+import { GlobalContext } from '../context/Provider';
+
+import CartItem from './cartItem';
+
+// UI
 
 function Payment() {
-  const { state, dispatch} = useContext(GlobalContext);
+  const { state, dispatch } = useContext(GlobalContext);
   const { checkoutItems } = state;
 
   const [formData, setFormData] = useState({});
@@ -44,13 +43,13 @@ function Payment() {
   };
 
   const getTotal = () => {
-    var i
-    var totalPrice = 0;
+    let i;
+    let totalPrice = 0;
     for (i = 0; i < checkoutItems.length; i += 1) {
-      totalPrice += (checkoutItems[i].amount * checkoutItems[i].price)
+      totalPrice += checkoutItems[i].amount * checkoutItems[i].price;
     }
     return totalPrice;
-  }
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -68,61 +67,65 @@ function Payment() {
     };
 
     // Request Client Secret to Server
-    const res = await fetch("http://localhost:5000/payment_intent", {
-      method: "POST",
+    const res = await fetch('http://localhost:5000/payment_intent', {
+      method: 'POST',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
-      body: JSON.stringify({ price: (getTotal() + 15) * 100, receipt_email: formData.email}),
+      body: JSON.stringify({
+        price: (getTotal() + 15) * 100,
+        receipt_email: formData.email,
+      }),
     });
 
     const data = await res.json();
-    const client_secret = data.client_secret;
+    const { client_secret } = data;
 
     // Create cardElement
     const cardElement = elements.getElement(CardElement);
 
     // Create Payment Request
     const paymentReqMethod = await stripe.createPaymentMethod({
-      type: "card",
+      type: 'card',
       card: cardElement,
-      billing_details: billing_details,
+      billing_details,
     });
 
     // Confirm the Payment
-    const confirmCardPayment = await stripe.confirmCardPayment(client_secret, {
-      payment_method: paymentReqMethod.paymentMethod.id,
-    }).then(function(result) {
-      if (result.error) {
+    const confirmCardPayment = await stripe
+      .confirmCardPayment(client_secret, {
+        payment_method: paymentReqMethod.paymentMethod.id,
+      })
+      .then(function (result) {
+        if (result.error) {
           // Show error to your customer (e.g., insufficient funds)
           console.log(result.error.message);
-          window.alert(result.error.message)
-      } else {
+          window.alert(result.error.message);
+        } else {
           // The payment has been processed!
           if (result.paymentIntent.status === 'succeeded') {
-              // Show a success message to your customer
-              // There's a risk of the customer closing the window before callback
-              // execution. Set up a webhook or plugin to listen for the
-              // payment_intent.succeeded event that handles any business critical
-              // post-payment actions.
-              console.log(result)
-              window.alert('Payment Succeeded')
-              navigate('/success',
-              {
-                state: {
-                  userEmail: formData.email,
-                  purchase: checkoutItems
-                },
-              });
-              resetCart()
+            // Show a success message to your customer
+            // There's a risk of the customer closing the window before callback
+            // execution. Set up a webhook or plugin to listen for the
+            // payment_intent.succeeded event that handles any business critical
+            // post-payment actions.
+            console.log(result);
+            window.alert('Payment Succeeded');
+            navigate('/success', {
+              state: {
+                userEmail: formData.email,
+                purchase: checkoutItems,
+              },
+            });
+            resetCart();
           }
-      }
-    });
+        }
+      });
   };
 
   return (
     <div className="flexbox-checkout">
-    <div className="cart-checkout">
+      <div className="cart-checkout">
         {checkoutItems.map((item) => {
           return (
             <CartItem
@@ -134,96 +137,100 @@ function Payment() {
               image={item.image}
             />
           );
-      })}
-      {getTotal() === 0 ? <div/> : <div className="summary" >
-          <b>Price: {getTotal()}$</b>
-          <p>Shipping: 15$</p>
-          <b>Total: {getTotal()+15}$</b>
-        </div>} 
-    </div>
-    <Container className='py-4'>
-      <Card>
-        <Card.Body>
-          <Form method='POST' onSubmit={submit}>
-            <Row>
-              <Col>
-                <FormGroup>
-                  <Form.Label> Name on Card </Form.Label>
-                  <FormControl
-                    type='text'
-                    placeholder='Enter name on card'
-                    name='name'
-                    onChange={change}
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <Form.Label> Email </Form.Label>
-                  <FormControl
-                    type='text'
-                    name='email'
-                    placeholder='xinruili07@gmail.com'
-                    onChange={change}
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
+        })}
+        {getTotal() === 0 ? (
+          <div />
+        ) : (
+          <div className="summary">
+            <b>Price: {getTotal()}$</b>
+            <p>Shipping: 15$</p>
+            <b>Total: {getTotal() + 15}$</b>
+          </div>
+        )}
+      </div>
+      <Container className="py-4">
+        <Card>
+          <Card.Body>
+            <Form method="POST" onSubmit={submit}>
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Form.Label> Name on Card </Form.Label>
+                    <FormControl
+                      type="text"
+                      placeholder="Enter name on card"
+                      name="name"
+                      onChange={change}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Form.Label> Email </Form.Label>
+                    <FormControl
+                      type="text"
+                      name="email"
+                      placeholder="xinruili07@gmail.com"
+                      onChange={change}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-            <Row>
-              <Col>
-                <FormGroup>
-                  <Form.Label> City </Form.Label>
-                  <FormControl
-                    type='text'
-                    name='city'
-                    placeholder='Montreal'
-                    onChange={change}
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <Form.Label> Address </Form.Label>
-                  <FormControl type='text' name='address' onChange={change} />
-                </FormGroup>
-              </Col>
-            </Row>
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Form.Label> City </Form.Label>
+                    <FormControl
+                      type="text"
+                      name="city"
+                      placeholder="Montreal"
+                      onChange={change}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Form.Label> Address </Form.Label>
+                    <FormControl type="text" name="address" onChange={change} />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-            <Row>
-              <Col>
-                <FormGroup>
-                  <Form.Label> State </Form.Label>
-                  <FormControl
-                    type='text'
-                    name='state'
-                    placeholder='Quebec'
-                    onChange={change}
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <Form.Label> Postal Code </Form.Label>
-                  <FormControl
-                    type='text'
-                    name='postal_code'
-                    placeholder='Postal Code '
-                    onChange={change}
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Form.Label> State </Form.Label>
+                    <FormControl
+                      type="text"
+                      name="state"
+                      placeholder="Quebec"
+                      onChange={change}
+                    />
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Form.Label> Postal Code </Form.Label>
+                    <FormControl
+                      type="text"
+                      name="postal_code"
+                      placeholder="Postal Code "
+                      onChange={change}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
-            <FormGroup>
-              <Form.Label> Card Details </Form.Label>
-              <CardElement> </CardElement>
-            </FormGroup>
-              <Button type='submit'> Pay {getTotal() + 15}$</Button>
-          </Form>
-        </Card.Body>
-      </Card>
-    </Container>
+              <FormGroup>
+                <Form.Label> Card Details </Form.Label>
+                <CardElement> </CardElement>
+              </FormGroup>
+              <Button type="submit"> Pay {getTotal() + 15}$</Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container>
     </div>
   );
 }

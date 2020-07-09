@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Layout from '../components/layout';
@@ -7,11 +7,16 @@ import LookbookFront from '../components/lookbookFront';
 import '../styles/lookbook.scss';
 
 const LookbookMenu = ({ uri }) => {
-  const [width, setWidth] = useState(window.innerWidth);
-
   const collections = [
     {
       label: 'Winter 18: 20666',
+      images: [
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
+      ],
+      position: 'bottom',
+    },
+    {
+      label: 'Spring 18: 仙人集团',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0593_dqqatl.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/Untitled-2_jb5y2r.jpg',
@@ -19,13 +24,6 @@ const LookbookMenu = ({ uri }) => {
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0791_decats.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0820_bwi8bi.jpg',
       ],
-    },
-    {
-      label: 'Spring 18: 仙人集团',
-      images: [
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
-      ],
-      position: 'bottom',
     },
     {
       label: 'Summer 19: Transit',
@@ -72,22 +70,15 @@ const LookbookMenu = ({ uri }) => {
     },
   ];
 
-  useEffect(() => {
-    window.addEventListener('resize', () => setWidth(window.innerWidth));
-  }, []);
-
-  const isMobile = width < 900;
-
   return (
     <Layout current={uri}>
-      <div className={isMobile ? 'lookbook-mobile' : 'lookbook'}>
+      <div className="lookbook">
         <div className="lookbook-scroll">
           {collections.map(({ label, images, position }) => {
             return (
               <LookbookFront
                 images={images}
                 label={label}
-                isMobile={isMobile}
                 position={position}
               />
             );

@@ -6,7 +6,7 @@ import './styles/lookbookFront.scss';
 import Fade from '@material-ui/core/Fade';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-const LookbookFront = ({ label, images, isMobile, position }) => {
+const LookbookFront = ({ label, images, position }) => {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
   const [index, setIndex] = useState(0);
@@ -45,7 +45,7 @@ const LookbookFront = ({ label, images, isMobile, position }) => {
   return (
     <>
       <div
-        className={isMobile ? 'lookbook-front-mobile' : 'lookbook-front'}
+        className="lookbook-front"
         onClick={() => setOpen(true)}
         onMouseOver={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -86,7 +86,6 @@ const LookbookFront = ({ label, images, isMobile, position }) => {
 LookbookFront.propTypes = {
   label: PropTypes.string.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
-  isMobile: PropTypes.bool.isRequired,
   position: PropTypes.string,
 };
 

@@ -1,5 +1,5 @@
 @mixin footer {
-  position: fixed;
+  position: absolute;
   display: flex;
   bottom: 0;
   justify-content: space-between;
@@ -10,14 +10,6 @@
   z-index: 100;
 }
 
-@mixin icon {
-  margin: 0;
-  margin-right: 10px;
-  transition: filter 3s ease-in-out;
-  color: black;
-  animation: rotate 5s infinite linear, rainbow 5s infinite linear;
-}
-
 .footer {
   @include footer();
 
@@ -26,26 +18,14 @@
     margin: 0;
     width: 155px;
     transition: 3s ease-in-out;
-    text-align: right;
   }
 
   &__icon {
-    &--dark {
-      @include icon();
-
-      &:hover {
-        opacity: 0.5;
-      }
-    }
-
-    &--light {
-      @include icon();
-      filter: invert(1);
-
-      &:hover {
-        opacity: 0.5;
-      }
-    }
+    margin: 0;
+    margin-right: 10px;
+    transition: filter 3s ease-in-out;
+    color: black;
+    animation: rotate 5s infinite linear, rainbow 5s infinite linear;
   }
 
   &__button {
@@ -54,27 +34,22 @@
     outline: none;
     background: none;
     border: none;
-    color: #154734;
-    // border-color: black;
-    // background: #154734;
-    // box-shadow: 0 4px #000;
+    color: white;
+    border-color: black;
+    background: #154734;
+    box-shadow: 0 4px #000;
     z-index: 100;
     cursor: pointer;
     font-weight: 500;
     display: flex;
     justify-content: center;
     position: absolute;
-    right: 1em;
+    left: 1em;
     bottom: 70px;
 
-    // &:active {
-    //   box-shadow: 0 2px #000;
-    //   transform: translateY(3px);
-    // }
-
-    &:hover {
-      background: rgb(228, 228, 228);
-      border-radius: 50%;
+    &:active {
+      box-shadow: 0 2px #000;
+      transform: translateY(3px);
     }
 
     &:focus {
