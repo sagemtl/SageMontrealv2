@@ -11,25 +11,22 @@
 }
 
 @mixin icon {
-  height: 30px;
-  width: 30px;
   margin: 0;
   margin-right: 10px;
   transition: filter 3s ease-in-out;
+  color: black;
+  animation: rotate 5s infinite linear, rainbow 5s infinite linear;
 }
 
 .footer {
   @include footer();
-  border-top: 2px solid black;
-  background: white;
 
   &__header {
-    right: 20px;
-    bottom: 15px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     margin: 0;
     width: 155px;
     transition: 3s ease-in-out;
+    text-align: right;
   }
 
   &__icon {
@@ -52,23 +49,36 @@
   }
 
   &__button {
-    width: 80px;
-    padding: 3px 6px;
-    border-radius: 5px;
+    padding: 8px;
+    border-radius: 50%;
     outline: none;
-    color: white;
-    border-color: black;
-    background: #154734;
-    box-shadow: 0 4px #000;
+    background: none;
+    border: none;
+    color: #154734;
+    // border-color: black;
+    // background: #154734;
+    // box-shadow: 0 4px #000;
     z-index: 100;
     cursor: pointer;
     font-weight: 500;
     display: flex;
     justify-content: center;
+    position: absolute;
+    right: 1em;
+    bottom: 70px;
 
-    &:active {
-      box-shadow: 0 2px #000;
-      transform: translateY(3px);
+    // &:active {
+    //   box-shadow: 0 2px #000;
+    //   transform: translateY(3px);
+    // }
+
+    &:hover {
+      background: rgb(228, 228, 228);
+      border-radius: 50%;
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 }
@@ -77,8 +87,42 @@
   @include footer();
 }
 
-.footer-icons {
-  width: 155px;
-  display: flex;
-  align-items: center;
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    color: red;
+  }
+
+  16.67% {
+    color: orange;
+  }
+
+  33.33% {
+    color: yellow;
+  }
+
+  50% {
+    color: green;
+  }
+
+  66.67% {
+    color: blue;
+  }
+
+  83.33% {
+    color: purple;
+  }
+
+  100% {
+    color: red;
+  }
 }
