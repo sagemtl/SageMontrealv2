@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import { GlobalContext } from '../context/Provider';
+import { sortSizes } from '../helpers/stripeHelper';
 
 import './styles/product.scss';
 
@@ -14,6 +15,7 @@ const Product = ({ data }) => {
   const sizes = ['S', 'M', 'L', 'XL'];
 
   const [selectedSize, setSelectedSize] = useState('');
+  const [selectedSku, setSelectedSku] = useState('');
   const [selectedImage, setSelectedImage] = useState(
     item.children[0].childImageSharp.fixed.src,
   );
@@ -31,9 +33,10 @@ const Product = ({ data }) => {
         id: itemId,
         name: item.name,
         amount: 1,
-        price: skus.edges[0].node.price / 100,
+        price: filterPrice(selectedSku),
         size: selectedSize,
         image: item.featuredImg.childImageSharp.fixed,
+        sku: selectedSku
       });
     }
 
@@ -44,6 +47,12 @@ const Product = ({ data }) => {
       },
     });
   };
+
+  const filterPrice = (sku) => {
+    return skus.edges.filter(node => node.id == sku) / 100;
+  }
+
+  const sortedSkus = sortSizes(skus.edges);
   
   return (
     <Layout current={`/shop/${item.fields.slug}`}>
@@ -83,7 +92,7 @@ const Product = ({ data }) => {
           <p className="product-details__point">{item.description}</p>
           <p>$ {skus.edges[0].node.price/100}</p>
           <div className="product-details-sizes">
-            {sizes.map((size, index) => {
+            {/* {sizes.map((size, index) => {
               return (
                 <div
                   className="product-details-sizes__size"
@@ -95,6 +104,29 @@ const Product = ({ data }) => {
                     value={size}
                     checked={selectedSize === size}
                     onClick={() => setSelectedSize(size)}
+                  />
+                    {size}
+                <label htmlFor={size} className="cursor">
+                  {size}
+                </label>
+                </div>
+              );
+            })} */}
+            {sortedSkus.map(({node, index}) => {
+              const size = node.attributes.name;
+              return (
+                <div
+                  className="product-details-sizes__size"
+                  style={index === 0 ? { marginLeft: 0 } : {}}
+                >
+                  <input
+                    type="radio"
+                    id={node.id}
+                    value={size}
+                    onClick={() => {
+                      setSelectedSize(size);
+                      setSelectedSku(node.id);
+                    }}
                   />
                   <label htmlFor={size} className="cursor">
                     {size}
