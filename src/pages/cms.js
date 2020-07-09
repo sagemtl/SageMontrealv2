@@ -38,7 +38,7 @@ const CMS = () => {
 
   const handleGetProduct = async (e) => {
     // e.preventDefault();
-    setProductId(productId.trim);
+    setProductId(productId.trim());
     var prod = await getProduct(productId);
     if(prod.statusCode){
       if(prod.statusCode==404){
