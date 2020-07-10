@@ -14,13 +14,27 @@
     margin: 0 15px;
   }
 
-  &__button {
-    width: calc((100% - 80px) / 3);
+  &__logo-button {
+    width: calc(100% / 3);
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-    border-left: 2px solid black;
+    color: black;
+    z-index: 100;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
+
+  &__button {
+    width: calc(100% / 3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
     color: black;
     z-index: 100;
 
@@ -32,5 +46,32 @@
     &:hover .header-mobile__icon {
       color: white;
     }
+  }
+}
+
+.header-mobile-animated {
+  width: calc(100% / 4 * 3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: left 3s;
+  height: 100%;
+}
+
+.header-mobile-cart {
+  width: calc(100% / 4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  &:hover {
+    background-color: #154734;
+    cursor: pointer;
+  }
+
+  &:hover .header-mobile__icon {
+    color: white;
   }
 }
