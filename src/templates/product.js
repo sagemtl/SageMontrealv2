@@ -12,7 +12,6 @@ import './styles/product.scss';
 const Product = ({ data }) => {
   const item = data.stripeProduct;
   const skus = data.allStripeSku;
-  const sizes = ['S', 'M', 'L', 'XL'];
 
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedSku, setSelectedSku] = useState('');
@@ -36,7 +35,7 @@ const Product = ({ data }) => {
         price: filterPrice(selectedSku),
         size: selectedSize,
         image: item.featuredImg.childImageSharp.fixed,
-        sku: selectedSku
+        sku: selectedSku,
       });
     }
 
@@ -49,11 +48,11 @@ const Product = ({ data }) => {
   };
 
   const filterPrice = (sku) => {
-    return skus.edges.filter(node => node.id == sku) / 100;
-  }
+    return skus.edges.filter((node) => node.id === sku) / 100;
+  };
 
   const sortedSkus = sortSizes(skus.edges);
-  
+
   return (
     <Layout current={`/shop/${item.fields.slug}`}>
       <div className="product">
@@ -90,9 +89,13 @@ const Product = ({ data }) => {
         <div className="product-details">
           <h1>{item.name}</h1>
           <p className="product-details__point">{item.description}</p>
-          <p>$ {skus.edges[0].node.price/100}</p>
+          <p>$ {skus.edges[0].node.price / 100}</p>
           <div className="product-details-sizes">
-            {/* {sizes.map((size, index) => {
+            {sortedSkus.map(({ node, index }) => {
+              const size = node.attributes.name;
+
+              // TODO: no attribute id for object node
+
               return (
                 <div
                   className="product-details-sizes__size"
@@ -103,29 +106,10 @@ const Product = ({ data }) => {
                     id={size}
                     value={size}
                     checked={selectedSize === size}
-                    onClick={() => setSelectedSize(size)}
-                  />
-                    {size}
-                <label htmlFor={size} className="cursor">
-                  {size}
-                </label>
-                </div>
-              );
-            })} */}
-            {sortedSkus.map(({node, index}) => {
-              const size = node.attributes.name;
-              return (
-                <div
-                  className="product-details-sizes__size"
-                  style={index === 0 ? { marginLeft: 0 } : {}}
-                >
-                  <input
-                    type="radio"
-                    id={node.id}
-                    value={size}
                     onClick={() => {
                       setSelectedSize(size);
-                      setSelectedSku(node.id);
+                      // commented out for now
+                      // setSelectedSku(node.id);
                     }}
                   />
                   <label htmlFor={size} className="cursor">
