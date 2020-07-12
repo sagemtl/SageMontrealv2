@@ -8,6 +8,12 @@ import { GlobalContext } from '../context/Provider';
 import { sortSizes } from '../helpers/stripeHelper';
 import Img from 'gatsby-image';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import './styles/product.scss';
 
 const Product = ({ data }) => {
@@ -19,6 +25,7 @@ const Product = ({ data }) => {
   const [selectedImage, setSelectedImage] = useState(
     item.children[0].childImageSharp.fixed.src,
   );
+  const [modalOpen, setModalOpen] = useState(false);
   const { state, dispatch } = useContext(GlobalContext);
 
   const addToCart = () => {
@@ -128,6 +135,57 @@ const Product = ({ data }) => {
               );
             })}
           </div>
+          <button className="size-guide__size-guide-link" onClick={()=>setModalOpen(true)}> size guide</button>
+          <Dialog
+            open={modalOpen}
+            onClose={()=>setModalOpen(false)}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle >Size Guides: Tops (Centimeters)</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <table>
+                  <tr>
+                    <th> </th>
+                    <th>S</th>
+                    <th>M</th>
+                    <th>L</th>
+                    <th>XL</th>
+                  </tr>
+                  <tr>
+                    <th>Width</th>
+                    <th>49</th>
+                    <th>52</th>
+                    <th>56</th>
+                    <th>59</th>
+                  </tr>
+                  <tr>
+                    <th>Shoulders</th>
+                    <th>44</th>
+                    <th>46</th>
+                    <th>48</th>
+                    <th>51</th>
+                  </tr>
+                  <tr>
+                    <th>Length</th>
+                    <th>65</th>
+                    <th>67</th>
+                    <th>70</th>
+                    <th>73</th>
+                  </tr>
+                  <tr>
+                  <th>Sleeve</th>
+                    <th>23</th>
+                    <th>25</th>
+                    <th>26</th>
+                    <th>27</th>
+                  </tr>
+                </table>
+              </DialogContentText>
+            </DialogContent>
+
+          </Dialog>
           <button
             className="product-details__button"
             type="button"

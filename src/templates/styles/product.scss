@@ -112,3 +112,24 @@ input[type="radio"]:checked + label {
   background-color: black;
   color: white;
 }
+
+.size-guide {
+  &__size-guide-link {
+    font-size: small;
+    letter-spacing: inherit;
+    text-align: left;
+    background: none;
+    cursor: pointer;
+    text-decoration: underline;
+    color: #767676;
+    
+  }
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+  column-width: 60vw;
+  font-size: small;
+}
