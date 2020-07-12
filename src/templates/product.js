@@ -6,6 +6,7 @@ import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import { GlobalContext } from '../context/Provider';
 import { sortSizes } from '../helpers/stripeHelper';
+import Img from 'gatsby-image';
 
 import './styles/product.scss';
 
@@ -67,6 +68,10 @@ const Product = ({ data }) => {
           </div>
           <div className="product-images-secondary">
             {item.children.map((node) => {
+              // console.log("node attr");
+              // console.log(node.childImageSharp.fixed.src);
+              // console.log(node.name);
+              // console.log(node.id);
               <img
                 src={node.childImageSharp.fixed.src}
                 alt={node.name}
@@ -76,6 +81,7 @@ const Product = ({ data }) => {
                   setSelectedImage(node.childImageSharp.fixed.src)
                 }
               />
+              
             })}
 
             {/* not pulling images from skus anymore */}
@@ -94,6 +100,7 @@ const Product = ({ data }) => {
         <div className="product-details">
           <h1>{item.name}</h1>
           <p className="product-details__point">{item.description}</p>
+          {item.metadata.modelInfo? <p className="product-details__point">{item.metadata.modelInfo}</p> : null}
           <p>$ {skus.edges[0].node.price / 100}</p>
           <div className="product-details-sizes">
             {sortedSkus.map(({ node, index }) => {
@@ -149,6 +156,9 @@ export const query = graphql`
       description
       fields {
         slug
+      }
+      metadata {
+        modelInfo
       }
       featuredImg {
         childImageSharp {

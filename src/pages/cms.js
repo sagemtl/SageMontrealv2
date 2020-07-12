@@ -19,6 +19,7 @@ const CMS = () => {
   const [images, setImages] = useState('');
   const [shippable, setShippable] = useState(false);
   const [featuredImg, setFeaturedImg] = useState('');
+  const [modelInfo, setModelInfo] = useState('');
   // Lookbook fields
   const [title, setTitle] = useState('');
   const [coverUrl, setCoverUrl] = useState('');
@@ -53,6 +54,7 @@ const CMS = () => {
     setImages(prod.images.join(',')); //turn array into comma seperated string
     setName(prod.name);
     prod.metadata.featuredImg? setFeaturedImg(prod.metadata.featuredImg) : null;
+    prod.metadata.modelInfo? setFeaturedImg(prod.metadata.modelInfo) : null;
   };
 
   const handleUpdateProduct = async()=>{
@@ -71,7 +73,10 @@ const CMS = () => {
     newProduct.description = desc;
     newProduct.name = name;
     newProduct.images = imgArr;
-    newProduct.metadata = {featuredImg:featuredImg};
+    newProduct.metadata = {
+      featuredImg:featuredImg,
+      modelInfo: modelInfo,
+    };
     var prod = await updateProduct(productId, newProduct);
     prod.statusCode? setSnack(true, 'error', "There has been an error updating the product")
                      : setSnack(true, 'success', "Product is successfully updated");
@@ -140,6 +145,19 @@ const CMS = () => {
         </div>
 
         <div className="cms__field">
+          <p className="cms__label">Model Info</p>
+          <div>
+            <input
+              placeholder="Model is height xxx wearing size xxx"
+              onChange={(e) => setModelInfo(e.target.value)}
+              value={modelInfo}
+              disabled={!edit}
+              className="cms__input"
+            />
+          </div>
+        </div>
+
+        <div className="cms__field">
           <p className="cms__label">Active</p>
           <div>
             <input
@@ -184,6 +202,7 @@ const CMS = () => {
           Update Product
         </button>
       </div>
+
 
       <div className="cms-lookbook">
         <h1>Lookbook</h1>
