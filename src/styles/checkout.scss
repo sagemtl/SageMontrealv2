@@ -83,6 +83,20 @@ label {
     display: flex;
 }
 
+.checkout-form{
+    border: 2px solid black;
+    overflow: hidden;
+    box-shadow: 3px 3px #154734;
+
+    &__form{
+       font-weight: bold;
+    }
+    &__form-control{
+        border: 2px solid black;
+    }
+}
+
+
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);

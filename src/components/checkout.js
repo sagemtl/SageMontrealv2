@@ -149,14 +149,14 @@ function Payment() {
         )}
       </div>
       <Container className="py-4">
-        <Card>
+        <Card className="checkout-form">
           <Card.Body>
-            <Form method="POST" onSubmit={submit}>
+            <Form method="POST" onSubmit={submit} className="checkout-form__form">
               <Row>
                 <Col>
                   <FormGroup>
                     <Form.Label> Name on Card </Form.Label>
-                    <FormControl
+                    <FormControl className="checkout-form__form-control"
                       type="text"
                       placeholder="Enter name on card"
                       name="name"
@@ -167,10 +167,10 @@ function Payment() {
                 <Col>
                   <FormGroup>
                     <Form.Label> Email </Form.Label>
-                    <FormControl
+                    <FormControl className="checkout-form__form-control"
                       type="text"
                       name="email"
-                      placeholder="xinruili07@gmail.com"
+                      placeholder="Enter email address"
                       onChange={change}
                     />
                   </FormGroup>
@@ -181,10 +181,10 @@ function Payment() {
                 <Col>
                   <FormGroup>
                     <Form.Label> City </Form.Label>
-                    <FormControl
+                    <FormControl className="checkout-form__form-control"
                       type="text"
                       name="city"
-                      placeholder="Montreal"
+                      placeholder="Enter city"
                       onChange={change}
                     />
                   </FormGroup>
@@ -192,7 +192,12 @@ function Payment() {
                 <Col>
                   <FormGroup>
                     <Form.Label> Address </Form.Label>
-                    <FormControl type="text" name="address" onChange={change} />
+                    <FormControl className="checkout-form__form-control"
+                      type="text" 
+                      name="address" 
+                      placeholder="Enter address"
+                      onChange={change} 
+                      />
                   </FormGroup>
                 </Col>
               </Row>
@@ -200,11 +205,11 @@ function Payment() {
               <Row>
                 <Col>
                   <FormGroup>
-                    <Form.Label> State </Form.Label>
-                    <FormControl
+                    <Form.Label> State / Province </Form.Label>
+                    <FormControl className="checkout-form__form-control"
                       type="text"
                       name="state"
-                      placeholder="Quebec"
+                      placeholder="Enter state / province"
                       onChange={change}
                     />
                   </FormGroup>
@@ -212,21 +217,21 @@ function Payment() {
                 <Col>
                   <FormGroup>
                     <Form.Label> Postal Code </Form.Label>
-                    <FormControl
+                    <FormControl className="checkout-form__form-control"
                       type="text"
                       name="postal_code"
-                      placeholder="Postal Code "
+                      placeholder="Enter postal code"
                       onChange={change}
                     />
                   </FormGroup>
                 </Col>
               </Row>
 
-              <FormGroup>
+              <FormGroup >
                 <Form.Label> Card Details </Form.Label>
-                <CardElement> </CardElement>
+                <CardElement > </CardElement>
+                <Button type="submit" style={{position: "relative", margin: "auto", width: "50%"}}> Pay {getTotal() + 15}$</Button>
               </FormGroup>
-              <Button type="submit"> Pay {getTotal() + 15}$</Button>
             </Form>
           </Card.Body>
         </Card>
