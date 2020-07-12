@@ -1,15 +1,13 @@
-import React from "react";
-import { Container } from "react-bootstrap";
-import Layout from '../components/layout';
+import React from 'react';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
+import Layout from '../components/layout';
 import '../styles/success.scss';
 
 import CartItem from '../components/cartItem';
 
-
 function Success() {
-    const data = useStaticQuery(graphql`
+  const data = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "sage-icon.png" }) {
         childImageSharp {
@@ -22,19 +20,25 @@ function Success() {
   `);
   return (
     <Layout current="/success">
-        <div className='text-left align-middle'>
-            <Img
-                className="success-sage-logo"
-                fluid={data.placeholderImage.childImageSharp.fluid}
-                alt="Success"
-            />
-            <p> Your order has been placed! <br />
-            Your payment has been successfully processed and a receipt has been sent to {window.history.state.userEmail}.<br />
-            Your items will be shipped the following day and should arrive within a week.<br />
-            Thank you for shopping with us!! </p>
-        </div>
+      <div className="text-left align-middle">
+        <Img
+          className="success-sage-logo"
+          fluid={data.placeholderImage.childImageSharp.fluid}
+          alt="Success"
+        />
+        <p>
+          {' '}
+          Your order has been placed! <br />
+          Your payment has been successfully processed and a receipt has been
+          sent to {window.history.state.userEmail}.<br />
+          Your items will be shipped the following day and should arrive within
+          a week.
+          <br />
+          Thank you for shopping with us!!{' '}
+        </p>
+      </div>
 
-        <div className="cart-checkout">
+      <div className="cart-checkout">
         {window.history.state.purchase.map((item) => {
           return (
             <CartItem
