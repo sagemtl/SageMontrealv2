@@ -51,6 +51,7 @@ const Product = ({ data }) => {
     return skus.edges.filter((node) => node.id === sku) / 100;
   };
 
+  // not fully tested yet
   const sortedSkus = sortSizes(skus.edges);
 
   return (
@@ -65,14 +66,18 @@ const Product = ({ data }) => {
             />
           </div>
           <div className="product-images-secondary">
-            <img
-              src={item.children[0].childImageSharp.fixed.src}
-              alt={item.name}
-              className="product-images__image--secondary"
-              onClick={() =>
-                setSelectedImage(item.children[0].childImageSharp.fixed.src)
-              }
-            />
+            {item.children.map((node) => {
+              <img
+                src={node.childImageSharp.fixed.src}
+                alt={node.name}
+                key={node.id}
+                className="product-images__image--secondary"
+                onClick={() =>
+                  setSelectedImage(node.childImageSharp.fixed.src)
+                }
+              />
+            })}
+
             {/* not pulling images from skus anymore */}
             {/* {skus.edges.map(({ node }) => (
               <img
@@ -93,23 +98,20 @@ const Product = ({ data }) => {
           <div className="product-details-sizes">
             {sortedSkus.map(({ node, index }) => {
               const size = node.attributes.name;
-
-              // TODO: no attribute id for object node
-
               return (
                 <div
                   className="product-details-sizes__size"
                   style={index === 0 ? { marginLeft: 0 } : {}}
+                  key={size}
                 >
                   <input
                     type="radio"
                     id={size}
                     value={size}
                     checked={selectedSize === size}
-                    onClick={() => {
+                    onChange={() => {
                       setSelectedSize(size);
-                      // commented out for now
-                      // setSelectedSku(node.id);
+                      setSelectedSku(node.id);
                     }}
                   />
                   <label htmlFor={size} className="cursor">
@@ -158,6 +160,7 @@ export const query = graphql`
       children {
         ... on File {
           name
+          id
           childImageSharp {
             fixed {
               ...GatsbyImageSharpFixed
@@ -169,6 +172,7 @@ export const query = graphql`
     allStripeSku(filter: { product: { id: { eq: $id } } }) {
       edges {
         node {
+          id
           price
           attributes {
             name
