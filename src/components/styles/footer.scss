@@ -20,6 +20,19 @@
     transition: 3s ease-in-out;
   }
 
+  &__link {
+    font-size: 0.7rem;
+    margin: 0;
+    transition: color 3s ease-in-out;
+    font-weight: 500;
+    line-height: 1.2;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   &__icon {
     margin: 0;
     margin-right: 10px;
@@ -51,11 +64,13 @@
       box-shadow: 0 2px #000;
       transform: translateY(3px);
     }
-
-    &:focus {
-      outline: none;
-    }
   }
+}
+
+.footer-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .footer-transparent {

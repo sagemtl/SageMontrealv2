@@ -18,6 +18,11 @@
   top: -20%;
   text-shadow: 2px 2px black;
 }
+button {
+  &:focus {
+    outline: none;
+  }
+}
 
 .index {
   @include index();
