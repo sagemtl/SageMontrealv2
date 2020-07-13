@@ -5,7 +5,7 @@ import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import Img from 'gatsby-image';
 import { GlobalContext } from '../context/Provider';
 
-const CartItem = ({ name, amount, size, price, image, id }) => {
+const CartItem = ({ name, amount, size, price, image, id, sku }) => {
   const { state, dispatch } = useContext(GlobalContext);
 
   const removeItem = (e) => {
@@ -64,6 +64,7 @@ CartItem.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
+  sku: PropTypes.string.isRequired,
 };
 
 export default CartItem;
