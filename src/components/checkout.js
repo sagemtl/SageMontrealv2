@@ -230,7 +230,7 @@ function Payment() {
               <FormGroup >
                 <Form.Label> Card Details </Form.Label>
                 <CardElement > </CardElement>
-                <Button type="submit" style={{position: "relative", margin: "auto", width: "50%"}}> Pay {getTotal() + 15}$</Button>
+                <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
               </FormGroup>
             </Form>
           </Card.Body>

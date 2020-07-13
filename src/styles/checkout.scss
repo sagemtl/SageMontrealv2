@@ -89,12 +89,46 @@ label {
     box-shadow: 3px 3px #154734;
 
     &__form{
-       font-weight: bold;
+       // font-weight: bold;
     }
     &__form-control{
-        border: 2px solid black;
+        border: 1px solid grey;
     }
 }
+
+.btn-primary {
+    background-color:#669677 !important;
+    border-color: #669677 !important;
+    box-shadow: 3px 3px #154734;  
+}
+
+.StripeElement {
+    box-sizing: border-box;
+  
+    height: 40px;
+  
+    padding: 10px 12px;
+  
+    border: 1px solid grey;
+    border-radius: 4px;
+    background-color: white;
+  
+    // box-shadow: 0 2px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+  }
+  
+  .StripeElement--focus {
+    box-shadow: 0 2px 3px 0 #cfd7df;
+  }
+  
+  .StripeElement--invalid {
+    border-color: #fa755a;
+  }
+  
+  .StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+  }
 
 
 @keyframes App-logo-spin {
