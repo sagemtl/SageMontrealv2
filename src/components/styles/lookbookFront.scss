@@ -1,7 +1,6 @@
 @mixin lookbook {
   position: relative;
   display: inline-block;
-  border: 8px solid #352315;
   border-radius: 24px;
   margin-right: 100px;
   transform: translateX(10%);
@@ -18,6 +17,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 3rem;
+}
+
+@mixin text {
+  color: white;
+  background-position: left bottom;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
 }
 
 .lookbook-front {
@@ -31,18 +40,26 @@
       @include header();
       position: absolute;
       width: 100%;
-      background-color: #154734;
-      border-bottom: 2px solid white;
-      border-top: 2px solid white;
     }
 
     &--animation {
       @include header();
       max-width: 100%;
       overflow: hidden;
-      background-color: #154734;
-      border-bottom: 2px solid white;
-      border-top: 2px solid white;
+    }
+  }
+
+  &__text {
+    &--placeholder {
+      @include text();
+      position: absolute;
+      width: 100%;
+    }
+
+    &--animation {
+      @include text();
+      max-width: 100%;
+      overflow: hidden;
     }
   }
 
@@ -56,14 +73,26 @@
     transform: rotate(90deg);
   }
 
-  &:hover .lookbook-front__header--animation {
-    transition: all 0.5s;
-    background-color: #154734;
-    max-width: 0%;
+  &:hover {
+    & .lookbook-front__header--animation {
+      transition: all 0.5s;
+      max-width: 0%;
+    }
+
+    & .lookbook-front__text--animation {
+      transition: all 0.5s;
+      max-width: 0%;
+    }
   }
 
-  &:hover .lookbook-front__header--placeholder {
-    visibility: hidden;
+  &:hover {
+    & .lookbook-front__header--placeholder {
+      visibility: hidden;
+    }
+
+    & .lookbook-front__text--placeholder {
+      visibility: hidden;
+    }
   }
 
   &:hover .lookbook-front-icons {
