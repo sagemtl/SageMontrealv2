@@ -9,14 +9,16 @@ import '../styles/lookbook.scss';
 const LookbookMenu = ({ uri }) => {
   const collections = [
     {
-      label: 'Winter 18: 20666',
+      label: '20666',
+      season: 'Winter 18',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
       ],
       position: 'bottom',
     },
     {
-      label: 'Spring 18: 仙人集团',
+      label: '仙人集团',
+      season: 'Spring 18',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0593_dqqatl.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/Untitled-2_jb5y2r.jpg',
@@ -26,7 +28,8 @@ const LookbookMenu = ({ uri }) => {
       ],
     },
     {
-      label: 'Summer 19: Transit',
+      label: 'Transit',
+      season: 'Summer 19',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1561337613/lookbook-desktop/1_i5socf.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1561337443/lookbook-desktop/2_eayxmf.jpg',
@@ -48,7 +51,8 @@ const LookbookMenu = ({ uri }) => {
       ],
     },
     {
-      label: 'Winter 20: Steam',
+      label: 'Steam',
+      season: 'Winter 20',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/1_gjlmik.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/2_pk948p.jpg',
@@ -63,7 +67,8 @@ const LookbookMenu = ({ uri }) => {
       ],
     },
     {
-      label: 'Capsule 01: Swish',
+      label: 'Swish',
+      season: 'Capsule 01',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1583035301/lookbookSwish/swish_lookbook_u1laoy.jpg',
       ],
@@ -74,11 +79,12 @@ const LookbookMenu = ({ uri }) => {
     <Layout current={uri}>
       <div className="lookbook">
         <div className="lookbook-scroll">
-          {collections.map(({ label, images, position }) => {
+          {collections.map(({ label, season, images, position }) => {
             return (
               <LookbookFront
                 images={images}
                 label={label}
+                season={season}
                 position={position}
               />
             );
