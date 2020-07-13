@@ -139,7 +139,7 @@ const Product = ({ data }) => {
           >
             
             <DialogContent>
-            <header className="size-guide__heading">Size Guides: Tops (Centimeters)</header>
+            <header className="size-guide__heading">Size Guides: Short sleeve T-shirts (Centimeters)</header>
               <div >
                 <table>
                   <tr>

@@ -157,7 +157,7 @@ const CMS = () => {
           </div>
         </div>
 
-        <div className="cms__field">
+        <div className="cms__field" style={{display:"inline-block"}}>
           <p className="cms__label">Active</p>
           <div>
             <input
@@ -166,7 +166,7 @@ const CMS = () => {
               checked={active}
               onChange={()=>{setActive(!active)}}
               disabled={!edit}
-              className="cms__input"
+              className="cms__checkbox"
             />
           </div>
         </div>
