@@ -9,10 +9,7 @@ import { sortSizes } from '../helpers/stripeHelper';
 import Img from 'gatsby-image';
 
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 import './styles/product.scss';
 
@@ -139,12 +136,11 @@ const Product = ({ data }) => {
           <Dialog
             open={modalOpen}
             onClose={()=>setModalOpen(false)}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
           >
-            <DialogTitle >Size Guides: Tops (Centimeters)</DialogTitle>
+            
             <DialogContent>
-              <DialogContentText id="alert-dialog-description">
+            <header className="size-guide__heading">Size Guides: Tops (Centimeters)</header>
+              <div >
                 <table>
                   <tr>
                     <th> </th>
@@ -182,7 +178,7 @@ const Product = ({ data }) => {
                     <th>27</th>
                   </tr>
                 </table>
-              </DialogContentText>
+              </div>
             </DialogContent>
 
           </Dialog>
