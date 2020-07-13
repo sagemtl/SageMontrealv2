@@ -32,6 +32,9 @@ const IndexPage = ({ uri }) => {
             />
           </label>
           <div className="index-text">
+            <h1 className="index-text__header--main">
+              <b>Sage Montreal</b>
+            </h1>
             <iframe
               width="860"
               height="615"
@@ -39,9 +42,6 @@ const IndexPage = ({ uri }) => {
               frameBorder="0"
               allowFullScreen
             />
-            <h1 className="index-text__header--main">
-              <b>Sage Montreal</b>
-            </h1>
           </div>
         </div>
       </>
