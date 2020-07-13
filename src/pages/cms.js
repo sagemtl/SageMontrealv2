@@ -166,7 +166,7 @@ const CMS = () => {
               checked={active}
               onChange={()=>{setActive(!active)}}
               disabled={!edit}
-              className="cms__input"
+              className="cms__checkbox"
             />
           </div>
         </div>
