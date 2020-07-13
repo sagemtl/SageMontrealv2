@@ -157,7 +157,7 @@ const CMS = () => {
           </div>
         </div>
 
-        <div className="cms__field" style={{display:"inline-block"}}>
+        <div className="cms__field">
           <p className="cms__label">Active</p>
           <div>
             <input
