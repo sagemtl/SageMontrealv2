@@ -1,3 +1,42 @@
+@mixin navbox {
+  position: fixed;
+  top: 30px;
+  width: 175px;
+  border: 2px solid black;
+  border-radius: 15px;
+  background-color: white;
+  z-index: 20;
+  overflow: hidden;
+  box-shadow: 3px 3px #154734;
+  transition: all 3s;
+}
+
+@mixin header-button {
+  position: absolute;
+  top: 60px;
+  z-index: 20;
+  transition: all 2s;
+  background: white;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border: 4px solid #154734;
+  border-left: none;
+  cursor: pointer;
+  padding: 5px 5px;
+}
+
+@mixin navbox-route {
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-decoration: none;
+  font-family: 'Helvetica Neue';
+  border-top: 2px solid black;
+}
+
 .cart{
   position: fixed;
   right: 30px;
@@ -63,7 +102,6 @@
 
   &__button{
     margin-top: 15px;
-    // background-color: #154734;
     border-radius: 8px;
     width: 175px;
     height: 40px;
@@ -87,53 +125,68 @@
 }
 
 .navbox{
-  position: fixed;
+  @include navbox();
   left: 30px;
-  top: 30px;
-  width: 175px;
-  height: 227px;
-  border: 2px solid black;
-  border-radius: 15px;
-  background-color: white;
-  z-index: 20;
-  overflow: hidden;
-  box-shadow: 3px 3px #154734;
 
-  &__logo{
+  &__logo {
     width: 70px;
     height: auto;
     margin: 0 auto;
+    margin-bottom: 45px;
     top: 25px;
+    cursor: pointer;
   }
-  &__link{
-    height: 52px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+
+  &__link {
+    @include navbox-route();
     color: black;
-    text-decoration: none;
-    font-family: 'Helvetica Neue';
+
     &:hover {
       background-color: #154734;
       color: white;
+      text-decoration: none;
+      cursor: pointer;
     }
   }
-  &__selected{
-    height: 52px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+
+  &__selected {
+    @include navbox-route();
     color: white;
-    text-decoration: none;
-    font-family: 'Helvetica Neue';
     background-color: #154734;
+
+    &:hover {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+    }
   }
-  &__text{
+
+  &__text {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 0px;
     margin-top: 0px;
+  }
+}
+
+.navbox--closed {
+  @include navbox();
+  left: -500px;
+}
+
+.header-button--closed {
+  @include header-button();
+  left: -100px;
+}
+
+.header-button {
+  @include header-button();
+  left: 0;
+
+  &__icon {
+    color: #154734;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
   }
 }
