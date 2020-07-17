@@ -18,6 +18,12 @@ const globalReducer = (state, action) => {
         checkoutItems: action.payload.checkoutItems,
       };
     }
+    case 'SET_NAVBAR_OPEN': {
+      return {
+        ...state,
+        navOpen: action.payload.navOpen,
+      };
+    }
     default:
       return state;
   }

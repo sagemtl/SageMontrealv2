@@ -9,22 +9,26 @@ import '../styles/lookbook.scss';
 const LookbookMenu = ({ uri }) => {
   const collections = [
     {
-      label: '20666',
-      season: 'Winter 18',
+      label: 'Swish',
+      season: 'Capsule 01',
       images: [
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1583035301/lookbookSwish/swish_lookbook_u1laoy.jpg',
       ],
-      position: 'bottom',
     },
     {
-      label: '仙人集团',
-      season: 'Spring 18',
+      label: 'Steam',
+      season: 'Winter 20',
       images: [
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0593_dqqatl.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/Untitled-2_jb5y2r.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0811_waybex.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0791_decats.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0820_bwi8bi.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/1_gjlmik.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/2_pk948p.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/3_g45sch.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/4_hphb4t.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/5_aptyse.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/6_hy2piq.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583185/lookbookSteam/7_n2tkl9.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/8_smacic.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/9_esocvv.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/10_iezm3p.jpg',
       ],
     },
     {
@@ -51,27 +55,23 @@ const LookbookMenu = ({ uri }) => {
       ],
     },
     {
-      label: 'Steam',
-      season: 'Winter 20',
+      label: '仙人集团',
+      season: 'Spring 18',
       images: [
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/1_gjlmik.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/2_pk948p.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/3_g45sch.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/4_hphb4t.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/5_aptyse.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/6_hy2piq.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583185/lookbookSteam/7_n2tkl9.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/8_smacic.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/9_esocvv.jpg',
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/10_iezm3p.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0593_dqqatl.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/Untitled-2_jb5y2r.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0811_waybex.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0791_decats.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0820_bwi8bi.jpg',
       ],
     },
     {
-      label: 'Swish',
-      season: 'Capsule 01',
+      label: '20666',
+      season: 'Winter 18',
       images: [
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1583035301/lookbookSwish/swish_lookbook_u1laoy.jpg',
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
       ],
+      position: 'bottom',
     },
   ];
 
