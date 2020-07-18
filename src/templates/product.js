@@ -41,7 +41,7 @@ const Product = ({ data }) => {
         sku: selectedSku,
       });
     }
-
+    console.log(itemsCopy);
     dispatch({
       type: 'SET_CHECKOUT_ITEMS',
       payload: {
@@ -51,7 +51,8 @@ const Product = ({ data }) => {
   };
 
   const filterPrice = (sku) => {
-    return skus.edges.filter((node) => node.id === sku) / 100;
+    var matched = skus.edges.find((node) => node.node.id == sku);
+    return matched.node.price / 100;
   };
 
   // not fully tested yet
@@ -88,6 +89,7 @@ const Product = ({ data }) => {
           <div className="product-details-sizes">
             {sortedSkus.map(({ node }) => {
               const size = node.attributes.name;
+              const nodeid = node.id;
               return (
                 <div className="product-details-sizes__size" key={size}>
                   <input
@@ -96,8 +98,10 @@ const Product = ({ data }) => {
                     value={size}
                     checked={selectedSize === size}
                     onChange={() => {
+                      setSelectedSku(nodeid);
                       setSelectedSize(size);
-                      setSelectedSku(node.id);
+                      
+                      console.log(`after set selected sku, nodeid ${nodeid}, selectedsku ${selectedSku}, selectedsize ${size}`);
                     }}
                   />
                   <label htmlFor={size} className="cursor">

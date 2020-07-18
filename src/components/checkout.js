@@ -135,6 +135,7 @@ function Payment() {
               price={item.price}
               size={item.size}
               image={item.image}
+              sku={item.sku}
             />
           );
         })}
