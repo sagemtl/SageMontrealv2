@@ -10,6 +10,7 @@ import SEO from '../components/seo';
 import Payment from '../components/checkout';
 import '../styles/bootstrap.min.css';
 import '../styles/checkout.scss';
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 import { GlobalContext } from '../context/Provider';
 
 

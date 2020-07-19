@@ -94,7 +94,22 @@ label {
     &__form-control{
         border: 1px solid grey;
     }
+    &__select-form{
+        border: 1px solid grey;
+        width: 100%;
+        border-radius: .25rem;
+        padding: .375rem .75rem;
+    }
 }
+
+    select,
+    select option {
+    color: #000000 !important;
+    }
+
+    select option[value=""] {
+    color: #999999 !important;
+    }
 
 .btn-primary {
     background-color:#669677 !important;

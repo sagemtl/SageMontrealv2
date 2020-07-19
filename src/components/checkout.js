@@ -4,6 +4,8 @@ import { navigate } from 'gatsby';
 
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+
 import {
   Container,
   Form,
@@ -25,12 +27,24 @@ function Payment() {
   const { checkoutItems } = state;
 
   const [formData, setFormData] = useState({});
+
+  const [countryValue, setCountryValue] = useState("");
+  const [province, setProvince] = useState("");
+
   const elements = useElements();
   const stripe = useStripe();
 
   const change = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const changeCountry = (val) => {
+    setCountryValue(val)
+  }
+
+  const changeState = (val) => {
+    setProvince(val)
+  }
 
   // After checkout, reset the cart state
   const resetCart = () => {
@@ -52,6 +66,10 @@ function Payment() {
   };
 
   const submit = async (e) => {
+
+    console.log(formData)
+    console.log(countryValue)
+    console.log(province)
     e.preventDefault();
 
     // Billing Details
@@ -60,8 +78,9 @@ function Payment() {
       email: formData.email,
       address: {
         city: formData.city,
+        country: countryValue,
         line1: formData.address,
-        state: formData.state,
+        state: province,
         postal_code: formData.postal_code,
       },
     };
@@ -176,6 +195,42 @@ function Payment() {
                   </FormGroup>
                 </Col>
               </Row>
+              <FormGroup>
+                    <Form.Label> Address </Form.Label>
+                    <FormControl className="checkout-form__form-control"
+                      type="text" 
+                      name="address" 
+                      placeholder="Enter address"
+                      onChange={change} 
+                      />
+              </FormGroup>
+              <Row>
+                <Col>
+                  <FormGroup>
+                      <Form.Label> Country/Region </Form.Label>
+                      <CountryDropdown 
+                      value={countryValue}
+                      onChange={ (val) => changeCountry(val)}
+                      priorityOptions={["CA", "US"]}
+                      classes="checkout-form__select-form"
+                      valueType="short"
+                      />
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Form.Label> State / Province </Form.Label>
+                    <RegionDropdown
+                    value={province}
+                    country={countryValue}
+                    onChange={ (val) => changeState(val)}
+                    defaultOptionLabel="Select State"
+                    classes="checkout-form__select-form"
+                    countryValueType="short"
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
               <Row>
                 <Col>
@@ -185,31 +240,6 @@ function Payment() {
                       type="text"
                       name="city"
                       placeholder="Enter city"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> Address </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text" 
-                      name="address" 
-                      placeholder="Enter address"
-                      onChange={change} 
-                      />
-                  </FormGroup>
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> State / Province </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="state"
-                      placeholder="Enter state / province"
                       onChange={change}
                     />
                   </FormGroup>
@@ -226,7 +256,6 @@ function Payment() {
                   </FormGroup>
                 </Col>
               </Row>
-
               <FormGroup >
                 <Form.Label> Card Details </Form.Label>
                 <CardElement > </CardElement>
