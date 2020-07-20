@@ -16,11 +16,16 @@
     flex-direction: column;
   }
 
+
   &__input {
     width: 300px;
     height: 40px;
     margin-right: 20px;
     border: 1px solid black;
+  }
+
+  &__checkbox {
+    align-content: left;;
   }
 
   &__input-area {

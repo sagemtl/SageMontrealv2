@@ -33,3 +33,15 @@ export const getProduct = async (prod_id) => {
     })
     .catch((error) => console.log('error', error));
 };
+
+export const sortSizes = (skus) => {
+  var ordering = {}, // map for efficient lookup of sortIndex
+    sortOrder = ['XS','S','M', 'L', "XL", "Onesize"];
+  for (var i=0; i<sortOrder.length; i++)
+      ordering[sortOrder[i]] = i;
+  skus.sort( function(a, b) {
+      return (ordering[a.node.attributes.name] - ordering[b.node.attributes.name]);
+  });
+
+  return skus; 
+}
