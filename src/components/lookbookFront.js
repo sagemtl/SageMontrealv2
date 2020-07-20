@@ -54,7 +54,6 @@ const LookbookFront = ({ label, season, images, position }) => {
           backgroundPosition: `center ${position}`,
         }}
       >
-        <h1 className="lookbook-front__header--placeholder">{label}</h1>
         <h1 className="lookbook-front__header--animation">{label}</h1>
         <p className="lookbook-front__text--placeholder">{season}</p>
         <p className="lookbook-front__text--animation">{season}</p>

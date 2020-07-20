@@ -1,7 +1,7 @@
 @mixin lookbook {
   position: relative;
   display: inline-block;
-  border-radius: 24px;
+  border-radius: 15px;
   margin-right: 100px;
   transform: translateX(10%);
   vertical-align: middle;
@@ -87,10 +87,6 @@
   }
 
   &:hover {
-    & .lookbook-front__header--placeholder {
-      visibility: hidden;
-    }
-
     & .lookbook-front__text--placeholder {
       visibility: hidden;
     }

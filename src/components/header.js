@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import Img from 'gatsby-image';
 import './styles/header.scss';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { GlobalContext } from '../context/Provider';
 
 const routes = [
@@ -51,7 +52,7 @@ const Header = ({ siteTitle, current }) => {
         className={navOpen ? 'header-button--closed' : 'header-button'}
         onClick={() => openNavbar(true)}
       >
-        <p className="header-button__icon">开</p>
+        <ArrowForwardIosIcon className="header-button__icon" />
       </div>
       <div className={navOpen ? 'navbox' : 'navbox--closed'}>
         <header>

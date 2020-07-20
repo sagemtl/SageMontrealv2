@@ -33,15 +33,6 @@
   justify-content: space-evenly;
   transition: all 1s;
   margin: 30px auto;
-
-  &:hover {
-    width: 96%;
-    height: 260px;
-    left: calc(-650px - 3%);
-    right: 3%;
-    top: 90px;
-    bottom: 40px;
-  }
 }
 
 @keyframes circle {
