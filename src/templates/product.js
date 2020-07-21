@@ -86,14 +86,10 @@ const Product = ({ data }) => {
           ) : null}
           <p>$ {skus.edges[0].node.price / 100}</p>
           <div className="product-details-sizes">
-            {sortedSkus.map(({ node, index }) => {
+            {sortedSkus.map(({ node }) => {
               const size = node.attributes.name;
               return (
-                <div
-                  className="product-details-sizes__size"
-                  style={index === 0 ? { marginLeft: 0 } : {}}
-                  key={size}
-                >
+                <div className="product-details-sizes__size" key={size}>
                   <input
                     type="radio"
                     id={size}

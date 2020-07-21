@@ -86,11 +86,10 @@
 
 .product-details-sizes {
   display: flex;
-  width: 100%;
-  margin: 1.5em 0;
+  margin: 20px 0;
 
   &__size {
-    margin: 0 30px;
+    margin-right: 30px;
   }
 }
 
@@ -175,19 +174,6 @@ table {
     &__button {
       position: relative;
       top: 10px;
-    }
-  }
-
-  .product-details-sizes {
-    display: flex;
-    width: 100%;
-    margin: 0.5rem 0;
-    position: relative;
-    left: -19px;
-  
-    &__size {
-      margin: 0 10px;
-      display: flex;
     }
   }
 }
