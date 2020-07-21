@@ -3,13 +3,11 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
 import Layout from '../components/layout';
 import { GlobalContext } from '../context/Provider';
 import { sortSizes } from '../helpers/stripeHelper';
-import Img from 'gatsby-image';
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 
 import './styles/product.scss';
 
@@ -63,48 +61,29 @@ const Product = ({ data }) => {
     <Layout current={`/shop/${item.fields.slug}`}>
       <div className="product">
         <div className="product-images">
-          <div>
-            <img
-              src={selectedImage}
-              alt={item.name}
-              className="product-images__image--main"
-            />
-          </div>
+          <img
+            src={selectedImage}
+            alt={item.name}
+            className="product-images__image--main"
+          />
           <div className="product-images-secondary">
             {item.children.map((node) => {
-              // console.log("node attr");
-              // console.log(node.childImageSharp.fixed.src);
-              // console.log(node.name);
-              // console.log(node.id);
               <img
                 src={node.childImageSharp.fixed.src}
                 alt={node.name}
                 key={node.id}
                 className="product-images__image--secondary"
-                onClick={() =>
-                  setSelectedImage(node.childImageSharp.fixed.src)
-                }
-              />
-              
+                onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
+              />;
             })}
-
-            {/* not pulling images from skus anymore */}
-            {/* {skus.edges.map(({ node }) => (
-              <img
-                src={node.featuredImg.childImageSharp.fixed.src}
-                alt={node.attributes.name}
-                className="product-images__image--secondary"
-                onClick={() =>
-                  setSelectedImage(node.featuredImg.childImageSharp.fixed.src)
-                }
-              />
-            ))} */}
           </div>
         </div>
         <div className="product-details">
-          <h1>{item.name}</h1>
+          <h1 className="product-details__header">{item.name}</h1>
           <p className="product-details__point">{item.description}</p>
-          {item.metadata.modelInfo? <p className="product-details__point">{item.metadata.modelInfo}</p> : null}
+          {item.metadata.modelInfo ? (
+            <p className="product-details__point">{item.metadata.modelInfo}</p>
+          ) : null}
           <p>$ {skus.edges[0].node.price / 100}</p>
           <div className="product-details-sizes">
             {sortedSkus.map(({ node, index }) => {
@@ -132,15 +111,19 @@ const Product = ({ data }) => {
               );
             })}
           </div>
-          <button className="size-guide__size-guide-link" onClick={()=>setModalOpen(true)}> size guide</button>
-          <Dialog
-            open={modalOpen}
-            onClose={()=>setModalOpen(false)}
+          <button
+            className="size-guide__size-guide-link"
+            onClick={() => setModalOpen(true)}
           >
-            
+            {' '}
+            size guide
+          </button>
+          <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
             <DialogContent>
-            <header className="size-guide__heading">Size Guides: Short sleeve T-shirts (Centimeters)</header>
-              <div >
+              <header className="size-guide__heading">
+                Size Guides: Short sleeve T-shirts (Centimeters)
+              </header>
+              <div>
                 <table>
                   <tr>
                     <th> </th>
@@ -171,7 +154,7 @@ const Product = ({ data }) => {
                     <th>73</th>
                   </tr>
                   <tr>
-                  <th>Sleeve</th>
+                    <th>Sleeve</th>
                     <th>23</th>
                     <th>25</th>
                     <th>26</th>
@@ -180,7 +163,6 @@ const Product = ({ data }) => {
                 </table>
               </div>
             </DialogContent>
-
           </Dialog>
           <button
             className="product-details__button"
