@@ -1,7 +1,7 @@
 const initialState = {
   checkoutItems: [],
   buttonPaused: false,
-  navOpen: true,
+  navOpen: false,
 };
 
 export default initialState;

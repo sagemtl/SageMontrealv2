@@ -11,7 +11,7 @@ const contact = ({ uri }) => {
         <h1 className="contact__header">Contact Us</h1>
         <div className="contact-row">
           <EmailIcon className="contact__icon" />
-          <p className="contact__text">sagemontreal@test.com</p>
+          <p className="contact__text">info@sagemontreal.com</p>
         </div>
       </div>
     </Layout>
