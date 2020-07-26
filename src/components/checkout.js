@@ -125,7 +125,7 @@ function Payment() {
 
   return (
     <div className="flexbox-checkout">
-      <div className="cart-checkout">
+      <div className="cart_checkout">
         {checkoutItems.map((item) => {
           return (
             <CartItem
@@ -148,94 +148,90 @@ function Payment() {
           </div>
         )}
       </div>
-      <Container className="py-4">
-        <Card className="checkout-form">
-          <Card.Body>
-            <Form method="POST" onSubmit={submit} className="checkout-form__form">
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> Name on Card </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      placeholder="Enter name on card"
-                      name="name"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> Email </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="email"
-                      placeholder="Enter email address"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> City </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="city"
-                      placeholder="Enter city"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> Address </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text" 
-                      name="address" 
-                      placeholder="Enter address"
-                      onChange={change} 
+      <div className="checkout">
+        <Container className="py-4">
+          <Card className="checkout__checkout-form">
+            <Card.Body>
+              <Form method="POST" onSubmit={submit} className="checkout-form__form">
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> Name on Card </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text"
+                        placeholder="Enter name on card"
+                        name="name"
+                        onChange={change}
                       />
-                  </FormGroup>
-                </Col>
-              </Row>
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> Email </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text"
+                        name="email"
+                        placeholder="Enter email address"
+                        onChange={change}
+                      />
+                    </FormGroup>
+                  </Col>
 
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> State / Province </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="state"
-                      placeholder="Enter state / province"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> Postal Code </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="postal_code"
-                      placeholder="Enter postal code"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> City </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text"
+                        name="city"
+                        placeholder="Enter city"
+                        onChange={change}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> Address </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text" 
+                        name="address" 
+                        placeholder="Enter address"
+                        onChange={change} 
+                        />
+                    </FormGroup>
+                  </Col>
 
-              <FormGroup >
-                <Form.Label> Card Details </Form.Label>
-                <CardElement > </CardElement>
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> State / Province </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text"
+                        name="state"
+                        placeholder="Enter state / province"
+                        onChange={change}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> Postal Code </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text"
+                        name="postal_code"
+                        placeholder="Enter postal code"
+                        onChange={change}
+                      />
+                    </FormGroup>
+                  </Col>
+
+                <FormGroup >
+                  <Form.Label> Card Details </Form.Label>
+                  <CardElement > </CardElement>
+                </FormGroup>
                 <Button type="submit" style={{position: "relative", margin: "auto", width: "50%"}}> Pay {getTotal() + 15}$</Button>
-              </FormGroup>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Container>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Container>
+      </div>
     </div>
   );
 }
