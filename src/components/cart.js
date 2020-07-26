@@ -20,6 +20,8 @@ const Cart = ({ isMobile }) => {
             price={item.price}
             size={item.size}
             image={item.image}
+            sku={item.sku}
+            key={item.sku}
           />
         );
       })}

@@ -6,7 +6,7 @@ import './styles/lookbookFront.scss';
 import Fade from '@material-ui/core/Fade';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-const LookbookFront = ({ label, images, position }) => {
+const LookbookFront = ({ label, season, images, position }) => {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
   const [index, setIndex] = useState(0);
@@ -54,18 +54,17 @@ const LookbookFront = ({ label, images, position }) => {
           backgroundPosition: `center ${position}`,
         }}
       >
-        <h1 className="lookbook-front__header--placeholder">{label}</h1>
-        <h1
-          className="lookbook-front__header--animation"
-          onMouseOver={(e) => e.preventDefault}
-        >
-          {label}
-        </h1>
+        <h1 className="lookbook-front__header--animation">{label}</h1>
+        <p className="lookbook-front__text--placeholder">{season}</p>
+        <p className="lookbook-front__text--animation">{season}</p>
         <div className="lookbook-front-icons">
           <ArrowForwardIosIcon className="lookbook-front__icon" />
           <ArrowForwardIosIcon className="lookbook-front__icon" />
         </div>
       </div>
+      {images.map((image) => {
+        return <img src={image} style={{ display: 'none' }} alt="Preloaded" />;
+      })}
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -85,6 +84,7 @@ const LookbookFront = ({ label, images, position }) => {
 
 LookbookFront.propTypes = {
   label: PropTypes.string.isRequired,
+  season: PropTypes.string.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
   position: PropTypes.string,
 };

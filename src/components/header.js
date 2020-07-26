@@ -1,11 +1,27 @@
 import { Link, useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
 import Img from 'gatsby-image';
 import './styles/header.scss';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { GlobalContext } from '../context/Provider';
 
-const Header = (props) => {
-  const { siteTitle, current } = props;
+const routes = [
+  {
+    label: 'Home',
+    to: '/',
+  },
+  {
+    label: 'Boutique',
+    to: '/shop',
+  },
+  {
+    label: 'Lookbook',
+    to: '/lookbook',
+  },
+];
+
+const Header = ({ siteTitle, current }) => {
   const data = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "sage-icon.png" }) {
@@ -18,58 +34,50 @@ const Header = (props) => {
     }
   `);
 
+  const { state, dispatch } = useContext(GlobalContext);
+  const { navOpen } = state;
+
+  const openNavbar = (open) => {
+    dispatch({
+      type: 'SET_NAVBAR_OPEN',
+      payload: {
+        navOpen: open,
+      },
+    });
+  };
+
   return (
-    <div className="navbox">
-      <header>
-        <div>
-          <Link to="/">
+    <>
+      <div
+        className={navOpen ? 'header-button--closed' : 'header-button'}
+        onClick={() => openNavbar(true)}
+      >
+        <ArrowForwardIosIcon className="header-button__icon" />
+      </div>
+      <div className={navOpen ? 'navbox' : 'navbox--closed'}>
+        <header>
+          <div onClick={() => openNavbar(false)}>
             <Img
               className="navbox__logo"
               fluid={data.placeholderImage.childImageSharp.fluid}
               alt={siteTitle}
             />
-          </Link>
-        </div>
-      </header>
-      <hr
-        style={{
-          marginTop: 45,
-          marginBottom: 0,
-          height: 2,
-          backgroundColor: 'black',
-          border: 'none',
-        }}
-      />
-      <div>
-        <Link
-          className={current === '/shop' ? 'navbox__selected' : 'navbox__link'}
-          to="/shop"
-        >
-          <h2 className="navbox__text">Boutique</h2>
-        </Link>
+          </div>
+        </header>
+        {routes.map((route) => {
+          return (
+            <Link
+              className={
+                current === route.to ? 'navbox__selected' : 'navbox__link'
+              }
+              to={route.to}
+            >
+              <h2 className="navbox__text">{route.label}</h2>
+            </Link>
+          );
+        })}
       </div>
-      <hr
-        style={{
-          marginTop: 0,
-          marginBottom: 0,
-          height: 2,
-          backgroundColor: 'black',
-          border: 'none',
-        }}
-      />
-      <div>
-        <Link
-          className={
-            current.substring(0, 9) === '/lookbook'
-              ? 'navbox__selected'
-              : 'navbox__link'
-          }
-          to="/lookbook"
-        >
-          <h2 className="navbox__text">Lookbook</h2>
-        </Link>
-      </div>
-    </div>
+    </>
   );
 };
 
