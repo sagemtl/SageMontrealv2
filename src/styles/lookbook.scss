@@ -1,23 +1,17 @@
 .lookbook {
   width: 100%;
-  position: absolute;
+  height: 102vh;
+  margin-bottom: -2vh;
   overflow-y: hidden;
-  max-height: 100vh;
-  padding: 0 1em;
 }
 
 .lookbook-scroll {
   white-space: nowrap;
   height: 100vh;
-  top: 50%;
-  margin: 0 auto;
 }
 
 @media (max-width: 450px) {
   .lookbook {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    transform: none;
-    padding: 0;
+    top: 60px;
   }
 }

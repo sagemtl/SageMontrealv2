@@ -1,24 +1,21 @@
 @mixin lookbook {
-  position: relative;
   display: inline-block;
-  border-radius: 15px;
-  margin-right: 100px;
-  transform: translateX(10%);
-  vertical-align: middle;
   cursor: pointer;
   transition: background 1s linear;
   animation-delay: -1s;
+  height: 100%;
+  background-size: cover;
 }
 
 @mixin header {
   color: white;
-  margin-top: 50%;
-  background-position: left bottom;
   height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 3rem;
+  position: relative;
+  top: 40vh;
 }
 
 @mixin text {
@@ -28,21 +25,15 @@
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
+  position: relative;
+  top: 40vh;
 }
 
 .lookbook-front {
   @include lookbook();
-  width: 450px;
-  height: 650px;
-  top: 110px;
+  width: 500px;
 
   &__header {
-    &--placeholder {
-      @include header();
-      position: absolute;
-      width: 100%;
-    }
-
     &--animation {
       @include header();
       max-width: 100%;
@@ -51,12 +42,6 @@
   }
 
   &__text {
-    &--placeholder {
-      @include text();
-      position: absolute;
-      width: 100%;
-    }
-
     &--animation {
       @include text();
       max-width: 100%;
@@ -97,18 +82,6 @@
   }
 }
 
-.lookbook-front-icons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 100px;
-  animation: 1.5s arrow infinite linear;
-  width: 100%;
-  margin: auto;
-}
-
 .lookbook-modal {
   position: absolute;
   overflow: scroll;
@@ -126,36 +99,8 @@
   margin: 0 auto;
 }
 
-@-webkit-keyframes arrow {
-  0%, 100% {
-    bottom: 50px;
-  }
-  50% {
-    bottom: 70px;
-  }
-}
-
-@keyframes arrow {
-  0%, 100% {
-    bottom: 50px;
-  }
-  50% {
-    bottom: 70px;
-  }
-}
-
 @media (max-width: 450px) {
   .lookbook-front {
-    @include lookbook();
-    width: 85%;
-    height: 75vh;
-    max-height: 550px;
-    top: 15vh;
-
-    &__header {
-      &--placeholder {
-        font-size: 1.8rem;
-      }
-    }
+    width: 100%;
   }
 }

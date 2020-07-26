@@ -76,7 +76,7 @@ const LookbookMenu = ({ uri }) => {
   ];
 
   return (
-    <Layout current={uri}>
+    <Layout current={uri} footerColor="white">
       <div className="lookbook">
         <div className="lookbook-scroll">
           {collections.map(({ label, season, images, position }) => {
