@@ -1,10 +1,11 @@
 @mixin lookbook {
-  display: inline-block;
   cursor: pointer;
   transition: background 1s linear;
   animation-delay: -1s;
-  height: 100%;
   background-size: cover;
+  display: inline-block;
+  height: 100%;
+  background-position: center top;
 }
 
 @mixin header {
@@ -31,7 +32,12 @@
 
 .lookbook-front {
   @include lookbook();
-  width: 500px;
+  width: 600px;
+  transition: all 1s;
+
+  &:hover {
+    opacity: 0.7;
+  }
 
   &__header {
     &--animation {
@@ -59,27 +65,27 @@
     transform: rotate(90deg);
   }
 
-  &:hover {
-    & .lookbook-front__header--animation {
-      transition: all 0.5s;
-      max-width: 0%;
-    }
+  // &:hover {
+  //   & .lookbook-front__header--animation {
+  //     transition: all 0.5s;
+  //     max-width: 0%;
+  //   }
 
-    & .lookbook-front__text--animation {
-      transition: all 0.5s;
-      max-width: 0%;
-    }
-  }
+  //   & .lookbook-front__text--animation {
+  //     transition: all 0.5s;
+  //     max-width: 0%;
+  //   }
+  // }
 
-  &:hover {
-    & .lookbook-front__text--placeholder {
-      visibility: hidden;
-    }
-  }
+  // &:hover {
+  //   & .lookbook-front__text--placeholder {
+  //     visibility: hidden;
+  //   }
+  // }
 
-  &:hover .lookbook-front-icons {
-    visibility: hidden;
-  }
+  // &:hover .lookbook-front-icons {
+  //   visibility: hidden;
+  // }
 }
 
 .lookbook-modal {

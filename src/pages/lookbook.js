@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
@@ -71,25 +72,44 @@ const LookbookMenu = ({ uri }) => {
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
       ],
-      position: 'bottom',
     },
   ];
+
+  const scrollRight = () => {
+    window.scrollBy({
+      left: -600,
+      behavior: 'smooth',
+    });
+  };
+
+  const scrollLeft = () => {
+    window.scrollBy({
+      left: 600,
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <Layout current={uri} footerColor="white">
       <div className="lookbook">
-        <div className="lookbook-scroll">
-          {collections.map(({ label, season, images, position }) => {
-            return (
-              <LookbookFront
-                images={images}
-                label={label}
-                season={season}
-                position={position}
-              />
-            );
-          })}
-        </div>
+        <ArrowForwardIosIcon
+          className="lookbook__icon--right"
+          onClick={() => scrollLeft()}
+        />
+        {collections.map(({ label, season, images, position }) => {
+          return (
+            <LookbookFront
+              images={images}
+              label={label}
+              season={season}
+              position={position}
+            />
+          );
+        })}
+        <ArrowForwardIosIcon
+          className="lookbook__icon--left"
+          onClick={() => scrollRight()}
+        />
       </div>
     </Layout>
   );

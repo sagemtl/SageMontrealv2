@@ -124,10 +124,8 @@
   left: 30px;
 
   &__logo {
-    width: 70px;
+    width: 100px;
     height: auto;
-    margin: 0 auto;
-    margin-bottom: 45px;
     top: 25px;
     cursor: pointer;
   }
@@ -162,6 +160,13 @@
     margin-bottom: 0px;
     margin-top: 0px;
   }
+}
+
+.navbox-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0 5px;
 }
 
 .navbox--closed {
