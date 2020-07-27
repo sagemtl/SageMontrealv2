@@ -26,6 +26,15 @@ const HeaderMobile = ({ cart, setCart }) => {
     setTimeout(() => video.current.pause(), 3000);
   };
 
+  const openNavbar = () => {
+    dispatch({
+      type: 'SET_NAVBAR_OPEN',
+      payload: {
+        navOpen: !navOpen,
+      },
+    });
+  };
+
   return (
     <div className="header-mobile">
       <div
