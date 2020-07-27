@@ -4,7 +4,6 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import './styles/lookbookFront.scss';
 import Fade from '@material-ui/core/Fade';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const LookbookFront = ({ label, season, images, position }) => {
   const [open, setOpen] = useState(false);
@@ -50,17 +49,11 @@ const LookbookFront = ({ label, season, images, position }) => {
         onMouseOver={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         style={{
-          backgroundImage: `url(${images[index]})`,
-          backgroundPosition: `center ${position}`,
+          backgroundImage: `url(${images[0]})`,
         }}
       >
         <h1 className="lookbook-front__header--animation">{label}</h1>
-        <p className="lookbook-front__text--placeholder">{season}</p>
         <p className="lookbook-front__text--animation">{season}</p>
-        <div className="lookbook-front-icons">
-          <ArrowForwardIosIcon className="lookbook-front__icon" />
-          <ArrowForwardIosIcon className="lookbook-front__icon" />
-        </div>
       </div>
       {images.map((image) => {
         return <img src={image} style={{ display: 'none' }} alt="Preloaded" />;

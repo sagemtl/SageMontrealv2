@@ -49,7 +49,7 @@ const Footer = ({ transparent, color }) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <InstagramIcon className="footer__icon" />
+        <InstagramIcon className="footer__icon" style={{ color }} />
       </a>
     </div>
   );

@@ -156,9 +156,12 @@ table {
   }
 
   .product-images {
+    width: 100%;
+
     &__image--main {
       width: 100%;
       height: auto;
+      margin: 0 auto;
     }
   }
 
