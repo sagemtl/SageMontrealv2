@@ -162,15 +162,17 @@ exports.createPages = async ({ graphql, actions }) => {
 
   result.data.allStripeProduct.edges.forEach(({ node }) => {
     // console.log("creating page: " + node.fields.slug);
-    createPage({
-      path: `/shop/${node.fields.slug}`,
-      component: path.resolve(`./src/templates/product.js`),
-      context: {
-        // Data passed to context is available
-        // in page queries as GraphQL variables.
-        id: node.id,
-      },
-    });
+    if(node.featuredImg){
+      createPage({
+        path: `/shop/${node.fields.slug}`,
+        component: path.resolve(`./src/templates/product.js`),
+        context: {
+          // Data passed to context is available
+          // in page queries as GraphQL variables.
+          id: node.id,
+        },
+      });
+    }
   });
 };
 

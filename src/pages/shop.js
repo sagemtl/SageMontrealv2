@@ -19,7 +19,7 @@ const Shop = ({ data, uri }) => {
   const { buttonPaused } = state;
 
   const getProducts = () => {
-    const stripeProducts = data.allStripeProduct.edges;
+    const stripeProducts = data.allStripeProduct.edges.filter(node => node.node.featuredImg);
     const products = [];
     let factor = Math.floor(16 / stripeProducts.length);
     const remainder = 16 % stripeProducts.length;
