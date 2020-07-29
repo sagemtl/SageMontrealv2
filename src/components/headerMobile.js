@@ -11,7 +11,6 @@ import Test from '../../public/static/test.mp4';
 const HeaderMobile = ({ cart, setCart }) => {
   const { state, dispatch } = useContext(GlobalContext);
   const { navOpen } = state;
-  const [position, setPosition] = useState('calc(100% / 4 * -2)');
 
   const video = useRef();
 
@@ -24,15 +23,6 @@ const HeaderMobile = ({ cart, setCart }) => {
       },
     });
     setTimeout(() => video.current.pause(), 3000);
-  };
-
-  const openNavbar = () => {
-    dispatch({
-      type: 'SET_NAVBAR_OPEN',
-      payload: {
-        navOpen: !navOpen,
-      },
-    });
   };
 
   return (
