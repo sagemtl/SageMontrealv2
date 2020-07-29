@@ -57,6 +57,28 @@ const Product = ({ data }) => {
   // not fully tested yet
   const sortedSkus = sortSizes(skus.edges);
 
+  const imgIcons = () => {
+    var icons = item.children.map((node) => {
+      // console.log("node attr");
+      // console.log(node.childImageSharp.fixed.src);
+      // console.log(node.name);
+      // console.log(node.id);
+      <img
+        src={node.childImageSharp.fixed.src}
+        alt={node.name}
+        key={node.id}
+        className="product-images__image--secondary"
+        onClick={() =>
+          setSelectedImage(node.childImageSharp.fixed.src)
+        }
+      />
+      
+    });
+    console.log(icons.length);
+    console.log(icons);
+    return icons;
+  }
+
   return (
     <Layout current={`/shop/${item.fields.slug}`}>
       <div className="product">
@@ -67,15 +89,35 @@ const Product = ({ data }) => {
             className="product-images__image--main"
           />
           <div className="product-images-secondary">
-            {item.children.map((node) => {
+            {/* {item.children.map((node) => {
+              // console.log("node attr");
+              // console.log(node.childImageSharp.fixed.src);
+              // console.log(node.name);
+              // console.log(node.id);
               <img
                 src={node.childImageSharp.fixed.src}
                 alt={node.name}
                 key={node.id}
                 className="product-images__image--secondary"
-                onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
-              />;
-            })}
+                onClick={() =>
+                  setSelectedImage(node.childImageSharp.fixed.src)
+                }
+              />
+              
+            })} */}
+            {imgIcons()}
+
+            {/* not pulling images from skus anymore */}
+            {/* {skus.edges.map(({ node }) => (
+              <img
+                src={node.featuredImg.childImageSharp.fixed.src}
+                alt={node.attributes.name}
+                className="product-images__image--secondary"
+                onClick={() =>
+                  setSelectedImage(node.featuredImg.childImageSharp.fixed.src)
+                }
+              />
+            ))} */}
           </div>
         </div>
         <div className="product-details">
@@ -122,6 +164,7 @@ const Product = ({ data }) => {
               </header>
               <div>
                 <table>
+                  <tbody>
                   <tr>
                     <th> </th>
                     <th>S</th>
@@ -157,6 +200,7 @@ const Product = ({ data }) => {
                     <th>26</th>
                     <th>27</th>
                   </tr>
+                  </tbody>
                 </table>
               </div>
             </DialogContent>

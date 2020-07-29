@@ -34,6 +34,26 @@ export const getProduct = async (prod_id) => {
     .catch((error) => console.log('error', error));
 };
 
+export const createProduct = async (product_info) => {
+  product_info["type"] = "good";
+  product_info["attributes"] = ["name"];
+  const requestOptions = {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    redirect: 'follow',
+    body: JSON.stringify(product_info)
+  };
+  return fetch(`http://localhost:5000/product/${prod_id}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      return result;
+    })
+    .catch((error) => console.log('error', error));
+};
+
 export const sortSizes = (skus) => {
   var ordering = {}, // map for efficient lookup of sortIndex
     sortOrder = ['XS','S','M', 'L', "XL", "Onesize"];

@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import { updateProduct, getProduct } from '../helpers/stripeHelper';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import '../styles/cms.scss';
 import { createJsxAttribute } from 'typescript';
 
 const CMS = () => {
   // Product fields
-
   const [productId, setProductId] = useState('');
   const [name, setName] = useState('');
   const [active, setActive] = useState(false);
@@ -31,7 +36,9 @@ const CMS = () => {
   const [snackSeverity, setSnackSeverity] = useState('info'); // one of 'info', 'error', 'success', 'warning'
   const [snackMessage, setSnackMessage] = useState('');
 
-  const setSnack = (open, sev, msg) => {
+  const [createMode, setCreateMode] = useState(false);
+
+  const setSnack =(open, sev, msg)=>{
     setSnackbarOpen(open);
     setSnackSeverity(sev);
     setSnackMessage(msg);
@@ -40,9 +47,13 @@ const CMS = () => {
   const handleGetProduct = async (e) => {
     // e.preventDefault();
     setProductId(productId.trim());
-    const prod = await getProduct(productId);
-    if (prod.statusCode) {
-      if (prod.statusCode == 404) {
+    var prod = await getProduct(productId);
+    if(prod==undefined){
+      setSnack(true, 'error', 'There has been an error getting the product');
+      return;
+    }
+    else if(prod.statusCode){
+      if(prod.statusCode==404){
         setSnack(true, 'error', 'The product does not exist');
         return;
       }
@@ -97,6 +108,36 @@ const CMS = () => {
     <div className="cms">
       <div className="cms-product">
         <h1>Product</h1>
+        <button
+            onClick={() => setCreateMode(true)}
+            type="button"
+            className="cms__button"
+          >
+            Create
+        </button>
+        <Dialog open={createMode} onClose={()=>setCreateMode(false)} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here. We will send updates
+            occasionally.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <button color="primary">
+            Cancel
+          </button>
+        </DialogActions>
+      </Dialog>
+
         <div className="cms__field">
           <p className="cms__label">Product ID</p>
           <input
