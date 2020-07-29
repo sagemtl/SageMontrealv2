@@ -5,7 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import './styles/lookbookFront.scss';
 import Fade from '@material-ui/core/Fade';
 
-const LookbookFront = ({ label, season, images, position }) => {
+const LookbookFront = ({ label, season, images }) => {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
   const [index, setIndex] = useState(0);
@@ -55,9 +55,6 @@ const LookbookFront = ({ label, season, images, position }) => {
         <h1 className="lookbook-front__header--animation">{label}</h1>
         <p className="lookbook-front__text--animation">{season}</p>
       </div>
-      {images.map((image) => {
-        return <img src={image} style={{ display: 'none' }} alt="Preloaded" />;
-      })}
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -79,11 +76,6 @@ LookbookFront.propTypes = {
   label: PropTypes.string.isRequired,
   season: PropTypes.string.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
-  position: PropTypes.string,
-};
-
-LookbookFront.defaultProps = {
-  position: 'top',
 };
 
 export default LookbookFront;

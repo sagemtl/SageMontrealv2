@@ -14,7 +14,6 @@
 
 .lookbook {
   height: 100vh;
-  margin-bottom: -50px;
   overflow-y: hidden;
   white-space: nowrap;
   text-align: left;
@@ -42,9 +41,24 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
 @media (max-width: 450px) {
   .lookbook {
     top: 60px;
     width: 100%;
   }
+
+  .lookbook__icon--right {
+    display: none;
+  }
+
+  .lookbook__icon--left {
+    display: none;
+  }
 }
+
