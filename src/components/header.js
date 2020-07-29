@@ -1,6 +1,6 @@
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import './styles/header.scss';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { GlobalContext } from '../context/Provider';
@@ -24,8 +24,6 @@ const routes = [
 const Header = ({ current }) => {
   const { state, dispatch } = useContext(GlobalContext);
   const { navOpen } = state;
-
-  const [animated, setAnimated] = useState(false);
 
   const openNavbar = (open) => {
     dispatch({

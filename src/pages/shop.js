@@ -120,7 +120,7 @@ export default Shop;
 
 export const query = graphql`
   query MyQuery {
-    allStripeProduct (filter: {active: {eq: true}}) {
+    allStripeProduct(filter: { active: { eq: true } }) {
       edges {
         node {
           id

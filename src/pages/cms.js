@@ -25,24 +25,24 @@ const CMS = () => {
   const [coverUrl, setCoverUrl] = useState('');
   const [lookbookImages, setLookbookImages] = useState('');
   // allow editing of product info
-  const [edit, setEdit] = useState(false); 
-  //snackbar
-  const [snackbarOpen, setSnackbarOpen] = useState(false)
-  const [snackSeverity, setSnackSeverity] = useState('info'); //one of 'info', 'error', 'success', 'warning'
+  const [edit, setEdit] = useState(false);
+  // snackbar
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackSeverity, setSnackSeverity] = useState('info'); // one of 'info', 'error', 'success', 'warning'
   const [snackMessage, setSnackMessage] = useState('');
 
-  const setSnack =(open, sev, msg)=>{
+  const setSnack = (open, sev, msg) => {
     setSnackbarOpen(open);
     setSnackSeverity(sev);
     setSnackMessage(msg);
-  }
+  };
 
   const handleGetProduct = async (e) => {
     // e.preventDefault();
     setProductId(productId.trim());
-    var prod = await getProduct(productId);
-    if(prod.statusCode){
-      if(prod.statusCode==404){
+    const prod = await getProduct(productId);
+    if (prod.statusCode) {
+      if (prod.statusCode == 404) {
         setSnack(true, 'error', 'The product does not exist');
         return;
       }
@@ -51,38 +51,45 @@ const CMS = () => {
     }
     setActive(prod.active);
     setDesc(prod.description);
-    setImages(prod.images.join(',')); //turn array into comma seperated string
+    setImages(prod.images.join(',')); // turn array into comma seperated string
     setName(prod.name);
-    prod.metadata.featuredImg? setFeaturedImg(prod.metadata.featuredImg) : null;
-    prod.metadata.modelInfo? setFeaturedImg(prod.metadata.modelInfo) : null;
+    prod.metadata.featuredImg
+      ? setFeaturedImg(prod.metadata.featuredImg)
+      : null;
+    prod.metadata.modelInfo ? setFeaturedImg(prod.metadata.modelInfo) : null;
   };
 
-  const handleUpdateProduct = async()=>{
-    //handle images
+  const handleUpdateProduct = async () => {
+    // handle images
     setImages(images.trim());
     setImages(images.replace(/\s/g, ''));
-    var imgArr = images.split(',');
-    var count = (images.match(/http/g) || []).length;
-    if(count != imgArr.length){
-      setSnack(true, 'error', "URLs are incorrect in format, must be seperated by commas");
+    const imgArr = images.split(',');
+    const count = (images.match(/http/g) || []).length;
+    if (count != imgArr.length) {
+      setSnack(
+        true,
+        'error',
+        'URLs are incorrect in format, must be seperated by commas',
+      );
       return;
     }
 
-    var newProduct = new Object;
+    const newProduct = new Object();
     newProduct.active = active;
     newProduct.description = desc;
     newProduct.name = name;
     newProduct.images = imgArr;
     newProduct.metadata = {
-      featuredImg:featuredImg,
-      modelInfo: modelInfo,
+      featuredImg,
+      modelInfo,
     };
-    var prod = await updateProduct(productId, newProduct);
-    prod.statusCode? setSnack(true, 'error', "There has been an error updating the product")
-                     : setSnack(true, 'success', "Product is successfully updated");
-  }
-  
-  const Alert = props => {
+    const prod = await updateProduct(productId, newProduct);
+    prod.statusCode
+      ? setSnack(true, 'error', 'There has been an error updating the product')
+      : setSnack(true, 'success', 'Product is successfully updated');
+  };
+
+  const Alert = (props) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 
@@ -105,7 +112,7 @@ const CMS = () => {
           >
             Get Product
           </button>
-          <br/>
+          <br />
           <button
             onClick={() => setEdit(true)}
             type="button"
@@ -164,7 +171,9 @@ const CMS = () => {
               placeholder="true/false"
               type="checkbox"
               checked={active}
-              onChange={()=>{setActive(!active)}}
+              onChange={() => {
+                setActive(!active);
+              }}
               disabled={!edit}
               className="cms__checkbox"
             />
@@ -198,11 +207,14 @@ const CMS = () => {
           </div>
         </div>
 
-        <button type="button" className="cms__button" onClick={()=>handleUpdateProduct()}>
+        <button
+          type="button"
+          className="cms__button"
+          onClick={() => handleUpdateProduct()}
+        >
           Update Product
         </button>
       </div>
-
 
       <div className="cms-lookbook">
         <h1>Lookbook</h1>
@@ -250,13 +262,10 @@ const CMS = () => {
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={4000}
-        onClose={()=>setSnackbarOpen(false)}
-        >
-        <Alert severity={snackSeverity}>
-          {snackMessage}
-        </Alert>
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert severity={snackSeverity}>{snackMessage}</Alert>
       </Snackbar>
-
     </div>
   );
 };
