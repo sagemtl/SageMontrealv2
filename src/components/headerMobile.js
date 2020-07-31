@@ -6,7 +6,6 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloseIcon from '@material-ui/icons/Close';
 import { GlobalContext } from '../context/Provider';
-import Test from '../../public/static/test.mp4';
 
 const HeaderMobile = ({ cart, setCart }) => {
   const { state, dispatch } = useContext(GlobalContext);
@@ -42,7 +41,7 @@ const HeaderMobile = ({ cart, setCart }) => {
           onClick={() => openNavbar()}
         >
           <video
-            src={Test}
+            src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
             ref={video}
             className="header-mobile__logo"
             muted

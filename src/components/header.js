@@ -1,10 +1,9 @@
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import './styles/header.scss';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { GlobalContext } from '../context/Provider';
-import Test from '../../public/static/test.mp4';
 
 const routes = [
   {
@@ -24,8 +23,6 @@ const routes = [
 const Header = ({ current }) => {
   const { state, dispatch } = useContext(GlobalContext);
   const { navOpen } = state;
-
-  const [animated, setAnimated] = useState(false);
 
   const openNavbar = (open) => {
     dispatch({
@@ -51,7 +48,7 @@ const Header = ({ current }) => {
             className="navbox-logo-wrapper"
           >
             <video
-              src={Test}
+              src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
               className="navbox__logo"
               muted
               playsInline

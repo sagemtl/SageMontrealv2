@@ -5,7 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import './styles/lookbookFront.scss';
 import Fade from '@material-ui/core/Fade';
 
-const LookbookFront = ({ label, season, images, position }) => {
+const LookbookFront = ({ season, images, cover, position }) => {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
   const [index, setIndex] = useState(0);
@@ -13,12 +13,12 @@ const LookbookFront = ({ label, season, images, position }) => {
   const modalContent = (
     <Fade in={open}>
       <div className="lookbook-modal-content">
-        {images.map((image, index) => {
+        {images.map((image) => {
           return (
             <img
               src={image}
               className="lookbook-front__image"
-              alt={`${label}-${index}`}
+              alt="Lookbook cover"
             />
           );
         })}
@@ -49,15 +49,12 @@ const LookbookFront = ({ label, season, images, position }) => {
         onMouseOver={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         style={{
-          backgroundImage: `url(${images[0]})`,
+          backgroundImage: `url(${cover})`,
+          backgroundPosition: position,
         }}
       >
-        <h1 className="lookbook-front__header--animation">{label}</h1>
-        <p className="lookbook-front__text--animation">{season}</p>
+        <p className="lookbook-front__text">{season}</p>
       </div>
-      {images.map((image) => {
-        return <img src={image} style={{ display: 'none' }} alt="Preloaded" />;
-      })}
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -76,14 +73,14 @@ const LookbookFront = ({ label, season, images, position }) => {
 };
 
 LookbookFront.propTypes = {
-  label: PropTypes.string.isRequired,
   season: PropTypes.string.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  cover: PropTypes.string.isRequired,
   position: PropTypes.string,
 };
 
 LookbookFront.defaultProps = {
-  position: 'top',
+  position: 'center top',
 };
 
 export default LookbookFront;
