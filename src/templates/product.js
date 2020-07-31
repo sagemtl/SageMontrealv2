@@ -84,7 +84,7 @@ const Product = ({ data }) => {
           {item.metadata.modelInfo ? (
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
-          <p>$ {skus.edges[0].node.price / 100}</p>
+          <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
           <div className="product-details-sizes">
             {sortedSkus.map(({ node }) => {
               const size = node.attributes.name;

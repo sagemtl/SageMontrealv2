@@ -10,15 +10,18 @@ import '../styles/lookbook.scss';
 const LookbookMenu = ({ uri }) => {
   const collections = [
     {
-      label: 'Swish',
       season: 'Capsule 01',
+      cover:
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596165459/SwishCover_b444ou.jpg',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1583035301/lookbookSwish/swish_lookbook_u1laoy.jpg',
       ],
+      position: 'bottom right',
     },
     {
-      label: 'Steam',
       season: 'Winter 20',
+      cover:
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596165459/SteamCover_aye3a5.jpg',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/1_gjlmik.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/2_pk948p.jpg',
@@ -31,10 +34,12 @@ const LookbookMenu = ({ uri }) => {
         'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/9_esocvv.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1579583184/lookbookSteam/10_iezm3p.jpg',
       ],
+      position: 'bottom left',
     },
     {
-      label: 'Transit',
       season: 'Summer 19',
+      cover:
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596165459/TransitCover_jhivn1.jpg',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1561337613/lookbook-desktop/1_i5socf.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1561337443/lookbook-desktop/2_eayxmf.jpg',
@@ -56,21 +61,23 @@ const LookbookMenu = ({ uri }) => {
       ],
     },
     {
-      label: '仙人集团',
+      season: 'Winter 18',
+      cover:
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596165459/20666Cover_kdvsxh.jpg',
+      images: [
+        'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
+      ],
+    },
+    {
       season: 'Spring 18',
+      cover:
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596165459/SageCover_h78pkc.jpg',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0593_dqqatl.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/Untitled-2_jb5y2r.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0811_waybex.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0791_decats.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0820_bwi8bi.jpg',
-      ],
-    },
-    {
-      label: '20666',
-      season: 'Winter 18',
-      images: [
-        'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
       ],
     },
   ];
@@ -96,12 +103,12 @@ const LookbookMenu = ({ uri }) => {
           className="lookbook__icon--right"
           onClick={() => scrollLeft()}
         />
-        {collections.map(({ label, season, images, position }) => {
+        {collections.map(({ season, images, cover, position }) => {
           return (
             <LookbookFront
               images={images}
-              label={label}
               season={season}
+              cover={cover}
               position={position}
             />
           );
