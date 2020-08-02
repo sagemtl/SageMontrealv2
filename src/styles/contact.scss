@@ -1,23 +1,52 @@
 .contact {
-  height: 100vh;
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin-bottom: 50px;
+  overflow: hidden;
+  padding: 70px 50px;
+  flex-wrap: wrap;
+  position: relative;
+  left: 10vw;
 
   &__header {
     color: #154734;
-    margin-bottom: 20px;
+    font-size: 2rem;
+
+    &--2 {
+      color: #154734;
+      font-weight: bold;
+      margin: 5px 0;
+      text-transform: uppercase;
+    }
   }
 
-  &__icon {
-    color: #154734;
+  &__text {
+    margin: 0;
+    font-size: 0.8rem;
   }
+
+  &__image {
+    width: 400px;
+    height: auto;
+  }
+}
+
+.contact-column {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  min-width: 350px;
+  margin: 3vw;
 }
 
 .contact-row {
   display: flex;
-  justify-content: space-evenly;
-  width: 260px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+@media (max-width: 500px) {
+  .contact {
+    left: 0;
+    justify-content: center;
+  }
 }
