@@ -77,7 +77,6 @@ const contact = ({ uri }) => {
           <p className="contact__text">
             All listed prices are in Canadian Dollars.
           </p>
-          <br />
           <p className="contact__text">
             Currently accepted payments are American Express, Visa & Mastercard.
           </p>

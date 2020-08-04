@@ -21,7 +21,7 @@ const LookbookMenu = ({ uri }) => {
     {
       season: 'Winter 20',
       cover:
-        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596165459/SteamCover_aye3a5.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596578719/SteamCoverV2_vrre0u.jpg',
       images: [
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596384831/Steam/DSC_1725-min_tlum4v.jpg',
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596384830/Steam/DSC_1766-min_v1pid9.jpg',
@@ -35,7 +35,7 @@ const LookbookMenu = ({ uri }) => {
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596384833/Steam/DSC_2136-min_vaf3ts.jpg',
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596384833/Steam/DSC_2155-min_e9xgnx.jpg',
       ],
-      position: 'bottom left',
+      position: 'top left',
     },
     {
       season: 'Summer 19',
@@ -64,7 +64,7 @@ const LookbookMenu = ({ uri }) => {
     {
       season: 'Winter 18',
       cover:
-        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596165459/20666Cover_kdvsxh.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596578719/20666CoverV2_t2bp8h.jpg',
       images: [
         'https://res.cloudinary.com/sage-montreal/image/upload/v1556419772/lookbook_mvygkt.jpg',
       ],
@@ -80,19 +80,20 @@ const LookbookMenu = ({ uri }) => {
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0791_decats.jpg',
         'https://res.cloudinary.com/sage-montreal/image/upload/v1580350739/lookbookFirst/DSC_0820_bwi8bi.jpg',
       ],
+      position: 'top right',
     },
   ];
 
   const scrollRight = () => {
     window.scrollBy({
-      left: -600,
+      left: -500,
       behavior: 'smooth',
     });
   };
 
   const scrollLeft = () => {
     window.scrollBy({
-      left: 600,
+      left: 500,
       behavior: 'smooth',
     });
   };
@@ -111,6 +112,7 @@ const LookbookMenu = ({ uri }) => {
               season={season}
               cover={cover}
               position={position}
+              key={season}
             />
           );
         })}
