@@ -13,11 +13,9 @@
 }
 
 .lookbook {
-  height: 100vh;
-  overflow-y: hidden;
-  white-space: nowrap;
-  text-align: left;
-  margin-right: auto;
+  display: flex;
+  width: calc(650px * 5);
+  overflow: hidden;
 
   &__icon {
     &--right {
@@ -51,6 +49,8 @@
   .lookbook {
     top: 60px;
     width: 100%;
+    overflow-x: scroll;
+    background: red;
   }
 
   .lookbook__icon--right {

@@ -18,35 +18,43 @@
   top: 40vh;
 }
 
-@mixin text {
-}
-
 .lookbook-front {
   @include lookbook();
-  min-width: 600px;
+  min-width: 650px;
   transition: all 1s;
+  overflow: hidden;
+  position: relative;
 
-  &:hover {
-    opacity: 0.7;
+  &:hover .lookbook-front-overlay {
+    opacity: 1;
+    visibility: visible;
   }
 
   &__text {
     color: white;
-    font-size: 1.3rem;
-    position: relative;
-    top: 20px;
-    left: 30px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
   }
 
   &__image {
-    width: auto;
-    max-width: 100%;
+    width: 100%;
+    height: auto;
   }
+}
 
-  &__icon {
-    color: white;
-    transform: rotate(90deg);
-  }
+.lookbook-front-overlay {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s;
+  background-color: rgba(0, 0, 0, 0.6);
+  max-width: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0; bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .lookbook-modal {
@@ -68,8 +76,8 @@
 
 @media (max-width: 450px) {
   .lookbook-front {
-    width: 100%;
-    min-width: auto;
+    min-width: 100vw;
     padding-top: 60px;
+    white-space: nowrap;
   }
 }

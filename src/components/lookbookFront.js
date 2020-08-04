@@ -7,8 +7,6 @@ import Fade from '@material-ui/core/Fade';
 
 const LookbookFront = ({ season, images, cover, position }) => {
   const [open, setOpen] = useState(false);
-  const [hover, setHover] = useState(false);
-  const [index, setIndex] = useState(0);
 
   const modalContent = (
     <Fade in={open}>
@@ -26,34 +24,19 @@ const LookbookFront = ({ season, images, cover, position }) => {
     </Fade>
   );
 
-  useEffect(() => {
-    if (hover) {
-      setTimeout(() => {
-        if (images.length > 1) {
-          setIndex(index + 1);
-          if (index === images.length - 1) {
-            setIndex(0);
-          }
-        }
-      }, 1500);
-    } else {
-      setIndex(0);
-    }
-  }, [hover, images.length, index]);
-
   return (
     <>
       <div
         className="lookbook-front"
         onClick={() => setOpen(true)}
-        onMouseOver={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
         style={{
           backgroundImage: `url(${cover})`,
           backgroundPosition: position,
         }}
       >
-        <p className="lookbook-front__text">{season}</p>
+        <div className="lookbook-front-overlay">
+          <p className="lookbook-front__text">{season}</p>
+        </div>
       </div>
       <Modal
         open={open}
