@@ -1,5 +1,6 @@
 
 export const updateProduct = async (prod_id, product_info) => {
+  console.log(product_info);
   const requestOptions = {
     headers: {
       'Accept': 'application/json',
@@ -37,6 +38,7 @@ export const getProduct = async (prod_id) => {
 export const createProduct = async (product_info) => {
   product_info["type"] = "good";
   product_info["attributes"] = ["name"];
+  product_info["active"] = false;
   const requestOptions = {
     headers: {
       'Accept': 'application/json',
@@ -46,7 +48,7 @@ export const createProduct = async (product_info) => {
     redirect: 'follow',
     body: JSON.stringify(product_info)
   };
-  return fetch(`http://localhost:5000/product/${prod_id}`, requestOptions)
+  return fetch(`http://localhost:5000/create/product`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       return result;

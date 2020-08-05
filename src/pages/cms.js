@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { updateProduct, getProduct } from '../helpers/stripeHelper';
+import { updateProduct, getProduct, createProduct } from '../helpers/stripeHelper';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+
+import CreateModal from '../components/createModal'
 
 import '../styles/cms.scss';
 import { createJsxAttribute } from 'typescript';
@@ -35,8 +31,11 @@ const CMS = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackSeverity, setSnackSeverity] = useState('info'); // one of 'info', 'error', 'success', 'warning'
   const [snackMessage, setSnackMessage] = useState('');
-
+  // create a product
   const [createMode, setCreateMode] = useState(false);
+  const [nameCreate, setNameCreate] = useState('');
+  const [imagesCreate, setImagesCreate] = useState('');
+  const [descCreate, setDescCreate] = useState('');
 
   const setSnack =(open, sev, msg)=>{
     setSnackbarOpen(open);
@@ -44,10 +43,31 @@ const CMS = () => {
     setSnackMessage(msg);
   };
 
-  const handleGetProduct = async (e) => {
-    // e.preventDefault();
-    setProductId(productId.trim());
-    var prod = await getProduct(productId);
+  const clearCreateFields = () => {
+    setNameCreate('');
+    setDescCreate('');
+    setImagesCreate('');
+  }
+
+  const processImgArr = (images) => {
+    //handle images
+    var imgArr = images.split(',');
+    imgArr = imgArr.map(s => s.trim())
+    var count = (images.match(/http/g) || []).length;
+    if (count == 0) {
+      setSnack(true, 'error', "Must have at least 1 url in Images URL");
+      return null;
+    } else if(count != imgArr.length){
+      setSnack(true, 'error', "URLs are incorrect in format, must be seperated by commas");
+      return null;
+    }
+    return imgArr;
+  }
+
+  const handleGetProduct = async (id = productId) => {
+    id = id.trim();
+    setProductId(id);
+    var prod = await getProduct(id);
     if(prod==undefined){
       setSnack(true, 'error', 'There has been an error getting the product');
       return;
@@ -70,20 +90,10 @@ const CMS = () => {
     prod.metadata.modelInfo ? setFeaturedImg(prod.metadata.modelInfo) : null;
   };
 
-  const handleUpdateProduct = async () => {
-    // handle images
-    setImages(images.trim());
-    setImages(images.replace(/\s/g, ''));
-    const imgArr = images.split(',');
-    const count = (images.match(/http/g) || []).length;
-    if (count != imgArr.length) {
-      setSnack(
-        true,
-        'error',
-        'URLs are incorrect in format, must be seperated by commas',
-      );
-      return;
-    }
+  const handleUpdateProduct = async()=>{
+    //handle images
+    var imgArr = processImgArr(images);
+    if (!imgArr) return;
 
     const newProduct = new Object();
     newProduct.active = active;
@@ -94,13 +104,32 @@ const CMS = () => {
       featuredImg,
       modelInfo,
     };
-    const prod = await updateProduct(productId, newProduct);
-    prod.statusCode
-      ? setSnack(true, 'error', 'There has been an error updating the product')
-      : setSnack(true, 'success', 'Product is successfully updated');
-  };
+    var prod = await updateProduct(productId, newProduct);
+    prod.statusCode? setSnack(true, 'error', "There has been an error updating the product")
+                     : setSnack(true, 'success', "Product is successfully updated");
+  }
 
-  const Alert = (props) => {
+  const handleCreateProduct = async() => {
+    var imgArr = processImgArr(imagesCreate);
+    if (!imgArr) return;
+
+    var newProduct = new Object;
+    newProduct.description = descCreate;
+    newProduct.name = nameCreate;
+    newProduct.images = imgArr;
+
+    var prod = await createProduct(newProduct);
+    prod.statusCode? setSnack(true, 'error', `Code ${prod.statusCode}, there has been an error creating the product`)
+                    : setSnack(true, 'success', "Product is successfully created");
+    clearCreateFields();
+    if(prod.id){
+      setProductId(prod.id);
+      setCreateMode(false);
+      handleGetProduct(prod.id);
+    }
+  }
+  
+  const Alert = props => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 
@@ -115,29 +144,17 @@ const CMS = () => {
           >
             Create
         </button>
-        <Dialog open={createMode} onClose={()=>setCreateMode(false)} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We will send updates
-            occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <button color="primary">
-            Cancel
-          </button>
-        </DialogActions>
-      </Dialog>
-
+        <CreateModal
+          createMode={createMode}
+          setCreateMode={setCreateMode}
+          nameCreate={nameCreate}
+          setNameCreate={setNameCreate}
+          descCreate={descCreate}
+          setDescCreate={setDescCreate}
+          imagesCreate={imagesCreate}
+          setImagesCreate={setImagesCreate}
+          handleCreateProduct={handleCreateProduct}
+        />
         <div className="cms__field">
           <p className="cms__label">Product ID</p>
           <input
@@ -147,7 +164,7 @@ const CMS = () => {
             className="cms__input"
           />
           <button
-            onClick={(e) => handleGetProduct(e)}
+            onClick={(e) => handleGetProduct()}
             type="button"
             className="cms__button"
           >

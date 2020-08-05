@@ -89,22 +89,7 @@ const Product = ({ data }) => {
             className="product-images__image--main"
           />
           <div className="product-images-secondary">
-            {/* {item.children.map((node) => {
-              // console.log("node attr");
-              // console.log(node.childImageSharp.fixed.src);
-              // console.log(node.name);
-              // console.log(node.id);
-              <img
-                src={node.childImageSharp.fixed.src}
-                alt={node.name}
-                key={node.id}
-                className="product-images__image--secondary"
-                onClick={() =>
-                  setSelectedImage(node.childImageSharp.fixed.src)
-                }
-              />
-              
-            })} */}
+            
             {imgIcons()}
 
             {/* not pulling images from skus anymore */}
