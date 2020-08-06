@@ -152,6 +152,7 @@ exports.createPages = async ({ graphql, actions }) => {
             fields {
               slug
             }
+            featuredImg {id}
           }
         }
       }
@@ -161,8 +162,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const path = require(`path`);
 
   result.data.allStripeProduct.edges.forEach(({ node }) => {
-    // console.log("creating page: " + node.fields.slug);
-    if(node.featuredImg){
+    if(node.featuredImg.id){
       createPage({
         path: `/shop/${node.fields.slug}`,
         component: path.resolve(`./src/templates/product.js`),
