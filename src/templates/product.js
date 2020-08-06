@@ -41,7 +41,6 @@ const Product = ({ data }) => {
         sku: selectedSku,
       });
     }
-    console.log(itemsCopy);
     dispatch({
       type: 'SET_CHECKOUT_ITEMS',
       payload: {
@@ -100,8 +99,6 @@ const Product = ({ data }) => {
                     onChange={() => {
                       setSelectedSku(nodeid);
                       setSelectedSize(size);
-                      
-                      console.log(`after set selected sku, nodeid ${nodeid}, selectedsku ${selectedSku}, selectedsize ${size}`);
                     }}
                   />
                   <label htmlFor={size} className="cursor">
