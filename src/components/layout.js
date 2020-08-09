@@ -14,6 +14,7 @@ const Layout = ({
   footerTransparent,
   footerColor,
   hideCart,
+  style,
 }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -42,7 +43,9 @@ const Layout = ({
         <Header siteTitle={data.site.siteMetadata.title} current={current} />
       )}
       {(!isMobile || cart) && !hideCart && <Cart isMobile={isMobile} />}
-      <div className="layout">{children}</div>
+      <div className="layout" style={style}>
+        {children}
+      </div>
       <Footer transparent={footerTransparent} color={footerColor} />
     </>
   );
@@ -54,12 +57,14 @@ Layout.propTypes = {
   footerTransparent: PropTypes.bool,
   hideCart: PropTypes.bool,
   footerColor: PropTypes.string,
+  style: PropTypes.shape,
 };
 
 Layout.defaultProps = {
   footerTransparent: false,
   hideCart: false,
   footerColor: 'black',
+  style: {},
 };
 
 export default Layout;

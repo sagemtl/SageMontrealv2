@@ -35,7 +35,7 @@ const LookbookMenu = ({ uri }) => {
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596384833/Steam/DSC_2136-min_vaf3ts.jpg',
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596384833/Steam/DSC_2155-min_e9xgnx.jpg',
       ],
-      position: 'top left',
+      position: 'top right',
     },
     {
       season: 'Summer 19',
@@ -99,7 +99,11 @@ const LookbookMenu = ({ uri }) => {
   };
 
   return (
-    <Layout current={uri} footerColor="white">
+    <Layout
+      current={uri}
+      footerColor="white"
+      style={{ alignItems: 'flex-start' }}
+    >
       <div className="lookbook">
         <ArrowForwardIosIcon
           className="lookbook__icon--right"
@@ -116,11 +120,11 @@ const LookbookMenu = ({ uri }) => {
             />
           );
         })}
-        <ArrowForwardIosIcon
-          className="lookbook__icon--left"
-          onClick={() => scrollRight()}
-        />
       </div>
+      <ArrowForwardIosIcon
+        className="lookbook__icon--left"
+        onClick={() => scrollRight()}
+      />
     </Layout>
   );
 };

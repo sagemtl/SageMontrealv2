@@ -50,7 +50,7 @@ const Product = ({ data }) => {
   };
 
   const filterPrice = (sku) => {
-    var matched = skus.edges.find((node) => node.node.id == sku);
+    const matched = skus.edges.find((node) => node.node.id == sku);
     return matched.node.price / 100;
   };
 
@@ -58,26 +58,18 @@ const Product = ({ data }) => {
   const sortedSkus = sortSizes(skus.edges);
 
   const imgIcons = () => {
-    var icons = item.children.map((node) => {
-      // console.log("node attr");
-      // console.log(node.childImageSharp.fixed.src);
-      // console.log(node.name);
-      // console.log(node.id);
-      <img
-        src={node.childImageSharp.fixed.src}
-        alt={node.name}
-        key={node.id}
-        className="product-images__image--secondary"
-        onClick={() =>
-          setSelectedImage(node.childImageSharp.fixed.src)
-        }
-      />
-      
+    const icons = item.children.map((node) => {
+      return (
+        <img
+          src={node.childImageSharp.fixed.src}
+          alt={node.name}
+          className="product-images__image--secondary"
+          onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
+        />
+      );
     });
-    console.log(icons.length);
-    console.log(icons);
     return icons;
-  }
+  };
 
   return (
     <Layout current={`/shop/${item.fields.slug}`}>
@@ -88,22 +80,7 @@ const Product = ({ data }) => {
             alt={item.name}
             className="product-images__image--main"
           />
-          <div className="product-images-secondary">
-            
-            {imgIcons()}
-
-            {/* not pulling images from skus anymore */}
-            {/* {skus.edges.map(({ node }) => (
-              <img
-                src={node.featuredImg.childImageSharp.fixed.src}
-                alt={node.attributes.name}
-                className="product-images__image--secondary"
-                onClick={() =>
-                  setSelectedImage(node.featuredImg.childImageSharp.fixed.src)
-                }
-              />
-            ))} */}
-          </div>
+          <div className="product-images-secondary">{imgIcons()}</div>
         </div>
         <div className="product-details">
           <h1 className="product-details__header">{item.name}</h1>
@@ -139,7 +116,6 @@ const Product = ({ data }) => {
             className="size-guide__size-guide-link"
             onClick={() => setModalOpen(true)}
           >
-            {' '}
             size guide
           </button>
           <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
@@ -150,41 +126,41 @@ const Product = ({ data }) => {
               <div>
                 <table>
                   <tbody>
-                  <tr>
-                    <th> </th>
-                    <th>S</th>
-                    <th>M</th>
-                    <th>L</th>
-                    <th>XL</th>
-                  </tr>
-                  <tr>
-                    <th>Width</th>
-                    <th>49</th>
-                    <th>52</th>
-                    <th>56</th>
-                    <th>59</th>
-                  </tr>
-                  <tr>
-                    <th>Shoulders</th>
-                    <th>44</th>
-                    <th>46</th>
-                    <th>48</th>
-                    <th>51</th>
-                  </tr>
-                  <tr>
-                    <th>Length</th>
-                    <th>65</th>
-                    <th>67</th>
-                    <th>70</th>
-                    <th>73</th>
-                  </tr>
-                  <tr>
-                    <th>Sleeve</th>
-                    <th>23</th>
-                    <th>25</th>
-                    <th>26</th>
-                    <th>27</th>
-                  </tr>
+                    <tr>
+                      <th> </th>
+                      <th>S</th>
+                      <th>M</th>
+                      <th>L</th>
+                      <th>XL</th>
+                    </tr>
+                    <tr>
+                      <th>Width</th>
+                      <th>49</th>
+                      <th>52</th>
+                      <th>56</th>
+                      <th>59</th>
+                    </tr>
+                    <tr>
+                      <th>Shoulders</th>
+                      <th>44</th>
+                      <th>46</th>
+                      <th>48</th>
+                      <th>51</th>
+                    </tr>
+                    <tr>
+                      <th>Length</th>
+                      <th>65</th>
+                      <th>67</th>
+                      <th>70</th>
+                      <th>73</th>
+                    </tr>
+                    <tr>
+                      <th>Sleeve</th>
+                      <th>23</th>
+                      <th>25</th>
+                      <th>26</th>
+                      <th>27</th>
+                    </tr>
                   </tbody>
                 </table>
               </div>
