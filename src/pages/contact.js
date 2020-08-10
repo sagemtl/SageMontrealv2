@@ -1,12 +1,34 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Layout from '../components/layout';
 import './styles/contact.scss';
 
 const Contact = ({ uri }) => {
   const [name, setName] = useState('');
+  const [subject, setSubject] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
+
+  const clearForm = () => {
+    setName('');
+    setSubject('');
+    setEmail('');
+    setMessage('');
+  };
+
+  const sendForm = async () => {
+    try {
+      await axios.post('http://localhost:5000/contact', {
+        name,
+        subject,
+        email,
+        message,
+      });
+      clearForm();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Layout current={uri}>
@@ -24,22 +46,22 @@ const Contact = ({ uri }) => {
             />
           </div>
           <div className="contact-form__group">
+            <p className="contact-form__label">Subject:</p>
+            <input
+              name="subject"
+              type="text"
+              onChange={(e) => setSubject(e.target.value)}
+              value={subject}
+              className="contact-form__input"
+            />
+          </div>
+          <div className="contact-form__group">
             <p className="contact-form__label">Email*:</p>
             <input
               name="email"
               type="text"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
-              className="contact-form__input"
-            />
-          </div>
-          <div className="contact-form__group">
-            <p className="contact-form__label">Phone:</p>
-            <input
-              name="phone"
-              type="text"
-              onChange={(e) => setPhone(e.target.value)}
-              value={phone}
               className="contact-form__input"
             />
           </div>
@@ -54,7 +76,17 @@ const Contact = ({ uri }) => {
               rows={5}
             />
           </div>
-          <button className="contact-form__button" type="button">
+          <button
+            className="contact-form__button"
+            type="button"
+            onClick={sendForm}
+            disabled={
+              name.length === 0 ||
+              subject.length === 0 ||
+              email.length === 0 ||
+              message.length === 0
+            }
+          >
             Send
           </button>
         </div>
