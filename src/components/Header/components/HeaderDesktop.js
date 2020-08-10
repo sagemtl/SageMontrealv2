@@ -1,9 +1,8 @@
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import './styles/header.scss';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { GlobalContext } from '../context/Provider';
+import { GlobalContext } from '../../../context/Provider';
 
 const routes = [
   {
@@ -20,7 +19,7 @@ const routes = [
   },
 ];
 
-const Header = ({ current }) => {
+const HeaderDesktop = ({ current }) => {
   const { state, dispatch } = useContext(GlobalContext);
   const { navOpen } = state;
 
@@ -75,9 +74,8 @@ const Header = ({ current }) => {
   );
 };
 
-Header.propTypes = {
-  siteTitle: PropTypes.string.isRequired,
+HeaderDesktop.propTypes = {
   current: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default HeaderDesktop;
