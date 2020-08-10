@@ -1,32 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useStaticQuery, graphql } from 'gatsby';
 
-import Header from './header';
-import HeaderMobile from './headerMobile';
-import Footer from './footer';
+import Header from './Header';
+import Footer from './Footer';
 import Cart from './cart';
 import './styles/layout.scss';
 
-const Layout = ({
-  children,
-  current,
-  footerTransparent,
-  footerColor,
-  hideCart,
-  style,
-}) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `);
-
-  const [cart, setCart] = useState(false);
+const Layout = ({ children, footerColor, hideCart, style, current }) => {
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -37,31 +17,24 @@ const Layout = ({
 
   return (
     <>
-      {isMobile ? (
-        <HeaderMobile setCart={setCart} cart={cart} />
-      ) : (
-        <Header siteTitle={data.site.siteMetadata.title} current={current} />
-      )}
-      {(!isMobile || cart) && !hideCart && <Cart isMobile={isMobile} />}
+      <Header current={current} />
+      {!isMobile && !hideCart && <Cart isMobile={isMobile} />}
       <div className="layout" style={style}>
         {children}
       </div>
-      <Footer transparent={footerTransparent} color={footerColor} />
+      <Footer color={footerColor} />
     </>
   );
 };
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  current: PropTypes.string.isRequired,
-  footerTransparent: PropTypes.bool,
   hideCart: PropTypes.bool,
   footerColor: PropTypes.string,
   style: PropTypes.shape,
 };
 
 Layout.defaultProps = {
-  footerTransparent: false,
   hideCart: false,
   footerColor: 'black',
   style: {},

@@ -1,13 +1,13 @@
 import React, { useContext, useState, useRef } from 'react';
 import { Link } from 'gatsby';
-import './styles/headerMobile.scss';
 import StoreIcon from '@material-ui/icons/Store';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloseIcon from '@material-ui/icons/Close';
-import { GlobalContext } from '../context/Provider';
+import { GlobalContext } from '../../../context/Provider';
 
-const HeaderMobile = ({ cart, setCart }) => {
+const HeaderMobile = () => {
+  const [cart, setCart] = useState(false);
   const { state, dispatch } = useContext(GlobalContext);
   const { navOpen } = state;
 
