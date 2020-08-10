@@ -10,7 +10,7 @@ const Header = ({ current }) => {
     window.addEventListener('resize', () => setWidth(window.innerWidth));
   }, []);
 
-  if (width >= 500) {
+  if (width >= 900) {
     return <HeaderDesktop current={current} />;
   }
 
