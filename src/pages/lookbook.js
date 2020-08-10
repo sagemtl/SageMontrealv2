@@ -5,7 +5,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
 
-import '../styles/lookbook.scss';
+import './styles/lookbook.scss';
 
 const LookbookMenu = ({ uri }) => {
   const collections = [
@@ -35,7 +35,7 @@ const LookbookMenu = ({ uri }) => {
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596384833/Steam/DSC_2136-min_vaf3ts.jpg',
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596384833/Steam/DSC_2155-min_e9xgnx.jpg',
       ],
-      position: 'top right',
+      position: 'top left',
     },
     {
       season: 'Summer 19',

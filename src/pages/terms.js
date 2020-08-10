@@ -1,9 +1,9 @@
 import React from 'react';
 import Layout from '../components/layout';
 
-import '../styles/contact.scss';
+import './styles/terms.scss';
 
-const contact = ({ uri }) => {
+const terms = ({ uri }) => {
   return (
     <Layout current={uri}>
       <div className="contact">
@@ -118,4 +118,4 @@ const contact = ({ uri }) => {
   );
 };
 
-export default contact;
+export default terms;
