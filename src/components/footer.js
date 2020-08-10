@@ -27,6 +27,9 @@ const Footer = ({ transparent, color }) => {
         <h3 className="footer__header" style={{ color }}>
           © Sage Montreal 2020
         </h3>
+        <a className="footer__link" style={{ color }} href="/contact">
+          Contact Us
+        </a>
         <a className="footer__link" style={{ color }} href="/terms">
           Terms & Conditions
         </a>
