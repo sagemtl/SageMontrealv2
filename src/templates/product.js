@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Layout from '../components/layout';
+import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
 import { sortSizes } from '../helpers/stripeHelper';
 
@@ -89,7 +90,7 @@ const Product = ({ data }) => {
             className="product-images__image--main"
           />
           <div className="product-images-secondary">
-            
+
             {imgIcons()}
 
             {/* not pulling images from skus anymore */}
@@ -142,54 +143,7 @@ const Product = ({ data }) => {
             {' '}
             size guide
           </button>
-          <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
-            <DialogContent>
-              <header className="size-guide__heading">
-                Size Guides: Short sleeve T-shirts (Centimeters)
-              </header>
-              <div>
-                <table>
-                  <tbody>
-                  <tr>
-                    <th> </th>
-                    <th>S</th>
-                    <th>M</th>
-                    <th>L</th>
-                    <th>XL</th>
-                  </tr>
-                  <tr>
-                    <th>Width</th>
-                    <th>49</th>
-                    <th>52</th>
-                    <th>56</th>
-                    <th>59</th>
-                  </tr>
-                  <tr>
-                    <th>Shoulders</th>
-                    <th>44</th>
-                    <th>46</th>
-                    <th>48</th>
-                    <th>51</th>
-                  </tr>
-                  <tr>
-                    <th>Length</th>
-                    <th>65</th>
-                    <th>67</th>
-                    <th>70</th>
-                    <th>73</th>
-                  </tr>
-                  <tr>
-                    <th>Sleeve</th>
-                    <th>23</th>
-                    <th>25</th>
-                    <th>26</th>
-                    <th>27</th>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <SizeChart modalOpen={modalOpen} setModalOpen={setModalOpen} />
           <button
             className="product-details__button"
             type="button"
