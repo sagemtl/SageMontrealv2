@@ -55,6 +55,12 @@ const Product = ({ data }) => {
     return false;
   }
 
+  const allowAddToCart = () => {
+    if(selectedSize.length <= 0) return false;
+    if(!checkIsInStock(selectedSku)) return false;
+    return true;
+  }
+
   const addToCart = () => {
     const itemsCopy = Array.from(state.checkoutItems);
     const itemId = item.id + selectedSize;
@@ -103,6 +109,45 @@ const Product = ({ data }) => {
     return icons;
   };
 
+  const renderSizesFromSku = () => {
+    
+    const skuComponents = sortedSkus.map(({ node }) => {
+      const size = node.attributes.name;
+      const nodeid = node.id;
+      const hasStock = checkIsInStock(nodeid);
+      const className = "product-details-sizes-label__" + (hasStock? "in-stock" : "no-stock");
+      return (
+        <div className="product-details-sizes__size" key={size}>
+          <input
+            type="radio"
+            id={size}
+            value={size}
+            checked={selectedSize === size}
+            onClick={() => {
+              setSelectedSku(nodeid);
+              setSelectedSize(size);
+            }}
+            // disabled={!hasStock}
+          />
+          <label htmlFor={size} className={className}>
+            {size}
+          </label>
+        </div>
+      );
+    });
+    return skuComponents;
+  }
+
+  const renderOutOfStockLabel = () => {
+    if(!checkIsInStock(selectedSku)){
+      return (
+        <div className="product-details-sizes__soldout-error">Sorry! This size is out of stock.</div>
+      );
+    } else {
+      return null;
+    }
+  }
+
   return (
     <Layout current={`/shop/${item.fields.slug}`}>
       <div className="product">
@@ -121,32 +166,12 @@ const Product = ({ data }) => {
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
           <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
+          {/* sku/size selection */}
           <div className="product-details-sizes">
-            {sortedSkus.map(({ node }) => {
-              const size = node.attributes.name;
-              const nodeid = node.id;
-              const hasStock = !checkIsInStock(nodeid);
-              return (
-                <div className="product-details-sizes__size" key={size}>
-                  <input
-                    type="radio"
-                    id={size}
-                    value={size}
-                    checked={selectedSize === size}
-                    onClick={() => {
-                      setSelectedSku(nodeid);
-                      setSelectedSize(size);
-                    }}
-                    disabled={hasStock}
-                    // disabled={checkIsInStock(nodeid)}
-                  />
-                  <label htmlFor={size} className="cursor">
-                    {size}
-                  </label>
-                </div>
-              );
-            })}
+            {renderSizesFromSku()}
           </div>
+          {renderOutOfStockLabel()}
+          {/* size guide */}
           <button
             className="size-guide__size-guide-link"
             onClick={() => setModalOpen(true)}
@@ -154,11 +179,12 @@ const Product = ({ data }) => {
             size guide
           </button>
           <SizeChart modalOpen={modalOpen} setModalOpen={setModalOpen} />
+
           <button
             className="product-details__button"
             type="button"
             onClick={addToCart}
-            disabled={selectedSize.length <= 0}
+            disabled={!allowAddToCart()}
           >
             Add to cart
           </button>
