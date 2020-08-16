@@ -6,6 +6,12 @@ import { PaymentRequestButtonElement, CardElement, useElements, useStripe } from
 
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import * as MaterialFormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
 import {
   Container,
   Form,
@@ -19,6 +25,7 @@ import {
 import { GlobalContext } from '../context/Provider';
 
 import CartItem from './cartItem';
+import { LabelDetail } from 'semantic-ui-react';
 
 // UI
 
@@ -30,8 +37,10 @@ const Payment = () => {
 
   const [formData, setFormData] = useState({});
 
-  const [countryValue, setCountryValue] = useState("");
-  const [province, setProvince] = useState("");
+  const [countryValue, setCountryValue] = useState("CA");
+  const [province, setProvince] = useState("Quebec");
+
+  const[shippingMethod, setShippingMethod] = useState("")
 
   const elements = useElements();
   const stripe = useStripe();
@@ -42,11 +51,17 @@ const Payment = () => {
 
   const changeCountry = (val) => {
     setCountryValue(val)
+    setShippingMethod(null);
   }
 
   const changeState = (val) => {
     setProvince(val)
   }
+
+  const changeShippingMethod = (val) => {
+    setShippingMethod(val);
+    console.log(val)
+  };
 
   // After checkout, reset the cart state
   const resetCart = () => {
@@ -60,6 +75,21 @@ const Payment = () => {
 
   const cartIsEmpty = () => {
     return checkoutItems.length <= 0;
+  }
+
+  const getShippingPrice = () => {
+    let prices = {
+      "$5 - Expedited Parcel (2 - 4 Business Days)": 5,
+      "FREE - Mail (4 - 10 Business Days)": 0,
+      "$15 - Expedited Parcel (5 - 10 Business Days)": 15,
+      "$20 - Small Packet - Air (6 - 12 Business Days)": 20,
+    }
+    if (shippingMethod) {
+      return prices[shippingMethod]
+    }
+    else {
+      return -1
+    }
   }
   
   const getTotal = () => {
@@ -243,6 +273,7 @@ const Payment = () => {
               price={item.price}
               size={item.size}
               image={item.image}
+              sku={item.sku}
             />
           );
         })}
@@ -251,8 +282,8 @@ const Payment = () => {
         ) : (
           <div className="summary">
             <b>Price: {getTotal()}$</b>
-            <p>Shipping: 15$</p>
-            <b>Total: {getTotal() + 15}$</b>
+            <p>Shipping: {getShippingPrice() == -1 ? "TBD" : getShippingPrice() + "$"}</p>
+            <b>Total: {getShippingPrice() == -1 ? getTotal() : getTotal() + getShippingPrice()}$</b>
           </div>
         )}
       </div>
@@ -339,25 +370,70 @@ const Payment = () => {
                   </FormGroup>
                 </Col>
                 <Col>
-                  <FormGroup>
-                    <Form.Label> Postal Code </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="postal_code"
-                      placeholder="Enter postal code"
-                      onChange={change}
-                    />
-                  </FormGroup>
+                  <Form.Label> Postal Code </Form.Label>
+                  <FormControl className="checkout-form__form-control"
+                    type="text"
+                    name="postal_code"
+                    placeholder="Enter postal code"
+                    onChange={change}
+                  />
                 </Col>
               </Row>
-              <FormGroup >
+                {countryValue == "CA" ? 
+                <div id="canada-wrapper">
+                <Form.Group>
+                  <Form.Label> Shipping Method </Form.Label>
+                    <Form.Check
+                    type="radio"
+                    label="FREE - Mail (4 - 10 Business Days)"
+                    name="shippingMethodCA"
+                    id="formHorizontalRadios1"
+                    onChange={() => changeShippingMethod("FREE - Mail (4 - 10 Business Days)")}
+                  />
+                  <Form.Check
+                    type="radio"
+                    label="$5 - Expedited Parcel (2 - 4 Business Days)"
+                    name="shippingMethodCA"
+                    id="formHorizontalRadios2"
+                    onChange={() => changeShippingMethod("$5 - Expedited Parcel (2 - 4 Business Days)")}
+                  />
+                  </Form.Group>
+                  </div> : 
+                  countryValue == "US" ?
+                  <fieldset id="us-wrapper">
+                  <Form.Group>
+                    <Form.Label> Shipping Method </Form.Label>
+                    <Form.Check
+                    type="radio"
+                    label="$15 - Expedited Parcel (5 - 10 Business Days)"
+                    name="shippingMethodUS"
+                    id="formHorizontalRadios3"
+                    onChange={() => changeShippingMethod("$15 - Expedited Parcel (5 - 10 Business Days)")}
+                  />
+                  </Form.Group>
+                  </fieldset>:
+                <Form.Group>
+                  <Form.Label> Shipping Method </Form.Label>
+                  <Form.Check
+                    type="radio"
+                    label="$20 - Small Packet - Air (6 - 12 Business Days)"
+                    name="shippingMethodOther"
+                    id="formHorizontalRadios4"
+                    onChange={() => changeShippingMethod("$20 - Small Packet - Air (6 - 12 Business Days)")}
+                  /> 
+                </Form.Group>
+                }
+            </Form>
+          </Card.Body>
+        </Card>
+        <div className="custom-pay">
+        <div style={{width:"80%"}}>
+        <FormGroup >
                 <Form.Label> Card Details </Form.Label>
                 <div className="custom-stripe-element"><CardElement > </CardElement></div>
                 <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
               </FormGroup>
-            </Form>
-          </Card.Body>
-        </Card>
+        </div></div>
       </Container>
     </div>
   );

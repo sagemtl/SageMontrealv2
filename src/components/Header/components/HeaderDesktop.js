@@ -1,9 +1,8 @@
-import { Link, useStaticQuery, graphql } from 'gatsby';
+import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import Img from 'gatsby-image';
-import './styles/header.scss';
-import { GlobalContext } from '../context/Provider';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { GlobalContext } from '../../../context/Provider';
 
 const routes = [
   {
@@ -20,19 +19,7 @@ const routes = [
   },
 ];
 
-const Header = ({ siteTitle, current }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "sage-icon.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 300) {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  `);
-
+const HeaderDesktop = ({ current }) => {
   const { state, dispatch } = useContext(GlobalContext);
   const { navOpen } = state;
 
@@ -51,15 +38,22 @@ const Header = ({ siteTitle, current }) => {
         className={navOpen ? 'header-button--closed' : 'header-button'}
         onClick={() => openNavbar(true)}
       >
-        <p className="header-button__icon">开</p>
+        <ArrowForwardIosIcon className="header-button__icon" />
       </div>
       <div className={navOpen ? 'navbox' : 'navbox--closed'}>
         <header>
-          <div onClick={() => openNavbar(false)}>
-            <Img
+          <div
+            onClick={() => openNavbar(false)}
+            className="navbox-logo-wrapper"
+          >
+            <video
+              src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
               className="navbox__logo"
-              fluid={data.placeholderImage.childImageSharp.fluid}
-              alt={siteTitle}
+              muted
+              playsInline
+              loop
+              onMouseOver={(e) => e.target.play()}
+              onMouseOut={(e) => e.target.pause()}
             />
           </div>
         </header>
@@ -80,9 +74,8 @@ const Header = ({ siteTitle, current }) => {
   );
 };
 
-Header.propTypes = {
-  siteTitle: PropTypes.string.isRequired,
+HeaderDesktop.propTypes = {
   current: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default HeaderDesktop;

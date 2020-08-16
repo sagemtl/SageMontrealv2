@@ -63,8 +63,8 @@
     border: 1px solid black;
     box-shadow: 0 5px #565656;
     cursor: pointer;
-    transition: all 0.5s;
-    background: linear-gradient(to right, #154734 50%, white 50%);
+    transition: background 0.5s;
+    background: linear-gradient(to right, #154734 50%, #dddddd 50%);
     background-size: 200% 100%;
     background-position: left bottom;
     font-weight: 500;
@@ -86,11 +86,10 @@
 
 .product-details-sizes {
   display: flex;
-  width: 100%;
-  margin: 1.5em 0;
+  margin: 20px 0;
 
   &__size {
-    margin: 0 30px;
+    margin-right: 30px;
   }
 }
 
@@ -123,6 +122,7 @@ input[type="radio"]:checked + label {
     color: #767676;
     max-width: 80px;
     border:none;
+    padding: 0;
   }
    &__heading {
      padding:10px;
@@ -147,4 +147,36 @@ td, th {
 table {
   padding-left: 50vw;
   color: #5f5f5f;
+}
+
+@media (max-width: 450px) {
+  .product {
+    width: 100%;
+    padding: 90px 0 30px;
+  }
+
+  .product-images {
+    width: 100%;
+
+    &__image--main {
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+  }
+
+  .product-details {
+    justify-content: center;
+    position: relative;
+    top: -40px;
+
+    &__header {
+      font-size: 1.5rem;
+    }
+
+    &__button {
+      position: relative;
+      top: 10px;
+    }
+  }
 }

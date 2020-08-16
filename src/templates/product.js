@@ -3,13 +3,11 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
 import Layout from '../components/layout';
 import { GlobalContext } from '../context/Provider';
 import { sortSizes } from '../helpers/stripeHelper';
-import Img from 'gatsby-image';
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 
 import './styles/product.scss';
 
@@ -43,7 +41,6 @@ const Product = ({ data }) => {
         sku: selectedSku,
       });
     }
-
     dispatch({
       type: 'SET_CHECKOUT_ITEMS',
       payload: {
@@ -53,76 +50,59 @@ const Product = ({ data }) => {
   };
 
   const filterPrice = (sku) => {
-    return skus.edges.filter((node) => node.id === sku) / 100;
+    const matched = skus.edges.find((node) => node.node.id == sku);
+    return matched.node.price / 100;
   };
 
   // not fully tested yet
   const sortedSkus = sortSizes(skus.edges);
 
+  const imgIcons = () => {
+    const icons = item.children.map((node) => {
+      return (
+        <img
+          src={node.childImageSharp.fixed.src}
+          alt={node.name}
+          className="product-images__image--secondary"
+          onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
+        />
+      );
+    });
+    return icons;
+  };
+
   return (
     <Layout current={`/shop/${item.fields.slug}`}>
       <div className="product">
         <div className="product-images">
-          <div>
-            <img
-              src={selectedImage}
-              alt={item.name}
-              className="product-images__image--main"
-            />
-          </div>
-          <div className="product-images-secondary">
-            {item.children.map((node) => {
-              // console.log("node attr");
-              // console.log(node.childImageSharp.fixed.src);
-              // console.log(node.name);
-              // console.log(node.id);
-              <img
-                src={node.childImageSharp.fixed.src}
-                alt={node.name}
-                key={node.id}
-                className="product-images__image--secondary"
-                onClick={() =>
-                  setSelectedImage(node.childImageSharp.fixed.src)
-                }
-              />
-              
-            })}
-
-            {/* not pulling images from skus anymore */}
-            {/* {skus.edges.map(({ node }) => (
-              <img
-                src={node.featuredImg.childImageSharp.fixed.src}
-                alt={node.attributes.name}
-                className="product-images__image--secondary"
-                onClick={() =>
-                  setSelectedImage(node.featuredImg.childImageSharp.fixed.src)
-                }
-              />
-            ))} */}
-          </div>
+          <img
+            src={selectedImage}
+            alt={item.name}
+            className="product-images__image--main"
+          />
+          <div className="product-images-secondary">{imgIcons()}</div>
         </div>
         <div className="product-details">
-          <h1>{item.name}</h1>
+          <h1 className="product-details__header">{item.name}</h1>
           <p className="product-details__point">{item.description}</p>
-          {item.metadata.modelInfo? <p className="product-details__point">{item.metadata.modelInfo}</p> : null}
-          <p>$ {skus.edges[0].node.price / 100}</p>
+          {item.metadata.modelInfo ? (
+            <p className="product-details__point">{item.metadata.modelInfo}</p>
+          ) : null}
+          <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
           <div className="product-details-sizes">
-            {sortedSkus.map(({ node, index }) => {
+            {sortedSkus.map(({ node }) => {
               const size = node.attributes.name;
+              const nodeid = node.id;
               return (
-                <div
-                  className="product-details-sizes__size"
-                  style={index === 0 ? { marginLeft: 0 } : {}}
-                  key={size}
-                >
+                <div className="product-details-sizes__size" key={size}>
                   <input
                     type="radio"
                     id={size}
                     value={size}
                     checked={selectedSize === size}
                     onChange={() => {
+                      setSelectedSku(nodeid);
                       setSelectedSize(size);
-                      setSelectedSku(node.id);
                     }}
                   />
                   <label htmlFor={size} className="cursor">
@@ -132,55 +112,59 @@ const Product = ({ data }) => {
               );
             })}
           </div>
-          <button className="size-guide__size-guide-link" onClick={()=>setModalOpen(true)}> size guide</button>
-          <Dialog
-            open={modalOpen}
-            onClose={()=>setModalOpen(false)}
+          <button
+            className="size-guide__size-guide-link"
+            onClick={() => setModalOpen(true)}
           >
-            
+            size guide
+          </button>
+          <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
             <DialogContent>
-            <header className="size-guide__heading">Size Guides: Short sleeve T-shirts (Centimeters)</header>
-              <div >
+              <header className="size-guide__heading">
+                Size Guides: Short sleeve T-shirts (Centimeters)
+              </header>
+              <div>
                 <table>
-                  <tr>
-                    <th> </th>
-                    <th>S</th>
-                    <th>M</th>
-                    <th>L</th>
-                    <th>XL</th>
-                  </tr>
-                  <tr>
-                    <th>Width</th>
-                    <th>49</th>
-                    <th>52</th>
-                    <th>56</th>
-                    <th>59</th>
-                  </tr>
-                  <tr>
-                    <th>Shoulders</th>
-                    <th>44</th>
-                    <th>46</th>
-                    <th>48</th>
-                    <th>51</th>
-                  </tr>
-                  <tr>
-                    <th>Length</th>
-                    <th>65</th>
-                    <th>67</th>
-                    <th>70</th>
-                    <th>73</th>
-                  </tr>
-                  <tr>
-                  <th>Sleeve</th>
-                    <th>23</th>
-                    <th>25</th>
-                    <th>26</th>
-                    <th>27</th>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <th> </th>
+                      <th>S</th>
+                      <th>M</th>
+                      <th>L</th>
+                      <th>XL</th>
+                    </tr>
+                    <tr>
+                      <th>Width</th>
+                      <th>49</th>
+                      <th>52</th>
+                      <th>56</th>
+                      <th>59</th>
+                    </tr>
+                    <tr>
+                      <th>Shoulders</th>
+                      <th>44</th>
+                      <th>46</th>
+                      <th>48</th>
+                      <th>51</th>
+                    </tr>
+                    <tr>
+                      <th>Length</th>
+                      <th>65</th>
+                      <th>67</th>
+                      <th>70</th>
+                      <th>73</th>
+                    </tr>
+                    <tr>
+                      <th>Sleeve</th>
+                      <th>23</th>
+                      <th>25</th>
+                      <th>26</th>
+                      <th>27</th>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </DialogContent>
-
           </Dialog>
           <button
             className="product-details__button"

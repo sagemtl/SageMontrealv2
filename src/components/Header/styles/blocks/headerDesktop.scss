@@ -8,11 +8,11 @@
   z-index: 20;
   overflow: hidden;
   box-shadow: 3px 3px #154734;
-  transition: all 3s;
+  transition: all 2s;
 }
 
 @mixin header-button {
-  position: absolute;
+  position: fixed;
   top: 60px;
   z-index: 20;
   transition: all 2s;
@@ -101,22 +101,17 @@
   }
 
   &__button{
+    border: none;
+    box-shadow: 3px 3px #000;
     margin-top: 15px;
+    background-color: #154734;
     border-radius: 8px;
     width: 175px;
     height: 40px;
-    color: black;
+    color: white;
     outline: none;
-    border: none;
     font-weight: 500;
     cursor: pointer;
-    box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
-    2px 6px 10px rgba(0, 0, 0, 0.2);
-
-    &:active {
-      box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.5),
-        inset 4px 8px 16px rgba(0, 0, 0, 0.1);
-    }
 
     &:focus {
       outline: none;
@@ -129,10 +124,8 @@
   left: 30px;
 
   &__logo {
-    width: 70px;
+    width: 100px;
     height: auto;
-    margin: 0 auto;
-    margin-bottom: 45px;
     top: 25px;
     cursor: pointer;
   }
@@ -167,6 +160,13 @@
     margin-bottom: 0px;
     margin-top: 0px;
   }
+}
+
+.navbox-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0 5px;
 }
 
 .navbox--closed {

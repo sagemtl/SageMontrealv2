@@ -159,6 +159,19 @@ label {
     background-color: white;
 }
 
+.custom-pay {
+    box-sizing: border-box;
+    margin-top: 10px;
+    height: 170px;
+    display: flex;
+    justify-content: center;
+    border: 2px solid black;
+    overflow: hidden;
+    box-shadow: 3px 3px #154734;
+    border-radius: .25rem;
+    background-color: white;
+}
+
 
 @keyframes App-logo-spin {
     from {
