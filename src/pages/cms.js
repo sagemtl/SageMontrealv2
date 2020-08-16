@@ -5,7 +5,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 import CreateModal from '../components/createModal'
 
-import '../styles/cms.scss';
+import './styles/cms.scss';
 import { createJsxAttribute } from 'typescript';
 
 const CMS = () => {

@@ -10,7 +10,7 @@
   z-index: 100;
 }
 
-.footer {
+.footer-desktop {
   @include footer();
 
   &__header {
@@ -27,6 +27,7 @@
     font-weight: 500;
     line-height: 1.2;
     cursor: pointer;
+    margin-right: 15px;
 
     &:hover {
       text-decoration: underline;
@@ -35,9 +36,13 @@
 
   &__icon {
     margin: 0;
-    margin-right: 10px;
-    transition: filter 3s ease-in-out;
+    margin-right: 15px;
     animation: rotate 5s infinite linear;
+    transition: all 0.5s;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 
   &__button {
@@ -66,14 +71,10 @@
   }
 }
 
-.footer-text {
+.footer-desktop-text {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.footer-transparent {
-  @include footer();
 }
 
 @keyframes rotate {

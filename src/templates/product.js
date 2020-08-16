@@ -82,7 +82,7 @@ const Product = ({ data }) => {
   };
 
   const filterPrice = (sku) => {
-    var matched = skus.edges.find((node) => node.node.id == sku);
+    const matched = skus.edges.find((node) => node.node.id == sku);
     return matched.node.price / 100;
   };
 
@@ -90,21 +90,18 @@ const Product = ({ data }) => {
   const sortedSkus = sortSizes(skus.edges);
 
   const imgIcons = () => {
-    var icons = item.children.map((node) => {
-
-      <img
-        src={node.childImageSharp.fixed.src}
-        alt={node.name}
-        key={node.id}
-        className="product-images__image--secondary"
-        onClick={() =>
-          setSelectedImage(node.childImageSharp.fixed.src)
-        }
-      />
-      
+    const icons = item.children.map((node) => {
+      return (
+        <img
+          src={node.childImageSharp.fixed.src}
+          alt={node.name}
+          className="product-images__image--secondary"
+          onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
+        />
+      );
     });
     return icons;
-  }
+  };
 
   return (
     <Layout current={`/shop/${item.fields.slug}`}>
@@ -115,22 +112,7 @@ const Product = ({ data }) => {
             alt={item.name}
             className="product-images__image--main"
           />
-          <div className="product-images-secondary">
-
-            {imgIcons()}
-
-            {/* not pulling images from skus anymore */}
-            {/* {skus.edges.map(({ node }) => (
-              <img
-                src={node.featuredImg.childImageSharp.fixed.src}
-                alt={node.attributes.name}
-                className="product-images__image--secondary"
-                onClick={() =>
-                  setSelectedImage(node.featuredImg.childImageSharp.fixed.src)
-                }
-              />
-            ))} */}
-          </div>
+          <div className="product-images-secondary">{imgIcons()}</div>
         </div>
         <div className="product-details">
           <h1 className="product-details__header">{item.name}</h1>
@@ -169,7 +151,6 @@ const Product = ({ data }) => {
             className="size-guide__size-guide-link"
             onClick={() => setModalOpen(true)}
           >
-            {' '}
             size guide
           </button>
           <SizeChart modalOpen={modalOpen} setModalOpen={setModalOpen} />

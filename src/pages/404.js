@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/layout';
 
-import '../styles/404.scss';
+import './styles/404.scss';
 
 const NotFoundPage = ({ uri }) => (
   <Layout current={uri} hideCart>

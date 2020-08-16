@@ -5,7 +5,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
 
-import '../styles/lookbook.scss';
+import './styles/lookbook.scss';
 
 const LookbookMenu = ({ uri }) => {
   const collections = [
@@ -99,7 +99,11 @@ const LookbookMenu = ({ uri }) => {
   };
 
   return (
-    <Layout current={uri} footerColor="white">
+    <Layout
+      current={uri}
+      footerColor="white"
+      style={{ alignItems: 'flex-start' }}
+    >
       <div className="lookbook">
         <ArrowForwardIosIcon
           className="lookbook__icon--right"
@@ -116,11 +120,11 @@ const LookbookMenu = ({ uri }) => {
             />
           );
         })}
-        <ArrowForwardIosIcon
-          className="lookbook__icon--left"
-          onClick={() => scrollRight()}
-        />
       </div>
+      <ArrowForwardIosIcon
+        className="lookbook__icon--left"
+        onClick={() => scrollRight()}
+      />
     </Layout>
   );
 };

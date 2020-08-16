@@ -14,8 +14,8 @@
 
 .lookbook {
   display: flex;
+  overflow-x: scroll;
   width: calc(650px * 5);
-  overflow: hidden;
 
   &__icon {
     &--right {
@@ -50,7 +50,7 @@
     top: 60px;
     width: 100%;
     overflow-x: scroll;
-    background: red;
+    overflow-y: hidden;
   }
 
   .lookbook__icon--right {

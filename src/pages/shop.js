@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import Layout from '../components/layout';
 import ShopItem from '../components/shopitem';
-import '../styles/shop.scss';
+import './styles/shop.scss';
 import { GlobalContext } from '../context/Provider';
 
 const Shop = ({ data, uri }) => {
