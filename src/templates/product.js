@@ -3,12 +3,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
-import { sortSizes } from '../helpers/stripeHelper';
+import { sortSizes, getSkuInventory } from '../helpers/stripeHelper';
 
 import './styles/product.scss';
 
@@ -22,7 +20,40 @@ const Product = ({ data }) => {
     item.children[0].childImageSharp.fixed.src,
   );
   const [modalOpen, setModalOpen] = useState(false);
+  const [inventories, setInventories] = useState([]);
   const { state, dispatch } = useContext(GlobalContext);
+
+  useEffect(() => {
+    getAllInventory();
+  }, []);
+
+  const getAllInventory = async () => {
+    var invs = await Promise.all(skus.edges.map(async (node) => {
+      var inv = await getSkuInventory(node.node.id);
+      console.log(inv);
+      return inv;
+    }));
+    console.log("invs");
+    console.log(invs);
+    if(invs) {
+      console.log("inside if inv");
+      setInventories(invs);
+    }
+    // console.log(inventories);
+  }
+
+  const checkIsInStock = (sku_id) => {
+    console.log("is in stock inventories "+sku_id);
+    console.log(inventories);
+    var inv = inventories.filter(inv => inv.sku_id == sku_id);
+    // console.log("is in stock ");
+    // console.log(inv);
+    if (inv[0] && inv[0].quantity != 0) {
+      console.log("has inv");
+      return true
+    };
+    return false;
+  }
 
   const addToCart = () => {
     const itemsCopy = Array.from(state.checkoutItems);
@@ -60,10 +91,7 @@ const Product = ({ data }) => {
 
   const imgIcons = () => {
     var icons = item.children.map((node) => {
-      // console.log("node attr");
-      // console.log(node.childImageSharp.fixed.src);
-      // console.log(node.name);
-      // console.log(node.id);
+
       <img
         src={node.childImageSharp.fixed.src}
         alt={node.name}
@@ -75,8 +103,6 @@ const Product = ({ data }) => {
       />
       
     });
-    console.log(icons.length);
-    console.log(icons);
     return icons;
   }
 
@@ -117,6 +143,7 @@ const Product = ({ data }) => {
             {sortedSkus.map(({ node }) => {
               const size = node.attributes.name;
               const nodeid = node.id;
+              const hasStock = !checkIsInStock(nodeid);
               return (
                 <div className="product-details-sizes__size" key={size}>
                   <input
@@ -124,10 +151,12 @@ const Product = ({ data }) => {
                     id={size}
                     value={size}
                     checked={selectedSize === size}
-                    onChange={() => {
+                    onClick={() => {
                       setSelectedSku(nodeid);
                       setSelectedSize(size);
                     }}
+                    disabled={hasStock}
+                    // disabled={checkIsInStock(nodeid)}
                   />
                   <label htmlFor={size} className="cursor">
                     {size}
