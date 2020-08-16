@@ -30,26 +30,16 @@ const Product = ({ data }) => {
   const getAllInventory = async () => {
     var invs = await Promise.all(skus.edges.map(async (node) => {
       var inv = await getSkuInventory(node.node.id);
-      console.log(inv);
       return inv;
     }));
-    console.log("invs");
-    console.log(invs);
     if(invs) {
-      console.log("inside if inv");
       setInventories(invs);
     }
-    // console.log(inventories);
   }
 
   const checkIsInStock = (sku_id) => {
-    console.log("is in stock inventories "+sku_id);
-    console.log(inventories);
     var inv = inventories.filter(inv => inv.sku_id == sku_id);
-    // console.log("is in stock ");
-    // console.log(inv);
     if (inv[0] && inv[0].quantity != 0) {
-      console.log("has inv");
       return true
     };
     return false;
