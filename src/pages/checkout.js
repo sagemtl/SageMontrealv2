@@ -12,6 +12,7 @@ import '../styles/bootstrap.min.css';
 import '../styles/checkout.scss';
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 import { GlobalContext } from '../context/Provider';
+import PaymentRequest from '../components/checkout';
 
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -29,7 +30,11 @@ const CheckoutPage = () => {
     }
     return totalPrice;
   }
-  if(getTotal() == 0){
+  const cartIsEmpty = () => {
+    return checkoutItems.length <= 0;
+  }
+
+  if(cartIsEmpty()){
     return(
       <div>
         <div style={{zIndex: "2", position:"absolute", width:"100%", height:"100%", top: "0px", left: "0px", textAlign: "center"}}>

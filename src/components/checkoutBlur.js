@@ -15,6 +15,9 @@ const MobileCart = () => {
         }
         return totalPrice;
     }
+    const cartIsEmpty = () => {
+      return checkoutItems.length <= 0;
+    }
     return(
     <div className="cart-checkout">
         {checkoutItems.map((item) => {
@@ -29,7 +32,7 @@ const MobileCart = () => {
             />
           );
       })}
-      {getTotal() === 0 ? <div/> : <div className="summary" >
+      {cartIsEmpty() ? <div/> : <div className="summary" >
           <b>Price: {getTotal()}$</b>
           <p>Shipping: 15$</p>
           <b>Total: {getTotal()+15}$</b>

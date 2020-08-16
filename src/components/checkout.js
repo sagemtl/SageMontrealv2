@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 // Stripe
 import { navigate } from 'gatsby';
 
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { PaymentRequestButtonElement, CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
@@ -22,9 +22,11 @@ import CartItem from './cartItem';
 
 // UI
 
-function Payment() {
+const Payment = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const { checkoutItems } = state;
+
+  const [paymentRequest, setPaymentRequest] = useState(null);
 
   const [formData, setFormData] = useState({});
 
@@ -56,6 +58,10 @@ function Payment() {
     });
   };
 
+  const cartIsEmpty = () => {
+    return checkoutItems.length <= 0;
+  }
+  
   const getTotal = () => {
     let i;
     let totalPrice = 0;
@@ -64,6 +70,89 @@ function Payment() {
     }
     return totalPrice;
   };
+
+  const getDisplayItems = () => {
+    let i;
+    let displayItems = []
+    for (i = 0; i < checkoutItems.length; i += 1) {
+      displayItems.push({amount: checkoutItems[i].amount, label: checkoutItems[i].name})
+    }
+  }
+
+
+  useEffect(() => {
+    if (stripe) {
+      const pr = stripe.paymentRequest({
+        country: 'CA',
+        currency: 'cad',
+        total: {
+          label: 'SageMontreal',
+          amount: getTotal(),
+        },
+        requestPayerName: true,
+        requestPayerEmail: true,
+        displayItems: getDisplayItems(),
+        requestShipping: true,
+        // `shippingOptions` is optional at this point:
+        shippingOptions: [
+          // The first shipping option in this list appears as the default
+          // option in the browser payment interface.
+          {
+            id: 'free-shipping',
+            label: 'Free shipping',
+            detail: 'Arrives in 5 to 7 days',
+            amount: 0,
+          },
+        ],
+      });
+
+      // Check the availability of the Payment Request API.
+      pr.canMakePayment().then(result => {
+        console.log(result)
+        if (result) {
+          setPaymentRequest(pr);
+        }
+      });
+    }
+  }, [stripe]);
+
+  if (paymentRequest) {
+    paymentRequest.on('shippingaddresschange', function(ev) {
+        // Perform server-side request to fetch shipping options
+        fetch('/calculateShipping', {
+          data: JSON.stringify({
+            shippingAddress: ev.shippingAddress
+          })
+        }).then(function(response) {
+          return response.json();
+        }).then(function(result) {
+          ev.updateWith({
+            status: 'success',
+            shippingOptions: result.supportedShippingOptions,
+          });
+        });
+    });
+  }
+
+  // BUTTON STYLING SETTINGS
+  const options = {
+    paymentRequest,
+    style: {
+      paymentRequestButton: {
+        type: 'default',
+        // One of 'default', 'book', 'buy', or 'donate'
+        // Defaults to 'default'
+  
+        theme: 'dark',
+        // One of 'dark', 'light', or 'light-outline'
+        // Defaults to 'dark'
+  
+        height: '44px',
+        // Defaults to '40px'. The width is always '100%'.
+
+      },
+    }
+  }
 
   const submit = async (e) => {
 
@@ -157,7 +246,7 @@ function Payment() {
             />
           );
         })}
-        {getTotal() === 0 ? (
+        {cartIsEmpty() ? (
           <div />
         ) : (
           <div className="summary">
@@ -167,7 +256,12 @@ function Payment() {
           </div>
         )}
       </div>
+
       <Container className="py-4">
+      {paymentRequest ?
+      <div className="custom-apple-pay">
+      <div style={{width:"350px"}}>
+      <PaymentRequestButtonElement options={options} /></div></div> : <div></div>}
         <Card className="checkout-form">
           <Card.Body>
             <Form method="POST" onSubmit={submit} className="checkout-form__form">
@@ -224,7 +318,7 @@ function Payment() {
                     value={province}
                     country={countryValue}
                     onChange={ (val) => changeState(val)}
-                    defaultOptionLabel="Select State"
+                    defaultOptionLabel="Select State/Province"
                     classes="checkout-form__select-form"
                     countryValueType="short"
                     />
@@ -258,7 +352,7 @@ function Payment() {
               </Row>
               <FormGroup >
                 <Form.Label> Card Details </Form.Label>
-                <CardElement > </CardElement>
+                <div className="custom-stripe-element"><CardElement > </CardElement></div>
                 <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
               </FormGroup>
             </Form>
