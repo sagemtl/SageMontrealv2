@@ -25,7 +25,7 @@ import CartItem from './cartItem';
 function Payment() {
   const { state, dispatch } = useContext(GlobalContext);
   const { checkoutItems } = state;
-
+  const [isPickUp, setIsPickUp] = useState(false);
   const [formData, setFormData] = useState({});
 
   const [countryValue, setCountryValue] = useState("");
@@ -46,6 +46,10 @@ function Payment() {
     setProvince(val)
   }
 
+  const changeIsPickup = (val) => {
+    setIsPickUp(val)
+  }
+
   // After checkout, reset the cart state
   const resetCart = () => {
     dispatch({
@@ -55,6 +59,17 @@ function Payment() {
       },
     });
   };
+
+  
+  // function isPickup(){
+  //   var checkbox = document.getElementById("111");
+  //   if(checkbox.checked==true){
+  //     return false;
+  //   }
+  //   else {
+  //     return true;
+  //   }
+  //  };
 
   const getTotal = () => {
     let i;
@@ -157,18 +172,24 @@ function Payment() {
             />
           );
         })}
-        {getTotal() === 0 ? (
+        {/* {getTotal() === 0 ? (
           <div />
-        ) : (
+        ) : ( */}
           <div className="summary">
+          <form action="#">
+          <input type="radio" id="111" name="gender" onClick={() => changeIsPickup(true)}/>
+          <label for="111">Pick Up</label>
+          <input type="radio" id="222" name="gender" onClick={() => changeIsPickup(false)}/>
+          <label for="222">Shipping</label>
+          </form>
             <b>Price: {getTotal()}$</b>
-            <p>Shipping: 15$</p>
+            <p>Shipping: 15$ {province}</p>
             <b>Total: {getTotal() + 15}$</b>
           </div>
-        )}
+        {/* )} */}
       </div>
-<<<<<<< HEAD
       <div className="checkout">
+        {isPickUp == false ? 
         <Container className="py-4">
           <Card className="checkout__checkout-form">
             <Card.Body>
@@ -218,18 +239,32 @@ function Payment() {
                         />
                     </FormGroup>
                   </Col>
-
+              
                   <Col>
                     <FormGroup>
-                      <Form.Label> State / Province </Form.Label>
-                      <FormControl className="checkout-form__form-control"
-                        type="text"
-                        name="state"
-                        placeholder="Enter state / province"
-                        onChange={change}
-                      />
+                        <Form.Label> Country/Region </Form.Label>
+                        <CountryDropdown 
+                        value={countryValue}
+                        onChange={ (val) => changeCountry(val)}
+                        priorityOptions={["CA", "US"]}
+                        classes="checkout-form__select-form"
+                        valueType="short"
+                        />
                     </FormGroup>
                   </Col>
+                  <Col>
+                  <FormGroup>
+                    <Form.Label> State / Province </Form.Label>
+                    <RegionDropdown
+                    value={province}
+                    country={countryValue}
+                    onChange={ (val) => changeState(val)}
+                    defaultOptionLabel="Select State"
+                    classes="checkout-form__select-form"
+                    countryValueType="short"
+                    />
+                  </FormGroup>
+                </Col>
                   <Col>
                     <FormGroup>
                       <Form.Label> Postal Code </Form.Label>
@@ -250,108 +285,49 @@ function Payment() {
               </Form>
             </Card.Body>
           </Card>
-        </Container>
-      </div>
-=======
-      <Container className="py-4">
-        <Card className="checkout-form">
-          <Card.Body>
-            <Form method="POST" onSubmit={submit} className="checkout-form__form">
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> Name on Card </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      placeholder="Enter name on card"
-                      name="name"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> Email </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="email"
-                      placeholder="Enter email address"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <FormGroup>
-                    <Form.Label> Address </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text" 
-                      name="address" 
-                      placeholder="Enter address"
-                      onChange={change} 
-                      />
-              </FormGroup>
-              <Row>
-                <Col>
-                  <FormGroup>
-                      <Form.Label> Country/Region </Form.Label>
-                      <CountryDropdown 
-                      value={countryValue}
-                      onChange={ (val) => changeCountry(val)}
-                      priorityOptions={["CA", "US"]}
-                      classes="checkout-form__select-form"
-                      valueType="short"
-                      />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> State / Province </Form.Label>
-                    <RegionDropdown
-                    value={province}
-                    country={countryValue}
-                    onChange={ (val) => changeState(val)}
-                    defaultOptionLabel="Select State"
-                    classes="checkout-form__select-form"
-                    countryValueType="short"
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+        </Container> 
 
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> City </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="city"
-                      placeholder="Enter city"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> Postal Code </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="postal_code"
-                      placeholder="Enter postal code"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <FormGroup >
-                <Form.Label> Card Details </Form.Label>
-                <CardElement > </CardElement>
-                <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
-              </FormGroup>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Container>
->>>>>>> ad308b3cf394de35deb69f414c3c5b2db073a3e4
+        :
+      
+         <Container className="py-4">
+          <Card className="checkout__checkout-form">
+            <Card.Body>
+              <Form method="POST" onSubmit={submit} className="checkout-form__form">
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> Name on Card </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text"
+                        placeholder="Enter name on card"
+                        name="name"
+                        onChange={change}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> Email </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text"
+                        name="email"
+                        placeholder="Enter email address"
+                        onChange={change}
+                      />
+                    </FormGroup>
+                  </Col>
+                <FormGroup >
+                  <Form.Label> Card Details </Form.Label>
+                  <CardElement > </CardElement>
+                </FormGroup>
+                <Button type="submit" style={{position: "relative", margin: "auto", width: "50%"}}> Pay {getTotal() + 15}$</Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Container>
+        } 
+        
+        
+      </div>
     </div>
   );
 }
