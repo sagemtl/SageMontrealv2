@@ -129,7 +129,7 @@ const Product = ({ data }) => {
   }
 
   const renderOutOfStockLabel = () => {
-    if(!checkIsInStock(selectedSku)){
+    if(selectedSize.length > 0 &&!checkIsInStock(selectedSku)){
       return (
         <div className="product-details-sizes__soldout-error">Sorry! This size is out of stock.</div>
       );
