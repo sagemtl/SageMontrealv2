@@ -1,37 +1,27 @@
-import React, { useContext, useState } from 'react';
-import { Link, useStaticQuery, graphql } from 'gatsby';
-import Img from 'gatsby-image';
-import './styles/headerMobile.scss';
+import React, { useContext, useState, useRef } from 'react';
+import { Link } from 'gatsby';
 import StoreIcon from '@material-ui/icons/Store';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloseIcon from '@material-ui/icons/Close';
-import { GlobalContext } from '../context/Provider';
+import { GlobalContext } from '../../../context/Provider';
 
-const HeaderMobile = ({ cart, setCart }) => {
+const HeaderMobile = () => {
+  const [cart, setCart] = useState(false);
   const { state, dispatch } = useContext(GlobalContext);
   const { navOpen } = state;
-  const [position, setPosition] = useState('calc(100% / 4 * -2)');
 
-  const data = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "sage-icon.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 300) {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  `);
+  const video = useRef();
 
   const openNavbar = () => {
+    video.current.play();
     dispatch({
       type: 'SET_NAVBAR_OPEN',
       payload: {
         navOpen: !navOpen,
       },
     });
+    setTimeout(() => video.current.pause(), 3000);
   };
 
   return (
@@ -50,9 +40,13 @@ const HeaderMobile = ({ cart, setCart }) => {
           className="header-mobile__logo-button"
           onClick={() => openNavbar()}
         >
-          <Img
+          <video
+            src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
+            ref={video}
             className="header-mobile__logo"
-            fluid={data.placeholderImage.childImageSharp.fluid}
+            muted
+            playsInline
+            loop
           />
         </div>
       </div>

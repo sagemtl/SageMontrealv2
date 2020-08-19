@@ -1,0 +1,30 @@
+.not-found {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
+  &__header {
+    color: #154734;
+    margin-bottom: 20px;
+    font-size: 2.3rem;
+  }
+
+  &__text {
+    margin: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  .not-found {
+    &__header{
+      font-size: 2rem;
+    }
+
+    &__text {
+      font-size: 0.9rem;
+    }
+  }
+}

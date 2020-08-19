@@ -1,0 +1,64 @@
+@mixin icon {
+  color: #154734;
+  position: fixed;
+  top: 45vh;
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  padding: 7px;
+  border: 2px solid #154734;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.lookbook {
+  display: flex;
+  overflow-x: scroll;
+  width: calc(650px * 5);
+
+  &__icon {
+    &--right {
+      @include icon();
+      right: 10px;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    &--left {
+      @include icon();
+      transform: rotate(180deg);
+      left: 10px;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+@media (max-width: 450px) {
+  .lookbook {
+    top: 60px;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+
+  .lookbook__icon--right {
+    display: none;
+  }
+
+  .lookbook__icon--left {
+    display: none;
+  }
+}
+

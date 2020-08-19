@@ -60,17 +60,6 @@ function Payment() {
     });
   };
 
-  
-  // function isPickup(){
-  //   var checkbox = document.getElementById("111");
-  //   if(checkbox.checked==true){
-  //     return false;
-  //   }
-  //   else {
-  //     return true;
-  //   }
-  //  };
-
   const getTotal = () => {
     let i;
     let totalPrice = 0;
@@ -177,10 +166,10 @@ function Payment() {
         ) : ( */}
           <div className="summary">
           <form action="#">
-          <input type="radio" id="111" name="gender" onClick={() => changeIsPickup(true)}/>
-          <label for="111">Pick Up</label>
-          <input type="radio" id="222" name="gender" onClick={() => changeIsPickup(false)}/>
-          <label for="222">Shipping</label>
+            <input type="radio" id="111" name="gender" onClick={() => changeIsPickup(true)}/>
+            <label for="111">Pick Up</label>
+            <input type="radio" id="222" name="gender" onClick={() => changeIsPickup(false)}/>
+            <label for="222">Shipping</label>
           </form>
             <b>Price: {getTotal()}$</b>
             <p>Shipping: 15$ {province}</p>

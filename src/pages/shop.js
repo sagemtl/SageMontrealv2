@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import Layout from '../components/layout';
 import ShopItem from '../components/shopitem';
-import '../styles/shop.scss';
+import './styles/shop.scss';
 import { GlobalContext } from '../context/Provider';
 
 const Shop = ({ data, uri }) => {
@@ -19,7 +19,7 @@ const Shop = ({ data, uri }) => {
   const { buttonPaused } = state;
 
   const getProducts = () => {
-    const stripeProducts = data.allStripeProduct.edges;
+    const stripeProducts = data.allStripeProduct.edges.filter(node => node.node.featuredImg); //only for products that have images
     const products = [];
     let factor = Math.floor(16 / stripeProducts.length);
     const remainder = 16 % stripeProducts.length;
@@ -120,7 +120,7 @@ export default Shop;
 
 export const query = graphql`
   query MyQuery {
-    allStripeProduct (filter: {active: {eq: true}}) {
+    allStripeProduct(filter: { active: { eq: true } }) {
       edges {
         node {
           id

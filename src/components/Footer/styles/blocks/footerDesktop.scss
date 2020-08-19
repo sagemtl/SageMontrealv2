@@ -1,5 +1,5 @@
 @mixin footer {
-  position: absolute;
+  position: fixed;
   display: flex;
   bottom: 0;
   justify-content: space-between;
@@ -10,7 +10,7 @@
   z-index: 100;
 }
 
-.footer {
+.footer-desktop {
   @include footer();
 
   &__header {
@@ -27,6 +27,7 @@
     font-weight: 500;
     line-height: 1.2;
     cursor: pointer;
+    margin-right: 15px;
 
     &:hover {
       text-decoration: underline;
@@ -35,10 +36,13 @@
 
   &__icon {
     margin: 0;
-    margin-right: 10px;
-    transition: filter 3s ease-in-out;
-    color: black;
-    animation: rotate 5s infinite linear, rainbow 5s infinite linear;
+    margin-right: 15px;
+    animation: rotate 5s infinite linear;
+    transition: all 0.5s;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 
   &__button {
@@ -67,14 +71,10 @@
   }
 }
 
-.footer-text {
+.footer-desktop-text {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.footer-transparent {
-  @include footer();
 }
 
 @keyframes rotate {
@@ -84,35 +84,5 @@
 
   to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes rainbow {
-  0% {
-    color: red;
-  }
-
-  16.67% {
-    color: orange;
-  }
-
-  33.33% {
-    color: yellow;
-  }
-
-  50% {
-    color: green;
-  }
-
-  66.67% {
-    color: blue;
-  }
-
-  83.33% {
-    color: purple;
-  }
-
-  100% {
-    color: red;
   }
 }
