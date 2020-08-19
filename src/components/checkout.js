@@ -161,9 +161,9 @@ function Payment() {
             />
           );
         })}
-        {/* {getTotal() === 0 ? (
+        {getTotal() === 0 ? (
           <div />
-        ) : ( */}
+        ) : (
           <div className="summary">
           <form action="#">
             <input type="radio" id="111" name="gender" onClick={() => changeIsPickup(true)}/>
@@ -175,7 +175,7 @@ function Payment() {
             <p>Shipping: 15$ {province}</p>
             <b>Total: {getTotal() + 15}$</b>
           </div>
-        {/* )} */}
+       )} 
       </div>
       <div className="checkout">
         {isPickUp == false ? 
