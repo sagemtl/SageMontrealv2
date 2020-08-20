@@ -41,6 +41,7 @@ const Payment = () => {
   const [province, setProvince] = useState("Quebec");
 
   const[shippingMethod, setShippingMethod] = useState("")
+  const [isPickUp, setIsPickUp] = useState(false);
 
   const elements = useElements();
   const stripe = useStripe();
@@ -62,6 +63,9 @@ const Payment = () => {
     setShippingMethod(val);
     console.log(val)
   };
+  const changeIsPickup = (val) => {
+    setIsPickUp(val)
+  }
 
   // After checkout, reset the cart state
   const resetCart = () => {
@@ -92,6 +96,17 @@ const Payment = () => {
     }
   }
   
+  
+  // function isPickup(){
+  //   var checkbox = document.getElementById("111");
+  //   if(checkbox.checked==true){
+  //     return false;
+  //   }
+  //   else {
+  //     return true;
+  //   }
+  //  };
+
   const getTotal = () => {
     let i;
     let totalPrice = 0;
@@ -263,7 +278,7 @@ const Payment = () => {
 
   return (
     <div className="flexbox-checkout">
-      <div className="cart-checkout">
+      <div className="cart_checkout">
         {checkoutItems.map((item) => {
           return (
             <CartItem
@@ -277,23 +292,30 @@ const Payment = () => {
             />
           );
         })}
-        {cartIsEmpty() ? (
+        {/* {isEmpty() ? (
           <div />
-        ) : (
+        ) : ( */}
           <div className="summary">
+          <form action="#">
+          <input type="radio" id="111" name="gender" onClick={() => changeIsPickup(true)}/>
+          <label for="111">Pick Up</label>
+          <input type="radio" id="222" name="gender" onClick={() => changeIsPickup(false)}/>
+          <label for="222">Shipping</label>
+          </form>
             <b>Price: {getTotal()}$</b>
             <p>Shipping: {getShippingPrice() == -1 ? "TBD" : getShippingPrice() + "$"}</p>
             <b>Total: {getShippingPrice() == -1 ? getTotal() : getTotal() + getShippingPrice()}$</b>
           </div>
-        )}
+        {/* )} */}
       </div>
-
+      <div className="checkout">
+      {isPickUp == false ?
       <Container className="py-4">
       {paymentRequest ?
       <div className="custom-apple-pay">
       <div style={{width:"350px"}}>
       <PaymentRequestButtonElement options={options} /></div></div> : <div></div>}
-        <Card className="checkout-form">
+        <Card className="checkout__checkout-form">
           <Card.Body>
             <Form method="POST" onSubmit={submit} className="checkout-form__form">
               <Row>
@@ -432,9 +454,50 @@ const Payment = () => {
                 <Form.Label> Card Details </Form.Label>
                 <div className="custom-stripe-element"><CardElement > </CardElement></div>
                 <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
-              </FormGroup>
+        </FormGroup>
         </div></div>
-      </Container>
+      </Container> 
+        :
+      
+         <Container className="py-4">
+          <Card className="checkout__checkout-form">
+            <Card.Body>
+              <Form method="POST" onSubmit={submit} className="checkout-form__form">
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> Name on Card </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text"
+                        placeholder="Enter name on card"
+                        name="name"
+                        onChange={change}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <FormGroup>
+                      <Form.Label> Email </Form.Label>
+                      <FormControl className="checkout-form__form-control"
+                        type="text"
+                        name="email"
+                        placeholder="Enter email address"
+                        onChange={change}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <FormGroup >
+                <Form.Label> Card Details </Form.Label>
+                  <div className="custom-stripe-element"><CardElement > </CardElement></div>
+                  <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
+                </FormGroup>
+                </Form>
+            </Card.Body>
+          </Card>
+        </Container>
+        } 
+        
+        
+      </div>
     </div>
   );
 }
