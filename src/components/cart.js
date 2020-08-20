@@ -26,7 +26,7 @@ const Cart = ({ isMobile }) => {
         );
       })}
       {checkoutItems.length > 0 && (
-         <Link to="/checkout">
+        <Link to="/checkout">
           <button type="submit" className="cart__button">
             Checkout
           </button>

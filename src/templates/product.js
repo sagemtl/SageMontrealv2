@@ -2,14 +2,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+
+import loadable from '@loadable/component';
+
 import { graphql } from 'gatsby';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import Layout from '../components/layout';
+// import Dialog from '@material-ui/core/Dialog';
+// import DialogContent from '@material-ui/core/DialogContent';
+// import Layout from '../components/layout';
 import { GlobalContext } from '../context/Provider';
 import { sortSizes } from '../helpers/stripeHelper';
 
 import './styles/product.scss';
+
+const Layout = loadable(() => import('../components/layout'));
+const Dialog = loadable(() => import('@material-ui/core/Dialog'));
+const DialogContent = loadable(() => import('@material-ui/core/DialogContent'));
 
 const Product = ({ data }) => {
   const item = data.stripeProduct;
@@ -22,6 +29,11 @@ const Product = ({ data }) => {
   );
   const [modalOpen, setModalOpen] = useState(false);
   const { state, dispatch } = useContext(GlobalContext);
+
+  const filterPrice = (sku) => {
+    const matched = skus.edges.find((node) => node.node.id === sku);
+    return matched.node.price / 100;
+  };
 
   const addToCart = () => {
     const itemsCopy = Array.from(state.checkoutItems);
@@ -49,11 +61,6 @@ const Product = ({ data }) => {
     });
   };
 
-  const filterPrice = (sku) => {
-    const matched = skus.edges.find((node) => node.node.id == sku);
-    return matched.node.price / 100;
-  };
-
   // not fully tested yet
   const sortedSkus = sortSizes(skus.edges);
 
@@ -65,6 +72,7 @@ const Product = ({ data }) => {
           alt={node.name}
           className="product-images__image--secondary"
           onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
+          onKeyDown={() => setSelectedImage(node.childImageSharp.fixed.src)}
         />
       );
     });
@@ -113,6 +121,7 @@ const Product = ({ data }) => {
             })}
           </div>
           <button
+            type="button"
             className="size-guide__size-guide-link"
             onClick={() => setModalOpen(true)}
           >

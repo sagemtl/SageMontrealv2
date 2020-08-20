@@ -1,18 +1,13 @@
 // import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, graphql } from 'gatsby';
 import React, { useContext } from 'react';
 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import Layout from '../components/layout';
-import SEO from '../components/seo';
+
 import Payment from '../components/checkout';
-import '../pages/styles/bootstrap.min.css';
-import '../pages/styles/checkout.scss';
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+import '../styles/bootstrap.min.css';
+import '../styles/checkout.scss';
 import { GlobalContext } from '../context/Provider';
-import PaymentRequest from '../components/checkout';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -28,13 +23,13 @@ const CheckoutPage = () => {
       totalPrice += checkoutItems[i].amount * checkoutItems[i].price;
     }
     return totalPrice;
-  }
+  };
   const cartIsEmpty = () => {
     return checkoutItems.length <= 0;
-  }
+  };
 
-  if(cartIsEmpty()){
-    return(
+  if (cartIsEmpty()) {
+    return (
       <div>
         <div
           style={{

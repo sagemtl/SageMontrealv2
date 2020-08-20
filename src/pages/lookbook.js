@@ -5,7 +5,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
 
-import './styles/lookbook.scss';
+import '../styles/lookbook.scss';
 
 const LookbookMenu = ({ uri }) => {
   const collections = [
@@ -85,17 +85,21 @@ const LookbookMenu = ({ uri }) => {
   ];
 
   const scrollRight = () => {
-    window.scrollBy({
-      left: -500,
-      behavior: 'smooth',
-    });
+    if (typeof window !== `undefined`) {
+      window.scrollBy({
+        left: -500,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const scrollLeft = () => {
-    window.scrollBy({
-      left: 500,
-      behavior: 'smooth',
-    });
+    if (typeof window !== `undefined`) {
+      window.scrollBy({
+        left: 500,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (

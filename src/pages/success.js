@@ -2,11 +2,11 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
-import './styles/success.scss';
+import '../styles/success.scss';
 
 import CartItem from '../components/cartItem';
 
-function Success() {
+const Success = () => {
   const data = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "sage-icon.png" }) {
@@ -30,7 +30,9 @@ function Success() {
           {' '}
           Your order has been placed! <br />
           Your payment has been successfully processed and a receipt has been
-          sent to {window.history.state.userEmail}.<br />
+          sent to{' '}
+          {typeof window !== `undefined` ? window.history.state.userEmail : ''}.
+          <br />
           Your items will be shipped the following day and should arrive within
           a week.
           <br />
@@ -39,21 +41,23 @@ function Success() {
       </div>
 
       <div className="cart-checkout">
-        {window.history.state.purchase.map((item) => {
-          return (
-            <CartItem
-              id={item.id}
-              name={item.name}
-              amount={item.amount}
-              price={item.price}
-              size={item.size}
-              image={item.image}
-            />
-          );
-        })}
+        {typeof window !== `undefined`
+          ? window.history.state.purchase.map((item) => {
+              return (
+                <CartItem
+                  id={item.id}
+                  name={item.name}
+                  amount={item.amount}
+                  price={item.price}
+                  size={item.size}
+                  image={item.image}
+                />
+              );
+            })
+          : undefined}
       </div>
     </Layout>
   );
-}
+};
 
 export default Success;

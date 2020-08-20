@@ -7,10 +7,13 @@ import Cart from './cart';
 import './styles/layout.scss';
 
 const Layout = ({ children, footerColor, hideCart, style, current }) => {
-  const [width, setWidth] = useState(window.innerWidth);
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const [width, setWidth] = useState(widthVal);
 
   useEffect(() => {
-    window.addEventListener('resize', () => setWidth(window.innerWidth));
+    if (typeof window !== `undefined`) {
+      window.addEventListener('resize', () => setWidth(window.innerWidth));
+    }
   }, []);
 
   const isMobile = width < 900;
@@ -32,6 +35,7 @@ Layout.propTypes = {
   hideCart: PropTypes.bool,
   footerColor: PropTypes.string,
   style: PropTypes.shape,
+  current: PropTypes.string.isRequired,
 };
 
 Layout.defaultProps = {

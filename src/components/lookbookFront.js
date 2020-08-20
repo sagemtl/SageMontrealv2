@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import './styles/lookbookFront.scss';
@@ -27,8 +27,11 @@ const LookbookFront = ({ season, images, cover, position }) => {
   return (
     <>
       <div
+        role="button"
         className="lookbook-front"
+        onKeyDown={() => setOpen(true)}
         onClick={() => setOpen(true)}
+        tabIndex={0}
         style={{
           backgroundImage: `url(${cover})`,
           backgroundPosition: position,
