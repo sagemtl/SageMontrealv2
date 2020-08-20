@@ -165,7 +165,6 @@ exports.createPages = async ({ graphql, actions }) => {
   const path = require(`path`);
 
   result.data.allStripeProduct.edges.forEach(({ node }) => {
-    console.log(node);
     if (node.featuredImg.id) {
       createPage({
         path: `/shop/${node.fields.slug}`,

@@ -23,13 +23,9 @@ const Product = ({ data }) => {
   const [inventories, setInventories] = useState([]);
   const { state, dispatch } = useContext(GlobalContext);
 
-  const filterPrice = (sku) => {
-    const matched = skus.edges.find((node) => node.node.id === sku);
-    return matched.node.price / 100;
-  };
   useEffect(() => {
     getAllInventory();
-  }, [getAllInventory]);
+  }, []);
 
   const getAllInventory = async () => {
     const invs = await Promise.all(
@@ -83,6 +79,11 @@ const Product = ({ data }) => {
     });
   };
 
+  const filterPrice = (sku) => {
+    const matched = skus.edges.find((node) => node.node.id == sku);
+    return matched.node.price / 100;
+  };
+
   // not fully tested yet
   const sortedSkus = sortSizes(skus.edges);
 
@@ -94,7 +95,6 @@ const Product = ({ data }) => {
           alt={node.name}
           className="product-images__image--secondary"
           onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
-          onKeyDown={() => setSelectedImage(node.childImageSharp.fixed.src)}
         />
       );
     });
@@ -165,7 +165,6 @@ const Product = ({ data }) => {
           {renderOutOfStockLabel()}
           {/* size guide */}
           <button
-            type="button"
             className="size-guide__size-guide-link"
             onClick={() => setModalOpen(true)}
           >
