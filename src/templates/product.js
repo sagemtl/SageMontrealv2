@@ -2,21 +2,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-
-import loadable from '@loadable/component';
-
 import { graphql } from 'gatsby';
-// import Dialog from '@material-ui/core/Dialog';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import Layout from '../components/layout';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import Layout from '../components/layout';
 import { GlobalContext } from '../context/Provider';
 import { sortSizes } from '../helpers/stripeHelper';
 
 import './styles/product.scss';
-
-const Layout = loadable(() => import('../components/layout'));
-const Dialog = loadable(() => import('@material-ui/core/Dialog'));
-const DialogContent = loadable(() => import('@material-ui/core/DialogContent'));
 
 const Product = ({ data }) => {
   const item = data.stripeProduct;

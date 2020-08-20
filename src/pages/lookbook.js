@@ -5,7 +5,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
 
-import '../styles/lookbook.scss';
+import './styles/lookbook.scss';
 
 const LookbookMenu = ({ uri }) => {
   const collections = [

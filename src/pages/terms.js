@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Layout from '../components/layout';
 
-import '../styles/terms.scss';
+import './styles/terms.scss';
 
 const terms = ({ uri }) => {
   return (

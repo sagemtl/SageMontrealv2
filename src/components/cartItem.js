@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
-// import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
+import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import Img from 'gatsby-image';
 import { GlobalContext } from '../context/Provider';
 
@@ -48,11 +48,11 @@ const CartItem = ({ name, amount, size, price, image, id, sku }) => {
       <div className="cart__item__price">
         <b>${price}</b>
       </div>
-      {/* <ClearRoundedIcon
+      <ClearRoundedIcon
         fontSize="small"
         className="cart__item__close"
         onClick={removeItem}
-      /> */}
+      />
     </div>
   );
 };

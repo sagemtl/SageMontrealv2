@@ -5,8 +5,8 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
 import Payment from '../components/checkout';
-import '../styles/bootstrap.min.css';
-import '../styles/checkout.scss';
+import './styles/bootstrap.min.css';
+import './styles/checkout.scss';
 import { GlobalContext } from '../context/Provider';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
