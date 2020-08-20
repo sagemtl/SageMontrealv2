@@ -24,24 +24,26 @@ const Product = ({ data }) => {
   const { state, dispatch } = useContext(GlobalContext);
 
   useEffect(() => {
+    const getAllInventory = async () => {
+      const invs = await Promise.all(
+        skus.edges.map(async (node) => {
+          const inv = await getSkuInventory(node.node.id);
+          return inv;
+        }),
+      );
+      if (invs) {
+        setInventories(invs);
+      }
+    };
+
     getAllInventory();
-  }, []);
+  }, [skus.edges]);
 
-  const getAllInventory = async () => {
-    const invs = await Promise.all(
-      skus.edges.map(async (node) => {
-        const inv = await getSkuInventory(node.node.id);
-        return inv;
-      }),
+  const checkIsInStock = (skuId) => {
+    const inv = inventories.filter(
+      (invEl) => typeof invEl !== 'undefined' && invEl.sku_id === skuId,
     );
-    if (invs) {
-      setInventories(invs);
-    }
-  };
-
-  const checkIsInStock = (sku_id) => {
-    const inv = inventories.filter((inv) => inv.sku_id == sku_id);
-    if (inv[0] && inv[0].quantity != 0) {
+    if (inv[0] && inv[0].quantity !== 0) {
       return true;
     }
     return false;
@@ -51,6 +53,11 @@ const Product = ({ data }) => {
     if (selectedSize.length <= 0) return false;
     if (!checkIsInStock(selectedSku)) return false;
     return true;
+  };
+
+  const filterPrice = (sku) => {
+    const matched = skus.edges.find((node) => node.node.id === sku);
+    return matched.node.price / 100;
   };
 
   const addToCart = () => {
@@ -79,11 +86,6 @@ const Product = ({ data }) => {
     });
   };
 
-  const filterPrice = (sku) => {
-    const matched = skus.edges.find((node) => node.node.id == sku);
-    return matched.node.price / 100;
-  };
-
   // not fully tested yet
   const sortedSkus = sortSizes(skus.edges);
 
@@ -95,6 +97,7 @@ const Product = ({ data }) => {
           alt={node.name}
           className="product-images__image--secondary"
           onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
+          onKeyDown={() => setSelectedImage(node.childImageSharp.fixed.src)}
         />
       );
     });
@@ -165,6 +168,7 @@ const Product = ({ data }) => {
           {renderOutOfStockLabel()}
           {/* size guide */}
           <button
+            type="button"
             className="size-guide__size-guide-link"
             onClick={() => setModalOpen(true)}
           >

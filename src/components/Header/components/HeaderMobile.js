@@ -2,6 +2,8 @@ import React, { useContext, useState, useRef } from 'react';
 import { Link } from 'gatsby';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CloseIcon from '@material-ui/icons/Close';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import StoreIcon from '@material-ui/icons/Store';
 import { GlobalContext } from '../../../context/Provider';
 
 const HeaderMobile = () => {
@@ -29,10 +31,10 @@ const HeaderMobile = () => {
         style={navOpen ? { left: 0 } : { left: 'calc(100% / 4 * -2)' }}
       >
         <Link to="/shop" className="header-mobile__button">
-          {/* <StoreIcon fontSize="large" className="header-mobile__icon" /> */}
+          <StoreIcon fontSize="large" className="header-mobile__icon" />
         </Link>
         <Link to="/lookbook" className="header-mobile__button">
-          {/* <VisibilityIcon fontSize="large" className="header-mobile__icon" /> */}
+          <VisibilityIcon fontSize="large" className="header-mobile__icon" />
         </Link>
         <div
           role="button"
