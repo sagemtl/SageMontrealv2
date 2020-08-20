@@ -12,6 +12,7 @@ const IndexPage = ({ uri }) => {
         <div className="artstep-wrapper">
           <div className="artstep-overlay" />
           <iframe
+            title="Virtual Museum"
             width="100%"
             height="100%"
             src="https://www.artsteps.com/embed/5f035eac83ecaf0b05dfd83c/560/315"

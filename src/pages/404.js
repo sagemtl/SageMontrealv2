@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Layout from '../components/layout';
 
 import './styles/404.scss';
@@ -17,5 +18,9 @@ const NotFoundPage = ({ uri }) => (
     </div>
   </Layout>
 );
+
+NotFoundPage.propTypes = {
+  uri: PropTypes.string.isRequired,
+};
 
 export default NotFoundPage;

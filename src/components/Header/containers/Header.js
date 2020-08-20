@@ -4,10 +4,13 @@ import HeaderMobile from '../components/HeaderMobile';
 import '../styles/header.scss';
 
 const Header = ({ current }) => {
-  const [width, setWidth] = useState(window.innerWidth);
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const [width, setWidth] = useState(widthVal);
 
   useEffect(() => {
-    window.addEventListener('resize', () => setWidth(window.innerWidth));
+    if (typeof window !== `undefined`) {
+      window.addEventListener('resize', () => setWidth(window.innerWidth));
+    }
   }, []);
 
   if (width >= 900) {

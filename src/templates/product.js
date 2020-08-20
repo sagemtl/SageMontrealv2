@@ -28,28 +28,30 @@ const Product = ({ data }) => {
   }, []);
 
   const getAllInventory = async () => {
-    var invs = await Promise.all(skus.edges.map(async (node) => {
-      var inv = await getSkuInventory(node.node.id);
-      return inv;
-    }));
-    if(invs) {
+    const invs = await Promise.all(
+      skus.edges.map(async (node) => {
+        const inv = await getSkuInventory(node.node.id);
+        return inv;
+      }),
+    );
+    if (invs) {
       setInventories(invs);
     }
-  }
+  };
 
   const checkIsInStock = (sku_id) => {
-    var inv = inventories.filter(inv => inv.sku_id == sku_id);
+    const inv = inventories.filter((inv) => inv.sku_id == sku_id);
     if (inv[0] && inv[0].quantity != 0) {
-      return true
-    };
+      return true;
+    }
     return false;
-  }
+  };
 
   const allowAddToCart = () => {
-    if(selectedSize.length <= 0) return false;
-    if(!checkIsInStock(selectedSku)) return false;
+    if (selectedSize.length <= 0) return false;
+    if (!checkIsInStock(selectedSku)) return false;
     return true;
-  }
+  };
 
   const addToCart = () => {
     const itemsCopy = Array.from(state.checkoutItems);
@@ -100,12 +102,13 @@ const Product = ({ data }) => {
   };
 
   const renderSizesFromSku = () => {
-    
     const skuComponents = sortedSkus.map(({ node }) => {
       const size = node.attributes.name;
       const nodeid = node.id;
       const hasStock = checkIsInStock(nodeid);
-      const className = "product-details-sizes-label__" + (hasStock? "in-stock" : "no-stock");
+      const className = `product-details-sizes-label__${
+        hasStock ? 'in-stock' : 'no-stock'
+      }`;
       return (
         <div className="product-details-sizes__size" key={size}>
           <input
@@ -126,17 +129,18 @@ const Product = ({ data }) => {
       );
     });
     return skuComponents;
-  }
+  };
 
   const renderOutOfStockLabel = () => {
-    if(selectedSize.length > 0 &&!checkIsInStock(selectedSku)){
+    if (selectedSize.length > 0 && !checkIsInStock(selectedSku)) {
       return (
-        <div className="product-details-sizes__soldout-error">Sorry! This size is out of stock.</div>
+        <div className="product-details-sizes__soldout-error">
+          Sorry! This size is out of stock.
+        </div>
       );
-    } else {
-      return null;
     }
-  }
+    return null;
+  };
 
   return (
     <Layout current={`/shop/${item.fields.slug}`}>
@@ -157,9 +161,7 @@ const Product = ({ data }) => {
           ) : null}
           <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
           {/* sku/size selection */}
-          <div className="product-details-sizes">
-            {renderSizesFromSku()}
-          </div>
+          <div className="product-details-sizes">{renderSizesFromSku()}</div>
           {renderOutOfStockLabel()}
           {/* size guide */}
           <button

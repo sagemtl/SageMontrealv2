@@ -21,7 +21,9 @@ const GlobalContextProvider = ({ children }) => {
   const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
   useEffect(() => {
-    localStorage.setItem('cart-items', JSON.stringify(state));
+    if (typeof window !== `undefined`) {
+      localStorage.setItem('cart-items', JSON.stringify(state));
+    }
   }, [state]);
 
   return (

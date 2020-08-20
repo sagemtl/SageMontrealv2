@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { updateProduct, getProduct, createProduct } from '../helpers/stripeHelper';
+import {
+  updateProduct,
+  getProduct,
+  createProduct,
+} from '../helpers/stripeHelper';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
-import CreateModal from '../components/createModal'
+import CreateModal from '../components/createModal';
 
 import './styles/cms.scss';
 import { createJsxAttribute } from 'typescript';
@@ -37,7 +41,7 @@ const CMS = () => {
   const [imagesCreate, setImagesCreate] = useState('');
   const [descCreate, setDescCreate] = useState('');
 
-  const setSnack =(open, sev, msg)=>{
+  const setSnack = (open, sev, msg) => {
     setSnackbarOpen(open);
     setSnackSeverity(sev);
     setSnackMessage(msg);
@@ -47,33 +51,38 @@ const CMS = () => {
     setNameCreate('');
     setDescCreate('');
     setImagesCreate('');
-  }
+  };
 
   const processImgArr = (images) => {
-    //handle images
-    var imgArr = images.split(',');
-    imgArr = imgArr.map(s => s.trim())
-    var count = (images.match(/http/g) || []).length;
+    // handle images
+    let imgArr = images.split(',');
+    imgArr = imgArr.map((s) => s.trim());
+    const count = (images.match(/http/g) || []).length;
     if (count == 0) {
-      setSnack(true, 'error', "Must have at least 1 url in Images URL");
+      setSnack(true, 'error', 'Must have at least 1 url in Images URL');
       return null;
-    } else if(count != imgArr.length){
-      setSnack(true, 'error', "URLs are incorrect in format, must be seperated by commas");
+    }
+    if (count != imgArr.length) {
+      setSnack(
+        true,
+        'error',
+        'URLs are incorrect in format, must be seperated by commas',
+      );
       return null;
     }
     return imgArr;
-  }
+  };
 
   const handleGetProduct = async (id = productId) => {
     id = id.trim();
     setProductId(id);
-    var prod = await getProduct(id);
-    if(prod==undefined){
+    const prod = await getProduct(id);
+    if (prod == undefined) {
       setSnack(true, 'error', 'There has been an error getting the product');
       return;
     }
-    else if(prod.statusCode){
-      if(prod.statusCode==404){
+    if (prod.statusCode) {
+      if (prod.statusCode == 404) {
         setSnack(true, 'error', 'The product does not exist');
         return;
       }
@@ -90,9 +99,9 @@ const CMS = () => {
     prod.metadata.modelInfo ? setFeaturedImg(prod.metadata.modelInfo) : null;
   };
 
-  const handleUpdateProduct = async()=>{
-    //handle images
-    var imgArr = processImgArr(images);
+  const handleUpdateProduct = async () => {
+    // handle images
+    const imgArr = processImgArr(images);
     if (!imgArr) return;
 
     const newProduct = new Object();
@@ -104,32 +113,38 @@ const CMS = () => {
       featuredImg,
       modelInfo,
     };
-    var prod = await updateProduct(productId, newProduct);
-    prod.statusCode? setSnack(true, 'error', "There has been an error updating the product")
-                     : setSnack(true, 'success', "Product is successfully updated");
-  }
+    const prod = await updateProduct(productId, newProduct);
+    prod.statusCode
+      ? setSnack(true, 'error', 'There has been an error updating the product')
+      : setSnack(true, 'success', 'Product is successfully updated');
+  };
 
-  const handleCreateProduct = async() => {
-    var imgArr = processImgArr(imagesCreate);
+  const handleCreateProduct = async () => {
+    const imgArr = processImgArr(imagesCreate);
     if (!imgArr) return;
 
-    var newProduct = new Object;
+    const newProduct = new Object();
     newProduct.description = descCreate;
     newProduct.name = nameCreate;
     newProduct.images = imgArr;
 
-    var prod = await createProduct(newProduct);
-    prod.statusCode? setSnack(true, 'error', `Code ${prod.statusCode}, there has been an error creating the product`)
-                    : setSnack(true, 'success', "Product is successfully created");
+    const prod = await createProduct(newProduct);
+    prod.statusCode
+      ? setSnack(
+          true,
+          'error',
+          `Code ${prod.statusCode}, there has been an error creating the product`,
+        )
+      : setSnack(true, 'success', 'Product is successfully created');
     clearCreateFields();
-    if(prod.id){
+    if (prod.id) {
       setProductId(prod.id);
       setCreateMode(false);
       handleGetProduct(prod.id);
     }
-  }
-  
-  const Alert = props => {
+  };
+
+  const Alert = (props) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 
@@ -138,11 +153,11 @@ const CMS = () => {
       <div className="cms-product">
         <h1>Product</h1>
         <button
-            onClick={() => setCreateMode(true)}
-            type="button"
-            className="cms__button"
-          >
-            Create
+          onClick={() => setCreateMode(true)}
+          type="button"
+          className="cms__button"
+        >
+          Create
         </button>
         <CreateModal
           createMode={createMode}

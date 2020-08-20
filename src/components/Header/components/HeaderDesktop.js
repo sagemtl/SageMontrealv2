@@ -35,15 +35,21 @@ const HeaderDesktop = ({ current }) => {
   return (
     <>
       <div
+        role="button"
+        tabIndex={0}
         className={navOpen ? 'header-button--closed' : 'header-button'}
         onClick={() => openNavbar(true)}
+        onKeyDown={() => openNavbar(true)}
       >
         <ArrowForwardIosIcon className="header-button__icon" />
       </div>
       <div className={navOpen ? 'navbox' : 'navbox--closed'}>
         <header>
           <div
+            role="button"
+            tabIndex={0}
             onClick={() => openNavbar(false)}
+            onKeyDown={() => openNavbar(false)}
             className="navbox-logo-wrapper"
           >
             <video
@@ -53,7 +59,9 @@ const HeaderDesktop = ({ current }) => {
               playsInline
               loop
               onMouseOver={(e) => e.target.play()}
+              onFocus={(e) => e.target.play()}
               onMouseOut={(e) => e.target.pause()}
+              onBlur={(e) => e.target.pause()}
             />
           </div>
         </header>

@@ -1,12 +1,9 @@
 // import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, graphql } from 'gatsby';
 import React, { useContext } from 'react';
 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import Layout from '../components/layout';
-import SEO from '../components/seo';
+
 import Payment from '../components/checkout';
 import './styles/bootstrap.min.css';
 import './styles/checkout.scss';
@@ -27,7 +24,11 @@ const CheckoutPage = () => {
     }
     return totalPrice;
   };
-  if (getTotal() == 0) {
+  const cartIsEmpty = () => {
+    return checkoutItems.length <= 0;
+  };
+
+  if (cartIsEmpty()) {
     return (
       <div>
         <div

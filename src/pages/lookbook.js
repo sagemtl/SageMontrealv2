@@ -85,17 +85,21 @@ const LookbookMenu = ({ uri }) => {
   ];
 
   const scrollRight = () => {
-    window.scrollBy({
-      left: -500,
-      behavior: 'smooth',
-    });
+    if (typeof window !== `undefined`) {
+      window.scrollBy({
+        left: -500,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const scrollLeft = () => {
-    window.scrollBy({
-      left: 500,
-      behavior: 'smooth',
-    });
+    if (typeof window !== `undefined`) {
+      window.scrollBy({
+        left: 500,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (

@@ -4,22 +4,26 @@ import { graphql } from 'gatsby';
 import classNames from 'classnames';
 
 import Layout from '../components/layout';
-import ShopItem from '../components/shopitem';
+import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
 import { GlobalContext } from '../context/Provider';
 
 const Shop = ({ data, uri }) => {
   const [paused, setPaused] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const [windowWidth, setWindowWidth] = useState(widthVal);
   const [extra, setExtra] = useState(0);
-  const [scroll, setScroll] = useState(window.pageYOffset);
+  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
+  const [scroll, setScroll] = useState(pageYOffset);
   const mobile = windowWidth < 1200;
 
   const { state } = useContext(GlobalContext);
   const { buttonPaused } = state;
 
   const getProducts = () => {
-    const stripeProducts = data.allStripeProduct.edges.filter(node => node.node.featuredImg); //only for products that have images
+    const stripeProducts = data.allStripeProduct.edges.filter(
+      (node) => node.node.featuredImg,
+    ); // only for products that have images
     const products = [];
     let factor = Math.floor(16 / stripeProducts.length);
     const remainder = 16 % stripeProducts.length;
@@ -32,31 +36,43 @@ const Shop = ({ data, uri }) => {
   };
 
   useEffect(() => {
-    if (scroll === 0) window.scrollTo(0, 1000);
-    else if (scroll === 1) window.scrollTo(0, 0);
+    if (typeof window !== `undefined`) {
+      if (scroll === 0) window.scrollTo(0, 1000);
+      else if (scroll === 1) window.scrollTo(0, 0);
+    }
   });
 
   useEffect(() => {
-    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
+    if (typeof window !== `undefined`)
+      window.addEventListener('resize', () =>
+        setWindowWidth(window.innerWidth),
+      );
 
     const updateDelay = () => {
       const winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
+        typeof document !== `undefined`
+          ? document.body.scrollTop || document.documentElement.scrollTop
+          : false;
 
       const height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
+        typeof document !== `undefined`
+          ? document.documentElement.scrollHeight -
+            document.documentElement.clientHeight
+          : 0;
 
       const scrolled = winScroll / height;
       setScroll(scrolled);
-      if (window.scrollY) setExtra((window.scrollY + extra) / 50);
+      if (typeof window !== `undefined` && window.scrollY)
+        setExtra((window.scrollY + extra) / 50);
     };
-    window.addEventListener('scroll', updateDelay);
+    if (typeof window !== `undefined`)
+      window.addEventListener('scroll', updateDelay);
 
     return () => {
-      window.removeEventListener('scroll', updateDelay);
+      if (typeof window !== `undefined`)
+        window.removeEventListener('scroll', updateDelay);
     };
-  }, [extra, scroll, windowWidth]);
+  }, [extra, scroll]);
 
   const shopClasses = classNames({
     shop: !mobile,
@@ -114,6 +130,7 @@ const Shop = ({ data, uri }) => {
 
 Shop.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  uri: PropTypes.string.isRequired,
 };
 
 export default Shop;

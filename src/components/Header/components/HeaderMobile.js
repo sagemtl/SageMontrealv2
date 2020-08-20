@@ -1,8 +1,6 @@
 import React, { useContext, useState, useRef } from 'react';
 import { Link } from 'gatsby';
-import StoreIcon from '@material-ui/icons/Store';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloseIcon from '@material-ui/icons/Close';
 import { GlobalContext } from '../../../context/Provider';
 
@@ -31,14 +29,17 @@ const HeaderMobile = () => {
         style={navOpen ? { left: 0 } : { left: 'calc(100% / 4 * -2)' }}
       >
         <Link to="/shop" className="header-mobile__button">
-          <StoreIcon fontSize="large" className="header-mobile__icon" />
+          {/* <StoreIcon fontSize="large" className="header-mobile__icon" /> */}
         </Link>
         <Link to="/lookbook" className="header-mobile__button">
-          <VisibilityIcon fontSize="large" className="header-mobile__icon" />
+          {/* <VisibilityIcon fontSize="large" className="header-mobile__icon" /> */}
         </Link>
         <div
+          role="button"
+          tabIndex={0}
           className="header-mobile__logo-button"
           onClick={() => openNavbar()}
+          onKeyDown={() => openNavbar()}
         >
           <video
             src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
@@ -50,7 +51,13 @@ const HeaderMobile = () => {
           />
         </div>
       </div>
-      <div className="header-mobile-cart" onClick={() => setCart(!cart)}>
+      <div
+        className="header-mobile-cart"
+        role="button"
+        tabIndex={0}
+        onClick={() => setCart(!cart)}
+        onKeyDown={() => setCart(!cart)}
+      >
         {cart ? (
           <CloseIcon fontSize="large" className="header-mobile__icon" />
         ) : (
