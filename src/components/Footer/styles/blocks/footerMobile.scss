@@ -1,6 +1,17 @@
+@media (min-width: 900px) {
+  .footer-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .footer-mobile {
+    display: flex;
+  }
+}
+
 .footer-mobile {
   position: fixed;
-  display: flex;
   flex-direction: column;
   bottom: 0;
   align-items: center;

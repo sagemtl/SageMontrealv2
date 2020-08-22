@@ -28,24 +28,21 @@ const Footer = ({ color }) => {
     });
   };
 
-  if (width >= 500) {
-    return (
+  return (
+    <>
       <FooterDesktop
         pathname={pathname}
         color={color}
         buttonPaused={buttonPaused}
         handleClick={handleClick}
       />
-    );
-  }
-
-  return (
-    <FooterMobile
-      pathname={pathname}
-      color={color}
-      buttonPaused={buttonPaused}
-      handleClick={handleClick}
-    />
+      <FooterMobile
+        pathname={pathname}
+        color={color}
+        buttonPaused={buttonPaused}
+        handleClick={handleClick}
+      />
+    </>
   );
 };
 

@@ -25,7 +25,7 @@ const Layout = ({ children, footerColor, hideCart, style, current }) => {
       <div className="layout" style={style}>
         {children}
       </div>
-      {/* <Footer color={footerColor} /> */}
+      <Footer color={footerColor} />
     </>
   );
 };
