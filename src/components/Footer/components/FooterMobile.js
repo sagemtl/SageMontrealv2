@@ -37,7 +37,7 @@ const FooterMobile = ({ pathname, buttonPaused, color, handleClick }) => {
         </a>
       </div>
       <h3 className="footer-mobile__header" style={{ color }}>
-        © Sage Montreal 2020
+        © Sage Montreal {new Date().getFullYear()}
       </h3>
     </div>
   );

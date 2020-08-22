@@ -10,7 +10,7 @@ const Footer = ({ color }) => {
   const { buttonPaused } = state;
   const { pathname } = useLocation();
 
-  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 1000;
   const [width, setWidth] = useState(widthVal);
 
   useEffect(() => {

@@ -10,7 +10,7 @@ import { GlobalContext } from '../context/Provider';
 
 const Shop = ({ data, uri }) => {
   const [paused, setPaused] = useState(false);
-  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 1200;
   const [windowWidth, setWindowWidth] = useState(widthVal);
   const [extra, setExtra] = useState(0);
   const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;

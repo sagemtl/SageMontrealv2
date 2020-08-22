@@ -9,7 +9,7 @@ const FooterDesktop = ({ pathname, buttonPaused, color, handleClick }) => {
     <div className="footer-desktop">
       <div className="footer-desktop-text">
         <h3 className="footer-desktop__header" style={{ color }}>
-          © Sage Montreal 2020
+          © Sage Montreal {new Date().getFullYear()}
         </h3>
         <a className="footer-desktop__link" style={{ color }} href="/contact">
           Contact Us

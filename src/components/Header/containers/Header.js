@@ -4,7 +4,7 @@ import HeaderMobile from '../components/HeaderMobile';
 import '../styles/header.scss';
 
 const Header = ({ current }) => {
-  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 0;
   const [width, setWidth] = useState(widthVal);
 
   useEffect(() => {
@@ -13,11 +13,12 @@ const Header = ({ current }) => {
     }
   }, []);
 
-  if (width >= 900) {
-    return <HeaderDesktop current={current} />;
-  }
-
-  return <HeaderMobile />;
+  return (
+    <>
+      <HeaderDesktop current={current} display={width >= 900} />
+      <HeaderMobile display={width >= 900} />
+    </>
+  );
 };
 
 export default Header;

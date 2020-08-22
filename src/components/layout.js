@@ -7,7 +7,7 @@ import Cart from './cart';
 import './styles/layout.scss';
 
 const Layout = ({ children, footerColor, hideCart, style, current }) => {
-  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 0;
   const [width, setWidth] = useState(widthVal);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Layout = ({ children, footerColor, hideCart, style, current }) => {
       <div className="layout" style={style}>
         {children}
       </div>
-      <Footer color={footerColor} />
+      {/* <Footer color={footerColor} /> */}
     </>
   );
 };

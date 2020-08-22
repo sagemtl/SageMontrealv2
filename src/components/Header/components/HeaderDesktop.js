@@ -33,7 +33,7 @@ const HeaderDesktop = ({ current }) => {
   };
 
   return (
-    <>
+    <div className="header-desktop">
       <div
         role="button"
         tabIndex={0}
@@ -47,7 +47,7 @@ const HeaderDesktop = ({ current }) => {
         <header>
           <div
             role="button"
-            tabIndex={0}
+            tabIndex={-1}
             onClick={() => openNavbar(false)}
             onKeyDown={() => openNavbar(false)}
             className="navbox-logo-wrapper"
@@ -78,7 +78,7 @@ const HeaderDesktop = ({ current }) => {
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 

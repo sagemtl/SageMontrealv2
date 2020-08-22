@@ -1,3 +1,9 @@
+@media (max-width: 900px) {
+  .header-desktop {
+    display: none;
+  }
+}
+
 @mixin navbox {
   position: fixed;
   top: 30px;

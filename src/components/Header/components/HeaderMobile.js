@@ -56,7 +56,7 @@ const HeaderMobile = () => {
       <div
         className="header-mobile-cart"
         role="button"
-        tabIndex={0}
+        tabIndex={-1}
         onClick={() => setCart(!cart)}
         onKeyDown={() => setCart(!cart)}
       >
