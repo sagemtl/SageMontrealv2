@@ -6,7 +6,7 @@ import Footer from './Footer';
 import Cart from './cart';
 import './styles/layout.scss';
 
-const Layout = ({ children, footerColor, hideCart, style, current }) => {
+const Layout = ({ children, footerColor, hideCart, style }) => {
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
   const [width, setWidth] = useState(widthVal);
 
@@ -20,7 +20,7 @@ const Layout = ({ children, footerColor, hideCart, style, current }) => {
 
   return (
     <>
-      <Header current={current} />
+      <Header isMobile={isMobile} />
       {!isMobile && !hideCart && <Cart isMobile={isMobile} />}
       <div className="layout" style={style}>
         {children}

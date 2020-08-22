@@ -1,25 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PauseIcon from '@material-ui/icons/Pause';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import InstagramIcon from '@material-ui/icons/Instagram';
 
-const FooterMobile = ({ pathname, buttonPaused, color, handleClick }) => {
+const FooterMobile = ({ color }) => {
   return (
     <div className="footer-mobile">
-      {pathname === '/shop' && (
-        <button
-          type="button"
-          className="footer-mobile__button"
-          onClick={() => handleClick()}
-        >
-          {buttonPaused ? (
-            <PlayArrowIcon />
-          ) : (
-            <PauseIcon style={{ verticalAlign: 'center' }} />
-          )}
-        </button>
-      )}
       <div className="footer-mobile-row">
         <a className="footer-mobile__link" style={{ color }} href="/contact">
           Contact Us
@@ -44,10 +29,7 @@ const FooterMobile = ({ pathname, buttonPaused, color, handleClick }) => {
 };
 
 FooterMobile.propTypes = {
-  buttonPaused: PropTypes.bool.isRequired,
-  pathname: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired,
 };
 
 export default FooterMobile;

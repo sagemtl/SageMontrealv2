@@ -1,24 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import classNames from 'classnames';
+import PauseIcon from '@material-ui/icons/Pause';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
-import { GlobalContext } from '../context/Provider';
 
 const Shop = ({ data, uri }) => {
-  const [paused, setPaused] = useState(false);
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
+
+  const [paused, setPaused] = useState(false);
+  const [buttonPaused, setButtonPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(widthVal);
   const [extra, setExtra] = useState(0);
-  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
   const [scroll, setScroll] = useState(pageYOffset);
-  const mobile = windowWidth < 1200;
 
-  const { state } = useContext(GlobalContext);
-  const { buttonPaused } = state;
+  const mobile = windowWidth < 1200;
 
   const getProducts = () => {
     const stripeProducts = data.allStripeProduct.edges.filter(
@@ -123,6 +124,18 @@ const Shop = ({ data, uri }) => {
               })}
           </div>
         </div>
+        <button
+          type="button"
+          className="shop-scroll__button"
+          style={{ position: 'fixed', bottom: 50, left: 50 }}
+          onClick={() => setButtonPaused(!buttonPaused)}
+        >
+          {buttonPaused ? (
+            <PlayArrowIcon />
+          ) : (
+            <PauseIcon style={{ verticalAlign: 'center' }} />
+          )}
+        </button>
       </div>
     </Layout>
   );

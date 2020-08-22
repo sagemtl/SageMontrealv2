@@ -163,10 +163,8 @@ const Product = ({ data }) => {
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
           <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
-          {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>
           {renderOutOfStockLabel()}
-          {/* size guide */}
           <button
             type="button"
             className="size-guide__size-guide-link"

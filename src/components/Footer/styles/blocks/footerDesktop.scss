@@ -44,31 +44,6 @@
       opacity: 0.7;
     }
   }
-
-  &__button {
-    padding: 8px;
-    border-radius: 50%;
-    outline: none;
-    background: none;
-    border: none;
-    color: black;
-    z-index: 100;
-    cursor: pointer;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    left: 1em;
-    bottom: 70px;
-    box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
-    2px 6px 10px rgba(0, 0, 0, 0.2);
-
-    &:active {
-      opacity: 1;
-      box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.5),
-        inset 4px 8px 16px rgba(0, 0, 0, 0.1);
-    }
-  }
 }
 
 .footer-desktop-text {
