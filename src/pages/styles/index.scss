@@ -8,9 +8,6 @@
 .artstep-wrapper {
   height: 100vh;
   width: 100vw;
-  position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,8 +83,9 @@
 
 @media screen and (max-width: 900px) {
   .artstep-wrapper {
-    margin-top: 60px;
     padding: 0;
-    height: calc(100% - 60px);
+    padding-top: 15px;
+    height: calc(100vh - 60px);
+    position: relative;
   }
 }
