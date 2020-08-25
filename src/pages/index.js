@@ -12,7 +12,7 @@ const IndexPage = ({ uri }) => {
         <SEO title="Home" />
         <div className="artstep-wrapper">
           <div className="artstep-overlay">
-            <h1 className="index-text__header--main">
+            <h1 className="artstep-wrapper__header">
               <b>Sage Montreal</b>
             </h1>
           </div>

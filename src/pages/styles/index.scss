@@ -1,10 +1,3 @@
-@mixin text {
-  position: fixed;
-  color: white;
-  top: -20%;
-  text-shadow: 2px 2px black;
-}
-
 .artstep-wrapper {
   height: 100vh;
   width: 100vw;
@@ -14,6 +7,14 @@
   background: black;
   padding: 3%;
   overflow: hidden;
+
+  &__header {
+    font-size: 0rem;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px black;
+    animation: updown 1.5s ease-in-out infinite, zoomInOut 4s ease-in-out 1.5s;
+  }
 }
 
 .artstep-overlay {
@@ -29,28 +30,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.artstep-frame {
-  z-index: -1;
-}
-
-.index-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  z-index: 10;
-
-  &__header {
-    &--main {
-      font-size: 0rem;
-      text-align: center;
-      color: white;
-      text-shadow: 2px 2px black;
-      animation: updown 1.5s ease-in-out infinite, zoomInOut 4s ease-in-out 1.5s;
-    }
-  }
 }
 
 @keyframes fadeOut {
@@ -78,6 +57,17 @@
   }
   5%, 95% {
     font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  @keyframes zoomInOut {
+    0%, 100% {
+      font-size: 0px;
+    }
+    5%, 95% {
+      font-size: 2rem;
+    }
   }
 }
 
