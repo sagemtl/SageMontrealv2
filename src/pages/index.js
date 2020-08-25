@@ -11,7 +11,11 @@ const IndexPage = ({ uri }) => {
       <>
         <SEO title="Home" />
         <div className="artstep-wrapper">
-          <div className="artstep-overlay" />
+          <div className="artstep-overlay">
+            <h1 className="index-text__header--main">
+              <b>Sage Montreal</b>
+            </h1>
+          </div>
           <iframe
             title="Virtual Museum"
             width="100%"
@@ -20,16 +24,6 @@ const IndexPage = ({ uri }) => {
             frameBorder="0"
             allowFullScreen
           />
-          <div className="index-text">
-            <h1 className="index-text__header--main">
-              <b>Sage Montreal</b>
-            </h1>
-            {/* <h2 className="index-text__header--1">We'll be back soon!</h2>
-            <h2 className="index-text__header--2">66666</h2>
-            <h2 className="index-text__header--3">66666</h2>
-            <h2 className="index-text__header--4">仙仙仙</h2>
-            <h2 className="index-text__header--5">仙仙仙</h2> */}
-          </div>
         </div>
       </>
     </Layout>

@@ -8,14 +8,12 @@
 .artstep-wrapper {
   height: 100vh;
   width: 100vw;
-  position: absolute;
-  top: 0;
-  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: black;
   padding: 3%;
+  overflow: hidden;
 }
 
 .artstep-overlay {
@@ -28,6 +26,9 @@
   top: 0;
   left: 0;
   z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .artstep-frame {
@@ -43,51 +44,11 @@
 
   &__header {
     &--main {
-      position: fixed;
-      white-space:nowrap;
-      font-size: 0;
-      left: 37.5%;
+      font-size: 0rem;
       text-align: center;
       color: white;
       text-shadow: 2px 2px black;
       animation: updown 1.5s ease-in-out infinite, zoomInOut 4s ease-in-out 1.5s;
-    }
-
-    &--1 {
-      @include text();
-      display: inline-block;
-      white-space:nowrap;
-      left: 50%;
-      transform: rotate(10deg) translate(-50%);
-      animation: falldown-main 6s ease-in-out 6s;
-    }
-
-    &--2 {
-      @include text();
-      left: 20%;
-      transform: rotate(-35deg);
-      animation: falldown 6s ease-in-out 4.5s;
-    }
-
-    &--3 {
-      @include text();
-      right: 20%;
-      transform: rotate(45deg);
-      animation: falldown 6s ease-in-out 7.5s;
-    }
-
-    &--4 {
-      @include text();
-      left: 20%;
-      transform: rotate(-45deg);
-      animation: falldown 6s ease-in-out 7s;
-    }
-
-    &--5 {
-      @include text();
-      right: 20%;
-      transform: rotate(25deg);
-      animation: falldown 6s ease-in-out 5s;
     }
   }
 }
@@ -111,61 +72,20 @@
   }
 } 
 
-@keyframes falldown {
-  0% {
-    top: -20%;
+@keyframes zoomInOut {
+  0%, 100% {
+    font-size: 0px;
   }
-  50% {
-    top: 50%;
-    transform: rotate(0deg);
-  }
-  100% {
-    top: 120%;
-  }
-} 
-@keyframes falldown-main {
-  0% {
-    top: -20%;
-  }
-  50% {
-    top: 50%;
-    transform: rotate(0deg) translate(-50%);
-  }
-  100% {
-    top: 120%;
-  }
-} 
-
-@media screen and (max-width: 800px)and (min-width: 300px) {
-  @keyframes zoomInOut {
-    0%, 100% {
-      font-size: 0px;
-    }
-    5%, 95% {
-      font-size: 32px;
-    }
-  }
-
-  #message1, #message2, #message3, #message4, #message5 {
-    font-size: 24px;
-  }
-}
-
-@media screen and (min-width: 800px) {
-  @keyframes zoomInOut {
-    0%, 100% {
-      font-size: 0px;
-    }
-    10%, 90% {
-      font-size: 72px;
-    }
+  5%, 95% {
+    font-size: 3rem;
   }
 }
 
 @media screen and (max-width: 900px) {
   .artstep-wrapper {
-    top: 60px;
-    padding: 5vh 3% 12vh;
-    height: 100vh;
+    padding: 0;
+    padding-top: 15px;
+    height: calc(100vh - 60px);
+    position: relative;
   }
 }
