@@ -40,6 +40,9 @@ const Product = ({ data }) => {
   }, [skus.edges]);
 
   const checkIsInStock = (skuId) => {
+    console.log(skuId);
+    inventories.forEach((invEl) => console.log(invEl));
+
     const inv = inventories.filter(
       (invEl) => typeof invEl !== 'undefined' && invEl.sku_id === skuId,
     );

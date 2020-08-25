@@ -15,7 +15,6 @@
   justify-content: center;
   align-items: center;
   background: black;
-  padding: 3%;
 }
 
 .artstep-overlay {
@@ -27,6 +26,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  padding: 0;
   z-index: 5;
 }
 
@@ -46,7 +46,7 @@
       position: fixed;
       white-space:nowrap;
       font-size: 0;
-      left: 37.5%;
+      left: 37.5vw;
       text-align: center;
       color: white;
       text-shadow: 2px 2px black;
@@ -165,7 +165,7 @@
 @media screen and (max-width: 900px) {
   .artstep-wrapper {
     top: 60px;
-    padding: 5vh 3% 12vh;
+    // padding: 5vh 3% 12vh;
     height: 100vh;
   }
 }
