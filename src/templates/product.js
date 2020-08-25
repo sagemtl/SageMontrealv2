@@ -126,26 +126,15 @@ const Product = ({ data }) => {
               setSelectedSku(nodeid);
               setSelectedSize(size);
             }}
-            // disabled={!hasStock}
+            disabled={!hasStock}
           />
-          <label htmlFor={size} className={className}>
+          <span htmlFor={size} className={className}>
             {size}
-          </label>
+          </span>
         </div>
       );
     });
     return skuComponents;
-  };
-
-  const renderOutOfStockLabel = () => {
-    if (selectedSize.length > 0 && !checkIsInStock(selectedSku)) {
-      return (
-        <div className="product-details-sizes__soldout-error">
-          Sorry! This size is out of stock.
-        </div>
-      );
-    }
-    return null;
   };
 
   return (
@@ -168,7 +157,6 @@ const Product = ({ data }) => {
           <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
           {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>
-          {renderOutOfStockLabel()}
           {/* size guide */}
           <button
             type="button"
