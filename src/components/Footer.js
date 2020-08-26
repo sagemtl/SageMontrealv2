@@ -1,25 +1,8 @@
-import React, { useContext } from 'react';
-import { useLocation } from '@reach/router';
-import PauseIcon from '@material-ui/icons/Pause';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import React from 'react';
 import InstagramIcon from '@material-ui/icons/Instagram';
-import { GlobalContext } from '../context/Provider';
 import './styles/footer.scss';
 
 const Footer = ({ color }) => {
-  const { state, dispatch } = useContext(GlobalContext);
-  const { buttonPaused } = state;
-  const { pathname } = useLocation();
-
-  const handleClick = () => {
-    dispatch({
-      type: 'SET_BUTTON_PAUSED',
-      payload: {
-        buttonPaused: !buttonPaused,
-      },
-    });
-  };
-
   return (
     <div className="footer-desktop">
       <div className="footer-desktop-text">
@@ -33,19 +16,6 @@ const Footer = ({ color }) => {
           Terms & Conditions
         </a>
       </div>
-      {pathname === '/shop' && (
-        <button
-          type="button"
-          className="footer-desktop__button"
-          onClick={() => handleClick()}
-        >
-          {buttonPaused ? (
-            <PlayArrowIcon />
-          ) : (
-            <PauseIcon style={{ verticalAlign: 'center' }} />
-          )}
-        </button>
-      )}
       <a
         href="https://www.instagram.com/sagemtl/"
         target="_blank"
