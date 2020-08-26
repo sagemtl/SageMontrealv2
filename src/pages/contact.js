@@ -18,7 +18,7 @@ const Contact = ({ uri }) => {
 
   const sendForm = async () => {
     try {
-      await axios.post('http://localhost:5000/contact', {
+      await axios.post('https://sagemtl-backend.herokuapp.com/contact', {
         name,
         subject,
         email,
