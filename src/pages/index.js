@@ -1,13 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import './styles/index.scss';
 import '../components/styles/layout.scss';
 
-const IndexPage = ({ uri }) => {
+const IndexPage = () => {
   return (
-    <Layout current={uri} footerTransparent hideCart footerColor="white">
+    <Layout footerTransparent hideCart footerColor="white">
       <>
         <SEO title="Home" />
         <div className="artstep-wrapper">
@@ -29,10 +28,6 @@ const IndexPage = ({ uri }) => {
       </>
     </Layout>
   );
-};
-
-IndexPage.propTypes = {
-  uri: PropTypes.string.isRequired,
 };
 
 export default IndexPage;

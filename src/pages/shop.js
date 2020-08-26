@@ -8,7 +8,7 @@ import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
 import { GlobalContext } from '../context/Provider';
 
-const Shop = ({ data, uri }) => {
+const Shop = ({ data }) => {
   const [paused, setPaused] = useState(false);
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 1200;
   const [windowWidth, setWindowWidth] = useState(widthVal);
@@ -86,7 +86,7 @@ const Shop = ({ data, uri }) => {
   });
 
   return (
-    <Layout current={uri}>
+    <Layout>
       <div className="shop-scroll">
         <div className={shopClasses}>
           <div className={shopAnimationClasses}>
@@ -130,7 +130,6 @@ const Shop = ({ data, uri }) => {
 
 Shop.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  uri: PropTypes.string.isRequired,
 };
 
 export default Shop;

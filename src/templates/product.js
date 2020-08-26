@@ -138,7 +138,7 @@ const Product = ({ data }) => {
   };
 
   return (
-    <Layout current={`/shop/${item.fields.slug}`}>
+    <Layout>
       <div className="product">
         <div className="product-images">
           <img

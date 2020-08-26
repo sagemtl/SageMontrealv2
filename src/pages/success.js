@@ -19,7 +19,7 @@ const Success = () => {
     }
   `);
   return (
-    <Layout current="/success">
+    <Layout>
       <div className="text-left align-middle">
         <Img
           className="success-sage-logo"

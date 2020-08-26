@@ -4,8 +4,8 @@ import Layout from '../components/layout';
 
 import './styles/404.scss';
 
-const NotFoundPage = ({ uri }) => (
-  <Layout current={uri} hideCart>
+const NotFoundPage = () => (
+  <Layout hideCart>
     <div className="not-found">
       <img
         src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1596573724/404Octopus_rezqoj.png"
@@ -18,9 +18,5 @@ const NotFoundPage = ({ uri }) => (
     </div>
   </Layout>
 );
-
-NotFoundPage.propTypes = {
-  uri: PropTypes.string.isRequired,
-};
 
 export default NotFoundPage;

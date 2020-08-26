@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import Layout from '../components/layout';
@@ -103,11 +102,7 @@ const LookbookMenu = ({ uri }) => {
   };
 
   return (
-    <Layout
-      current={uri}
-      footerColor="white"
-      style={{ alignItems: 'flex-start' }}
-    >
+    <Layout footerColor="white" style={{ alignItems: 'flex-start' }}>
       <div className="lookbook">
         <ArrowForwardIosIcon
           className="lookbook__icon--right"
@@ -131,10 +126,6 @@ const LookbookMenu = ({ uri }) => {
       />
     </Layout>
   );
-};
-
-LookbookMenu.propTypes = {
-  uri: PropTypes.string.isRequired,
 };
 
 export default LookbookMenu;
