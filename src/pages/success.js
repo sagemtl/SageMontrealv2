@@ -2,7 +2,6 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
-import './styles/success.scss';
 
 import CartItem from '../components/cartItem';
 
