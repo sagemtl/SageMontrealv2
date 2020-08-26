@@ -32,7 +32,7 @@ const Contact = ({ uri }) => {
   };
 
   return (
-    <Layout current={uri}>
+    <Layout>
       <div className="contact">
         <h1>Contact Us</h1>
         <div className="contact-form">
