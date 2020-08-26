@@ -13,6 +13,12 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-plugin-layout`,
     {
+      resolve: `gatsby-plugin-layout`,
+      options: {
+        component: require.resolve('./src/components/layout.js'),
+      },
+    },
+    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
