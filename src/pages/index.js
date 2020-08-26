@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 
+import './styles/index.scss';
+
 const IndexPage = ({ uri }) => {
   return (
     <Layout current={uri} footerTransparent hideCart footerColor="white">

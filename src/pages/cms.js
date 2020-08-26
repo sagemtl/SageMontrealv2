@@ -11,6 +11,8 @@ import {
   createProduct,
 } from '../helpers/stripeHelper';
 
+import './styles/cms.scss';
+
 const CMS = () => {
   // Product fields
   const [productId, setProductId] = useState('');

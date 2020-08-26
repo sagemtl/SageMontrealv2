@@ -5,6 +5,8 @@ import Layout from '../components/layout';
 
 import CartItem from '../components/cartItem';
 
+import './styles/success.scss';
+
 const Success = () => {
   const data = useStaticQuery(graphql`
     query {

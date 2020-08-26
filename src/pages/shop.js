@@ -8,6 +8,8 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 
+import './styles/shop.scss';
+
 const Shop = ({ data, uri }) => {
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
   const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;

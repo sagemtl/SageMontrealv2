@@ -8,6 +8,8 @@ import Payment from '../components/checkout';
 import './styles/bootstrap.min.css';
 import { GlobalContext } from '../context/Provider';
 
+import './styles/checkout.scss';
+
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.STRIPE_PUBLIC);
