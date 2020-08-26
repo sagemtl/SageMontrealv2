@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import SEO from '../components/seo';
 import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
-
-import './styles/lookbook.scss';
 
 const LookbookMenu = ({ uri }) => {
   const collections = [
@@ -109,30 +106,27 @@ const LookbookMenu = ({ uri }) => {
       footerColor="white"
       style={{ alignItems: 'flex-start' }}
     >
-      <>
-        <SEO title="Lookbook" />
-        <div className="lookbook">
-          <ArrowForwardIosIcon
-            className="lookbook__icon--right"
-            onClick={() => scrollLeft()}
-          />
-          {collections.map(({ season, images, cover, position }) => {
-            return (
-              <LookbookFront
-                images={images}
-                season={season}
-                cover={cover}
-                position={position}
-                key={season}
-              />
-            );
-          })}
-        </div>
+      <div className="lookbook">
         <ArrowForwardIosIcon
-          className="lookbook__icon--left"
-          onClick={() => scrollRight()}
+          className="lookbook__icon--right"
+          onClick={() => scrollLeft()}
         />
-      </>
+        {collections.map(({ season, images, cover, position }) => {
+          return (
+            <LookbookFront
+              images={images}
+              season={season}
+              cover={cover}
+              position={position}
+              key={season}
+            />
+          );
+        })}
+      </div>
+      <ArrowForwardIosIcon
+        className="lookbook__icon--left"
+        onClick={() => scrollRight()}
+      />
     </Layout>
   );
 };

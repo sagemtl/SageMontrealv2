@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-import './styles/index.scss';
-import '../components/styles/layout.scss';
 
 const IndexPage = ({ uri }) => {
   return (
