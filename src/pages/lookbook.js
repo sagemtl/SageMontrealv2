@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
+import SEO from '../components/seo';
 import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
 
@@ -108,27 +109,30 @@ const LookbookMenu = ({ uri }) => {
       footerColor="white"
       style={{ alignItems: 'flex-start' }}
     >
-      <div className="lookbook">
+      <>
+        <SEO title="Lookbook" />
+        <div className="lookbook">
+          <ArrowForwardIosIcon
+            className="lookbook__icon--right"
+            onClick={() => scrollLeft()}
+          />
+          {collections.map(({ season, images, cover, position }) => {
+            return (
+              <LookbookFront
+                images={images}
+                season={season}
+                cover={cover}
+                position={position}
+                key={season}
+              />
+            );
+          })}
+        </div>
         <ArrowForwardIosIcon
-          className="lookbook__icon--right"
-          onClick={() => scrollLeft()}
+          className="lookbook__icon--left"
+          onClick={() => scrollRight()}
         />
-        {collections.map(({ season, images, cover, position }) => {
-          return (
-            <LookbookFront
-              images={images}
-              season={season}
-              cover={cover}
-              position={position}
-              key={season}
-            />
-          );
-        })}
-      </div>
-      <ArrowForwardIosIcon
-        className="lookbook__icon--left"
-        onClick={() => scrollRight()}
-      />
+      </>
     </Layout>
   );
 };

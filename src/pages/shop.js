@@ -1,24 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import classNames from 'classnames';
+import PauseIcon from '@material-ui/icons/Pause';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
+import SEO from '../components/seo';
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
-import { GlobalContext } from '../context/Provider';
 
 const Shop = ({ data, uri }) => {
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
+
   const [paused, setPaused] = useState(false);
-  const widthVal = typeof window !== `undefined` ? window.innerWidth : 1200;
+  const [buttonPaused, setButtonPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(widthVal);
   const [extra, setExtra] = useState(0);
-  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
   const [scroll, setScroll] = useState(pageYOffset);
-  const mobile = windowWidth < 1200;
 
-  const { state } = useContext(GlobalContext);
-  const { buttonPaused } = state;
+  const mobile = windowWidth < 1200;
 
   const getProducts = () => {
     const stripeProducts = data.allStripeProduct.edges.filter(
@@ -87,32 +89,20 @@ const Shop = ({ data, uri }) => {
 
   return (
     <Layout current={uri}>
-      <div className="shop-scroll">
-        <div className={shopClasses}>
-          <div className={shopAnimationClasses}>
-            {getProducts().map((product, index) => {
-              if (index < 16) {
-                const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
+      <>
+        <SEO title="Shop" />
 
-                return (
-                  <ShopItem
-                    buttonPaused={buttonPaused}
-                    delay={delay}
-                    paused={paused}
-                    setPaused={setPaused}
-                    windowWidth={windowWidth}
-                    product={product}
-                  />
-                );
-              }
-            })}
-            {mobile &&
-              getProducts().map((product, index) => {
+        <div className="shop-scroll">
+          <div className={shopClasses}>
+            <div className={shopAnimationClasses}>
+              {getProducts().map((product, index) => {
                 if (index < 16) {
+                  const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
+
                   return (
                     <ShopItem
                       buttonPaused={buttonPaused}
-                      delay={0}
+                      delay={delay}
                       paused={paused}
                       setPaused={setPaused}
                       windowWidth={windowWidth}
@@ -121,9 +111,37 @@ const Shop = ({ data, uri }) => {
                   );
                 }
               })}
+              {mobile &&
+                getProducts().map((product, index) => {
+                  if (index < 16) {
+                    return (
+                      <ShopItem
+                        buttonPaused={buttonPaused}
+                        delay={0}
+                        paused={paused}
+                        setPaused={setPaused}
+                        windowWidth={windowWidth}
+                        product={product}
+                      />
+                    );
+                  }
+                })}
+            </div>
           </div>
+          <button
+            type="button"
+            className="shop-scroll__button"
+            style={{ position: 'fixed', bottom: 50, left: 50 }}
+            onClick={() => setButtonPaused(!buttonPaused)}
+          >
+            {buttonPaused ? (
+              <PlayArrowIcon />
+            ) : (
+              <PauseIcon style={{ verticalAlign: 'center' }} />
+            )}
+          </button>
         </div>
-      </div>
+      </>
     </Layout>
   );
 };
