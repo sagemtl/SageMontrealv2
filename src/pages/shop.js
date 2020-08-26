@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
-import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 
 import './styles/shop.scss';
@@ -88,18 +87,32 @@ const Shop = ({ data }) => {
   });
 
   return (
-    <Layout>
-      <div className="shop-scroll">
-        <div className={shopClasses}>
-          <div className={shopAnimationClasses}>
-            {getProducts().map((product, index) => {
-              if (index < 16) {
-                const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
+    <div className="shop-scroll">
+      <div className={shopClasses}>
+        <div className={shopAnimationClasses}>
+          {getProducts().map((product, index) => {
+            if (index < 16) {
+              const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
 
+              return (
+                <ShopItem
+                  buttonPaused={buttonPaused}
+                  delay={delay}
+                  paused={paused}
+                  setPaused={setPaused}
+                  windowWidth={windowWidth}
+                  product={product}
+                />
+              );
+            }
+          })}
+          {mobile &&
+            getProducts().map((product, index) => {
+              if (index < 16) {
                 return (
                   <ShopItem
                     buttonPaused={buttonPaused}
-                    delay={delay}
+                    delay={0}
                     paused={paused}
                     setPaused={setPaused}
                     windowWidth={windowWidth}
@@ -108,37 +121,21 @@ const Shop = ({ data }) => {
                 );
               }
             })}
-            {mobile &&
-              getProducts().map((product, index) => {
-                if (index < 16) {
-                  return (
-                    <ShopItem
-                      buttonPaused={buttonPaused}
-                      delay={0}
-                      paused={paused}
-                      setPaused={setPaused}
-                      windowWidth={windowWidth}
-                      product={product}
-                    />
-                  );
-                }
-              })}
-          </div>
         </div>
-        <button
-          type="button"
-          className="shop-scroll__button"
-          style={{ position: 'fixed', bottom: 50, left: 50 }}
-          onClick={() => setButtonPaused(!buttonPaused)}
-        >
-          {buttonPaused ? (
-            <PlayArrowIcon />
-          ) : (
-            <PauseIcon style={{ verticalAlign: 'center' }} />
-          )}
-        </button>
       </div>
-    </Layout>
+      <button
+        type="button"
+        className="shop-scroll__button"
+        style={{ position: 'fixed', bottom: 50, left: 50 }}
+        onClick={() => setButtonPaused(!buttonPaused)}
+      >
+        {buttonPaused ? (
+          <PlayArrowIcon />
+        ) : (
+          <PauseIcon style={{ verticalAlign: 'center' }} />
+        )}
+      </button>
+    </div>
   );
 };
 

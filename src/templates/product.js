@@ -3,7 +3,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
 import { sortSizes, getSkuInventory } from '../helpers/stripeHelper';
@@ -135,45 +134,43 @@ const Product = ({ data }) => {
   };
 
   return (
-    <Layout current={`/shop/${item.fields.slug}`}>
-      <div className="product">
-        <div className="product-images">
-          <img
-            src={selectedImage}
-            alt={item.name}
-            className="product-images__image--main"
-          />
-          <div className="product-images-secondary">{imgIcons()}</div>
-        </div>
-        <div className="product-details">
-          <h1 className="product-details__header">{item.name}</h1>
-          <p className="product-details__point">{item.description}</p>
-          {item.metadata.modelInfo ? (
-            <p className="product-details__point">{item.metadata.modelInfo}</p>
-          ) : null}
-          <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
-          <div className="product-details-sizes">{renderSizesFromSku()}</div>
-          {/* size guide */}
-          <button
-            type="button"
-            className="size-guide__size-guide-link"
-            onClick={() => setModalOpen(true)}
-          >
-            size guide
-          </button>
-          <SizeChart modalOpen={modalOpen} setModalOpen={setModalOpen} />
-
-          <button
-            className="product-details__button"
-            type="button"
-            onClick={addToCart}
-            disabled={!allowAddToCart()}
-          >
-            Add to cart
-          </button>
-        </div>
+    <div className="product">
+      <div className="product-images">
+        <img
+          src={selectedImage}
+          alt={item.name}
+          className="product-images__image--main"
+        />
+        <div className="product-images-secondary">{imgIcons()}</div>
       </div>
-    </Layout>
+      <div className="product-details">
+        <h1 className="product-details__header">{item.name}</h1>
+        <p className="product-details__point">{item.description}</p>
+        {item.metadata.modelInfo ? (
+          <p className="product-details__point">{item.metadata.modelInfo}</p>
+        ) : null}
+        <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
+        <div className="product-details-sizes">{renderSizesFromSku()}</div>
+        {/* size guide */}
+        <button
+          type="button"
+          className="size-guide__size-guide-link"
+          onClick={() => setModalOpen(true)}
+        >
+          size guide
+        </button>
+        <SizeChart modalOpen={modalOpen} setModalOpen={setModalOpen} />
+
+        <button
+          className="product-details__button"
+          type="button"
+          onClick={addToCart}
+          disabled={!allowAddToCart()}
+        >
+          Add to cart
+        </button>
+      </div>
+    </div>
   );
 };
 
