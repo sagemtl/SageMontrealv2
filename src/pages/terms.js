@@ -4,9 +4,9 @@ import Layout from '../components/layout';
 
 import './styles/terms.scss';
 
-const terms = ({ uri }) => {
+const terms = () => {
   return (
-    <Layout current={uri}>
+    <Layout>
       <div className="terms">
         <div className="terms-column">
           <img

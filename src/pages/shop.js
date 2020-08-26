@@ -10,7 +10,7 @@ import ShopItem from '../components/ShopItem';
 
 import './styles/shop.scss';
 
-const Shop = ({ data, uri }) => {
+const Shop = ({ data }) => {
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
   const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
 
@@ -88,7 +88,7 @@ const Shop = ({ data, uri }) => {
   });
 
   return (
-    <Layout current={uri}>
+    <Layout>
       <div className="shop-scroll">
         <div className={shopClasses}>
           <div className={shopAnimationClasses}>

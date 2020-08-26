@@ -5,9 +5,9 @@ import SEO from '../components/seo';
 
 import './styles/index.scss';
 
-const IndexPage = ({ uri }) => {
+const IndexPage = () => {
   return (
-    <Layout current={uri} footerTransparent hideCart footerColor="white">
+    <Layout footerTransparent hideCart footerColor="white">
       <>
         <SEO title="Home" />
         <div className="artstep-wrapper">

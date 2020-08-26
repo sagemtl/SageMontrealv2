@@ -35,7 +35,6 @@ Layout.propTypes = {
   hideCart: PropTypes.bool,
   footerColor: PropTypes.string,
   style: PropTypes.shape,
-  current: PropTypes.string.isRequired,
 };
 
 Layout.defaultProps = {
