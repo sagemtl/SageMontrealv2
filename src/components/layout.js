@@ -21,7 +21,7 @@ const Layout = ({ children, footerColor, hideCart, style, current }) => {
   return (
     <>
       <Header current={current} />
-      {!isMobile && !hideCart && <Cart isMobile={isMobile} />}
+      {!hideCart && <Cart isMobile={isMobile} />}
       <div className="layout" style={style}>
         {children}
       </div>

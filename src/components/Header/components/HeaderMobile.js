@@ -1,9 +1,9 @@
 import React, { useContext, useState, useRef } from 'react';
 import { Link } from 'gatsby';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
+import PhotoAlbumOutlinedIcon from '@material-ui/icons/PhotoAlbumOutlined';
+import StorefrontOutlinedIcon from '@material-ui/icons/StorefrontOutlined';
 import CloseIcon from '@material-ui/icons/Close';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import StoreIcon from '@material-ui/icons/Store';
 import { GlobalContext } from '../../../context/Provider';
 
 const HeaderMobile = () => {
@@ -14,14 +14,14 @@ const HeaderMobile = () => {
   const video = useRef();
 
   const openNavbar = () => {
-    video.current.play();
+    // video.current.play();
     dispatch({
       type: 'SET_NAVBAR_OPEN',
       payload: {
         navOpen: !navOpen,
       },
     });
-    setTimeout(() => video.current.pause(), 3000);
+    // setTimeout(() => video.current.pause(), 3000);
   };
 
   return (
@@ -31,10 +31,18 @@ const HeaderMobile = () => {
         style={navOpen ? { left: 0 } : { left: 'calc(100% / 4 * -2)' }}
       >
         <Link to="/shop" className="header-mobile__button">
-          <StoreIcon fontSize="large" className="header-mobile__icon" />
+          <StorefrontOutlinedIcon
+            style={{ color: '#154734' }}
+            fontSize="large"
+            className="header-mobile__icon"
+          />
         </Link>
         <Link to="/lookbook" className="header-mobile__button">
-          <VisibilityIcon fontSize="large" className="header-mobile__icon" />
+          <PhotoAlbumOutlinedIcon
+            style={{ color: '#154734' }}
+            fontSize="large"
+            className="header-mobile__icon"
+          />
         </Link>
         <div
           role="button"
@@ -43,13 +51,19 @@ const HeaderMobile = () => {
           onClick={() => openNavbar()}
           onKeyDown={() => openNavbar()}
         >
-          <video
+          {/* <video
             src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
             ref={video}
             className="header-mobile__logo"
             muted
             playsInline
             loop
+          /> */}
+          <img
+            style={{ margin: 0 }}
+            className="header-mobile__logo"
+            src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+            alt="Sage Logo"
           />
         </div>
       </div>
@@ -63,7 +77,11 @@ const HeaderMobile = () => {
         {cart ? (
           <CloseIcon fontSize="large" className="header-mobile__icon" />
         ) : (
-          <ShoppingCartIcon fontSize="large" className="header-mobile__icon" />
+          <LocalMallOutlinedIcon
+            style={{ color: '#154734' }}
+            fontSize="large"
+            className="header-mobile__icon"
+          />
         )}
       </div>
     </div>

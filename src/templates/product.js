@@ -128,9 +128,9 @@ const Product = ({ data }) => {
             }}
             disabled={!hasStock}
           />
-          <span htmlFor={size} className={className}>
+          <label htmlFor={size} className={className}>
             {size}
-          </span>
+          </label>
         </div>
       );
     });
