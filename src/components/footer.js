@@ -1,6 +1,5 @@
 import React from 'react';
 import InstagramIcon from '@material-ui/icons/Instagram';
-import classnames from 'classnames';
 import './styles/footer.scss';
 
 const Footer = () => {
