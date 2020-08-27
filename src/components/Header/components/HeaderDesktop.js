@@ -1,5 +1,5 @@
 import { Link } from 'gatsby';
-import PropTypes from 'prop-types';
+import { useLocation } from '@reach/router';
 import React, { useContext } from 'react';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { GlobalContext } from '../../../context/Provider';
@@ -19,8 +19,9 @@ const routes = [
   },
 ];
 
-const HeaderDesktop = ({ current }) => {
+const HeaderDesktop = () => {
   const { state, dispatch } = useContext(GlobalContext);
+  const { pathname } = useLocation();
   const { navOpen } = state;
 
   const openNavbar = (open) => {
@@ -69,7 +70,10 @@ const HeaderDesktop = ({ current }) => {
           return (
             <Link
               className={
-                current === route.to ? 'navbox__selected' : 'navbox__link'
+                (route.to !== '/' && pathname.includes(route.to)) ||
+                (route.to === '/' && pathname === '/')
+                  ? 'navbox__selected'
+                  : 'navbox__link'
               }
               to={route.to}
             >
@@ -80,10 +84,6 @@ const HeaderDesktop = ({ current }) => {
       </div>
     </div>
   );
-};
-
-HeaderDesktop.propTypes = {
-  current: PropTypes.string.isRequired,
 };
 
 export default HeaderDesktop;

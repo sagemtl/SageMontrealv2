@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-
+import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
 
 import './styles/lookbook.scss';
@@ -102,32 +101,30 @@ const LookbookMenu = () => {
   };
 
   return (
-    <div className="lookbook">
-      <ArrowForwardIosIcon
-        className="lookbook__icon--right"
-        onClick={() => scrollLeft()}
-      />
-      {collections.map(({ season, images, cover, position }) => {
-        return (
-          <LookbookFront
-            images={images}
-            season={season}
-            cover={cover}
-            position={position}
-            key={season}
-          />
-        );
-      })}
-      <ArrowForwardIosIcon
-        className="lookbook__icon--left"
-        onClick={() => scrollRight()}
-      />
-    </div>
+    <Layout footerColor="white" style={{ alignItems: 'flex-start' }}>
+      <div className="lookbook">
+        <ArrowForwardIosIcon
+          className="lookbook__icon--right"
+          onClick={() => scrollLeft()}
+        />
+        {collections.map(({ season, images, cover, position }) => {
+          return (
+            <LookbookFront
+              images={images}
+              season={season}
+              cover={cover}
+              position={position}
+              key={season}
+            />
+          );
+        })}
+        <ArrowForwardIosIcon
+          className="lookbook__icon--left"
+          onClick={() => scrollRight()}
+        />
+      </div>
+    </Layout>
   );
-};
-
-LookbookMenu.propTypes = {
-  uri: PropTypes.string.isRequired,
 };
 
 export default LookbookMenu;

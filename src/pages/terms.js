@@ -1,44 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import Layout from '../components/layout';
 
 import './styles/terms.scss';
 
 const terms = () => {
   return (
-    <div className="terms">
-      <div className="terms-column">
-        <img
-          src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1596397009/contactCover_jrd5x3.png"
-          className="terms__image"
-          alt="terms Artwork"
-        />
-        <h1 className="terms__header">Sage Montréal</h1>
-        <h1 className="terms__header">S.E.N.C ©2017</h1>
-        <br />
-        <p className="terms__header--2">Instagram</p>
-        <p className="terms__text">@sagemtl</p>
-        <br />
-        <p className="terms__header--2">Email</p>
-        <p className="terms__text">info@sagemontreal.com</p>
-      </div>
-      <div className="terms-column">
-        <p className="terms__header--2">Shipping</p>
-        <br />
-        <p className="terms__text">
-          All orders are shipped within 1-2 business days
-        </p>
-        <p className="terms__text">
-          Orders shipped outside of Canada may possibly incur duties and taxes
-        </p>
-        <br />
-        <p className="terms__header--2">Shipping rates</p>
-        <br />
-        <p className="terms__text">
-          <u>Canada</u>
-        </p>
-        <div className="terms-row">
-          <p className="terms__text">Mail (4 - 10 Business Days)</p>
-          <p className="terms__text">Free</p>
+    <Layout>
+      <div className="terms">
+        <div className="terms-column">
+          <img
+            src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1596397009/contactCover_jrd5x3.png"
+            className="terms__image"
+            alt="terms Artwork"
+          />
+          <h1 className="terms__header">Sage Montréal</h1>
+          <h1 className="terms__header">S.E.N.C ©2017</h1>
+          <br />
+          <p className="terms__header--2">Instagram</p>
+          <p className="terms__text">@sagemtl</p>
+          <br />
+          <p className="terms__header--2">Email</p>
+          <p className="terms__text">info@sagemontreal.com</p>
         </div>
         <div className="terms-row">
           <p className="terms__text">Expedited Parcel (2 - 4 Business Days)</p>
@@ -107,12 +89,8 @@ const terms = () => {
           fulfilled and a full refund will be issued.
         </p>
       </div>
-    </div>
+    </Layout>
   );
-};
-
-terms.propTypes = {
-  uri: PropTypes.string.isRequired,
 };
 
 export default terms;

@@ -5,7 +5,6 @@
   justify-content: center;
   align-items: center;
   background: black;
-  padding: 3%;
   overflow: hidden;
 
   &__header {
@@ -26,6 +25,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  padding: 0;
   z-index: 5;
   display: flex;
   justify-content: center;
@@ -74,7 +74,7 @@
 @media screen and (max-width: 900px) {
   .artstep-wrapper {
     padding: 0;
-    padding-top: 15px;
+    margin-top: 60px;
     height: calc(100vh - 60px);
     position: relative;
   }

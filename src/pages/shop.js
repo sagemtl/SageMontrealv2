@@ -4,17 +4,19 @@ import { graphql } from 'gatsby';
 import classNames from 'classnames';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 
+import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 
 import './styles/shop.scss';
 
 const Shop = ({ data }) => {
+  const [paused, setPaused] = useState(false);
+  const [buttonPaused, setButtonPaused] = useState(false);
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
   const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
 
-  const [paused, setPaused] = useState(false);
-  const [buttonPaused, setButtonPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(widthVal);
   const [extra, setExtra] = useState(0);
   const [scroll, setScroll] = useState(pageYOffset);
@@ -87,27 +89,11 @@ const Shop = ({ data }) => {
   });
 
   return (
-    <div className="shop-scroll">
-      <div className={shopClasses}>
-        <div className={shopAnimationClasses}>
-          {getProducts().map((product, index) => {
-            if (index < 16) {
-              const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
-
-              return (
-                <ShopItem
-                  buttonPaused={buttonPaused}
-                  delay={delay}
-                  paused={paused}
-                  setPaused={setPaused}
-                  windowWidth={windowWidth}
-                  product={product}
-                />
-              );
-            }
-          })}
-          {mobile &&
-            getProducts().map((product, index) => {
+    <Layout>
+      <div className="shop-scroll">
+        <div className={shopClasses}>
+          <div className={shopAnimationClasses}>
+            {getProducts().map((product, index) => {
               if (index < 16) {
                 return (
                   <ShopItem
@@ -121,27 +107,42 @@ const Shop = ({ data }) => {
                 );
               }
             })}
+            {mobile &&
+              getProducts().map((product, index) => {
+                if (index < 16) {
+                  return (
+                    <ShopItem
+                      buttonPaused={buttonPaused}
+                      delay={0}
+                      paused={paused}
+                      setPaused={setPaused}
+                      windowWidth={windowWidth}
+                      product={product}
+                    />
+                  );
+                }
+              })}
+          </div>
+          <button
+            type="button"
+            className="shop-scroll__button"
+            onClick={() => setButtonPaused(!buttonPaused)}
+          >
+            {buttonPaused ? (
+              <PlayArrowIcon />
+            ) : (
+              <PauseIcon style={{ verticalAlign: 'center' }} />
+            )}
+          </button>
         </div>
       </div>
-      <button
-        type="button"
-        className="shop-scroll__button"
-        style={{ position: 'fixed', bottom: 50, left: 50 }}
-        onClick={() => setButtonPaused(!buttonPaused)}
-      >
-        {buttonPaused ? (
-          <PlayArrowIcon />
-        ) : (
-          <PauseIcon style={{ verticalAlign: 'center' }} />
-        )}
-      </button>
-    </div>
+      <ForwardRoundedIcon className="shop__view" />
+    </Layout>
   );
 };
 
 Shop.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  uri: PropTypes.string.isRequired,
 };
 
 export default Shop;

@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext, useEffect } from 'react';
+import { Link, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
 import { sortSizes, getSkuInventory } from '../helpers/stripeHelper';
@@ -39,6 +41,9 @@ const Product = ({ data }) => {
   }, [skus.edges]);
 
   const checkIsInStock = (skuId) => {
+    console.log(skuId);
+    inventories.forEach((invEl) => console.log(invEl));
+
     const inv = inventories.filter(
       (invEl) => typeof invEl !== 'undefined' && invEl.sku_id === skuId,
     );
@@ -124,9 +129,9 @@ const Product = ({ data }) => {
             }}
             disabled={!hasStock}
           />
-          <span htmlFor={size} className={className}>
+          <label htmlFor={size} className={className}>
             {size}
-          </span>
+          </label>
         </div>
       );
     });
@@ -134,43 +139,52 @@ const Product = ({ data }) => {
   };
 
   return (
-    <div className="product">
-      <div className="product-images">
-        <img
-          src={selectedImage}
-          alt={item.name}
-          className="product-images__image--main"
-        />
-        <div className="product-images-secondary">{imgIcons()}</div>
-      </div>
-      <div className="product-details">
-        <h1 className="product-details__header">{item.name}</h1>
-        <p className="product-details__point">{item.description}</p>
-        {item.metadata.modelInfo ? (
-          <p className="product-details__point">{item.metadata.modelInfo}</p>
-        ) : null}
-        <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
-        <div className="product-details-sizes">{renderSizesFromSku()}</div>
-        {/* size guide */}
-        <button
-          type="button"
-          className="size-guide__size-guide-link"
-          onClick={() => setModalOpen(true)}
-        >
-          size guide
-        </button>
-        <SizeChart modalOpen={modalOpen} setModalOpen={setModalOpen} />
+    <Layout>
+      <div className="product">
+        <div className="product-images">
+          <img
+            src={selectedImage}
+            alt={item.name}
+            className="product-images__image--main"
+          />
+          <div className="product-images-secondary">{imgIcons()}</div>
+        </div>
+        <div className="product-details">
+          <h1 className="product-details__header">{item.name}</h1>
+          <p className="product-details__point">{item.description}</p>
+          {item.metadata.modelInfo ? (
+            <p className="product-details__point">{item.metadata.modelInfo}</p>
+          ) : null}
+          <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
+          {/* sku/size selection */}
+          <div className="product-details-sizes">{renderSizesFromSku()}</div>
+          {/* size guide */}
+          <button
+            type="button"
+            className="size-guide__size-guide-link"
+            onClick={() => setModalOpen(true)}
+          >
+            size guide
+          </button>
+          <SizeChart modalOpen={modalOpen} setModalOpen={setModalOpen} />
 
-        <button
-          className="product-details__button"
-          type="button"
-          onClick={addToCart}
-          disabled={!allowAddToCart()}
-        >
-          Add to cart
-        </button>
+          <button
+            className="product-details__button"
+            type="button"
+            onClick={addToCart}
+            disabled={!allowAddToCart()}
+          >
+            Add to cart
+          </button>
+        </div>
+        <Link className="product-details__back" to="/shop">
+          <KeyboardBackspaceIcon
+            style={{ color: '#154734' }}
+            fontSize="large"
+          />
+        </Link>
       </div>
-    </div>
+    </Layout>
   );
 };
 

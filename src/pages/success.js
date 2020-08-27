@@ -2,6 +2,7 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
+import Layout from '../components/layout';
 import CartItem from '../components/cartItem';
 
 import './styles/success.scss';
@@ -19,7 +20,7 @@ const Success = () => {
     }
   `);
   return (
-    <>
+    <Layout>
       <div className="text-left align-middle">
         <Img
           className="success-sage-logo"
@@ -56,7 +57,7 @@ const Success = () => {
             })
           : undefined}
       </div>
-    </>
+    </Layout>
   );
 };
 

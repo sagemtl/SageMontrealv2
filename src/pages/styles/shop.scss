@@ -25,14 +25,14 @@
     outline: none;
     background: none;
     border: none;
-    color: black;
+    color: #154734;
     z-index: 100;
     cursor: pointer;
     font-weight: 500;
     display: flex;
     justify-content: center;
-    position: absolute;
-    left: 1em;
+    position: fixed;
+    right: 50px;
     bottom: 70px;
     border: 2px solid #154734;
     box-shadow: 0 5px #154734;
@@ -90,5 +90,14 @@
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
+}
+
+@media only screen and (max-width: 500px) {
+  .shop-scroll {
+    &__button {
+      right: 20px;
+      bottom: 30px;
+    }
+  }
 }
 
