@@ -6,7 +6,6 @@ import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 
-import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 
 import './styles/shop.scss';
@@ -89,7 +88,7 @@ const Shop = ({ data }) => {
   });
 
   return (
-    <Layout>
+    <>
       <div className="shop-scroll">
         <div className={shopClasses}>
           <div className={shopAnimationClasses}>
@@ -137,7 +136,7 @@ const Shop = ({ data }) => {
         </div>
       </div>
       <ForwardRoundedIcon className="shop__view" />
-    </Layout>
+    </>
   );
 };
 
