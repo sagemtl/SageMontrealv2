@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import GlobalContextProvider from '../context/Provider';
 import Header from './Header';
-import Footer from './Footer';
+import Footer from './footer';
 import Cart from './cart';
 import './styles/layout.scss';
 
-const Layout = ({ children, footerColor, hideCart, style }) => {
+const Layout = ({ children, footerColor, hideCart }) => {
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 0;
   const [width, setWidth] = useState(widthVal);
 
@@ -21,11 +21,9 @@ const Layout = ({ children, footerColor, hideCart, style }) => {
 
   return (
     <GlobalContextProvider>
-      <Header />
+      <Header isMobile={isMobile} />
       {!hideCart && <Cart isMobile={isMobile} />}
-      <div className="layout" style={style}>
-        {children}
-      </div>
+      <div className="layout">{children}</div>
       <Footer color={footerColor} />
     </GlobalContextProvider>
   );
@@ -35,13 +33,11 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
   hideCart: PropTypes.bool,
   footerColor: PropTypes.string,
-  style: PropTypes.shape,
 };
 
 Layout.defaultProps = {
   hideCart: false,
   footerColor: 'black',
-  style: {},
 };
 
 export default Layout;

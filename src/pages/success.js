@@ -28,7 +28,6 @@ const Success = () => {
           alt="Success"
         />
         <p>
-          {' '}
           Your order has been placed! <br />
           Your payment has been successfully processed and a receipt has been
           sent to{' '}

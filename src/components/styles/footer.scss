@@ -28,13 +28,11 @@
     font-size: 0.7rem;
     margin: 0;
     width: 155px;
-    transition: 3s ease-in-out;
   }
 
   &__link {
     font-size: 0.7rem;
     margin: 0;
-    transition: color 3s ease-in-out;
     font-weight: 500;
     line-height: 1.2;
     cursor: pointer;
@@ -49,7 +47,6 @@
     margin: 0;
     margin-right: 15px;
     animation: rotate 5s infinite linear;
-    transition: all 0.5s;
 
     &:hover {
       opacity: 0.7;

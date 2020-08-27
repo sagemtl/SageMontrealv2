@@ -89,16 +89,22 @@ const Shop = ({ data }) => {
   });
 
   return (
+<<<<<<< HEAD
+    <>
+=======
     <Layout>
+>>>>>>> master
       <div className="shop-scroll">
         <div className={shopClasses}>
           <div className={shopAnimationClasses}>
             {getProducts().map((product, index) => {
               if (index < 16) {
+                const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
+
                 return (
                   <ShopItem
                     buttonPaused={buttonPaused}
-                    delay={0}
+                    delay={delay}
                     paused={paused}
                     setPaused={setPaused}
                     windowWidth={windowWidth}
@@ -137,7 +143,11 @@ const Shop = ({ data }) => {
         </div>
       </div>
       <ForwardRoundedIcon className="shop__view" />
+<<<<<<< HEAD
+    </>
+=======
     </Layout>
+>>>>>>> master
   );
 };
 

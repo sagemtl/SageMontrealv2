@@ -1,11 +1,10 @@
 import React from 'react';
-import Layout from '../components/layout';
 
 import './styles/terms.scss';
 
 const terms = () => {
   return (
-    <Layout>
+    <>
       <div className="terms">
         <div className="terms-column">
           <img
@@ -89,7 +88,7 @@ const terms = () => {
           fulfilled and a full refund will be issued.
         </p>
       </div>
-    </Layout>
+    </>
   );
 };
 
