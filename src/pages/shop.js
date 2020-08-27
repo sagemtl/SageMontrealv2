@@ -94,10 +94,12 @@ const Shop = ({ data }) => {
           <div className={shopAnimationClasses}>
             {getProducts().map((product, index) => {
               if (index < 16) {
+                const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
+
                 return (
                   <ShopItem
                     buttonPaused={buttonPaused}
-                    delay={0}
+                    delay={delay}
                     paused={paused}
                     setPaused={setPaused}
                     windowWidth={windowWidth}
