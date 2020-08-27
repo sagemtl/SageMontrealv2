@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import GlobalContextProvider from '../context/Provider';
 import Header from './Header';
 import Footer from './Footer';
 import Cart from './cart';
@@ -19,14 +20,14 @@ const Layout = ({ children, footerColor, hideCart, style }) => {
   const isMobile = width < 900;
 
   return (
-    <>
+    <GlobalContextProvider>
       <Header />
       {!hideCart && <Cart isMobile={isMobile} />}
       <div className="layout" style={style}>
         {children}
       </div>
       <Footer color={footerColor} />
-    </>
+    </GlobalContextProvider>
   );
 };
 

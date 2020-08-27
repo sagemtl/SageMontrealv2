@@ -22,97 +22,72 @@ const terms = () => {
           <p className="terms__header--2">Email</p>
           <p className="terms__text">info@sagemontreal.com</p>
         </div>
-        <div className="terms-column">
-          <p className="terms__header--2">Shipping</p>
-          <br />
-          <p className="terms__text">
-            All orders are shipped within 1-2 business days
-          </p>
-          <p className="terms__text">
-            Orders shipped outside of Canada may possibly incur duties and taxes
-          </p>
-          <br />
-          <p className="terms__header--2">Shipping rates</p>
-          <br />
-          <p className="terms__text">
-            <u>Canada</u>
-          </p>
-          <div className="terms-row">
-            <p className="terms__text">Mail (4 - 10 Business Days)</p>
-            <p className="terms__text">Free</p>
-          </div>
-          <div className="terms-row">
-            <p className="terms__text">
-              Expedited Parcel (2 - 4 Business Days)
-            </p>
-            <p className="terms__text">$5</p>
-          </div>
-          <br />
-          <p className="terms__text">
-            <u>USA</u>
-          </p>
-          <div className="terms-row">
-            <p className="terms__text">
-              Expedited Parcel (5 - 10 Business Days)
-            </p>
-            <p className="terms__text">$15</p>
-          </div>
-          <br />
-          <p className="terms__text">
-            <u>International</u>
-          </p>
-          <div className="terms-row">
-            <p className="terms__text">
-              Small Packet - Air (6 - 12 Business Days)
-            </p>
-            <p className="terms__text">$20</p>
-          </div>
-          <br />
-          <p className="terms__text">
-            *Orders above $75 have free expedited shipping
-          </p>
-          <br />
-          <p className="terms__header--2">Payments</p>
-          <br />
-          <p className="terms__text">
-            All listed prices are in Canadian Dollars.
-          </p>
-          <p className="terms__text">
-            Currently accepted payments are American Express, Visa & Mastercard.
-          </p>
+        <div className="terms-row">
+          <p className="terms__text">Expedited Parcel (2 - 4 Business Days)</p>
+          <p className="terms__text">$5</p>
         </div>
-        <div className="terms-column">
-          <p className="terms__header--2">Returns & exchanges</p>
-          <br />
-          <p className="terms__text">
-            If you received a package that is defective or incorrect, you may
-            return the package within 14 days after its reception by termsing us
-            at info@sagemontreal.com and using the return label inside your
-            order.
-          </p>
-          <br />
-          <p className="terms__text">
-            For international customers, you may communicate with our teams for
-            further details.
-          </p>
-          <br />
-          <p className="terms__text">
-            To file a return, please include your order number along with
-            relevant pictures of the defective item(s) and one of our team
-            members will authorize your return. A full refund will be issued
-            upon reception of the returned order.
-          </p>
-          <br />
-          <p className="terms__header--2">Policies</p>
-          <br />
-          <p className="terms__text">
-            SAGE reserves the right to cancel an order at any time. Cancellation
-            reasons may occur but are not limited to: lack of stock for order
-            fulfilment, fraud suspicion, or any discrepancies on an item's
-            description or price. We will notify you if your order cannot be
-            fulfilled and a full refund will be issued.
-          </p>
+        <br />
+        <p className="terms__text">
+          <u>USA</u>
+        </p>
+        <div className="terms-row">
+          <p className="terms__text">Expedited Parcel (5 - 10 Business Days)</p>
+          <p className="terms__text">$15</p>
         </div>
+        <br />
+        <p className="terms__text">
+          <u>International</u>
+        </p>
+        <div className="terms-row">
+          <p className="terms__text">
+            Small Packet - Air (6 - 12 Business Days)
+          </p>
+          <p className="terms__text">$20</p>
+        </div>
+        <br />
+        <p className="terms__text">
+          *Orders above $75 have free expedited shipping
+        </p>
+        <br />
+        <p className="terms__header--2">Payments</p>
+        <br />
+        <p className="terms__text">
+          All listed prices are in Canadian Dollars.
+        </p>
+        <p className="terms__text">
+          Currently accepted payments are American Express, Visa & Mastercard.
+        </p>
+      </div>
+      <div className="terms-column">
+        <p className="terms__header--2">Returns & exchanges</p>
+        <br />
+        <p className="terms__text">
+          If you received a package that is defective or incorrect, you may
+          return the package within 14 days after its reception by termsing us
+          at info@sagemontreal.com and using the return label inside your order.
+        </p>
+        <br />
+        <p className="terms__text">
+          For international customers, you may communicate with our teams for
+          further details.
+        </p>
+        <br />
+        <p className="terms__text">
+          To file a return, please include your order number along with relevant
+          pictures of the defective item(s) and one of our team members will
+          authorize your return. A full refund will be issued upon reception of
+          the returned order.
+        </p>
+        <br />
+        <p className="terms__header--2">Policies</p>
+        <br />
+        <p className="terms__text">
+          SAGE reserves the right to cancel an order at any time. Cancellation
+          reasons may occur but are not limited to: lack of stock for order
+          fulfilment, fraud suspicion, or any discrepancies on an item's
+          description or price. We will notify you if your order cannot be
+          fulfilled and a full refund will be issued.
+        </p>
       </div>
     </Layout>
   );

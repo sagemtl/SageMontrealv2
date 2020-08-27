@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+import { createJsxAttribute } from 'typescript';
+import CreateModal from '../components/createModal';
+
 import {
   updateProduct,
   getProduct,
   createProduct,
 } from '../helpers/stripeHelper';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-
-import CreateModal from '../components/createModal';
 
 import './styles/cms.scss';
-import { createJsxAttribute } from 'typescript';
 
 const CMS = () => {
   // Product fields

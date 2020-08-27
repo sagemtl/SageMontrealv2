@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Layout from '../components/layout';
+
 import './styles/contact.scss';
 
 const Contact = () => {
@@ -90,6 +91,19 @@ const Contact = () => {
             Send
           </button>
         </div>
+        <button
+          className="contact-form__button"
+          type="button"
+          onClick={sendForm}
+          disabled={
+            name.length === 0 ||
+            subject.length === 0 ||
+            email.length === 0 ||
+            message.length === 0
+          }
+        >
+          Send
+        </button>
       </div>
     </Layout>
   );

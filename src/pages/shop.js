@@ -8,16 +8,19 @@ import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
+
 import './styles/shop.scss';
 
 const Shop = ({ data }) => {
   const [paused, setPaused] = useState(false);
   const [buttonPaused, setButtonPaused] = useState(false);
-  const widthVal = typeof window !== `undefined` ? window.innerWidth : 1200;
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
+
   const [windowWidth, setWindowWidth] = useState(widthVal);
   const [extra, setExtra] = useState(0);
-  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
   const [scroll, setScroll] = useState(pageYOffset);
+
   const mobile = windowWidth < 1200;
 
   const getProducts = () => {
@@ -92,12 +95,10 @@ const Shop = ({ data }) => {
           <div className={shopAnimationClasses}>
             {getProducts().map((product, index) => {
               if (index < 16) {
-                const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
-
                 return (
                   <ShopItem
                     buttonPaused={buttonPaused}
-                    delay={delay}
+                    delay={0}
                     paused={paused}
                     setPaused={setPaused}
                     windowWidth={windowWidth}

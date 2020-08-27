@@ -1,12 +1,11 @@
 import React from 'react';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-
 import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
 
 import './styles/lookbook.scss';
 
-const LookbookMenu = ({ uri }) => {
+const LookbookMenu = () => {
   const collections = [
     {
       season: 'Capsule 01',
@@ -119,11 +118,11 @@ const LookbookMenu = ({ uri }) => {
             />
           );
         })}
+        <ArrowForwardIosIcon
+          className="lookbook__icon--left"
+          onClick={() => scrollRight()}
+        />
       </div>
-      <ArrowForwardIosIcon
-        className="lookbook__icon--left"
-        onClick={() => scrollRight()}
-      />
     </Layout>
   );
 };
