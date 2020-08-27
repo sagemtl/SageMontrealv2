@@ -7,6 +7,7 @@ import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
 import { GlobalContext } from '../context/Provider';
+import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 
 const Shop = ({ data }) => {
   const [paused, setPaused] = useState(false);
@@ -124,6 +125,7 @@ const Shop = ({ data }) => {
           </div>
         </div>
       </div>
+      <ForwardRoundedIcon className="shop__view" />
     </Layout>
   );
 };

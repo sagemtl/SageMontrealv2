@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext, useEffect } from 'react';
+import { Link, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
@@ -176,6 +177,12 @@ const Product = ({ data }) => {
             Add to cart
           </button>
         </div>
+        <Link className="product-details__back" to="/shop">
+          <KeyboardBackspaceIcon
+            style={{ color: '#154734' }}
+            fontSize="large"
+          />
+        </Link>
       </div>
     </Layout>
   );
