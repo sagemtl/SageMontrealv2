@@ -22,6 +22,16 @@
   z-index: 100;
   background: transparent;
 
+  &__cart {
+    width: 75px;
+    height: auto;
+
+    &:hover {
+      opacity: 0.7;
+      cursor: pointer;
+    }
+  }
+
   &__icon {
     color: #154734;
     position: relative;
@@ -29,6 +39,7 @@
 
     &:hover {
       opacity: 0.7;
+      cursor: pointer;
     }
   }
 
@@ -48,6 +59,7 @@
 
     &:hover {
       cursor: pointer;
+      opacity: 0.7;
     }
   }
 
@@ -61,8 +73,8 @@
     z-index: 100;
 
     &:hover {
-      background-color: #154734;
       cursor: pointer;
+      opacity: 0.7;
     }
 
     &:hover .header-mobile__icon {
@@ -105,15 +117,6 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-
-  &:hover {
-    background-color: #154734;
-    cursor: pointer;
-  }
-
-  &:hover .header-mobile__icon {
-    color: white;
-  }
 }
 
 [role="button"]:hover,
