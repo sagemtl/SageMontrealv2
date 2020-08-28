@@ -1,0 +1,24 @@
+.shop-view-all-item {
+    max-width: 200px;
+    width: 200px;
+    margin-bottom: 100px;
+
+    &__image {
+        width: 100%;
+        height: auto;
+    }
+
+    &__name {
+        position: relative;
+        color: black;
+        font-size: 14px;
+        font-weight: bold;
+        padding-top: 100px;
+    }
+
+    &__price {
+        position: absolute;
+        color: darkslategray;
+        font-size: 12px;
+    }
+}

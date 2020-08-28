@@ -35,33 +35,40 @@
 }
 
 .shop-view {
+  position: fixed;
+  float: right;
+  top: 50vh;
+  transform: translateY(-50%);
+  width: 125px;
+  height: 80px;
+  right: 0;
+  cursor: pointer;
+
   &__arrow {
     position: fixed;
     float: right;
-    top: 50vh;
-    transform: translateY(-50%);
+    margin-top: 10px;
     color: #154734;
     right: 15px;
     animation: pointer 1s ease-in-out infinite;
   }
+
   &__logo {
     position: fixed;
     float: right;
-    top: 50vh;
-    transform: translateY(-50%);
     width: 55px;
     height: auto;
     right: 50px;
   }
+
   &__text {
     position: fixed;
     float: right;
-    top: 50vh;
-    margin-top: 35px;
-    transform: translateY(-50%);
+    margin-top: 50px;
     width: 100px;
     height: auto;
     right: 10px;
+    color: black;
     animation: fadeinout 2s ease-in-out infinite;
   }
 }

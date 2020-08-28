@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import classNames from 'classnames';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 import Layout from '../components/layout';
@@ -33,6 +33,10 @@ const Shop = ({ data }) => {
     }
     products.push(...stripeProducts.slice(0, remainder));
     return products;
+  };
+
+  const viewAll = () => {
+    console.log('hello');
   };
 
   useEffect(() => {
@@ -126,18 +130,26 @@ const Shop = ({ data }) => {
           </div>
         </div>
       </div>
-      <div>
-        <img
-          style={{ margin: 0 }}
-          className="shop-view__logo"
-          src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
-          alt="Sage Logo"
-        />
-        <div className="shop-view__text">
-          <b>view all</b>
+      <Link to="/shop/all">
+        <div
+          className="shop-view"
+          onClick={() => viewAll()}
+          onKeyDown={() => viewAll()}
+          role="button"
+          tabIndex={0}
+        >
+          <img
+            style={{ margin: 0 }}
+            className="shop-view__logo"
+            src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+            alt="Sage Logo"
+          />
+          <div className="shop-view__text">
+            <b>view all</b>
+          </div>
+          <ForwardRoundedIcon fontSize="large" className="shop-view__arrow" />
         </div>
-        <ForwardRoundedIcon fontSize="large" className="shop-view__arrow" />
-      </div>
+      </Link>
     </Layout>
   );
 };

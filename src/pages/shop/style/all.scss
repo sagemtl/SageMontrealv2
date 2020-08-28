@@ -1,0 +1,13 @@
+.shop-all-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 90%;
+  top: 10%;
+  display: flex;
+  flex-wrap: wrap;
+//   justify-content: space-around;
+  align-items: flex-start;
+  align-content: flex-start;
+}

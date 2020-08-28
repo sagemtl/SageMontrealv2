@@ -28,22 +28,25 @@ const Product = ({ data }) => {
     const getAllInventory = async () => {
       const invs = await Promise.all(
         skus.edges.map(async (node) => {
-          const inv = await getSkuInventory(node.node.id);
+          const inv = await getSkuInventory(
+            item.metadata.item,
+            item.metadata.colour,
+            node.node.attributes.name,
+            node.node.id,
+          );
           return inv;
         }),
       );
+      console.log(invs);
       if (invs) {
         setInventories(invs);
       }
     };
 
     getAllInventory();
-  }, [skus.edges]);
+  }, [item.metadata.colour, item.metadata.item, skus.edges]);
 
   const checkIsInStock = (skuId) => {
-    console.log(skuId);
-    inventories.forEach((invEl) => console.log(invEl));
-
     const inv = inventories.filter(
       (invEl) => typeof invEl !== 'undefined' && invEl.sku_id === skuId,
     );
@@ -188,10 +191,6 @@ const Product = ({ data }) => {
   );
 };
 
-Product.propTypes = {
-  data: PropTypes.shape().isRequired,
-};
-
 export default Product;
 
 export const query = graphql`
@@ -205,6 +204,8 @@ export const query = graphql`
       }
       metadata {
         modelInfo
+        item
+        colour
       }
       featuredImg {
         childImageSharp {
