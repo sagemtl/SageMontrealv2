@@ -25,6 +25,11 @@
     height: auto;
   }
 
+  &__cart {
+    width: 75px;
+    height: auto;
+  }
+
   &__logo-button {
     width: calc(100% / 3);
     display: flex;

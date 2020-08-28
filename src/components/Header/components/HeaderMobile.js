@@ -77,10 +77,11 @@ const HeaderMobile = () => {
         {cart ? (
           <CloseIcon fontSize="large" className="header-mobile__icon" />
         ) : (
-          <LocalMallOutlinedIcon
-            style={{ color: '#154734' }}
-            fontSize="large"
-            className="header-mobile__icon"
+          <img
+            style={{ margin: 0 }}
+            className="header-mobile__cart"
+            src="https://sageimagebank.s3.ca-central-1.amazonaws.com/shopping-bag.png"
+            alt="Sage Shopping Bag"
           />
         )}
       </div>

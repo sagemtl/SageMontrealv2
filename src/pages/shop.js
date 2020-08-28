@@ -2,12 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import classNames from 'classnames';
-
+import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
 import { GlobalContext } from '../context/Provider';
-import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 
 const Shop = ({ data }) => {
   const [paused, setPaused] = useState(false);
@@ -88,32 +87,18 @@ const Shop = ({ data }) => {
 
   return (
     <Layout>
-      <div className="shop-scroll">
-        <div className={shopClasses}>
-          <div className={shopAnimationClasses}>
-            {getProducts().map((product, index) => {
-              if (index < 16) {
-                const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
-
-                return (
-                  <ShopItem
-                    buttonPaused={buttonPaused}
-                    delay={delay}
-                    paused={paused}
-                    setPaused={setPaused}
-                    windowWidth={windowWidth}
-                    product={product}
-                  />
-                );
-              }
-            })}
-            {mobile &&
-              getProducts().map((product, index) => {
+      <div className="shop-background">
+        <div className="shop-scroll">
+          <div className={shopClasses}>
+            <div className={shopAnimationClasses}>
+              {getProducts().map((product, index) => {
                 if (index < 16) {
+                  const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
+
                   return (
                     <ShopItem
                       buttonPaused={buttonPaused}
-                      delay={0}
+                      delay={delay}
                       paused={paused}
                       setPaused={setPaused}
                       windowWidth={windowWidth}
@@ -122,10 +107,37 @@ const Shop = ({ data }) => {
                   );
                 }
               })}
+              {mobile &&
+                getProducts().map((product, index) => {
+                  if (index < 16) {
+                    return (
+                      <ShopItem
+                        buttonPaused={buttonPaused}
+                        delay={0}
+                        paused={paused}
+                        setPaused={setPaused}
+                        windowWidth={windowWidth}
+                        product={product}
+                      />
+                    );
+                  }
+                })}
+            </div>
           </div>
         </div>
       </div>
-      <ForwardRoundedIcon className="shop__view" />
+      <div>
+        <img
+          style={{ margin: 0 }}
+          className="shop-view__logo"
+          src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+          alt="Sage Logo"
+        />
+        <div className="shop-view__text">
+          <b>view all</b>
+        </div>
+        <ForwardRoundedIcon fontSize="large" className="shop-view__arrow" />
+      </div>
     </Layout>
   );
 };
@@ -149,7 +161,7 @@ export const query = graphql`
           }
           featuredImg {
             childImageSharp {
-              fixed(width: 240) {
+              fixed(height: 200, toFormat: PNG) {
                 ...GatsbyImageSharpFixed
               }
             }
