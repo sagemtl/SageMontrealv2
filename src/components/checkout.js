@@ -36,6 +36,7 @@ const Payment = () => {
   const [paymentRequest, setPaymentRequest] = useState(null);
 
   const [formData, setFormData] = useState({});
+  const [validated, setValidated] = useState(false);
 
   const [countryValue, setCountryValue] = useState("CA");
   const [province, setProvince] = useState("Quebec");
@@ -65,6 +66,12 @@ const Payment = () => {
   };
   const changeIsPickup = (val) => {
     setIsPickUp(val)
+    if (val) {
+      setShippingMethod("Local Pickup");
+    }
+    else {
+      setShippingMethod("");
+    }
   }
 
   // After checkout, reset the cart state
@@ -87,12 +94,13 @@ const Payment = () => {
       "FREE - Mail (4 - 10 Business Days)": 0,
       "$15 - Expedited Parcel (5 - 10 Business Days)": 15,
       "$20 - Small Packet - Air (6 - 12 Business Days)": 20,
+      "Local Pickup": 0,
     }
     if (shippingMethod) {
       return prices[shippingMethod]
     }
     else {
-      return -1
+      return null
     }
   }
   
@@ -123,7 +131,6 @@ const Payment = () => {
       displayItems.push({amount: checkoutItems[i].amount, label: checkoutItems[i].name})
     }
   }
-
 
   useEffect(() => {
     if (stripe) {
@@ -164,7 +171,7 @@ const Payment = () => {
   if (paymentRequest) {
     paymentRequest.on('shippingaddresschange', function(ev) {
         // Perform server-side request to fetch shipping options
-        fetch('/calculateShipping', {
+        fetch('http://localhost:5000/calculateShipping', {
           data: JSON.stringify({
             shippingAddress: ev.shippingAddress
           })
@@ -201,23 +208,48 @@ const Payment = () => {
 
   const submit = async (e) => {
 
+    const form = e.currentTarget;
+    console.log(form)
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    setValidated(true);
+    if (form.checkValidity() === false) {
+      return;
+    }
+
     console.log(formData)
     console.log(countryValue)
     console.log(province)
     e.preventDefault();
 
     // Billing Details
-    const billing_details = {
-      name: formData.name,
-      email: formData.email,
-      address: {
-        city: formData.city,
-        country: countryValue,
-        line1: formData.address,
-        state: province,
-        postal_code: formData.postal_code,
-      },
-    };
+    var information
+    if (isPickUp) {
+      information = {
+        price: (getTotal() + getShippingPrice()) * 100,
+        receipt_email: formData.email,
+      }
+    }
+    else {
+      information = {
+        price: (getTotal() + getShippingPrice()) * 100,
+        receipt_email: formData.email,
+        shipping: {
+          name: formData.name,
+          address: {
+            city: formData.city,
+            country: countryValue,
+            line1: formData.address,
+            state: province,
+            postal_code: formData.postal_code,
+          },
+          carrier: shippingMethod,
+        }
+      }
+    }
 
     // Request Client Secret to Server
     const res = await fetch('http://localhost:5000/payment_intent', {
@@ -225,10 +257,7 @@ const Payment = () => {
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify({
-        price: (getTotal() + 15) * 100,
-        receipt_email: formData.email,
-      }),
+      body: JSON.stringify(information),
     });
 
     const data = await res.json();
@@ -241,7 +270,6 @@ const Payment = () => {
     const paymentReqMethod = await stripe.createPaymentMethod({
       type: 'card',
       card: cardElement,
-      billing_details,
     });
 
     // Confirm the Payment
@@ -297,14 +325,14 @@ const Payment = () => {
         ) : ( */}
           <div className="summary">
           <form action="#">
-          <input type="radio" id="111" name="gender" onClick={() => changeIsPickup(true)}/>
-          <label for="111">Pick Up</label>
-          <input type="radio" id="222" name="gender" onClick={() => changeIsPickup(false)}/>
-          <label for="222">Shipping</label>
+            <input type="radio" id="222" name="gender" defaultChecked onClick={() => changeIsPickup(false)}/>
+            <label for="222">Shipping</label>
+            <input type="radio" id="111" name="gender" onClick={() => changeIsPickup(true)}/>
+            <label for="111">Pick Up</label>
           </form>
             <b>Price: {getTotal()}$</b>
-            <p>Shipping: {getShippingPrice() == -1 ? "TBD" : getShippingPrice() + "$"}</p>
-            <b>Total: {getShippingPrice() == -1 ? getTotal() : getTotal() + getShippingPrice()}$</b>
+            <p>Shipping: {getShippingPrice() === null ? "TBD" : getShippingPrice() == 0 ? "FREE" : getShippingPrice()+ "$"}</p>
+            <b>Total: {!getShippingPrice() ? getTotal() : getTotal() + getShippingPrice()}$</b>
           </div>
         {/* )} */}
       </div>
@@ -315,58 +343,52 @@ const Payment = () => {
       <div className="custom-apple-pay">
       <div style={{width:"350px"}}>
       <PaymentRequestButtonElement options={options} /></div></div> : <div></div>}
+      <Form noValidate validated={validated} method="POST" onSubmit={submit} className="checkout-form__form">
         <Card className="checkout__checkout-form">
           <Card.Body>
-            <Form method="POST" onSubmit={submit} className="checkout-form__form">
               <Row>
                 <Col>
                   <FormGroup>
-                    <Form.Label> Name on Card </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      placeholder="Enter name on card"
-                      name="name"
-                      onChange={change}
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label> Email </Form.Label>
+                    <Form.Label className="form-title-label"> Email </Form.Label>
                     <FormControl className="checkout-form__form-control"
                       type="text"
                       name="email"
-                      placeholder="Enter email address"
+                      placeholder="sage@office.com"
                       onChange={change}
+                      required
                     />
                   </FormGroup>
                 </Col>
-              </Row>
-              <FormGroup>
-                    <Form.Label> Address </Form.Label>
+                <Col>
+                  <FormGroup>
+                    <Form.Label className="form-title-label"> Address </Form.Label>
                     <FormControl className="checkout-form__form-control"
                       type="text" 
                       name="address" 
-                      placeholder="Enter address"
+                      placeholder="5463 W. 666th Ave"
                       onChange={change} 
+                      required
                       />
-              </FormGroup>
+                  </FormGroup>
+                </Col>
+              </Row>
               <Row>
                 <Col>
                   <FormGroup>
-                      <Form.Label> Country/Region </Form.Label>
+                      <Form.Label className="form-title-label"> Country/Region </Form.Label>
                       <CountryDropdown 
                       value={countryValue}
                       onChange={ (val) => changeCountry(val)}
                       priorityOptions={["CA", "US"]}
                       classes="checkout-form__select-form"
                       valueType="short"
+                      required
                       />
                   </FormGroup>
                 </Col>
                 <Col>
                   <FormGroup>
-                    <Form.Label> State / Province </Form.Label>
+                    <Form.Label className="form-title-label"> State / Province </Form.Label>
                     <RegionDropdown
                     value={province}
                     country={countryValue}
@@ -374,6 +396,7 @@ const Payment = () => {
                     defaultOptionLabel="Select State/Province"
                     classes="checkout-form__select-form"
                     countryValueType="short"
+                    required
                     />
                   </FormGroup>
                 </Col>
@@ -382,22 +405,24 @@ const Payment = () => {
               <Row>
                 <Col>
                   <FormGroup>
-                    <Form.Label> City </Form.Label>
+                    <Form.Label className="form-title-label"> City </Form.Label>
                     <FormControl className="checkout-form__form-control"
                       type="text"
                       name="city"
-                      placeholder="Enter city"
+                      placeholder="Montreal"
                       onChange={change}
+                      required
                     />
                   </FormGroup>
                 </Col>
                 <Col>
-                  <Form.Label> Postal Code </Form.Label>
+                  <Form.Label className="form-title-label"> Postal Code </Form.Label>
                   <FormControl className="checkout-form__form-control"
                     type="text"
                     name="postal_code"
-                    placeholder="Enter postal code"
+                    placeholder="S4G 3S4"
                     onChange={change}
+                    required
                   />
                 </Col>
               </Row>
@@ -408,9 +433,10 @@ const Payment = () => {
                     <Form.Check
                     type="radio"
                     label="FREE - Mail (4 - 10 Business Days)"
-                    name="shippingMethodCA"
                     id="formHorizontalRadios1"
+                    name="shippingMethodCA"
                     onChange={() => changeShippingMethod("FREE - Mail (4 - 10 Business Days)")}
+                    required
                   />
                   <Form.Check
                     type="radio"
@@ -418,6 +444,7 @@ const Payment = () => {
                     name="shippingMethodCA"
                     id="formHorizontalRadios2"
                     onChange={() => changeShippingMethod("$5 - Expedited Parcel (2 - 4 Business Days)")}
+                    required
                   />
                   </Form.Group>
                   </div> : 
@@ -431,6 +458,7 @@ const Payment = () => {
                     name="shippingMethodUS"
                     id="formHorizontalRadios3"
                     onChange={() => changeShippingMethod("$15 - Expedited Parcel (5 - 10 Business Days)")}
+                    required
                   />
                   </Form.Group>
                   </fieldset>:
@@ -442,57 +470,70 @@ const Payment = () => {
                     name="shippingMethodOther"
                     id="formHorizontalRadios4"
                     onChange={() => changeShippingMethod("$20 - Small Packet - Air (6 - 12 Business Days)")}
+                    required
                   /> 
                 </Form.Group>
                 }
-            </Form>
           </Card.Body>
         </Card>
         <div className="custom-pay">
-        <div style={{width:"80%"}}>
-        <FormGroup >
-                <Form.Label> Card Details </Form.Label>
-                <div className="custom-stripe-element"><CardElement > </CardElement></div>
-                <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
+        <div style={{width:"80%", marginTop:"1.25rem"}}>
+        <FormGroup>
+          <Form.Label className="form-title-label"> Name on Card </Form.Label>
+          <FormControl className="checkout-form__form-control"
+            type="text"
+            placeholder="Sage"
+            name="name"
+            onChange={change}
+            required
+          />
         </FormGroup>
-        </div></div>
+        <FormGroup >
+          <Form.Label className="form-title-label"> Card Details </Form.Label>
+          <div className="custom-stripe-element"><CardElement > </CardElement></div>
+          <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}} > Pay</Button>
+        </FormGroup>
+        </div>
+        </div>
+        </Form>
       </Container> 
         :
       
          <Container className="py-4">
           <Card className="checkout__checkout-form">
             <Card.Body>
-              <Form method="POST" onSubmit={submit} className="checkout-form__form">
-                  <Col>
+              <div style={{width: "80%", display: "block", marginRight: "auto", marginLeft: "auto"}}>
+              <Form method="POST"  noValidate validated={validated} onSubmit={submit} className="checkout-form__form">
                     <FormGroup>
-                      <Form.Label> Name on Card </Form.Label>
+                      <Form.Label className="form-title-label"> Name on Card </Form.Label>
                       <FormControl className="checkout-form__form-control"
                         type="text"
-                        placeholder="Enter name on card"
+                        placeholder="Sage"
                         name="name"
                         onChange={change}
+                        required
                       />
                     </FormGroup>
-                  </Col>
-                  <Col>
                     <FormGroup>
-                      <Form.Label> Email </Form.Label>
+                      <Form.Label  className="form-title-label"> Email </Form.Label>
                       <FormControl className="checkout-form__form-control"
                         type="text"
                         name="email"
-                        placeholder="Enter email address"
+                        placeholder="sage@office.com"
                         onChange={change}
+                        required
                       />
                     </FormGroup>
-                  </Col>
-                  <FormGroup >
-                <Form.Label> Card Details </Form.Label>
+                <FormGroup>
+                  <Form.Label className="form-title-label"> Card Details </Form.Label>
                   <div className="custom-stripe-element"><CardElement > </CardElement></div>
                   <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
                 </FormGroup>
                 </Form>
+                </div>
             </Card.Body>
           </Card>
+          <Form.Label className="form-title-label" style={{marginTop: "10px"}}> * Local pickup in Montreal downtown area. Pickup location will be sent by email. </Form.Label>
         </Container>
         } 
         
