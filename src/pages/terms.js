@@ -24,16 +24,18 @@ const terms = () => {
         </div>
         <div className="terms-column">
           <p className="terms__header--2">Shipping</p>
-          <br />
           <p className="terms__text">
             All orders are shipped within 1-2 business days
+          </p>
+          <p className="terms__text">
+            Orders made in the downtown Montreal area may be eligible for same
+            day shipping
           </p>
           <p className="terms__text">
             Orders shipped outside of Canada may possibly incur duties and taxes
           </p>
           <br />
           <p className="terms__header--2">Shipping rates</p>
-          <br />
           <p className="terms__text">
             <u>Canada</u>
           </p>
@@ -65,15 +67,14 @@ const terms = () => {
             <p className="terms__text">
               Small Packet - Air (6 - 12 Business Days)
             </p>
-            <p className="terms__text">$20</p>
+            <p className="terms__text">$22</p>
           </div>
           <br />
           <p className="terms__text">
-            *Orders above $75 have free expedited shipping
+            *Orders above $80 have free expedited shipping
           </p>
           <br />
           <p className="terms__header--2">Payments</p>
-          <br />
           <p className="terms__text">
             All listed prices are in Canadian Dollars.
           </p>
@@ -83,7 +84,6 @@ const terms = () => {
         </div>
         <div className="terms-column">
           <p className="terms__header--2">Returns & exchanges</p>
-          <br />
           <p className="terms__text">
             If you received a package that is defective or incorrect, you may
             return the package within 14 days after its reception by termsing us
@@ -104,13 +104,19 @@ const terms = () => {
           </p>
           <br />
           <p className="terms__header--2">Policies</p>
-          <br />
           <p className="terms__text">
             SAGE reserves the right to cancel an order at any time. Cancellation
             reasons may occur but are not limited to: lack of stock for order
             fulfilment, fraud suspicion, or any discrepancies on an item's
             description or price. We will notify you if your order cannot be
             fulfilled and a full refund will be issued.
+          </p>
+          <br />
+          <p className="terms__header--2">Local Pickup</p>
+          <p className="terms__text">
+            Pickups are only offered to Montreal residents. We will contact you
+            by email about the pickup location and meeting time once the payment
+            has been processed.
           </p>
         </div>
       </div>
