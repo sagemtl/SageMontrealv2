@@ -1,12 +1,12 @@
 import React from 'react';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
+import Layout from '../components/layout';
 
 import './styles/lookbook.scss';
 
-const LookbookMenu = ({ uri }) => {
+const LookbookMenu = () => {
   const collections = [
     {
       season: 'Capsule 01',
@@ -102,7 +102,7 @@ const LookbookMenu = ({ uri }) => {
   };
 
   return (
-    <Layout footerColor="white" style={{ alignItems: 'flex-start' }}>
+    <Layout>
       <div className="lookbook">
         <ArrowForwardIosIcon
           className="lookbook__icon--right"

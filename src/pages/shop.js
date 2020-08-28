@@ -1,24 +1,24 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { graphql, Link } from 'gatsby';
 import classNames from 'classnames';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
+
 import './styles/shop.scss';
-import { GlobalContext } from '../context/Provider';
 
 const Shop = ({ data }) => {
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
+
   const [paused, setPaused] = useState(false);
-  const widthVal = typeof window !== `undefined` ? window.innerWidth : 1200;
+  const [buttonPaused, setButtonPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(widthVal);
   const [extra, setExtra] = useState(0);
-  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
   const [scroll, setScroll] = useState(pageYOffset);
-  const mobile = windowWidth < 1200;
 
-  const { state } = useContext(GlobalContext);
-  const { buttonPaused } = state;
+  const mobile = windowWidth < 1200;
 
   const getProducts = () => {
     const stripeProducts = data.allStripeProduct.edges.filter(
