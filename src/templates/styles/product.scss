@@ -97,7 +97,6 @@
 .product-details-sizes {
   display: flex;
   margin: 20px 0;
-  margin-bottom: 10px;
 
   &__size {
     margin-right: 30px;
@@ -116,6 +115,9 @@
     height: 30px;
     background-color: white;
     cursor: pointer;
+    border: 2px solid black;
+    border-radius: 50%;
+    padding: 1em;
   }
 
   &__no-stock{
@@ -129,15 +131,9 @@
     background-color: white;
     cursor: not-allowed;
     position: relative;
-
-    &::after {
-      border-bottom: 2px solid rgb(158, 158, 158);
-      content: "";
-      left: 0;
-      right: 0;
-      position: absolute;
-      top: 50%;
-    }
+    border: 2px solid rgb(158, 158, 158);
+    border-radius: 50%;
+    padding: 1em;
   }
 }
 

@@ -50,10 +50,10 @@ const Product = ({ data }) => {
     const inv = inventories.filter(
       (invEl) => typeof invEl !== 'undefined' && invEl.sku_id === skuId,
     );
-    if (inv[0] && inv[0].quantity !== 0) {
-      return true;
+    if (inv[0] && inv[0].quantity === 0) {
+      return false;
     }
-    return false;
+    return true;
   };
 
   const allowAddToCart = () => {
@@ -130,7 +130,7 @@ const Product = ({ data }) => {
               setSelectedSku(nodeid);
               setSelectedSize(size);
             }}
-            disabled={!hasStock}
+            disabled={false || !hasStock}
           />
           <label htmlFor={size} className={className}>
             {size}
