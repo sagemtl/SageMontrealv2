@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import Layout from '../components/layout';
+import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
-import { sortSizes } from '../helpers/stripeHelper';
+import { sortSizes, getSkuInventory } from '../helpers/stripeHelper';
 
 import './styles/product.scss';
 
@@ -21,7 +21,48 @@ const Product = ({ data }) => {
     item.children[0].childImageSharp.fixed.src,
   );
   const [modalOpen, setModalOpen] = useState(false);
+  const [inventories, setInventories] = useState([]);
   const { state, dispatch } = useContext(GlobalContext);
+
+  useEffect(() => {
+    const getAllInventory = async () => {
+      const invs = await Promise.all(
+        skus.edges.map(async (node) => {
+          const inv = await getSkuInventory(node.node.id);
+          return inv;
+        }),
+      );
+      if (invs) {
+        setInventories(invs);
+      }
+    };
+
+    getAllInventory();
+  }, [skus.edges]);
+
+  const checkIsInStock = (skuId) => {
+    console.log(skuId);
+    inventories.forEach((invEl) => console.log(invEl));
+
+    const inv = inventories.filter(
+      (invEl) => typeof invEl !== 'undefined' && invEl.sku_id === skuId,
+    );
+    if (inv[0] && inv[0].quantity !== 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const allowAddToCart = () => {
+    if (selectedSize.length <= 0) return false;
+    if (!checkIsInStock(selectedSku)) return false;
+    return true;
+  };
+
+  const filterPrice = (sku) => {
+    const matched = skus.edges.find((node) => node.node.id === sku);
+    return matched.node.price / 100;
+  };
 
   const addToCart = () => {
     const itemsCopy = Array.from(state.checkoutItems);
@@ -49,11 +90,6 @@ const Product = ({ data }) => {
     });
   };
 
-  const filterPrice = (sku) => {
-    const matched = skus.edges.find((node) => node.node.id == sku);
-    return matched.node.price / 100;
-  };
-
   // not fully tested yet
   const sortedSkus = sortSizes(skus.edges);
 
@@ -65,14 +101,45 @@ const Product = ({ data }) => {
           alt={node.name}
           className="product-images__image--secondary"
           onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
+          onKeyDown={() => setSelectedImage(node.childImageSharp.fixed.src)}
         />
       );
     });
     return icons;
   };
 
+  const renderSizesFromSku = () => {
+    const skuComponents = sortedSkus.map(({ node }) => {
+      const size = node.attributes.name;
+      const nodeid = node.id;
+      const hasStock = checkIsInStock(nodeid);
+      const className = `product-details-sizes-label__${
+        hasStock ? 'in-stock' : 'no-stock'
+      }`;
+      return (
+        <div className="product-details-sizes__size" key={size}>
+          <input
+            type="radio"
+            id={size}
+            value={size}
+            checked={selectedSize === size}
+            onClick={() => {
+              setSelectedSku(nodeid);
+              setSelectedSize(size);
+            }}
+            disabled={!hasStock}
+          />
+          <label htmlFor={size} className={className}>
+            {size}
+          </label>
+        </div>
+      );
+    });
+    return skuComponents;
+  };
+
   return (
-    <Layout current={`/shop/${item.fields.slug}`}>
+    <Layout>
       <div className="product">
         <div className="product-images">
           <img
@@ -89,92 +156,33 @@ const Product = ({ data }) => {
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
           <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
-          <div className="product-details-sizes">
-            {sortedSkus.map(({ node }) => {
-              const size = node.attributes.name;
-              const nodeid = node.id;
-              return (
-                <div className="product-details-sizes__size" key={size}>
-                  <input
-                    type="radio"
-                    id={size}
-                    value={size}
-                    checked={selectedSize === size}
-                    onChange={() => {
-                      setSelectedSku(nodeid);
-                      setSelectedSize(size);
-                    }}
-                  />
-                  <label htmlFor={size} className="cursor">
-                    {size}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
+          {/* sku/size selection */}
+          <div className="product-details-sizes">{renderSizesFromSku()}</div>
+          {/* size guide */}
           <button
+            type="button"
             className="size-guide__size-guide-link"
             onClick={() => setModalOpen(true)}
           >
             size guide
           </button>
-          <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
-            <DialogContent>
-              <header className="size-guide__heading">
-                Size Guides: Short sleeve T-shirts (Centimeters)
-              </header>
-              <div>
-                <table>
-                  <tbody>
-                    <tr>
-                      <th> </th>
-                      <th>S</th>
-                      <th>M</th>
-                      <th>L</th>
-                      <th>XL</th>
-                    </tr>
-                    <tr>
-                      <th>Width</th>
-                      <th>49</th>
-                      <th>52</th>
-                      <th>56</th>
-                      <th>59</th>
-                    </tr>
-                    <tr>
-                      <th>Shoulders</th>
-                      <th>44</th>
-                      <th>46</th>
-                      <th>48</th>
-                      <th>51</th>
-                    </tr>
-                    <tr>
-                      <th>Length</th>
-                      <th>65</th>
-                      <th>67</th>
-                      <th>70</th>
-                      <th>73</th>
-                    </tr>
-                    <tr>
-                      <th>Sleeve</th>
-                      <th>23</th>
-                      <th>25</th>
-                      <th>26</th>
-                      <th>27</th>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <SizeChart modalOpen={modalOpen} setModalOpen={setModalOpen} />
+
           <button
             className="product-details__button"
             type="button"
             onClick={addToCart}
-            disabled={selectedSize.length <= 0}
+            disabled={!allowAddToCart()}
           >
             Add to cart
           </button>
         </div>
+        <Link className="product-details__back" to="/shop">
+          <KeyboardBackspaceIcon
+            style={{ color: '#154734' }}
+            fontSize="large"
+          />
+        </Link>
       </div>
     </Layout>
   );

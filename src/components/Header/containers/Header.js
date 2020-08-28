@@ -1,20 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import HeaderDesktop from '../components/HeaderDesktop';
 import HeaderMobile from '../components/HeaderMobile';
 import '../styles/header.scss';
 
-const Header = ({ current }) => {
-  const [width, setWidth] = useState(window.innerWidth);
+const Header = ({ isMobile }) => {
+  return <>{isMobile ? <HeaderMobile /> : <HeaderDesktop />}</>;
+};
 
-  useEffect(() => {
-    window.addEventListener('resize', () => setWidth(window.innerWidth));
-  }, []);
-
-  if (width >= 900) {
-    return <HeaderDesktop current={current} />;
-  }
-
-  return <HeaderMobile />;
+Header.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
 };
 
 export default Header;

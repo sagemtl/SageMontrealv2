@@ -252,7 +252,7 @@ const Payment = () => {
     }
 
     // Request Client Secret to Server
-    const res = await fetch('http://localhost:5000/payment_intent', {
+    const res = await fetch('https://sagemtl-backend.herokuapp.com/payment_intent', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',

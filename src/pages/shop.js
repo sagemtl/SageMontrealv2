@@ -1,25 +1,31 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import classNames from 'classnames';
+import PauseIcon from '@material-ui/icons/Pause';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 
-import Layout from '../components/layout';
-import ShopItem from '../components/shopitem';
+import ShopItem from '../components/ShopItem';
+
 import './styles/shop.scss';
-import { GlobalContext } from '../context/Provider';
 
-const Shop = ({ data, uri }) => {
+const Shop = ({ data }) => {
   const [paused, setPaused] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [buttonPaused, setButtonPaused] = useState(false);
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
+  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
+
+  const [windowWidth, setWindowWidth] = useState(widthVal);
   const [extra, setExtra] = useState(0);
-  const [scroll, setScroll] = useState(window.pageYOffset);
+  const [scroll, setScroll] = useState(pageYOffset);
+
   const mobile = windowWidth < 1200;
 
-  const { state } = useContext(GlobalContext);
-  const { buttonPaused } = state;
-
   const getProducts = () => {
-    const stripeProducts = data.allStripeProduct.edges.filter(node => node.node.featuredImg); //only for products that have images
+    const stripeProducts = data.allStripeProduct.edges.filter(
+      (node) => node.node.featuredImg,
+    ); // only for products that have images
     const products = [];
     let factor = Math.floor(16 / stripeProducts.length);
     const remainder = 16 % stripeProducts.length;
@@ -32,31 +38,43 @@ const Shop = ({ data, uri }) => {
   };
 
   useEffect(() => {
-    if (scroll === 0) window.scrollTo(0, 1000);
-    else if (scroll === 1) window.scrollTo(0, 0);
+    if (typeof window !== `undefined`) {
+      if (scroll === 0) window.scrollTo(0, 1000);
+      else if (scroll === 1) window.scrollTo(0, 0);
+    }
   });
 
   useEffect(() => {
-    window.addEventListener('resize', () => setWindowWidth(window.innerWidth));
+    if (typeof window !== `undefined`)
+      window.addEventListener('resize', () =>
+        setWindowWidth(window.innerWidth),
+      );
 
     const updateDelay = () => {
       const winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
+        typeof document !== `undefined`
+          ? document.body.scrollTop || document.documentElement.scrollTop
+          : false;
 
       const height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
+        typeof document !== `undefined`
+          ? document.documentElement.scrollHeight -
+            document.documentElement.clientHeight
+          : 0;
 
       const scrolled = winScroll / height;
       setScroll(scrolled);
-      if (window.scrollY) setExtra((window.scrollY + extra) / 50);
+      if (typeof window !== `undefined` && window.scrollY)
+        setExtra((window.scrollY + extra) / 50);
     };
-    window.addEventListener('scroll', updateDelay);
+    if (typeof window !== `undefined`)
+      window.addEventListener('scroll', updateDelay);
 
     return () => {
-      window.removeEventListener('scroll', updateDelay);
+      if (typeof window !== `undefined`)
+        window.removeEventListener('scroll', updateDelay);
     };
-  }, [extra, scroll, windowWidth]);
+  }, [extra, scroll]);
 
   const shopClasses = classNames({
     shop: !mobile,
@@ -70,7 +88,7 @@ const Shop = ({ data, uri }) => {
   });
 
   return (
-    <Layout current={uri}>
+    <>
       <div className="shop-scroll">
         <div className={shopClasses}>
           <div className={shopAnimationClasses}>
@@ -106,9 +124,21 @@ const Shop = ({ data, uri }) => {
                 }
               })}
           </div>
+          <button
+            type="button"
+            className="shop-scroll__button"
+            onClick={() => setButtonPaused(!buttonPaused)}
+          >
+            {buttonPaused ? (
+              <PlayArrowIcon />
+            ) : (
+              <PauseIcon style={{ verticalAlign: 'center' }} />
+            )}
+          </button>
         </div>
       </div>
-    </Layout>
+      <ForwardRoundedIcon className="shop__view" />
+    </>
   );
 };
 

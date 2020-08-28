@@ -62,7 +62,7 @@ CartItem.propTypes = {
   amount: PropTypes.number.isRequired,
   size: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  image: PropTypes.object.isRequired,
+  image: PropTypes.shape.isRequired,
   id: PropTypes.string.isRequired,
   sku: PropTypes.string.isRequired,
 };

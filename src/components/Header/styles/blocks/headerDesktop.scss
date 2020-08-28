@@ -1,3 +1,9 @@
+@media (max-width: 900px) {
+  .header-desktop {
+    display: none;
+  }
+}
+
 @mixin navbox {
   position: fixed;
   top: 30px;
@@ -33,7 +39,7 @@
   align-items: center;
   width: 100%;
   text-decoration: none;
-  font-family: 'Helvetica Neue';
+  font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
   border-top: 2px solid black;
 }
 
@@ -59,7 +65,7 @@
       position: absolute;
       left: 10px;
       top: 28px;
-      font-family: 'Helvetica Neue';
+      font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
       font-size: 12px;
     }
     &__image{
@@ -71,14 +77,14 @@
       position: absolute;
       left: 115px;
       top: 28px;
-      font-family: 'Helvetica Neue';
+      font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
       font-size: 12px;
     }
     &__price{
       position: absolute;
       right: 10px;
       bottom: 10px;
-      font-family: 'Helvetica Neue';
+      font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
       font-size: 12px;
     }
     &__close{

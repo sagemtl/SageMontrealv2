@@ -12,6 +12,12 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sass`,
     {
+      resolve: `gatsby-plugin-layout`,
+      options: {
+        component: require.resolve('./src/components/layout.js'),
+      },
+    },
+    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
@@ -65,7 +71,7 @@ module.exports = {
       options: {
         objects: ['Sku', 'Product'],
         secretKey: process.env.STRIPE_SECRET,
-        downloadFiles: true
+        downloadFiles: true,
       },
     },
     {
@@ -74,6 +80,12 @@ module.exports = {
         stylesProvider: {
           injectFirst: true,
         },
+      },
+    },
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        // Add any options here
       },
     },
   ],

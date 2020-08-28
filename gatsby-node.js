@@ -34,7 +34,8 @@ exports.onCreateNode = async ({
       value: slug,
     });
   }
-  if (node.internal.type === `StripeSku`) { // not pulling imgs for Skus
+  if (node.internal.type === `StripeSku`) {
+    // not pulling imgs for Skus
     // if (node.image) {
     //   try {
     //     fileNode = await createRemoteFileNode({
@@ -145,14 +146,16 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
   const result = await graphql(`
     query {
-      allStripeProduct(filter: {active: {eq: true}}) {
+      allStripeProduct(filter: { active: { eq: true } }) {
         edges {
           node {
             id
             fields {
               slug
             }
-            featuredImg {id}
+            featuredImg {
+              id
+            }
           }
         }
       }
@@ -162,7 +165,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const path = require(`path`);
 
   result.data.allStripeProduct.edges.forEach(({ node }) => {
-    if(node.featuredImg.id){
+    if (node.featuredImg.id) {
       createPage({
         path: `/shop/${node.fields.slug}`,
         component: path.resolve(`./src/templates/product.js`),
