@@ -139,7 +139,7 @@ const Payment = () => {
         currency: 'cad',
         total: {
           label: 'SageMontreal',
-          amount: getTotal(),
+          amount: getTotal() * 100,
         },
         requestPayerName: true,
         requestPayerEmail: true,
@@ -171,8 +171,9 @@ const Payment = () => {
   if (paymentRequest) {
     paymentRequest.on('shippingaddresschange', function(ev) {
         // Perform server-side request to fetch shipping options
+        console.log(ev.shippingAddress)
         fetch('http://localhost:5000/calculateShipping', {
-          data: JSON.stringify({
+          body: JSON.stringify({
             shippingAddress: ev.shippingAddress
           })
         }).then(function(response) {
