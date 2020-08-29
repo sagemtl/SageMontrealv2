@@ -384,6 +384,27 @@ label {
   padding-bottom: 0 !important;
 }
 
+#shipping-method input[type="radio"],
+#canada-wrapper input[type="radio"],
+#us-wrapper input[type="radio"]{
+  display: none;
+  margin-left: 0%;
+}
+
+#shipping-method input[type="radio"]:checked + label,
+#canada-wrapper input[type="radio"]:checked + label,
+#us-wrapper input[type="radio"]:checked + label,
+#ww-wrapper input[type="radio"]:checked + label {
+  background-color: #669677;
+  color: white;
+  margin: 10px auto;
+  width: auto;
+  box-shadow: 3px 3px #154734;
+  border-radius: 3px;
+  padding-left:10px;
+  padding-right:10px;
+}
+
 
 @keyframes App-logo-spin {
     from {
