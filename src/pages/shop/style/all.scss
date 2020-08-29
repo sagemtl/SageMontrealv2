@@ -1,0 +1,11 @@
+.shop-all-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 200px);
+  grid-gap: 5rem;
+  justify-content: space-around;
+  align-content: space-around;
+  
+  width: 80vw;
+  margin: 5% auto;
+  padding: 0;
+}
