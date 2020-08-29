@@ -46,10 +46,9 @@ const CartItem = ({ name, amount, size, price, image, id, sku }) => {
           className="cart__item__image"
           height="50"
           fixed={image}
-          alt="test"
+          alt="cart item"
         />
       </div>
-
       <div className="cart__item__size">
         <b>{size}</b>
       </div>

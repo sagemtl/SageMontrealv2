@@ -145,12 +145,10 @@ const Product = ({ data }) => {
     const descArr = desc.split(',');
     const descComponent = descArr.map((text) => {
       text = text.trim();
-      return (
-        <p className="product-details__point">{text}</p>
-      )
-    })
+      return <p className="product-details__point">{text}</p>;
+    });
     return descComponent;
-  }
+  };
 
   return (
     <Layout>
@@ -169,8 +167,10 @@ const Product = ({ data }) => {
           {item.metadata.modelInfo ? (
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
-          <br/>
-          <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
+          <br />
+          <p className="product-details__price">
+            $ {skus.edges[0].node.price / 100}.00 CAD
+          </p>
           {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>
           {/* size guide */}
@@ -221,7 +221,7 @@ export const query = graphql`
       }
       featuredImg {
         childImageSharp {
-          fixed(height: 100, toFormat: PNG) {
+          fixed(height: 50, toFormat: PNG) {
             ...GatsbyImageSharpFixed
           }
         }
