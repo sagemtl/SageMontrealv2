@@ -41,7 +41,15 @@ const CartItem = ({ name, amount, size, price, image, id, sku }) => {
       <div className="cart__item__amount">
         <b>{amount}x</b>
       </div>
-      <Img className="cart__item__image" height="50" fixed={image} alt="test" />
+      <div className="image-wrapper">
+        <Img
+          className="cart__item__image"
+          height="50"
+          fixed={image}
+          alt="test"
+        />
+      </div>
+
       <div className="cart__item__size">
         <b>{size}</b>
       </div>
