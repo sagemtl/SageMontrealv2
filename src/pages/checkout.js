@@ -11,7 +11,7 @@ import { GlobalContext } from '../context/Provider';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(process.env.STRIPE_PUBLIC);
+const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLIC);
 
 const CheckoutPage = () => {
   const { state } = useContext(GlobalContext);
