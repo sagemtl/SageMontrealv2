@@ -10,7 +10,7 @@ const Cart = ({ isMobile }) => {
   const { checkoutItems } = state;
 
   return (
-    <div className="cart" style={isMobile ? { right: 20, top: 80 } : {}}>
+    <div className="cart">
       {checkoutItems.map((item) => {
         return (
           <CartItem

@@ -196,3 +196,10 @@
     margin: 0;
   }
 }
+
+@media only screen and (max-width: 900px) {
+  .cart {
+      right: 20px; 
+      top: 80px;
+  }
+}
