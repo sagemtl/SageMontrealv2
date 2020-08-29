@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'gatsby';
-import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import InstagramIcon from '@material-ui/icons/Instagram';
-import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import Drawer from '@material-ui/core/Drawer';
 
@@ -32,8 +30,7 @@ const footerRoutes = [
   },
 ];
 
-const HeaderMobile = () => {
-  const [cart, setCart] = useState(false);
+const HeaderMobile = ({ setCart, cart }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -92,7 +89,6 @@ const HeaderMobile = () => {
           />
         ) : (
           <img
-            style={{ margin: 0 }}
             className="header-mobile__cart"
             src="https://sageimagebank.s3.ca-central-1.amazonaws.com/shopping-bag.png"
             alt="Sage Shopping Bag"

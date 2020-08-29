@@ -6,9 +6,10 @@ import Footer from './footer';
 import Cart from './cart';
 import './styles/layout.scss';
 
-const Layout = ({ children, footerColor, hideCart, style }) => {
+const Layout = ({ children, footerColor }) => {
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 0;
   const [width, setWidth] = useState(widthVal);
+  const [cart, setCart] = useState(true);
 
   useEffect(() => {
     if (typeof window !== `undefined`) {
@@ -20,11 +21,9 @@ const Layout = ({ children, footerColor, hideCart, style }) => {
 
   return (
     <>
-      <Header />
-      {!hideCart && <Cart isMobile={isMobile} />}
-      <div className="layout" style={style}>
-        {children}
-      </div>
+      <Header setCart={setCart} cart={cart} />
+      {cart && <Cart isMobile={isMobile} />}
+      <div className="layout">{children}</div>
       <Footer color={footerColor} />
     </>
   );
@@ -32,15 +31,11 @@ const Layout = ({ children, footerColor, hideCart, style }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  hideCart: PropTypes.bool,
   footerColor: PropTypes.string,
-  style: PropTypes.shape,
 };
 
 Layout.defaultProps = {
-  hideCart: false,
   footerColor: 'black',
-  style: {},
 };
 
 export default Layout;

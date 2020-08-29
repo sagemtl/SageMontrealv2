@@ -3,11 +3,11 @@ import HeaderDesktop from '../components/HeaderDesktop';
 import HeaderMobile from '../components/HeaderMobile';
 import '../styles/header.scss';
 
-const Header = () => {
+const Header = ({ setCart, cart }) => {
   return (
     <>
       <HeaderDesktop />
-      <HeaderMobile />
+      <HeaderMobile setCart={setCart} cart={cart} />
     </>
   );
 };

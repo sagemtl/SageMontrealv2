@@ -90,18 +90,41 @@ const Shop = ({ data }) => {
 
   return (
     <Layout>
-      <div className="shop-background">
-        <div className="shop-scroll">
-          <div className={shopClasses}>
-            <div className={shopAnimationClasses}>
-              {getProducts().map((product, index) => {
-                if (index < 16) {
-                  const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
+      <div className="shop-scroll">
+        <img
+          src={
+            mobile
+              ? 'https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-shop-background-mobile.jpg'
+              : 'https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-shop-background.jpg'
+          }
+          className="shop-scroll__background"
+          alt="Shop Wheel Art"
+        />
+        <div className={shopClasses}>
+          <div className={shopAnimationClasses}>
+            {getProducts().map((product, index) => {
+              if (index < 16) {
+                const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
 
+                return (
+                  <ShopItem
+                    buttonPaused={buttonPaused}
+                    delay={delay}
+                    paused={paused}
+                    setPaused={setPaused}
+                    windowWidth={windowWidth}
+                    product={product}
+                  />
+                );
+              }
+            })}
+            {mobile &&
+              getProducts().map((product, index) => {
+                if (index < 16) {
                   return (
                     <ShopItem
                       buttonPaused={buttonPaused}
-                      delay={delay}
+                      delay={0}
                       paused={paused}
                       setPaused={setPaused}
                       windowWidth={windowWidth}
@@ -110,34 +133,18 @@ const Shop = ({ data }) => {
                   );
                 }
               })}
-              {mobile &&
-                getProducts().map((product, index) => {
-                  if (index < 16) {
-                    return (
-                      <ShopItem
-                        buttonPaused={buttonPaused}
-                        delay={0}
-                        paused={paused}
-                        setPaused={setPaused}
-                        windowWidth={windowWidth}
-                        product={product}
-                      />
-                    );
-                  }
-                })}
-            </div>
-            <button
-              type="button"
-              className="shop-scroll__button"
-              onClick={() => setButtonPaused(!buttonPaused)}
-            >
-              {buttonPaused ? (
-                <PlayArrowIcon />
-              ) : (
-                <PauseIcon style={{ verticalAlign: 'center' }} />
-              )}
-            </button>
           </div>
+          <button
+            type="button"
+            className="shop-scroll__button"
+            onClick={() => setButtonPaused(!buttonPaused)}
+          >
+            {buttonPaused ? (
+              <PlayArrowIcon />
+            ) : (
+              <PauseIcon style={{ verticalAlign: 'center' }} />
+            )}
+          </button>
         </div>
       </div>
       <Link to="/shop/all">
