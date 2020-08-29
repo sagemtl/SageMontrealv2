@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from '@reach/router';
 
 import Header from './Header';
 import Footer from './footer';
 import Cart from './cart';
 import './styles/layout.scss';
-import { useLocation } from '@reach/router';
-
 
 const Layout = ({ children, footerColor, hideCart, style }) => {
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 0;
@@ -23,8 +22,8 @@ const Layout = ({ children, footerColor, hideCart, style }) => {
 
   return (
     <>
-      {pathname !== "/checkout" && <Header isMobile={isMobile} />}
-      {!hideCart && pathname !== "/checkout" && <Cart isMobile={isMobile} />}
+      {pathname !== '/checkout' && <Header isMobile={isMobile} />}
+      {!hideCart && pathname !== '/checkout' && <Cart isMobile={isMobile} />}
       <div className="layout" style={style}>
         {children}
       </div>

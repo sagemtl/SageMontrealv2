@@ -26,46 +26,28 @@ const CheckoutPage = () => {
     return cartEmpty;
   };
 
-  if (isCartEmpty()) {
-    return (
-      <div>
-        <div
-          style={{
-            zIndex: '2',
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            top: '0px',
-            left: '0px',
-            textAlign: 'center',
-          }}
-        >
-          <a
-            className="empty-Cart-Link"
-            href="/shop"
-            style={{ position: 'relative', top: '30vh', fontWeight: 'bold' }}
-          >
+  isCartEmpty();
+
+  return (
+    <>
+      {cartEmpty && (
+        <div className="empty-cart">
+          <a className="empty-cart__link" href="/shop">
             <p>CART EMPTY, CLICK TO RETURN TO SHOP</p>
           </a>
           <img
-            style={{ height: '100px', display: 'inline-block' }}
+            className="empty-cart__image"
             src="https://res.cloudinary.com/sage-montreal/image/upload/v1588341601/LOGO_x1kbox.png"
             alt="Sage logo empty"
           />
         </div>
-        <div className="empty-Cart">
-          <Elements stripe={stripePromise}>
-            <Payment />
-          </Elements>
-        </div>
+      )}
+      <div className={cartEmpty && 'empty-Cart'}>
+        <Elements stripe={stripePromise}>
+          <Payment />
+        </Elements>
       </div>
-    );
-  }
-
-  return (
-    <Elements stripe={stripePromise}>
-      <Payment />
-    </Elements>
+    </>
   );
 };
 
