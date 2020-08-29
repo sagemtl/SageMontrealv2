@@ -180,7 +180,7 @@ const Product = ({ data }) => {
             Add to cart
           </button>
         </div>
-        <Link className="product-details__back" to="/shop">
+        <Link className="product-details__back" to="/shop/all">
           <KeyboardBackspaceIcon
             style={{ color: '#154734' }}
             fontSize="large"
