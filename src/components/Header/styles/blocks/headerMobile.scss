@@ -14,14 +14,23 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 60px;
-  display: flex;
-  padding: 0 1.3em;
+  padding: 0 0 0 20px;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
   background: transparent;
+
+  &__cart {
+    width: 75px;
+    height: auto;
+
+    &:hover {
+      opacity: 0.7;
+      cursor: pointer;
+    }
+  }
 
   &__icon {
     color: #154734;
@@ -30,13 +39,15 @@
 
     &:hover {
       opacity: 0.7;
+      cursor: pointer;
     }
   }
 
   &__logo {
-    width: 40px;
+    width: 55px;
     height: auto;
     color: #154734;
+    margin: 0;
   }
 
   &__logo-button {
@@ -49,6 +60,7 @@
 
     &:hover {
       cursor: pointer;
+      opacity: 0.7;
     }
   }
 
@@ -62,8 +74,8 @@
     z-index: 100;
 
     &:hover {
-      background-color: #154734;
       cursor: pointer;
+      opacity: 0.7;
     }
 
     &:hover .header-mobile__icon {
@@ -106,15 +118,6 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-
-  &:hover {
-    background-color: #154734;
-    cursor: pointer;
-  }
-
-  &:hover .header-mobile__icon {
-    color: white;
-  }
 }
 
 [role="button"]:hover,

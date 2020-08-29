@@ -27,7 +27,7 @@
   &__image--main {
     margin: 0;
     width: auto;
-    height: 40%;
+    height: 50vh;
   }
 
   &__image--secondary {
@@ -54,9 +54,24 @@
   max-width: 550px;
   margin: 0 auto;
 
+  &__header {
+    font-size: 1.7rem;
+    font-weight: bolder;
+    margin-bottom: 1.3rem;
+  }
+
+  &__price {
+    margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 15px;
+  }
+
   &__point {
-    margin: 0.5em 0;
+    margin: 0.15em 0;
     max-width: 400px;
+    font-size: 14px;
+    font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
   }
 
   &__back {
@@ -70,11 +85,11 @@
     border-radius: 5px;
     outline: none;
     margin: 0.5em 0;
-    border: 2px solid #154734;
-    box-shadow: 0 5px #154734;
+    border: 1px solid black;
+    box-shadow: 0 5px #565656;
     cursor: pointer;
     transition: background 0.5s;
-    background: linear-gradient(to right, #154734 50%, #fff 50%);
+    background: linear-gradient(to right, #154734 50%, #dddddd 50%);
     background-size: 200% 100%;
     background-position: left bottom;
     font-weight: 500;
@@ -88,7 +103,7 @@
     }
 
     &:active {
-      box-shadow: 0 2px #154734;
+      box-shadow: 0 2px #565656;
       transform: translateY(4px);
     }
   }
@@ -97,7 +112,6 @@
 .product-details-sizes {
   display: flex;
   margin: 20px 0;
-  margin-bottom: 10px;
 
   &__size {
     margin-right: 30px;
@@ -125,6 +139,9 @@
     height: 30px;
     background-color: white;
     cursor: pointer;
+    border: 2px solid black;
+    border-radius: 50%;
+    padding: 1em;
   }
 
   &__no-stock{
@@ -138,15 +155,9 @@
     background-color: white;
     cursor: not-allowed;
     position: relative;
-
-    &::after {
-      border-bottom: 2px solid rgb(158, 158, 158);
-      content: "";
-      left: 0;
-      right: 0;
-      position: absolute;
-      top: 50%;
-    }
+    border: 2px solid rgb(158, 158, 158);
+    border-radius: 50%;
+    padding: 1em;
   }
 }
 
@@ -206,13 +217,14 @@ table {
 @media (max-width: 450px) {
   .product {
     width: 100%;
+    padding-top: 30px;
   }
 
   .product-images {
     width: 100%;
 
     &__image--main {
-      width: 100%;
+      width: 95%;
       height: auto;
       margin: 0 auto;
     }

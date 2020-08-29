@@ -28,29 +28,32 @@ const Product = ({ data }) => {
     const getAllInventory = async () => {
       const invs = await Promise.all(
         skus.edges.map(async (node) => {
-          const inv = await getSkuInventory(node.node.id);
+          const inv = await getSkuInventory(
+            item.metadata.item,
+            item.metadata.colour,
+            node.node.attributes.name,
+            node.node.id,
+          );
           return inv;
         }),
       );
+      console.log(invs);
       if (invs) {
         setInventories(invs);
       }
     };
 
     getAllInventory();
-  }, [skus.edges]);
+  }, [item.metadata.colour, item.metadata.item, skus.edges]);
 
   const checkIsInStock = (skuId) => {
-    console.log(skuId);
-    inventories.forEach((invEl) => console.log(invEl));
-
     const inv = inventories.filter(
       (invEl) => typeof invEl !== 'undefined' && invEl.sku_id === skuId,
     );
-    if (inv[0] && inv[0].quantity !== 0) {
-      return true;
+    if (inv[0] && inv[0].quantity === 0) {
+      return false;
     }
-    return false;
+    return true;
   };
 
   const allowAddToCart = () => {
@@ -127,7 +130,7 @@ const Product = ({ data }) => {
               setSelectedSku(nodeid);
               setSelectedSize(size);
             }}
-            disabled={!hasStock}
+            disabled={false || !hasStock}
           />
           <label htmlFor={size} className={className}>
             {size}
@@ -136,6 +139,15 @@ const Product = ({ data }) => {
       );
     });
     return skuComponents;
+  };
+
+  const productDescription = (desc) => {
+    const descArr = desc.split(',');
+    const descComponent = descArr.map((text) => {
+      text = text.trim();
+      return <p className="product-details__point">{text}</p>;
+    });
+    return descComponent;
   };
 
   return (
@@ -151,11 +163,14 @@ const Product = ({ data }) => {
         </div>
         <div className="product-details">
           <h1 className="product-details__header">{item.name}</h1>
-          <p className="product-details__point">{item.description}</p>
+          {productDescription(item.description)}
           {item.metadata.modelInfo ? (
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
-          <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
+          <br />
+          <p className="product-details__price">
+            $ {skus.edges[0].node.price / 100}.00 CAD
+          </p>
           {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>
           {/* size guide */}
@@ -177,7 +192,7 @@ const Product = ({ data }) => {
             Add to cart
           </button>
         </div>
-        <Link className="product-details__back" to="/shop">
+        <Link className="product-details__back" to="/shop/all">
           <KeyboardBackspaceIcon
             style={{ color: '#154734' }}
             fontSize="large"
@@ -186,10 +201,6 @@ const Product = ({ data }) => {
       </div>
     </Layout>
   );
-};
-
-Product.propTypes = {
-  data: PropTypes.shape().isRequired,
 };
 
 export default Product;
@@ -205,10 +216,12 @@ export const query = graphql`
       }
       metadata {
         modelInfo
+        item
+        colour
       }
       featuredImg {
         childImageSharp {
-          fixed(height: 50) {
+          fixed(height: 50, toFormat: PNG) {
             ...GatsbyImageSharpFixed
           }
         }
@@ -218,7 +231,7 @@ export const query = graphql`
           name
           id
           childImageSharp {
-            fixed {
+            fixed(height: 500, toFormat: PNG) {
               ...GatsbyImageSharpFixed
             }
           }
@@ -235,7 +248,7 @@ export const query = graphql`
           }
           featuredImg {
             childImageSharp {
-              fixed {
+              fixed(height: 500, toFormat: PNG) {
                 ...GatsbyImageSharpFixed
               }
             }

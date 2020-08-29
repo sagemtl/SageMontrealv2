@@ -2,6 +2,7 @@ import { Link } from 'gatsby';
 import React, { useContext } from 'react';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { GlobalContext } from '../../../context/Provider';
+import { useLocation } from '@reach/router';
 
 const routes = [
   {

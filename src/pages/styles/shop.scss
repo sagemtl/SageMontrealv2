@@ -15,6 +15,16 @@
   animation: fadein 5s;
 }
 
+.shop-background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-shop-background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .shop-scroll {
   height: 2000px;
   @include flex();
@@ -26,6 +36,7 @@
     background: none;
     border: none;
     color: #154734;
+    background: white;
     z-index: 100;
     cursor: pointer;
     font-weight: 500;
@@ -46,6 +57,45 @@
 
 .shop {
   @include shop();
+}
+
+.shop-view {
+  position: fixed;
+  float: right;
+  top: 50vh;
+  transform: translateY(-50%);
+  width: 125px;
+  height: 80px;
+  right: 0;
+  cursor: pointer;
+
+  &__arrow {
+    position: fixed;
+    float: right;
+    margin-top: 10px;
+    color: #154734;
+    right: 15px;
+    animation: pointer 1s ease-in-out infinite;
+  }
+
+  &__logo {
+    position: fixed;
+    float: right;
+    width: 55px;
+    height: auto;
+    right: 50px;
+  }
+
+  &__text {
+    position: fixed;
+    float: right;
+    margin-top: 50px;
+    width: 100px;
+    height: auto;
+    right: 10px;
+    color: black;
+    animation: fadeinout 2s ease-in-out infinite;
+  }
 }
 
 .shop-mobile {
@@ -82,9 +132,21 @@
   to { opacity: 1; }
 }
 
+@keyframes fadeinout {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 @keyframes straight {
 	0% { transform: translateY(0); }
 	100% { transform: translateY(calc(-300px * 16))}
+}
+
+@keyframes pointer {
+  0% {right: 15px}
+  50% {right: 0px}
+  100% {right: 15px}
 }
 
 ::-webkit-scrollbar {
@@ -92,12 +154,9 @@
   background: transparent;
 }
 
-@media only screen and (max-width: 500px) {
-  .shop-scroll {
-    &__button {
-      right: 20px;
-      bottom: 30px;
-    }
+
+@media (max-width: 500px) {
+  .shop-background {
+    background-image: url("https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-shop-background-mobile.jpg");
   }
 }
-

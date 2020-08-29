@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Layout from '../components/layout';
-
 import './styles/contact.scss';
 
 const Contact = () => {

@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   overflow: hidden;
-  padding: 70px 50px;
+  padding: 20px 50px;
   flex-wrap: wrap;
   position: relative;
   left: 10vw;
@@ -16,6 +16,7 @@
       font-weight: bold;
       margin: 5px 0;
       text-transform: uppercase;
+      margin-bottom: 0.8em;
     }
   }
 
@@ -48,5 +49,7 @@
   .terms {
     left: 0;
     justify-content: center;
+    padding: 20px 50px;
+    top: 50px;
   }
 }

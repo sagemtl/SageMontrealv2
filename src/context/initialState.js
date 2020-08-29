@@ -1,5 +1,6 @@
 const initialState = {
   checkoutItems: [],
+  buttonPaused: false,
   navOpen: true,
 };
 

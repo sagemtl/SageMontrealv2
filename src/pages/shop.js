@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import classNames from 'classnames';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
-
+import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
-
 import './styles/shop.scss';
 
 const Shop = ({ data }) => {
-  const [paused, setPaused] = useState(false);
   const [buttonPaused, setButtonPaused] = useState(false);
-  const widthVal = typeof window !== `undefined` ? window.innerWidth : 800;
-  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
-
+  const [paused, setPaused] = useState(false);
+  const widthVal = typeof window !== `undefined` ? window.innerWidth : 1200;
   const [windowWidth, setWindowWidth] = useState(widthVal);
   const [extra, setExtra] = useState(0);
+  const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
   const [scroll, setScroll] = useState(pageYOffset);
-
   const mobile = windowWidth < 1200;
 
   const getProducts = () => {
@@ -35,6 +32,10 @@ const Shop = ({ data }) => {
     }
     products.push(...stripeProducts.slice(0, remainder));
     return products;
+  };
+
+  const viewAll = () => {
+    console.log('hello');
   };
 
   useEffect(() => {
@@ -88,33 +89,19 @@ const Shop = ({ data }) => {
   });
 
   return (
-    <>
-      <div className="shop-scroll">
-        <div className={shopClasses}>
-          <div className={shopAnimationClasses}>
-            {getProducts().map((product, index) => {
-              if (index < 16) {
-                const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
-
-                return (
-                  <ShopItem
-                    buttonPaused={buttonPaused}
-                    delay={delay}
-                    paused={paused}
-                    setPaused={setPaused}
-                    windowWidth={windowWidth}
-                    product={product}
-                  />
-                );
-              }
-            })}
-            {mobile &&
-              getProducts().map((product, index) => {
+    <Layout>
+      <div className="shop-background">
+        <div className="shop-scroll">
+          <div className={shopClasses}>
+            <div className={shopAnimationClasses}>
+              {getProducts().map((product, index) => {
                 if (index < 16) {
+                  const delay = !mobile ? `${0 - index * 1.25 - extra}s` : 0;
+
                   return (
                     <ShopItem
                       buttonPaused={buttonPaused}
-                      delay={0}
+                      delay={delay}
                       paused={paused}
                       setPaused={setPaused}
                       windowWidth={windowWidth}
@@ -123,22 +110,57 @@ const Shop = ({ data }) => {
                   );
                 }
               })}
+              {mobile &&
+                getProducts().map((product, index) => {
+                  if (index < 16) {
+                    return (
+                      <ShopItem
+                        buttonPaused={buttonPaused}
+                        delay={0}
+                        paused={paused}
+                        setPaused={setPaused}
+                        windowWidth={windowWidth}
+                        product={product}
+                      />
+                    );
+                  }
+                })}
+            </div>
+            <button
+              type="button"
+              className="shop-scroll__button"
+              onClick={() => setButtonPaused(!buttonPaused)}
+            >
+              {buttonPaused ? (
+                <PlayArrowIcon />
+              ) : (
+                <PauseIcon style={{ verticalAlign: 'center' }} />
+              )}
+            </button>
           </div>
-          <button
-            type="button"
-            className="shop-scroll__button"
-            onClick={() => setButtonPaused(!buttonPaused)}
-          >
-            {buttonPaused ? (
-              <PlayArrowIcon />
-            ) : (
-              <PauseIcon style={{ verticalAlign: 'center' }} />
-            )}
-          </button>
         </div>
       </div>
-      <ForwardRoundedIcon className="shop__view" />
-    </>
+      <Link to="/shop/all">
+        <div
+          className="shop-view"
+          onClick={() => viewAll()}
+          onKeyDown={() => viewAll()}
+          role="button"
+          tabIndex={0}
+        >
+          <img
+            style={{ margin: 0 }}
+            className="shop-view__logo"
+            src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+            alt="Sage Logo"
+          />
+          <div className="shop-view__text">
+            <b>view all</b>
+          </div>
+          <ForwardRoundedIcon fontSize="large" className="shop-view__arrow" />
+        </div>
+      </Link>
+    </Layout>
   );
 };
 
@@ -161,7 +183,7 @@ export const query = graphql`
           }
           featuredImg {
             childImageSharp {
-              fixed(width: 240) {
+              fixed(height: 200, toFormat: PNG) {
                 ...GatsbyImageSharpFixed
               }
             }

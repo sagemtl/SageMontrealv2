@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { useLocation } from '@reach/router';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import Drawer from '@material-ui/core/Drawer';
-import { GlobalContext } from '../../../context/Provider';
 
 const routes = [
   {
@@ -73,10 +71,10 @@ const HeaderMobile = () => {
         onClick={() => setOpen(true)}
         onKeyDown={() => setOpen(true)}
       >
-        <MenuIcon
+        <img
           className="header-mobile__logo"
           src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
-          alt="Sage Logo"
+          alt="Sage Mobile Logo"
         />
       </div>
       <div
@@ -87,12 +85,17 @@ const HeaderMobile = () => {
         onKeyDown={() => setCart(!cart)}
       >
         {cart ? (
-          <CloseIcon fontSize="large" className="header-mobile__icon" />
-        ) : (
-          <LocalMallOutlinedIcon
-            style={{ color: '#154734' }}
+          <CloseIcon
             fontSize="large"
             className="header-mobile__icon"
+            style={{ 'margin-right': 15 }}
+          />
+        ) : (
+          <img
+            style={{ margin: 0 }}
+            className="header-mobile__cart"
+            src="https://sageimagebank.s3.ca-central-1.amazonaws.com/shopping-bag.png"
+            alt="Sage Shopping Bag"
           />
         )}
       </div>
