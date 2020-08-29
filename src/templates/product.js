@@ -141,6 +141,17 @@ const Product = ({ data }) => {
     return skuComponents;
   };
 
+  const productDescription = (desc) => {
+    const descArr = desc.split(',');
+    const descComponent = descArr.map((text) => {
+      text = text.trim();
+      return (
+        <p className="product-details__point">{text}</p>
+      )
+    })
+    return descComponent;
+  }
+
   return (
     <Layout>
       <div className="product">
@@ -154,10 +165,11 @@ const Product = ({ data }) => {
         </div>
         <div className="product-details">
           <h1 className="product-details__header">{item.name}</h1>
-          <p className="product-details__point">{item.description}</p>
+          {productDescription(item.description)}
           {item.metadata.modelInfo ? (
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
+          <br/>
           <p style={{ margin: 0 }}>$ {skus.edges[0].node.price / 100}</p>
           {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>
