@@ -34,6 +34,8 @@ const Payment = () => {
   const { checkoutItems } = state;
 
   const [paymentRequest, setPaymentRequest] = useState(null);
+  const [cardError, setCardError] = useState(true);
+  const [displayCardError, setDisplayCardError] = useState(false)
 
   const [formData, setFormData] = useState({});
   const [validated, setValidated] = useState(false);
@@ -74,6 +76,15 @@ const Payment = () => {
     }
   }
 
+  const stripeElementChange = (element) => {
+    if (!element.complete) {
+      setCardError(true)
+    }
+    else if (element.complete) {
+      setCardError(false)
+    }
+  }
+
   // After checkout, reset the cart state
   const resetCart = () => {
     dispatch({
@@ -102,6 +113,39 @@ const Payment = () => {
     else {
       return null
     }
+  }
+
+  const getStripeShippingPrice = (selectedOption) => {
+    let stripeShippingOptions = [
+      {
+        id: 'free-shipping',
+        label: 'Mail',
+        detail: 'Arrives in 4 to 10 business days',
+        amount: 0,
+      },
+      {
+        id: 'expedited-shipping',
+        label: 'Expedited Parcel',
+        detail: 'Arrives in 2 to 4 business days',
+        amount: 500,
+      },
+      {
+        id: 'expedited-shipping-us',
+        label: '"Expedited Parcel',
+        detail: 'Arrives in 5 to 10 business days',
+        amount: 1500,
+      },
+      {
+        id: 'small-packet-shipping',
+        label: 'Small Packet - Air',
+        detail: 'Arrives in 6 to 12 business days',
+        amount: 2000,
+      },
+    ]
+
+    return stripeShippingOptions.filter(
+      option => option.id === selectedOption.id
+    )[0].amount;
   }
   
   
@@ -172,7 +216,11 @@ const Payment = () => {
     paymentRequest.on('shippingaddresschange', function(ev) {
         // Perform server-side request to fetch shipping options
         console.log(ev.shippingAddress)
-        fetch('http://localhost:5000/calculateShipping', {
+        fetch('https://d30bb050db14.ngrok.io/calculateShipping', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
           body: JSON.stringify({
             shippingAddress: ev.shippingAddress
           })
@@ -184,6 +232,99 @@ const Payment = () => {
             shippingOptions: result.supportedShippingOptions,
           });
         });
+    });
+
+    // Callback when the shipping option is changed.
+    paymentRequest.on('shippingoptionchange', async (event) => {
+      console.log(event)
+      event.updateWith({
+        total: {
+          label: 'Total',
+          amount: getTotal() * 100 + getStripeShippingPrice(event.shippingOption)
+        },
+        status: 'success',
+      });
+    });
+
+    // Callback when a payment method is created.
+    paymentRequest.on('paymentmethod', async (event) => {
+      let information = {
+        price: (getTotal() + getStripeShippingPrice(event.shippingOption)) * 100,
+        receipt_email: event.payerEmail,
+        shipping: {
+          name: event.shippingAddress.recipient,
+          phone: event.shippingAddress.phone,
+          address: {
+            line1: event.shippingAddress.addressLine[0],
+            city: event.shippingAddress.city,
+            postal_code: event.shippingAddress.postalCode,
+            state: event.shippingAddress.region,
+            country: event.shippingAddress.country,
+          },
+          carrier: event.shippingOption.label,
+        }
+      }
+      const res = await fetch('http://localhost:5000/payment_intent', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(information),
+      });
+
+      const data = await res.json();
+      const { client_secret } = data;
+
+      // Confirm the PaymentIntent with the payment method returned from the payment request.
+      const {error} = await stripe.confirmCardPayment(
+        client_secret,
+        {
+          payment_method: event.paymentMethod.id,
+        },
+        {handleActions: false}
+      );
+      if (error) {
+        // Report to the browser that the payment failed.
+        event.complete('fail');
+        console.log(error);
+        window.alert(error);
+      } else {
+        // Report to the browser that the confirmation was successful, prompting
+        // it to close the browser payment method collection interface.
+        event.complete('success');
+        // Let Stripe.js handle the rest of the payment flow, including 3D Secure if needed.
+        const response = await stripe.confirmCardPayment(
+          client_secret
+        )
+        .then(function (result) {
+          if (result.error) {
+            // Show error to your customer (e.g., insufficient funds)
+            console.log(result.error.message);
+            window.alert(result.error.message);
+          } else {
+            // The payment has been processed!
+            if (result.paymentIntent.status === 'succeeded') {
+              // Show a success message to your customer
+              // There's a risk of the customer closing the window before callback
+              // execution. Set up a webhook or plugin to listen for the
+              // payment_intent.succeeded event that handles any business critical
+              // post-payment actions.
+  
+              // decrease inventory here
+  
+              console.log(result);
+              window.alert('Payment Succeeded');
+              navigate('/success', {
+                state: {
+                  userEmail: event.payerEmail,
+                  purchase: checkoutItems,
+                },
+              });
+              resetCart();
+            }
+          }
+        });
+      }
     });
   }
 
@@ -208,16 +349,19 @@ const Payment = () => {
   }
 
   const submit = async (e) => {
-
     const form = e.currentTarget;
     console.log(form)
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === false || cardError) {
       e.preventDefault();
       e.stopPropagation();
+      setDisplayCardError(true)
     }
 
     setValidated(true);
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === false || cardError) {
+      setDisplayCardError(true)
+      console.log(cardError)
+      console.log(displayCardError)
       return;
     }
 
@@ -253,7 +397,7 @@ const Payment = () => {
     }
 
     // Request Client Secret to Server
-    const res = await fetch('https://sagemtl-backend.herokuapp.com/payment_intent', {
+    const res = await fetch('http://localhost:5000/payment_intent', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -466,7 +610,7 @@ const Payment = () => {
                   />
                   </Form.Group>
                   </fieldset>:
-                <Form.Group>
+                <Form.Group id="ww-wrapper">
                   <Form.Label> Shipping Method </Form.Label>
                   <Form.Check
                     type="radio"
@@ -494,7 +638,8 @@ const Payment = () => {
         </FormGroup>
         <FormGroup >
           <Form.Label className="form-title-label"> Card Details </Form.Label>
-          <div className="custom-stripe-element"><CardElement > </CardElement></div>
+          <div className="custom-stripe-element"><CardElement onChange={(element) => stripeElementChange(element)}> </CardElement></div>
+          {displayCardError && cardError && <span id="card-errors" className="text-danger" role="alert">Your card number is incomplete.</span>}
           <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}} > Pay</Button>
         </FormGroup>
         </div>
@@ -530,7 +675,8 @@ const Payment = () => {
                     </FormGroup>
                 <FormGroup>
                   <Form.Label className="form-title-label"> Card Details </Form.Label>
-                  <div className="custom-stripe-element"><CardElement > </CardElement></div>
+                  <div className="custom-stripe-element"><CardElement onChange={(element) => stripeElementChange(element)}> </CardElement></div>
+                  {displayCardError && cardError && <span id="card-errors" className="text-danger" role="alert">Your card number is incomplete.</span>}
                   <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
                 </FormGroup>
                 </Form>
