@@ -1,24 +1,8 @@
-@mixin flex {
+.shop-scroll {
+  height: 20000px;
   display: flex;
   align-self: center;
   justify-content: center;
-}
-
-@mixin shop {
-  width: 90%;
-  max-width: 1450px;
-  height: 100%;
-  border-top: 0;
-  border-bottom: 0;
-  overflow: hidden;
-  position: fixed;
-  animation: fadein 5s;
-}
-
-.shop-scroll {
-  height: 2000px;
-  background-image: url("https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-shop-background.jpg");
-  @include flex();
 
   &__background {
     position: fixed;
@@ -55,7 +39,11 @@
 }
 
 .shop {
-  @include shop();
+  width: 90%;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  animation: fadein 5s;
 }
 
 .shop-view {
@@ -95,12 +83,6 @@
     color: black;
     animation: fadeinout 2s ease-in-out infinite;
   }
-}
-
-.shop-mobile {
-  @include shop();
-  width: 80%;
-  z-index: 10;
 }
 
 .shop-wheel {

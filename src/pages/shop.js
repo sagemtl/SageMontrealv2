@@ -34,10 +34,6 @@ const Shop = ({ data }) => {
     return products;
   };
 
-  const viewAll = () => {
-    console.log('hello');
-  };
-
   useEffect(() => {
     if (typeof window !== `undefined`) {
       if (scroll === 0) window.scrollTo(0, 1000);
@@ -46,41 +42,30 @@ const Shop = ({ data }) => {
   });
 
   useEffect(() => {
-    if (typeof window !== `undefined`)
+    if (typeof document !== 'undefined' && typeof window !== 'undefined') {
       window.addEventListener('resize', () =>
         setWindowWidth(window.innerWidth),
       );
 
-    const updateDelay = () => {
-      const winScroll =
-        typeof document !== `undefined`
-          ? document.body.scrollTop || document.documentElement.scrollTop
-          : false;
+      const updateDelay = () => {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
 
-      const height =
-        typeof document !== `undefined`
-          ? document.documentElement.scrollHeight -
-            document.documentElement.clientHeight
-          : 0;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
 
-      const scrolled = winScroll / height;
-      setScroll(scrolled);
-      if (typeof window !== `undefined` && window.scrollY)
-        setExtra((window.scrollY + extra) / 50);
-    };
-    if (typeof window !== `undefined`)
+        const scrolled = winScroll / height;
+        setScroll(scrolled);
+        if (window.scrollY) setExtra((window.scrollY + extra) / 50);
+      };
       window.addEventListener('scroll', updateDelay);
 
-    return () => {
-      if (typeof window !== `undefined`)
+      return () => {
         window.removeEventListener('scroll', updateDelay);
-    };
+      };
+    }
   }, [extra, scroll]);
-
-  const shopClasses = classNames({
-    shop: !mobile,
-    'shop-mobile': mobile,
-  });
 
   const shopAnimationClasses = classNames({
     'shop-wheel': !mobile,
@@ -100,7 +85,7 @@ const Shop = ({ data }) => {
           className="shop-scroll__background"
           alt="Shop Wheel Art"
         />
-        <div className={shopClasses}>
+        <div className="shop">
           <div className={shopAnimationClasses}>
             {getProducts().map((product, index) => {
               if (index < 16) {
@@ -118,21 +103,6 @@ const Shop = ({ data }) => {
                 );
               }
             })}
-            {mobile &&
-              getProducts().map((product, index) => {
-                if (index < 16) {
-                  return (
-                    <ShopItem
-                      buttonPaused={buttonPaused}
-                      delay={0}
-                      paused={paused}
-                      setPaused={setPaused}
-                      windowWidth={windowWidth}
-                      product={product}
-                    />
-                  );
-                }
-              })}
           </div>
           <button
             type="button"
@@ -148,13 +118,7 @@ const Shop = ({ data }) => {
         </div>
       </div>
       <Link to="/shop/all">
-        <div
-          className="shop-view"
-          onClick={() => viewAll()}
-          onKeyDown={() => viewAll()}
-          role="button"
-          tabIndex={0}
-        >
+        <div className="shop-view" role="button" tabIndex={0}>
           <img
             style={{ margin: 0 }}
             className="shop-view__logo"
