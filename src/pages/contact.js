@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Layout from '../components/layout';
+
 import './styles/contact.scss';
 
-const Contact = ({ uri }) => {
+const Contact = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ const Contact = ({ uri }) => {
 
   const sendForm = async () => {
     try {
-      await axios.post('http://localhost:5000/contact', {
+      await axios.post('https://sagemtl-backend.herokuapp.com/contact', {
         name,
         subject,
         email,
@@ -31,7 +32,7 @@ const Contact = ({ uri }) => {
   };
 
   return (
-    <Layout current={uri}>
+    <Layout>
       <div className="contact">
         <h1>Contact Us</h1>
         <div className="contact-form">

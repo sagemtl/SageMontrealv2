@@ -1,60 +1,99 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState } from 'react';
+import { useLocation } from '@reach/router';
 import { Link } from 'gatsby';
-import StoreIcon from '@material-ui/icons/Store';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import Drawer from '@material-ui/core/Drawer';
 import { GlobalContext } from '../../../context/Provider';
+
+const routes = [
+  {
+    label: 'Home',
+    to: '/',
+  },
+  {
+    label: 'Boutique',
+    to: '/shop',
+  },
+  {
+    label: 'Lookbook',
+    to: '/lookbook',
+  },
+];
+
+const footerRoutes = [
+  {
+    label: 'Contact Us',
+    to: '/contact',
+  },
+  {
+    label: 'Terms & Conditions',
+    to: '/terms',
+  },
+];
 
 const HeaderMobile = () => {
   const [cart, setCart] = useState(false);
-  const { state, dispatch } = useContext(GlobalContext);
-  const { navOpen } = state;
-
-  const video = useRef();
-
-  const openNavbar = () => {
-    video.current.play();
-    dispatch({
-      type: 'SET_NAVBAR_OPEN',
-      payload: {
-        navOpen: !navOpen,
-      },
-    });
-    setTimeout(() => video.current.pause(), 3000);
-  };
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="header-mobile">
-      <div
-        className="header-mobile-animated"
-        style={navOpen ? { left: 0 } : { left: 'calc(100% / 4 * -2)' }}
-      >
-        <Link to="/shop" className="header-mobile__button">
-          <StoreIcon fontSize="large" className="header-mobile__icon" />
-        </Link>
-        <Link to="/lookbook" className="header-mobile__button">
-          <VisibilityIcon fontSize="large" className="header-mobile__icon" />
-        </Link>
-        <div
-          className="header-mobile__logo-button"
-          onClick={() => openNavbar()}
-        >
-          <video
-            src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
-            ref={video}
-            className="header-mobile__logo"
-            muted
-            playsInline
-            loop
-          />
+      <Drawer open={open} onClose={() => setOpen(!open)}>
+        <div className="header-mobile-drawer">
+          {routes.map((route) => {
+            return (
+              <Link className="header-mobile__link" to={route.to}>
+                <h2>{route.label}</h2>
+              </Link>
+            );
+          })}
+          <hr className="header-mobile__separator" />
+          {footerRoutes.map((route) => {
+            return (
+              <Link className="header-mobile__footer-link" to={route.to}>
+                <p>{route.label}</p>
+              </Link>
+            );
+          })}
+          <a
+            href="https://www.instagram.com/sagemtl/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <InstagramIcon className="header-mobile__icon" />
+          </a>
         </div>
+      </Drawer>
+      <div
+        role="button"
+        tabIndex={0}
+        className="header-mobile__logo-button"
+        onClick={() => setOpen(true)}
+        onKeyDown={() => setOpen(true)}
+      >
+        <MenuIcon
+          className="header-mobile__logo"
+          src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+          alt="Sage Logo"
+        />
       </div>
-      <div className="header-mobile-cart" onClick={() => setCart(!cart)}>
+      <div
+        className="header-mobile-cart"
+        role="button"
+        tabIndex={-1}
+        onClick={() => setCart(!cart)}
+        onKeyDown={() => setCart(!cart)}
+      >
         {cart ? (
           <CloseIcon fontSize="large" className="header-mobile__icon" />
         ) : (
-          <ShoppingCartIcon fontSize="large" className="header-mobile__icon" />
+          <LocalMallOutlinedIcon
+            style={{ color: '#154734' }}
+            fontSize="large"
+            className="header-mobile__icon"
+          />
         )}
       </div>
     </div>

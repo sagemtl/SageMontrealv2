@@ -253,7 +253,7 @@ const Payment = () => {
     }
 
     // Request Client Secret to Server
-    const res = await fetch('http://localhost:5000/payment_intent', {
+    const res = await fetch('https://sagemtl-backend.herokuapp.com/payment_intent', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -325,12 +325,12 @@ const Payment = () => {
           <div />
         ) : ( */}
           <div className="summary">
-          <form action="#">
-            <input type="radio" id="222" name="gender" defaultChecked onClick={() => changeIsPickup(false)}/>
-            <label for="222">Shipping</label>
-            <input type="radio" id="111" name="gender" onClick={() => changeIsPickup(true)}/>
-            <label for="111">Pick Up</label>
-          </form>
+            <form action="#" id="shipping-method">
+              <input type="radio" id="shipping-method-button1" name="gender" defaultChecked onClick={() => changeIsPickup(false)}/>
+              <label for="shipping-method-button1">Shipping</label>
+              <input type="radio" id="shipping-method-button2" name="gender" onClick={() => changeIsPickup(true)}/>
+              <label for="shipping-method-button2">Pick Up</label>
+            </form>
             <b>Price: {getTotal()}$</b>
             <p>Shipping: {getShippingPrice() === null ? "TBD" : getShippingPrice() == 0 ? "FREE" : getShippingPrice()+ "$"}</p>
             <b>Total: {!getShippingPrice() ? getTotal() : getTotal() + getShippingPrice()}$</b>

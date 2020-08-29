@@ -175,7 +175,7 @@
 
     .cart_checkout{
       position: absolute;
-      width: 300px;
+      width: 175px;
       top: 30px;
       left: 7.5%;
       margin-right: 20px;
@@ -185,6 +185,10 @@
       position: relative;
       top: 40px;
       margin-top: 10px;
+
+      &__shipping-method{
+        position: static;
+      }
   }
 }
 

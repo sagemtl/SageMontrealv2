@@ -18,6 +18,30 @@
 .shop-scroll {
   height: 2000px;
   @include flex();
+
+  &__button {
+    padding: 8px;
+    border-radius: 50%;
+    outline: none;
+    background: none;
+    border: none;
+    color: #154734;
+    z-index: 100;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    right: 50px;
+    bottom: 70px;
+    border: 2px solid #154734;
+    box-shadow: 0 5px #154734;
+
+    &:active {
+      box-shadow: 0 2px #154734;
+      transform: translateY(4px);
+    }
+  }
 }
 
 .shop {
@@ -66,5 +90,14 @@
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
+}
+
+@media only screen and (max-width: 500px) {
+  .shop-scroll {
+    &__button {
+      right: 20px;
+      bottom: 30px;
+    }
+  }
 }
 
