@@ -101,6 +101,15 @@
 
   &__size {
     margin-right: 30px;
+
+    input[type="radio"] {
+      display: none;
+    }
+    
+    input[type="radio"]:checked + label {
+      background-color: black;
+      color: white;
+    }
   }
 }
 
@@ -143,11 +152,18 @@
 
 input[type="radio"] {
   display: none;
+  margin-left: 0%;
 }
 
 input[type="radio"]:checked + label {
-  background-color: black;
+  background-color: #669677;
   color: white;
+  margin: 10px auto;
+  width: auto;
+  box-shadow: 3px 3px #154734;
+  border-radius: 3px;
+  padding-left:10px;
+  padding-right:10px;
 }
 
 .size-guide {

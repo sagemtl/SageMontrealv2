@@ -6,10 +6,13 @@ import Header from './Header';
 import Footer from './footer';
 import Cart from './cart';
 import './styles/layout.scss';
+import { useLocation } from '@reach/router';
+
 
 const Layout = ({ children, footerColor, hideCart }) => {
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 0;
   const [width, setWidth] = useState(widthVal);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (typeof window !== `undefined`) {
@@ -21,8 +24,8 @@ const Layout = ({ children, footerColor, hideCart }) => {
 
   return (
     <GlobalContextProvider>
-      <Header isMobile={isMobile} />
-      {!hideCart && <Cart isMobile={isMobile} />}
+      {pathname !== "/checkout" && <Header isMobile={isMobile} />}
+      {!hideCart && pathname !== "/checkout" && <Cart isMobile={isMobile} />}
       <div className="layout">{children}</div>
       <Footer color={footerColor} />
     </GlobalContextProvider>
