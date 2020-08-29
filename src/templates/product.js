@@ -162,7 +162,6 @@ const Product = ({ data }) => {
         </div>
         <div className="product-details">
           <h1 className="product-details__header">{item.name}</h1>
-          {/* <p className="product-details__point">{item.description}</p> */}
           {productDescription(item.description)}
           {item.metadata.modelInfo ? (
             <p className="product-details__point">{item.metadata.modelInfo}</p>
