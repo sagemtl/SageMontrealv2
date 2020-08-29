@@ -71,9 +71,10 @@ const HeaderMobile = () => {
         onClick={() => setOpen(true)}
         onKeyDown={() => setOpen(true)}
       >
-        <MenuIcon
+        <img
           className="header-mobile__logo"
           src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+          alt="Sage Mobile Logo"
         />
       </div>
       <div
@@ -84,7 +85,11 @@ const HeaderMobile = () => {
         onKeyDown={() => setCart(!cart)}
       >
         {cart ? (
-          <CloseIcon fontSize="large" className="header-mobile__icon" />
+          <CloseIcon
+            fontSize="large"
+            className="header-mobile__icon"
+            style={{ 'margin-right': 15 }}
+          />
         ) : (
           <img
             style={{ margin: 0 }}

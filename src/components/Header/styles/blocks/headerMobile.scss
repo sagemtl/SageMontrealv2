@@ -14,9 +14,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 60px;
-  padding: 0 50px;
+  padding: 0 0 0 20px;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
@@ -44,9 +44,10 @@
   }
 
   &__logo {
-    width: 40px;
+    width: 55px;
     height: auto;
     color: #154734;
+    margin: 0;
   }
 
   &__logo-button {
