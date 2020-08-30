@@ -55,8 +55,8 @@ module.exports = {
           port: 63764,
         },
         auth: {
-          user: process.env.DB_USER,
-          password: process.env.DB_PASSWORD,
+          user: process.env.GATSBY_DB_USER,
+          password: process.env.GATSBY_DB_PASSWORD,
         },
       },
     },
@@ -64,7 +64,7 @@ module.exports = {
       resolve: 'gatsby-source-stripe',
       options: {
         objects: ['Sku', 'Product'],
-        secretKey: process.env.STRIPE_SECRET,
+        secretKey: process.env.GATSBY_STRIPE_SECRET,
         downloadFiles: true,
       },
     },
@@ -80,6 +80,14 @@ module.exports = {
       resolve: `gatsby-plugin-styled-components`,
       options: {
         // Add any options here
+      },
+    },
+    {
+      resolve: '@mkitio/gatsby-theme-password-protect',
+      options: {
+        partialMatching: true,
+        password: process.env.GATSBY_PASSWORD, // delete or `undefined` to disable password protection
+        pagePaths: ['/cms', '/'],
       },
     },
   ],

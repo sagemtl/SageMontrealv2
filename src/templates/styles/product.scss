@@ -4,14 +4,14 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: 2vh;
   transform: translate(-50%, -50%);
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   max-width: 1500px;
-  height: calc(100vh - 60px);
+  height: 100vh;
   overflow: scroll;
+  padding: 50px 0;
 }
 
 .product-images {
@@ -210,7 +210,7 @@ table {
 @media (max-width: 450px) {
   .product {
     width: 100%;
-    padding-top: 30px;
+    height: 100vh;
   }
 
   .product-images {
