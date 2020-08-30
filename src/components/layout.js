@@ -10,6 +10,7 @@ import './styles/layout.scss';
 const Layout = ({ children, footerColor }) => {
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 0;
   const [width, setWidth] = useState(widthVal);
+  const { pathname } = useLocation();
   const [cart, setCart] = useState(true);
 
   useEffect(() => {
@@ -22,9 +23,11 @@ const Layout = ({ children, footerColor }) => {
 
   return (
     <>
-      <Header setCart={setCart} cart={cart} />
-      {cart && <Cart isMobile={isMobile} />}
-      <div className="layout">{children}</div>
+      {pathname !== '/checkout' && <Header setCart={setCart} cart={cart} />}
+      {cart && pathname !== '/checkout' && <Cart isMobile={isMobile} />}
+      <div className="layout">
+        {children}
+      </div>
       <Footer color={footerColor} />
     </>
   );

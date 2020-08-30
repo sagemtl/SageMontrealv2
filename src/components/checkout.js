@@ -564,14 +564,16 @@ const Payment = () => {
                   </FormGroup>
                 </Col>
                 <Col>
-                  <Form.Label className="form-title-label"> Postal Code </Form.Label>
-                  <FormControl className="checkout-form__form-control"
-                    type="text"
-                    name="postal_code"
-                    placeholder="S4G 3S4"
-                    onChange={change}
-                    required
-                  />
+                  <FormGroup>
+                    <Form.Label className="form-title-label"> Postal Code </Form.Label>
+                    <FormControl className="checkout-form__form-control"
+                      type="text"
+                      name="postal_code"
+                      placeholder="S4G 3S4"
+                      onChange={change}
+                      required
+                    />
+                  </FormGroup>
                 </Col>
               </Row>
                 {countryValue == "CA" ? 
@@ -651,7 +653,7 @@ const Payment = () => {
          <Container className="py-4">
           <Card className="checkout__checkout-form">
             <Card.Body>
-              <div style={{width: "80%", display: "block", marginRight: "auto", marginLeft: "auto"}}>
+              <div style={{display: "block", marginRight: "auto", marginLeft: "auto"}}>
               <Form method="POST"  noValidate validated={validated} onSubmit={submit} className="checkout-form__form">
                     <FormGroup>
                       <Form.Label className="form-title-label"> Name on Card </Form.Label>
