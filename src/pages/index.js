@@ -6,7 +6,7 @@ import '../components/styles/layout.scss';
 
 const IndexPage = () => {
   return (
-    <Layout footerTransparent hideCart footerColor="white">
+    <Layout footerTransparent footerColor="white">
       <>
         <SEO title="Home" />
         <div className="artstep-wrapper">

@@ -5,11 +5,11 @@ import '../styles/header.scss';
 import { useLocation } from '@reach/router';
 
 
-const Header = () => {
+const Header = ({ setCart, cart }) => {
   return (
     <>
       <HeaderDesktop />
-      <HeaderMobile />
+      <HeaderMobile setCart={setCart} cart={cart} />
     </>
   );
 };

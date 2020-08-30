@@ -7,6 +7,20 @@
   height: 90vh;
 }
 
+.contact-confirmation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  text-align: center;
+  padding: 1em 2em;
+
+  &__header {
+    margin-bottom: 1em;
+  }
+}
+
 .contact-form {
   width: 90%;
   margin-top: 40px;
@@ -88,6 +102,12 @@
 
     &__label {
       font-size: 0.9rem;
+    }
+  }
+
+  .contact-confirmation {
+    &__header {
+      font-size: 2rem;
     }
   }
 }
