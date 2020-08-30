@@ -104,6 +104,21 @@ const Shop = ({ data }) => {
               }
             })}
           </div>
+          {mobile &&
+            getProducts().map((product, index) => {
+              if (index < 16) {
+                return (
+                  <ShopItem
+                    buttonPaused={buttonPaused}
+                    delay={0}
+                    paused={paused}
+                    setPaused={setPaused}
+                    windowWidth={windowWidth}
+                    product={product}
+                  />
+                );
+              }
+            })}
           <button
             type="button"
             className="shop-scroll__button"
