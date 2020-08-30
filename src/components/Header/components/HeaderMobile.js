@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'gatsby';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import CloseIcon from '@material-ui/icons/Close';
 import Drawer from '@material-ui/core/Drawer';
+import { GlobalContext } from '../../../context/Provider';
 
 const routes = [
   {
@@ -31,6 +32,8 @@ const footerRoutes = [
 ];
 
 const HeaderMobile = ({ setCart, cart }) => {
+  const { state } = useContext(GlobalContext);
+  const { checkoutItems } = state;
   const [open, setOpen] = useState(false);
 
   return (
@@ -81,7 +84,7 @@ const HeaderMobile = ({ setCart, cart }) => {
         onClick={() => setCart(!cart)}
         onKeyDown={() => setCart(!cart)}
       >
-        {cart ? (
+        {cart && checkoutItems.length > 0 ? (
           <CloseIcon
             fontSize="large"
             className="header-mobile__icon"
