@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import Layout from '../../components/layout';
 import ShopViewItem from '../../components/ShopViewItem';
 
@@ -24,6 +25,9 @@ const ShopAll = ({ data }) => {
           return <ShopViewItem product={product} />;
         })}
       </div>
+      <Link className="back" to="/shop">
+        <KeyboardBackspaceIcon style={{ color: '#154734' }} fontSize="large" />
+      </Link>
     </Layout>
   );
 };
