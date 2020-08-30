@@ -27,12 +27,12 @@ const Product = ({ data }) => {
   useEffect(() => {
     const getAllInventory = async () => {
       const invs = await Promise.all(
-        skus.edges.map(async (node) => {
+        skus.edges.map(async ({ node }) => {
           const inv = await getSkuInventory(
             item.metadata.item,
             item.metadata.colour,
-            node.node.attributes.name,
-            node.node.id,
+            node.attributes.name,
+            node.id,
           );
           return inv;
         }),
@@ -63,7 +63,7 @@ const Product = ({ data }) => {
   };
 
   const filterPrice = (sku) => {
-    const matched = skus.edges.find((node) => node.node.id === sku);
+    const matched = skus.edges.find(({ node }) => node.id === sku);
     return matched.node.price / 100;
   };
 
