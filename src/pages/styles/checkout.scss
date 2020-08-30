@@ -362,12 +362,20 @@ label {
   border-color: grey !important;
 }
 
+.form-check {
+  padding-left: 0 !important;
+}
+
 .form-check-input:valid:checked~.form-check-label {
   color: white !important;
 }
 
 .form-check-input:valid~.form-check-label {
   color: black !important;
+}
+
+.checkout-form__form .form-group {
+  min-width: 225px;
 }
 
 .custom-apple-pay {
@@ -401,9 +409,11 @@ label {
   justify-content: left !important;
 }
 
-.card-body {
-  padding-bottom: 0 !important;
+label.form-check-label {
+  height: 100%;
+  margin-bottom: 10px;
 }
+
 
 #shipping-method input[type="radio"],
 #canada-wrapper input[type="radio"],
@@ -418,7 +428,8 @@ label {
 #ww-wrapper input[type="radio"]:checked + label {
   background-color: #669677;
   color: white;
-  margin: 10px auto;
+  padding: 10px auto;
+  height: 100%;
   width: auto;
   box-shadow: 3px 3px #154734;
   border-radius: 3px;
