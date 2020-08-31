@@ -6,6 +6,11 @@ import { PaymentRequestButtonElement, CardElement, useElements, useStripe } from
 
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 import CartCheckout from './cartCheckout'
+
+import { getSkuInventory, updateSkuInventory } from '../helpers/stripeHelper';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -60,6 +65,11 @@ const Payment = () => {
   const elements = useElements();
   const stripe = useStripe();
 
+  // snackbar
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackSeverity, setSnackSeverity] = useState('info'); // one of 'info', 'error', 'success', 'warning'
+  const [snackMessage, setSnackMessage] = useState('');
+
   const change = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -75,7 +85,6 @@ const Payment = () => {
 
   const changeShippingMethod = (val) => {
     setShippingMethod(val);
-    console.log(val)
   };
   const changeIsPickup = (val) => {
     setIsPickUp(val)
@@ -205,6 +214,54 @@ const Payment = () => {
     }
     return skusList
   }
+  const checkInventoryForAllCart = async () => {
+    const invs = await Promise.all(
+      checkoutItems.map(async ({ item }) => {
+        // the name of the sku is the size
+        const inv = await getSkuInventory(
+          item.prodMetadata.item,
+          item.prodMetadata.colour,
+          item.size,
+          item.skuId,
+        );
+        return inv;
+      }),
+    );
+    const noStockArr = invs.filter((inv)=>{
+      if (inv[0] && inv[0].quantity <= 0) {
+        return inv;
+      }
+    });
+    // there are items out of stock
+    if (noStockArr.length > 0) {
+      //give error banner
+      setSnack(true, 'error', 'One or more items are out of stock, please remove from cart');
+    }
+  }
+
+  const setSnack = (open, sev, msg) => {
+    setSnackbarOpen(open);
+    setSnackSeverity(sev);
+    setSnackMessage(msg);
+  };
+
+  const Alert = (props) => {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  };
+
+  const decreaseInventory = async () => {
+    const result = await Promise.all(
+      checkoutItems.map(async ({ item }) => {
+        // the name of the sku is the size
+        const inv = await updateSkuInventory(
+          item.skuId,
+          item.amount
+        );
+        return inv;
+      }),
+    );
+  }
+
 
   useEffect(() => {
     if (stripe) {
@@ -426,9 +483,6 @@ const Payment = () => {
       return;
     }
 
-    console.log(formData)
-    console.log(countryValue)
-    console.log(province)
     e.preventDefault();
 
     // Billing Details
@@ -552,6 +606,7 @@ const Payment = () => {
             },
             body: JSON.stringify(information),
         });
+        
       }
   };
 
@@ -576,6 +631,13 @@ const Payment = () => {
           <b>Total: {!getShippingPrice() ? getTotal() : getTotal() + getShippingPrice()}$</b>
         </div>
       </div>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert severity={snackSeverity}>{snackMessage}</Alert>
+      </Snackbar>
       <div className="checkout">
       {isPickUp == false ?
       <Container className="py-4">

@@ -1,29 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
 import './styles/success.scss';
 
 import CartItem from '../components/cartItem';
+import { transpileModule } from 'typescript';
 
 const Success = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "sage-icon.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 300) {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
+  const [userEmail, setUserEmail] = useState("")
+  const [userPurchase, setUserPurchase] = useState([])
+
+  useEffect(() => {
+    if (typeof window !== `undefined`) {
+      setUserEmail(window.history.state.userEmail)
+      setUserPurchase(window.history.state.purchase)
     }
-  `);
+  }, [[]]);
+
   return (
     <Layout>
-      <div className="text-left align-middle">
-        <Img
+      <div className="text-left success-align-middle">
+        <img
           className="success-sage-logo"
-          fluid={data.placeholderImage.childImageSharp.fluid}
+          src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1598851891/mr-frog-png_nsfobb.png"
           alt="Success"
         />
         <p>
@@ -31,7 +31,7 @@ const Success = () => {
           Your order has been placed! <br />
           Your payment has been successfully processed and a receipt has been
           sent to{' '}
-          {typeof window !== `undefined` ? window.history.state.userEmail : ''}.
+          {userEmail}.
           <br />
           Your items will be shipped the following day and should arrive within
           a week.
@@ -40,21 +40,12 @@ const Success = () => {
         </p>
       </div>
 
-      <div className="cart-checkout">
-        {typeof window !== `undefined`
-          ? window.history.state.purchase.map((item) => {
+      <div className="success-page-cart">
+          {userPurchase.map((item) => {
               return (
-                <CartItem
-                  id={item.id}
-                  name={item.name}
-                  amount={item.amount}
-                  price={item.price}
-                  size={item.size}
-                  image={item.image}
-                />
+                <CartItem {...item} />
               );
-            })
-          : undefined}
+            })}
       </div>
     </Layout>
   );

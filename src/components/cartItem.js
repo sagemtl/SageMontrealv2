@@ -1,15 +1,35 @@
-import React, { useContext } from 'react';
-import { navigate } from 'gatsby';
+import React, { useContext, useEffect, useState } from 'react';
+import { useStaticQuery, graphql, navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import Img from 'gatsby-image';
 import { GlobalContext } from '../context/Provider';
 import { useLocation } from '@reach/router';
+import { getSkuInventory } from '../helpers/stripeHelper';
 
-
-const CartItem = ({ name, amount, size, price, image, id, sku, isCheckout}) => {
+const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata }) => {
   const { state, dispatch } = useContext(GlobalContext);
+  const [inStock, setInStock] = useState(true);
   const { pathname } = useLocation();
+  const [isCheckout, setIsCheckout] = useState(false)
+
+  useEffect(() => {
+    const getInventory = async () => {
+      setIsCheckout(pathname === '/checkout' || pathname === '/success')
+      const inv = await getSkuInventory(
+        prodMetadata.item,
+        prodMetadata.colour,
+        size,
+        skuId
+      )
+      // will show out of stock
+      if (inv.quantity < 1) {
+        setInStock(false);
+      }
+    };
+
+    getInventory();
+  }, []);
 
   const removeItem = (e) => {
     e.stopPropagation();
@@ -33,16 +53,29 @@ const CartItem = ({ name, amount, size, price, image, id, sku, isCheckout}) => {
     navigate(`/shop/${name.replace(/ +/g, '-')}`);
   };
 
+  //will show out of stock if no stock
+  const showAmount = () => {
+    if(inStock) {
+      return (
+        <b>{amount}x</b>
+      );
+    } else {
+      return (
+        <b className="cart__item__noStockMsg">Out of stock</b>
+      );
+    }
+  }
+
   return (
     <div
-      className={isCheckout ? "cart_checkout__item" : "cart__item"}
+      className={isCheckout ? (inStock ? "cart_checkout__item" : "cart_checkout__item cart_checkout__item__noStock") : (inStock ? "cart__item" : "cart__item cart__item__noStock")}
       onClick={() => handleClick()}
       onKeyDown={() => handleClick()}
       role="button"
       tabIndex={0}
     >
       <div className={isCheckout ? "cart_checkout__item__amount" : "cart__item__amount"}>
-        <b>{amount}x</b>
+        {showAmount()}
       </div>
       <div className="image-wrapper">
         <Img
@@ -58,7 +91,7 @@ const CartItem = ({ name, amount, size, price, image, id, sku, isCheckout}) => {
       <div className={isCheckout ? "cart_checkout__item__price" : "cart__item__price"}>
         <b>${price}</b>
       </div>
-      {pathname === '/checkout' && <div className="cart_checkout__item__name">
+      {(pathname === '/checkout' || pathname === '/success') && <div className="cart_checkout__item__name">
         <b>{name}</b>
       </div>}
       <ClearRoundedIcon
@@ -77,7 +110,8 @@ CartItem.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.shape.isRequired,
   id: PropTypes.string.isRequired,
-  sku: PropTypes.string.isRequired,
+  skuId: PropTypes.string.isRequired,
+  prodMetadata: PropTypes.object.isRequired,
 };
 
 export default CartItem;
