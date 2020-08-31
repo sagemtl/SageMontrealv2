@@ -13,16 +13,7 @@ const Cart = ({ isMobile }) => {
     <div className="cart">
       {checkoutItems.map((item) => {
         return (
-          <CartItem
-            id={item.id}
-            name={item.name}
-            amount={item.amount}
-            price={item.price}
-            size={item.size}
-            image={item.image}
-            sku={item.sku}
-            key={item.sku}
-          />
+          <CartItem { ...item } />
         );
       })}
       {checkoutItems.length > 0 && (

@@ -31,17 +31,17 @@ const Product = ({ data }) => {
   useEffect(() => {
     const getAllInventory = async () => {
       const invs = await Promise.all(
-        skus.edges.map(async (node) => {
+        skus.edges.map(async ({ node }) => {
+          // the name of the sku is the size
           const inv = await getSkuInventory(
             item.metadata.item,
             item.metadata.colour,
-            node.node.attributes.name,
-            node.node.id,
+            node.attributes.name,
+            node.id,
           );
           return inv;
         }),
       );
-      console.log(invs);
       if (invs) {
         setInventories(invs);
       }
@@ -54,7 +54,7 @@ const Product = ({ data }) => {
     const inv = inventories.filter(
       (invEl) => typeof invEl !== 'undefined' && invEl.sku_id === skuId,
     );
-    if (inv[0] && inv[0].quantity === 0) {
+    if (inv[0] && inv[0].quantity <= 0) {
       return false;
     }
     return true;
@@ -67,7 +67,7 @@ const Product = ({ data }) => {
   };
 
   const filterPrice = (sku) => {
-    const matched = skus.edges.find((node) => node.node.id === sku);
+    const matched = skus.edges.find(({ node }) => node.id === sku);
     return matched.node.price / 100;
   };
 
@@ -86,7 +86,8 @@ const Product = ({ data }) => {
         price: filterPrice(selectedSku),
         size: selectedSize,
         image: item.featuredImg.childImageSharp.fixed,
-        sku: selectedSku,
+        skuId: selectedSku,
+        prodMetadata: item.metadata,
       });
     }
     dispatch({
