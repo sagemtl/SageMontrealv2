@@ -1,29 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
 import './styles/success.scss';
 
 import CartItem from '../components/cartItem';
+import { transpileModule } from 'typescript';
+import { GlobalContext } from '../context/Provider';
 
 const Success = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "sage-icon.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 300) {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  `);
+
+  const { state, dispatch } = useContext(GlobalContext);
+  const { successEmail, successItems } = state;
+
   return (
     <Layout>
-      <div className="text-left align-middle">
-        <Img
+      <div className="text-center success-align-middle">
+        <img
           className="success-sage-logo"
-          fluid={data.placeholderImage.childImageSharp.fluid}
+          src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1598851891/mr-frog-png_nsfobb.png"
           alt="Success"
         />
         <p>
@@ -31,7 +26,7 @@ const Success = () => {
           Your order has been placed! <br />
           Your payment has been successfully processed and a receipt has been
           sent to{' '}
-          {typeof window !== `undefined` ? window.history.state.userEmail : ''}.
+          {successEmail}.
           <br />
           Your items will be shipped the following day and should arrive within
           a week.
@@ -40,21 +35,12 @@ const Success = () => {
         </p>
       </div>
 
-      <div className="cart-checkout">
-        {typeof window !== `undefined`
-          ? window.history.state.purchase.map((item) => {
+      <div className="success-page-cart">
+          {successItems.map((item) => {
               return (
-                <CartItem
-                  id={item.id}
-                  name={item.name}
-                  amount={item.amount}
-                  price={item.price}
-                  size={item.size}
-                  image={item.image}
-                />
+                <CartItem {...item} />
               );
-            })
-          : undefined}
+            })}
       </div>
     </Layout>
   );

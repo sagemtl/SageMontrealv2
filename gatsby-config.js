@@ -87,7 +87,7 @@ module.exports = {
       options: {
         partialMatching: true,
         password: process.env.GATSBY_PASSWORD, // delete or `undefined` to disable password protection
-        pagePaths: ['/cms', '/'],
+        pagePaths: ['/cms'],
       },
     },
   ],

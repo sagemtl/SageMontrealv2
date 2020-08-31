@@ -24,6 +24,18 @@ const globalReducer = (state, action) => {
         navOpen: action.payload.navOpen,
       };
     }
+    case 'SET_SUCCESS_EMAIL': {
+      return {
+        ...state,
+        successEmail: action.payload.successEmail,
+      };
+    }
+    case 'SET_SUCCESS_ITEMS': {
+      return {
+        ...state,
+        successItems: action.payload.successItems,
+      };
+    }
     default:
       return state;
   }

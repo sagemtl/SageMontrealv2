@@ -116,6 +116,15 @@
 
   &__size {
     margin-right: 30px;
+
+    input[type="radio"] {
+      display: none;
+    }
+    
+    input[type="radio"]:checked + label {
+      background-color: black;
+      color: white;
+    }
   }
 }
 
