@@ -71,6 +71,8 @@
     &__image{
       margin-top: 10px;
       margin-left: 30px;
+      position: absolute;
+      // z-index:-1;
     }
     &__size{
       position: absolute;
@@ -105,8 +107,12 @@
       cursor: pointer;
     }
     &__noStock{
-      opacity: 0.4;
+      opacity: 0.5;
       cursor: pointer;
+    }
+    &__noStockMsg{
+      color:red;
+      z-index: -1;
     }
   }
 

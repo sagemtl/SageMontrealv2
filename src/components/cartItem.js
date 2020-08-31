@@ -18,7 +18,8 @@ const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata })
         size,
         skuId
       )
-      if (inv.quantity < 1) {
+      // will show out of stock
+      if (inv.quantity < amount) {
         setInStock(false);
       }
     };
@@ -48,25 +49,38 @@ const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata })
     navigate(`/shop/${name.replace(/ +/g, '-')}`);
   };
 
+  //will show out of stock if no stock
+  const showAmount = () => {
+    if(inStock) {
+      return (
+        <b>{amount}x</b>
+      );
+    } else {
+      return (
+        <b className="cart__item__noStockMsg">Out of stock</b>
+      );
+    }
+  }
+
   return (
     <div
-      className="cart__item"
+      className={inStock? "cart__item" : "cart__item cart__item__noStock"}
       onClick={() => handleClick()}
       onKeyDown={() => handleClick()}
       role="button"
       tabIndex={0}
     >
       <div className="cart__item__amount">
-        <b>{amount}x</b>
+        {showAmount()}
       </div>
-      <div className="image-wrapper">
+      {/* <div > */}
         <Img
           className="cart__item__image"
           height="50"
           fixed={image}
           alt="cart item"
         />
-      </div>
+      {/* </div> */}
       <div className="cart__item__size">
         <b>{size}</b>
       </div>
