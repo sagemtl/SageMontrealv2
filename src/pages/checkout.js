@@ -42,7 +42,7 @@ const CheckoutPage = () => {
           />
         </div>
       )}
-      <div className={cartEmpty && 'empty-Cart'}>
+      <div className={cartEmpty && 'empty-checkout-page'}>
         <Elements stripe={stripePromise}>
           <Payment />
         </Elements>

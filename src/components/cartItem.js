@@ -58,7 +58,7 @@ const CartItem = ({ name, amount, size, price, image, id, sku, isCheckout}) => {
       <div className={isCheckout ? "cart_checkout__item__price" : "cart__item__price"}>
         <b>${price}</b>
       </div>
-      {pathname === '/checkout' && <div className="cart_checkout__item__name">
+      {(pathname === '/checkout' || pathname === '/success') && <div className="cart_checkout__item__name">
         <b>{name}</b>
       </div>}
       <ClearRoundedIcon
