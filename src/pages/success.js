@@ -38,7 +38,17 @@ const Success = () => {
       <div className="success-page-cart">
           {successItems.map((item) => {
               return (
-                <CartItem {...item} />
+                <CartItem
+                  name={item.name}
+                  amount={item.amount}
+                  size={item.size}
+                  price={item.price}
+                  image={item.image}
+                  id={item.id}
+                  skuId={item.sku}
+                  prodMetadata={item.prodMetadata}
+                  isCheckout={true}
+                />
               );
             })}
       </div>
