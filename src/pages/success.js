@@ -20,7 +20,7 @@ const Success = () => {
 
   return (
     <Layout>
-      <div className="text-left success-align-middle">
+      <div className="text-center success-align-middle">
         <img
           className="success-sage-logo"
           src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1598851891/mr-frog-png_nsfobb.png"

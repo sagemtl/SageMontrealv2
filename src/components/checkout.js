@@ -207,11 +207,12 @@ const Payment = () => {
         "amount": checkoutItems[i].price * 100,
         "currency": "cad",
         "description": desc,
-        "parent": checkoutItems[i].sku,
+        "parent": checkoutItems[i].skuId,
         "quantity": checkoutItems[i].amount,
         "type": "sku"
       },)
     }
+    console.log(skusList)
     return skusList
   }
   const checkInventoryForAllCart = async () => {
@@ -606,7 +607,7 @@ const Payment = () => {
             },
             body: JSON.stringify(information),
         });
-        
+
       }
   };
 
