@@ -507,6 +507,7 @@ const Payment = () => {
       return;
     }
 
+    form.submitButton.disabled = true;
     e.preventDefault();
 
     // Billing Details
@@ -547,7 +548,6 @@ const Payment = () => {
     const data = await res.json();
     const { client_secret } = data;
     var successful = false
-
     // Create cardElement
     const cardElement = elements.getElement(CardElement);
 
@@ -556,7 +556,6 @@ const Payment = () => {
       type: 'card',
       card: cardElement,
     });
-
     // Confirm the Payment
     const confirmCardPayment = await stripe
       .confirmCardPayment(client_secret, {
@@ -614,6 +613,7 @@ const Payment = () => {
             metadata: { "Shipping Method": shippingMethod}
           }
         }
+      
         
         const res = await fetch('https://sagemtl-backend.herokuapp.com/create_order', {
             method: 'POST',
@@ -630,6 +630,9 @@ const Payment = () => {
         resetCart();
         const inventoryUpdate = await decreaseInventory();
 
+      }
+      else {
+        form.submitButton.disabled = false;
       }
   };
 
@@ -841,7 +844,7 @@ const Payment = () => {
           <Form.Label className="form-title-label"> Card Details </Form.Label>
           <div className="custom-stripe-element"><CardElement onChange={(element) => stripeElementChange(element)}> </CardElement></div>
           {displayCardError && cardError && <span id="card-errors" className="text-danger" role="alert">Your card number is incomplete.</span>}
-          <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}} > Pay</Button>
+          <Button type="submit" name="submitButton" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}} > Pay</Button>
         </FormGroup>
         </div>
         </div>
@@ -878,7 +881,7 @@ const Payment = () => {
                   <Form.Label className="form-title-label"> Card Details </Form.Label>
                   <div className="custom-stripe-element"><CardElement onChange={(element) => stripeElementChange(element)}> </CardElement></div>
                   {displayCardError && cardError && <span id="card-errors" className="text-danger" role="alert">Your card number is incomplete.</span>}
-                  <Button type="submit" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
+                  <Button type="submit" name="submitButton" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
                 </FormGroup>
                 </Form>
                 </div>
