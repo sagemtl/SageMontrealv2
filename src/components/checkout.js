@@ -207,11 +207,12 @@ const Payment = () => {
         "amount": checkoutItems[i].price * 100,
         "currency": "cad",
         "description": desc,
-        "parent": checkoutItems[i].sku,
+        "parent": checkoutItems[i].skuId,
         "quantity": checkoutItems[i].amount,
         "type": "sku"
       },)
     }
+    console.log(skusList)
     return skusList
   }
   const checkInventoryForAllCart = async () => {
@@ -254,7 +255,9 @@ const Payment = () => {
       checkoutItems.map(async ({ item }) => {
         // the name of the sku is the size
         const inv = await updateSkuInventory(
-          item.skuId,
+          item.prodMetadata.item,
+          item.prodMetadata.colour,
+          item.size,
           item.amount
         );
         return inv;
@@ -606,7 +609,7 @@ const Payment = () => {
             },
             body: JSON.stringify(information),
         });
-        
+
       }
   };
 

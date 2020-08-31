@@ -508,6 +508,8 @@ label.form-check-label {
 }
 .error-image {
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%)
 }
 
 

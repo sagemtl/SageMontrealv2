@@ -76,7 +76,7 @@ export const createProduct = async (product_info) => {
     .catch((error) => console.log('error', error));
 };
 
-export const updateSkuInventory = async (sku_id, quantity) => {
+export const updateSkuInventory = async (item, color, size, quantity) => {
   var quantity = new Object();
   quantity.quantity = quantity;
   const requestOptions = {
@@ -89,7 +89,7 @@ export const updateSkuInventory = async (sku_id, quantity) => {
     body: JSON.stringify(quantity),
   };
   return fetch(
-    `https://sagemtl-backend.herokuapp.com/inventory/${sku_id}`,
+    `https://sagemtl-backend.herokuapp.com/inventory/${item}-${color}-${size}`,
     requestOptions,
   )
     .then((response) => response.json())
