@@ -50,7 +50,7 @@ const Product = ({ data }) => {
     const inv = inventories.filter(
       (invEl) => typeof invEl !== 'undefined' && invEl.sku_id === skuId,
     );
-    if (inv[0] && inv[0].quantity === 0) {
+    if (inv[0] && inv[0].quantity <= 0) {
       return false;
     }
     return true;

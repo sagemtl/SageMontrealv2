@@ -19,7 +19,7 @@ const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata })
         skuId
       )
       // will show out of stock
-      if (inv.quantity < amount) {
+      if (inv.quantity < 1) {
         setInStock(false);
       }
     };
