@@ -10,6 +10,7 @@
     top: 0;
     width: 100vw;
     height: 100vh;
+    animation: fadein 3s;
   }
 
   &__button {
@@ -49,8 +50,6 @@
 .shop-view {
   position: fixed;
   float: right;
-  top: 50vh;
-  transform: translateY(-50%);
   width: 125px;
   height: 80px;
   right: 0;
@@ -88,8 +87,8 @@
 .shop-wheel {
   width:100vw;
   height:100vh;
-  position: relative;
-  top: 250px;
+  position: absolute;
+  top: 25vh;
 
   &__image {
     max-height: 60%;
