@@ -255,7 +255,9 @@ const Payment = () => {
       checkoutItems.map(async ({ item }) => {
         // the name of the sku is the size
         const inv = await updateSkuInventory(
-          item.skuId,
+          item.prodMetadata.item,
+          item.prodMetadata.colour,
+          item.size,
           item.amount
         );
         return inv;
