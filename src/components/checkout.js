@@ -317,7 +317,7 @@ const Payment = () => {
     paymentRequest.on('shippingaddresschange', function(ev) {
         // Perform server-side request to fetch shipping options
         console.log(ev.shippingAddress)
-        fetch('https://ba9dfe28d4b7.ngrok.io/calculateShipping', {
+        fetch('https://sagemtl-backend.herokuapp.com/calculateShipping', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json',
@@ -365,7 +365,7 @@ const Payment = () => {
           carrier: event.shippingOption.label,
         },
       }
-      const res = await fetch('https://ba9dfe28d4b7.ngrok.io/payment_intent', {
+      const res = await fetch('https://sagemtl-backend.herokuapp.com/payment_intent', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
