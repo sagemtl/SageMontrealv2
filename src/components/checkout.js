@@ -220,16 +220,6 @@ const Payment = () => {
         displayItems: getDisplayItems(),
         requestShipping: true,
         // `shippingOptions` is optional at this point:
-        shippingOptions: [
-          // The first shipping option in this list appears as the default
-          // option in the browser payment interface.
-          {
-            id: 'free-shipping',
-            label: 'Free shipping',
-            detail: 'Arrives in 5 to 7 days',
-            amount: 0,
-          },
-        ],
       });
 
       // Check the availability of the Payment Request API.
@@ -245,7 +235,7 @@ const Payment = () => {
     paymentRequest.on('shippingaddresschange', function(ev) {
         // Perform server-side request to fetch shipping options
         console.log(ev.shippingAddress)
-        fetch('https://d30bb050db14.ngrok.io/calculateShipping', {
+        fetch('https://ba9dfe28d4b7.ngrok.io/calculateShipping', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json',
@@ -293,7 +283,7 @@ const Payment = () => {
           carrier: event.shippingOption.label,
         },
       }
-      const res = await fetch('http://localhost:5000/payment_intent', {
+      const res = await fetch('https://ba9dfe28d4b7.ngrok.io/payment_intent', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -354,39 +344,41 @@ const Payment = () => {
           }
         });
       }
+
+      console.log(event.shippingOption)
       if (successful) {
         if (isPickUp) {
           information = {
-            receipt_email: formData.email,
+            receipt_email: event.payerEmail,
             shipping: {
-              name: formData.name,
+              name: event.shippingAddress.recipient,
               address: {
                 line1: "N/A",
               },
             },
             orderItems: getListOfSkus(),
-            metadata: { "Shipping Method": shippingMethod}
+            metadata: { "Shipping Method": event.shippingOption.label + " " + event.shippingOption.id + ": " + event.shippingOption.detail}
           }
         }
         else {
           information = {
-            receipt_email: formData.email,
+            receipt_email: event.payerEmail,
             shipping: {
-              name: formData.name,
+              name: event.shippingAddress.recipient,
               address: {
-                city: formData.city,
-                country: countryValue,
-                line1: formData.address,
-                state: province,
-                postal_code: formData.postal_code,
+                line1: event.shippingAddress.addressLine[0],
+                city: event.shippingAddress.city,
+                postal_code: event.shippingAddress.postalCode,
+                state: event.shippingAddress.region,
+                country: event.shippingAddress.country,
               },
             },
             orderItems: getListOfSkus(),
-            metadata: { "Shipping Method": shippingMethod}
+            metadata: { "Shipping Method": event.shippingOption.label + " " + event.shippingOption.id + ": " + event.shippingOption.detail}
           }
         }
         
-        const res = await fetch('http://localhost:5000/create_order', {
+        const res = await fetch('https://ba9dfe28d4b7.ngrok.io/create_order', {
             method: 'POST',
             headers: {
               'Content-type': 'application/json',
