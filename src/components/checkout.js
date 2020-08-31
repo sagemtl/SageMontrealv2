@@ -452,7 +452,7 @@ const Payment = () => {
           }
         }
         
-        const res = await fetch('https://ba9dfe28d4b7.ngrok.io/create_order', {
+        const res = await fetch('https://sagemtl-backend.herokuapp.com/create_order', {
             method: 'POST',
             headers: {
               'Content-type': 'application/json',
