@@ -5,7 +5,7 @@ import { navigate } from 'gatsby';
 import { PaymentRequestButtonElement, CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
 import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
-
+import CartCheckout from './cartCheckout'
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -454,35 +454,19 @@ const Payment = () => {
 
   return (
     <div className="flexbox-checkout">
-      <div className="cart_checkout">
-        {checkoutItems.map((item) => {
-          return (
-            <CartItem
-              id={item.id}
-              name={item.name}
-              amount={item.amount}
-              price={item.price}
-              size={item.size}
-              image={item.image}
-              sku={item.sku}
-            />
-          );
-        })}
-        {/* {isEmpty() ? (
-          <div />
-        ) : ( */}
-          <div className="summary">
-            <form action="#" id="shipping-method">
-              <input type="radio" id="shipping-method-button1" name="gender" defaultChecked onClick={() => changeIsPickup(false)}/>
-              <label for="shipping-method-button1">Shipping</label>
-              <input type="radio" id="shipping-method-button2" name="gender" onClick={() => changeIsPickup(true)}/>
-              <label for="shipping-method-button2">Pick Up</label>
-            </form>
-            <b>Price: {getTotal()}$</b>
-            <p>Shipping: {getShippingPrice() === null ? "TBD" : getShippingPrice() == 0 ? "FREE" : getShippingPrice()+ "$"}</p>
-            <b>Total: {!getShippingPrice() ? getTotal() : getTotal() + getShippingPrice()}$</b>
-          </div>
-        {/* )} */}
+      <div className="cart_checkout_container">
+        <div className="summary">
+          <form action="#" id="shipping-method">
+            <input type="radio" id="shipping-method-button1" name="gender" defaultChecked onClick={() => changeIsPickup(false)}/>
+            <label for="shipping-method-button1">Shipping</label>
+            <input type="radio" id="shipping-method-button2" name="gender" onClick={() => changeIsPickup(true)}/>
+            <label for="shipping-method-button2">Pick Up</label>
+          </form>
+          <CartCheckout></CartCheckout>
+          <b>Price: {getTotal()}$</b>
+          <p>Shipping: {getShippingPrice() === null ? "TBD" : getShippingPrice() == 0 ? "FREE" : getShippingPrice()+ "$"}</p>
+          <b>Total: {!getShippingPrice() ? getTotal() : getTotal() + getShippingPrice()}$</b>
+        </div>
       </div>
       <div className="checkout">
       {isPickUp == false ?

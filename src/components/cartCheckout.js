@@ -5,12 +5,12 @@ import CartItem from './cartItem';
 
 import { GlobalContext } from '../context/Provider';
 
-const Cart = ({ isMobile }) => {
+const CartCheckout = ({ isMobile }) => {
   const { state } = useContext(GlobalContext);
   const { checkoutItems } = state;
 
   return (
-    <div className="cart">
+    <div className="cart-checkout">
       {checkoutItems.map((item) => {
         return (
           <CartItem
@@ -22,23 +22,16 @@ const Cart = ({ isMobile }) => {
             image={item.image}
             sku={item.sku}
             key={item.sku}
-            isCheckout={false}
+            isCheckout={true}
           />
         );
       })}
-      {checkoutItems.length > 0 && (
-        <Link to="/checkout">
-          <button type="submit" className="cart__button">
-            Checkout
-          </button>
-        </Link>
-      )}
     </div>
   );
 };
 
-Cart.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
-};
+CartCheckout.propTypes = {
+    isMobile: PropTypes.bool.isRequired,
+  };
 
-export default Cart;
+export default CartCheckout;
