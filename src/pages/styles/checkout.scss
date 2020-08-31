@@ -139,38 +139,45 @@
         // margin-bottom: 5px;
         &__amount{
           position: absolute;
-          left: 10px;
+          left: 55px;
           top: 28px;
           font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
           font-size: 12px;
         }
         &__image{
+          position: absolute;
           margin-top: 10px;
-          margin-left: 30px;
+          // left: -100px;
+          margin-left: 0px;
         }
         &__size{
           position: absolute;
-          left: 115px;
+          left: 215px;
           top: 28px;
           font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
           font-size: 12px;
         }
         &__price{
           position: absolute;
-          right: 10px;
+          right: 30px;
+          top: 28px;
           bottom: 10px;
           font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
           font-size: 12px;
         }
         &__name{
-          display: none;
+          position: absolute;
+          margin-left: -28px;
+          top: 28px;
+          font-size: 12px;
+          left: 100px
         }
         &__close{
           position: absolute;
-          right: 5px;
-          top: 5px;
+          right: 0px;
+          top: 25px;
           color: black;
-          font-size: 16px;
+          font-size: 25px;
         }
         &__noStock{
           opacity: 0.5;
@@ -292,8 +299,8 @@
         }
       }
     }
+  }
 
-}
 
 /* Base for label styling */
 [type="checkbox"]:not(:checked),

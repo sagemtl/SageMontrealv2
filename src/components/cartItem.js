@@ -77,6 +77,7 @@ const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata, i
       </div>
       <div className="image-wrapper">
         <Img
+          style={{display: "block", position: "absolute"}}
           className={(isCheckout) ? "cart_checkout__item__image" : "cart__item__image"}
           height="50"
           fixed={image}
