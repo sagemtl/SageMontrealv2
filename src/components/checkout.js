@@ -734,7 +734,8 @@ const Payment = () => {
                 <div id="canada-wrapper">
                 <Form.Group>
                   <Form.Label> Shipping Method </Form.Label>
-                    <Form.Check
+                    <Form.Check 
+                    style={{textAlign: "center"}}
                     type="radio"
                     label="FREE - Mail (4 - 10 Business Days)"
                     id="formHorizontalRadios1"
@@ -742,7 +743,8 @@ const Payment = () => {
                     onChange={() => changeShippingMethod("FREE - Mail (4 - 10 Business Days)")}
                     required
                   />
-                  <Form.Check
+                  <Form.Check 
+                    style={{textAlign: "center"}}
                     type="radio"
                     label="$5 - Expedited Parcel (2 - 4 Business Days)"
                     name="shippingMethodCA"
@@ -757,6 +759,7 @@ const Payment = () => {
                   <Form.Group>
                     <Form.Label> Shipping Method </Form.Label>
                     {getTotal() >= 70 && <Form.Check
+                      style={{textAlign: "center"}}
                       type="radio"
                       label="FREE - Expedited Parcel (6 - 12 Business Days)"
                       name="shippingMethodUS"
@@ -765,6 +768,7 @@ const Payment = () => {
                       required
                     />}
                     <Form.Check
+                      style={{textAlign: "center"}}
                       type="radio"
                       label="$15 - Expedited Parcel (5 - 10 Business Days)"
                       name="shippingMethodUS"
@@ -777,6 +781,7 @@ const Payment = () => {
                 <Form.Group id="ww-wrapper">
                   <Form.Label> Shipping Method </Form.Label>
                   {getTotal() >= 70 && <Form.Check
+                    style={{textAlign: "center"}}
                     type="radio"
                     label="FREE - Small Packet - Air (6 - 12 Business Days)"
                     name="shippingMethodOther"
@@ -785,6 +790,7 @@ const Payment = () => {
                     required
                   /> }
                   <Form.Check
+                    style={{textAlign: "center"}}
                     type="radio"
                     label="$22 - Small Packet - Air (6 - 12 Business Days)"
                     name="shippingMethodOther"
