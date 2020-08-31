@@ -25,6 +25,7 @@ import {
 import { GlobalContext } from '../context/Provider';
 
 import CartItem from './cartItem';
+import ModalError from './modalError';
 import { LabelDetail } from 'semantic-ui-react';
 
 // UI
@@ -45,6 +46,16 @@ const Payment = () => {
 
   const[shippingMethod, setShippingMethod] = useState("")
   const [isPickUp, setIsPickUp] = useState(false);
+
+  const [modalShow, setModalShow] = useState(false);
+  const [modalErrorMessage, setModalErrorMessage] = useState("")
+
+  const handleModalShow = () => setModalShow(true);
+  const handleModalClose = () => setModalShow(true);
+
+  const handleErrorMessage = (message) => {
+    setModalErrorMessage(message)
+  }
 
   const elements = useElements();
   const stripe = useStripe();
@@ -104,7 +115,9 @@ const Payment = () => {
       "$5 - Expedited Parcel (2 - 4 Business Days)": 5,
       "FREE - Mail (4 - 10 Business Days)": 0,
       "$15 - Expedited Parcel (5 - 10 Business Days)": 15,
-      "$20 - Small Packet - Air (6 - 12 Business Days)": 20,
+      "$22 - Small Packet - Air (6 - 12 Business Days)": 22,
+      "FREE - Expedited Parcel (6 - 12 Business Days)": 0,
+      "FREE - Small Packet - Air (6 - 12 Business Days)": 0,
       "Local Pickup": 0,
     }
     if (shippingMethod) {
@@ -176,6 +189,23 @@ const Payment = () => {
     }
   }
 
+  const getListOfSkus = () => {
+    let i;
+    let skusList = []
+    for (i = 0; i < checkoutItems.length; i += 1) {
+      var desc = checkoutItems[i].size + " " + checkoutItems[i].name
+      skusList.push({ 
+        "amount": checkoutItems[i].price * 100,
+        "currency": "cad",
+        "description": desc,
+        "parent": checkoutItems[i].sku,
+        "quantity": checkoutItems[i].amount,
+        "type": "sku"
+      },)
+    }
+    return skusList
+  }
+
   useEffect(() => {
     if (stripe) {
       const pr = stripe.paymentRequest({
@@ -204,7 +234,6 @@ const Payment = () => {
 
       // Check the availability of the Payment Request API.
       pr.canMakePayment().then(result => {
-        console.log(result)
         if (result) {
           setPaymentRequest(pr);
         }
@@ -262,7 +291,7 @@ const Payment = () => {
             country: event.shippingAddress.country,
           },
           carrier: event.shippingOption.label,
-        }
+        },
       }
       const res = await fetch('http://localhost:5000/payment_intent', {
         method: 'POST',
@@ -274,6 +303,7 @@ const Payment = () => {
 
       const data = await res.json();
       const { client_secret } = data;
+      var successful = false
 
       // Confirm the PaymentIntent with the payment method returned from the payment request.
       const {error} = await stripe.confirmCardPayment(
@@ -288,7 +318,8 @@ const Payment = () => {
         event.complete('fail');
         console.log(error);
         window.alert(error);
-      } else {
+      } 
+      else {
         // Report to the browser that the confirmation was successful, prompting
         // it to close the browser payment method collection interface.
         event.complete('success');
@@ -309,11 +340,9 @@ const Payment = () => {
               // execution. Set up a webhook or plugin to listen for the
               // payment_intent.succeeded event that handles any business critical
               // post-payment actions.
-  
+              successful = true
               // decrease inventory here
-  
               console.log(result);
-              window.alert('Payment Succeeded');
               navigate('/success', {
                 state: {
                   userEmail: event.payerEmail,
@@ -323,6 +352,46 @@ const Payment = () => {
               resetCart();
             }
           }
+        });
+      }
+      if (successful) {
+        if (isPickUp) {
+          information = {
+            receipt_email: formData.email,
+            shipping: {
+              name: formData.name,
+              address: {
+                line1: "N/A",
+              },
+            },
+            orderItems: getListOfSkus(),
+            metadata: { "Shipping Method": shippingMethod}
+          }
+        }
+        else {
+          information = {
+            receipt_email: formData.email,
+            shipping: {
+              name: formData.name,
+              address: {
+                city: formData.city,
+                country: countryValue,
+                line1: formData.address,
+                state: province,
+                postal_code: formData.postal_code,
+              },
+            },
+            orderItems: getListOfSkus(),
+            metadata: { "Shipping Method": shippingMethod}
+          }
+        }
+        
+        const res = await fetch('http://localhost:5000/create_order', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify(information),
         });
       }
     });
@@ -407,6 +476,7 @@ const Payment = () => {
 
     const data = await res.json();
     const { client_secret } = data;
+    var successful = false
 
     // Create cardElement
     const cardElement = elements.getElement(CardElement);
@@ -426,7 +496,8 @@ const Payment = () => {
         if (result.error) {
           // Show error to your customer (e.g., insufficient funds)
           console.log(result.error.message);
-          window.alert(result.error.message);
+          handleErrorMessage(result.error.message);
+          handleModalShow();
         } else {
           // The payment has been processed!
           if (result.paymentIntent.status === 'succeeded') {
@@ -435,9 +506,8 @@ const Payment = () => {
             // execution. Set up a webhook or plugin to listen for the
             // payment_intent.succeeded event that handles any business critical
             // post-payment actions.
-
+            successful = true
             // decrease inventory here
-
             console.log(result);
             window.alert('Payment Succeeded');
             navigate('/success', {
@@ -450,10 +520,56 @@ const Payment = () => {
           }
         }
       });
+      if (successful) {
+        var information
+        if (isPickUp) {
+          information = {
+            receipt_email: formData.email,
+            shipping: {
+              name: formData.name,
+              address: {
+                line1: "N/A",
+              },
+            },
+            orderItems: getListOfSkus(),
+            metadata: { "Shipping Method": shippingMethod}
+          }
+        }
+        else {
+          information = {
+            receipt_email: formData.email,
+            shipping: {
+              name: formData.name,
+              address: {
+                city: formData.city,
+                country: countryValue,
+                line1: formData.address,
+                state: province,
+                postal_code: formData.postal_code,
+              },
+            },
+            orderItems: getListOfSkus(),
+            metadata: { "Shipping Method": shippingMethod}
+          }
+        }
+        
+        const res = await fetch('http://localhost:5000/create_order', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify(information),
+        });
+      }
   };
 
   return (
     <div className="flexbox-checkout">
+      <ModalError
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        message={modalErrorMessage}
+      />
       <div className="cart_checkout_container">
         <div className="summary">
           <form action="#" id="shipping-method">
@@ -586,24 +702,40 @@ const Payment = () => {
                   <fieldset id="us-wrapper">
                   <Form.Group>
                     <Form.Label> Shipping Method </Form.Label>
+                    {getTotal() >= 70 && <Form.Check
+                      type="radio"
+                      label="FREE - Expedited Parcel (6 - 12 Business Days)"
+                      name="shippingMethodUS"
+                      id="formHorizontalRadios3"
+                      onChange={() => changeShippingMethod("FREE - Expedited Parcel (6 - 12 Business Days)")}
+                      required
+                    />}
                     <Form.Check
-                    type="radio"
-                    label="$15 - Expedited Parcel (5 - 10 Business Days)"
-                    name="shippingMethodUS"
-                    id="formHorizontalRadios3"
-                    onChange={() => changeShippingMethod("$15 - Expedited Parcel (5 - 10 Business Days)")}
-                    required
-                  />
+                      type="radio"
+                      label="$15 - Expedited Parcel (5 - 10 Business Days)"
+                      name="shippingMethodUS"
+                      id="formHorizontalRadios4"
+                      onChange={() => changeShippingMethod("$15 - Expedited Parcel (5 - 10 Business Days)")}
+                      required
+                    />
                   </Form.Group>
                   </fieldset>:
                 <Form.Group id="ww-wrapper">
                   <Form.Label> Shipping Method </Form.Label>
+                  {getTotal() >= 70 && <Form.Check
+                    type="radio"
+                    label="FREE - Small Packet - Air (6 - 12 Business Days)"
+                    name="shippingMethodOther"
+                    id="formHorizontalRadios5"
+                    onChange={() => changeShippingMethod("FREE - Small Packet - Air (6 - 12 Business Days)")}
+                    required
+                  /> }
                   <Form.Check
                     type="radio"
-                    label="$20 - Small Packet - Air (6 - 12 Business Days)"
+                    label="$22 - Small Packet - Air (6 - 12 Business Days)"
                     name="shippingMethodOther"
-                    id="formHorizontalRadios4"
-                    onChange={() => changeShippingMethod("$20 - Small Packet - Air (6 - 12 Business Days)")}
+                    id="formHorizontalRadios6"
+                    onChange={() => changeShippingMethod("$22 - Small Packet - Air (6 - 12 Business Days)")}
                     required
                   /> 
                 </Form.Group>
@@ -631,9 +763,9 @@ const Payment = () => {
         </div>
         </div>
         </Form>
-      </Container> 
+        <Form.Label className="form-title-label"> * Free shipping on orders above $70.</Form.Label> 
+      </Container>
         :
-      
          <Container className="py-4">
           <Card className="checkout__checkout-form">
             <Card.Body>
@@ -681,3 +813,4 @@ const Payment = () => {
 
 export default Payment;
 // export const getTotal = () => {};
+  
