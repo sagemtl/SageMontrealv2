@@ -7,15 +7,13 @@ import { GlobalContext } from '../context/Provider';
 import { useLocation } from '@reach/router';
 import { getSkuInventory } from '../helpers/stripeHelper';
 
-const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata }) => {
+const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata, isCheckout }) => {
   const { state, dispatch } = useContext(GlobalContext);
   const [inStock, setInStock] = useState(true);
   const { pathname } = useLocation();
-  const [isCheckout, setIsCheckout] = useState(false)
 
   useEffect(() => {
     const getInventory = async () => {
-      setIsCheckout(pathname === '/checkout' || pathname === '/success')
       const inv = await getSkuInventory(
         prodMetadata.item,
         prodMetadata.colour,
@@ -68,36 +66,36 @@ const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata })
 
   return (
     <div
-      className={isCheckout ? (inStock ? "cart_checkout__item" : "cart_checkout__item cart_checkout__item__noStock") : (inStock ? "cart__item" : "cart__item cart__item__noStock")}
+      className={(isCheckout) ? (inStock ? "cart_checkout__item" : "cart_checkout__item cart_checkout__item__noStock") : (inStock ? "cart__item" : "cart__item cart__item__noStock")}
       onClick={() => handleClick()}
       onKeyDown={() => handleClick()}
       role="button"
       tabIndex={0}
     >
-      <div className={isCheckout ? "cart_checkout__item__amount" : "cart__item__amount"}>
+      <div className={(isCheckout) ? "cart_checkout__item__amount" : "cart__item__amount"}>
         {showAmount()}
       </div>
       <div className="image-wrapper">
-        <Img 
+        <Img
           style={{display: "block", position: "absolute"}}
-          className={isCheckout ? "cart_checkout__item__image" : "cart__item__image"}
+          className={(isCheckout) ? "cart_checkout__item__image" : "cart__item__image"}
           height="50"
           fixed={image}
           alt="cart item"
         />
       </div>
-      <div className={isCheckout ? "cart_checkout__item__size" : "cart__item__size"}>
+      <div className={(isCheckout) ? "cart_checkout__item__size" : "cart__item__size"}>
         <b>{size}</b>
       </div>
-      <div className={isCheckout ? "cart_checkout__item__price" : "cart__item__price"}>
+      <div className={(isCheckout) ? "cart_checkout__item__price" : "cart__item__price"}>
         <b>${price}</b>
       </div>
-      {(pathname === '/checkout' || pathname === '/success') && <div className="cart_checkout__item__name">
+      {(isCheckout) && <div className="cart_checkout__item__name">
         <b>{name}</b>
       </div>}
       <ClearRoundedIcon
         fontSize="small"
-        className={isCheckout ? "cart_checkout__item__close" : "cart__item__close"}
+        className={(isCheckout) ? "cart_checkout__item__close" : "cart__item__close"}
         onClick={removeItem}
       />
     </div>

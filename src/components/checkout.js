@@ -31,7 +31,7 @@ import { GlobalContext } from '../context/Provider';
 
 import CartItem from './cartItem';
 import ModalError from './modalError';
-import { LabelDetail } from 'semantic-ui-react';
+import { LabelDetail, ItemDescription } from 'semantic-ui-react';
 
 // UI
 
@@ -111,6 +111,26 @@ const Payment = () => {
       type: 'RESET_CHECKOUT_ITEMS',
       payload: {
         checkoutItems: [],
+      },
+    });
+  };
+
+  // After checkout, add email to success page
+  const setSuccessEmail = (email) => {
+    dispatch({
+      type: 'SET_SUCCESS_EMAIL',
+      payload: {
+        successEmail: email,
+      },
+    });
+  };
+
+  // After checkout, add items to success page
+  const setSuccessItems= (items) => {
+    dispatch({
+      type: 'SET_SUCCESS_ITEMS',
+      payload: {
+        successItems: items,
       },
     });
   };
@@ -217,7 +237,7 @@ const Payment = () => {
   }
   const checkInventoryForAllCart = async () => {
     const invs = await Promise.all(
-      checkoutItems.map(async ({ item }) => {
+      successItems.map(async ({ item }) => {
         // the name of the sku is the size
         const inv = await getSkuInventory(
           item.prodMetadata.item,
@@ -251,9 +271,11 @@ const Payment = () => {
   };
 
   const decreaseInventory = async () => {
+    console.log(checkoutItems)
     const result = await Promise.all(
-      checkoutItems.map(async ({ item }) => {
+      checkoutItems.map(async (item) => {
         // the name of the sku is the size
+        console.log(item)
         const inv = await updateSkuInventory(
           item.prodMetadata.item,
           item.prodMetadata.colour,
@@ -392,14 +414,6 @@ const Payment = () => {
               // post-payment actions.
               successful = true
               // decrease inventory here
-              console.log(result);
-              navigate('/success', {
-                state: {
-                  userEmail: event.payerEmail,
-                  purchase: checkoutItems,
-                },
-              });
-              resetCart();
             }
           }
         });
@@ -445,6 +459,13 @@ const Payment = () => {
             },
             body: JSON.stringify(information),
         });
+
+        navigate('/success');
+
+        setSuccessEmail(formData.email);
+        setSuccessItems(checkoutItems);
+        resetCart();
+        const inventoryUpdate = await decreaseInventory();
       }
     });
   }
@@ -558,14 +579,6 @@ const Payment = () => {
             successful = true
             // decrease inventory here
             console.log(result);
-            window.alert('Payment Succeeded');
-            navigate('/success', {
-              state: {
-                userEmail: formData.email,
-                purchase: checkoutItems,
-              },
-            });
-            resetCart();
           }
         }
       });
@@ -609,6 +622,13 @@ const Payment = () => {
             },
             body: JSON.stringify(information),
         });
+
+        navigate('/success');
+
+        setSuccessEmail(formData.email);
+        setSuccessItems(checkoutItems);
+        resetCart();
+        const inventoryUpdate = await decreaseInventory();
 
       }
   };

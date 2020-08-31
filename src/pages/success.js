@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
@@ -6,17 +6,12 @@ import './styles/success.scss';
 
 import CartItem from '../components/cartItem';
 import { transpileModule } from 'typescript';
+import { GlobalContext } from '../context/Provider';
 
 const Success = () => {
-  const [userEmail, setUserEmail] = useState("")
-  const [userPurchase, setUserPurchase] = useState([])
 
-  useEffect(() => {
-    if (typeof window !== `undefined`) {
-      setUserEmail(window.history.state.userEmail)
-      setUserPurchase(window.history.state.purchase)
-    }
-  }, [[]]);
+  const { state, dispatch } = useContext(GlobalContext);
+  const { successEmail, successItems } = state;
 
   return (
     <Layout>
@@ -31,7 +26,7 @@ const Success = () => {
           Your order has been placed! <br />
           Your payment has been successfully processed and a receipt has been
           sent to{' '}
-          {userEmail}.
+          {successEmail}.
           <br />
           Your items will be shipped the following day and should arrive within
           a week.
@@ -41,7 +36,7 @@ const Success = () => {
       </div>
 
       <div className="success-page-cart">
-          {userPurchase.map((item) => {
+          {successItems.map((item) => {
               return (
                 <CartItem {...item} />
               );
