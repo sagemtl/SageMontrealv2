@@ -77,8 +77,8 @@ export const createProduct = async (product_info) => {
 };
 
 export const updateSkuInventory = async (item, color, size, quantity) => {
-  var quantity = new Object();
-  quantity.quantity = quantity;
+  var qtyObj = new Object();
+  qtyObj.quantity = quantity;
   const requestOptions = {
     headers: {
       Accept: 'application/json',
@@ -86,10 +86,10 @@ export const updateSkuInventory = async (item, color, size, quantity) => {
     },
     method: 'POST',
     redirect: 'follow',
-    body: JSON.stringify(quantity),
+    body: JSON.stringify(qtyObj),
   };
   return fetch(
-    `https://sagemtl-backend.herokuapp.com/inventory/${item}-${color}-${size}`,
+    `http://localhost:5000/inventory/${item}-${color}-${size}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -109,7 +109,7 @@ export const getSkuInventory = async (item, color, size, skuId) => {
     redirect: 'follow',
   };
   return fetch(
-    `https://sagemtl-backend.herokuapp.com/inventory/${item}-${color}-${size}`,
+    `http://localhost:5000/inventory/${item}-${color}-${size}`,
     requestOptions,
   )
     .then((response) => response.json())
