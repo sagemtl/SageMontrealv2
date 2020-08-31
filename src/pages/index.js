@@ -20,7 +20,7 @@ const IndexPage = () => {
             width="100%"
             style={{ margin: 0 }}
             height="100%"
-            src="https://www.artsteps.com/embed/5f035eac83ecaf0b05dfd83c/560/315"
+            src="https://www.artsteps.com/embed/5f2757d621909b55d48be154/560/315"
             frameBorder="0"
             allowFullScreen
           />
