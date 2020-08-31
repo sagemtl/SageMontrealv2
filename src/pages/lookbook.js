@@ -9,6 +9,15 @@ import './styles/lookbook.scss';
 const LookbookMenu = ({ uri }) => {
   const collections = [
     {
+      season: 'Summer 20',
+      cover:
+        'https://sageimagebank.s3.ca-central-1.amazonaws.com/heat-of-the-sun-cover.png',
+      images: [
+        'https://sageimagebank.s3.ca-central-1.amazonaws.com/heat-of-the-sun-lookbook.png',
+      ],
+      position: 'bottom right',
+    },
+    {
       season: 'Capsule 01',
       cover:
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1596165459/SwishCover_b444ou.jpg',

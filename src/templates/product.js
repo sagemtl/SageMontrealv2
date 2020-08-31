@@ -3,7 +3,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import { TypePredicateKind } from 'typescript';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
@@ -20,6 +23,7 @@ const Product = ({ data }) => {
   const [selectedImage, setSelectedImage] = useState(
     item.children[0].childImageSharp.fixed.src,
   );
+  const [zoomOpen, setZoomOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [inventories, setInventories] = useState([]);
   const { state, dispatch } = useContext(GlobalContext);
@@ -158,6 +162,12 @@ const Product = ({ data }) => {
             src={selectedImage}
             alt={item.name}
             className="product-images__image--main"
+            onClick={() => {
+              setZoomOpen(true);
+            }}
+            onKeyDown={() => {
+              setZoomOpen(true);
+            }}
           />
           <div className="product-images-secondary">{imgIcons()}</div>
         </div>
@@ -198,6 +208,27 @@ const Product = ({ data }) => {
             fontSize="large"
           />
         </Link>
+        <Modal
+          open={zoomOpen}
+          onClose={() => setZoomOpen(false)}
+          aria-labelledby="zoom"
+          aria-describedby="Product Zoom"
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <img
+            src={selectedImage}
+            alt={item.name}
+            style={{
+              left: '50%',
+              top: '50%',
+              position: 'absolute',
+              transform: 'translate(-50%, -50%)',
+            }}
+          />
+        </Modal>
       </div>
     </Layout>
   );
@@ -231,7 +262,7 @@ export const query = graphql`
           name
           id
           childImageSharp {
-            fixed(height: 500, toFormat: PNG) {
+            fixed(height: 750, toFormat: PNG) {
               ...GatsbyImageSharpFixed
             }
           }
@@ -248,7 +279,7 @@ export const query = graphql`
           }
           featuredImg {
             childImageSharp {
-              fixed(height: 500, toFormat: PNG) {
+              fixed(height: 750, toFormat: PNG) {
                 ...GatsbyImageSharpFixed
               }
             }
