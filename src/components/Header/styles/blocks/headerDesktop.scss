@@ -1,9 +1,3 @@
-@media (max-width: 750px) {
-  .header-desktop {
-    display: none;
-  }
-}
-
 @mixin navbox {
   position: fixed;
   top: 30px;
@@ -129,6 +123,7 @@
 .navbox{
   @include navbox();
   left: 30px;
+  display: block;
 
   &__logo {
     width: 100px;
@@ -202,5 +197,13 @@
   .cart {
       right: 20px; 
       top: 80px;
+  }
+
+  .header-desktop {
+    display: none;
+  }
+  
+  .navbox {
+    display: none;
   }
 }
