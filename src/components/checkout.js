@@ -60,7 +60,6 @@ const Payment = () => {
 
   const changeShippingMethod = (val) => {
     setShippingMethod(val);
-    console.log(val)
   };
 
   // After checkout, reset the cart state
@@ -138,7 +137,6 @@ const Payment = () => {
 
       // Check the availability of the Payment Request API.
       pr.canMakePayment().then(result => {
-        console.log(result)
         if (result) {
           setPaymentRequest(pr);
         }
@@ -186,9 +184,6 @@ const Payment = () => {
 
   const submit = async (e) => {
 
-    console.log(formData)
-    console.log(countryValue)
-    console.log(province)
     e.preventDefault();
 
     // Billing Details
@@ -269,15 +264,7 @@ const Payment = () => {
       <div className="cart-checkout">
         {checkoutItems.map((item) => {
           return (
-            <CartItem
-              id={item.id}
-              name={item.name}
-              amount={item.amount}
-              price={item.price}
-              size={item.size}
-              image={item.image}
-              sku={item.sku}
-            />
+            <CartItem { ...item } />
           );
         })}
         {cartIsEmpty() ? (

@@ -28,6 +28,7 @@ const Product = ({ data }) => {
     const getAllInventory = async () => {
       const invs = await Promise.all(
         skus.edges.map(async ({ node }) => {
+          // the name of the sku is the size
           const inv = await getSkuInventory(
             item.metadata.item,
             item.metadata.colour,
@@ -37,7 +38,6 @@ const Product = ({ data }) => {
           return inv;
         }),
       );
-      console.log(invs);
       if (invs) {
         setInventories(invs);
       }
@@ -82,7 +82,8 @@ const Product = ({ data }) => {
         price: filterPrice(selectedSku),
         size: selectedSize,
         image: item.featuredImg.childImageSharp.fixed,
-        sku: selectedSku,
+        skuId: selectedSku,
+        prodMetadata: item.metadata,
       });
     }
     dispatch({

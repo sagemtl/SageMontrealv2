@@ -1,12 +1,30 @@
-import React, { useContext } from 'react';
-import { navigate } from 'gatsby';
+import React, { useContext, useEffect, useState } from 'react';
+import { useStaticQuery, graphql, navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import Img from 'gatsby-image';
 import { GlobalContext } from '../context/Provider';
+import { getSkuInventory } from '../helpers/stripeHelper';
 
-const CartItem = ({ name, amount, size, price, image, id, sku }) => {
+const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata }) => {
   const { state, dispatch } = useContext(GlobalContext);
+  const [inStock, setInStock] = useState(true);
+
+  useEffect(() => {
+    const getInventory = async () => {
+      const inv = await getSkuInventory(
+        prodMetadata.item,
+        prodMetadata.colour,
+        size,
+        skuId
+      )
+      if (inv.quantity < 1) {
+        setInStock(false);
+      }
+    };
+
+    getInventory();
+  }, []);
 
   const removeItem = (e) => {
     e.stopPropagation();
@@ -71,7 +89,8 @@ CartItem.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.shape.isRequired,
   id: PropTypes.string.isRequired,
-  sku: PropTypes.string.isRequired,
+  skuId: PropTypes.string.isRequired,
+  prodMetadata: PropTypes.object.isRequired,
 };
 
 export default CartItem;
