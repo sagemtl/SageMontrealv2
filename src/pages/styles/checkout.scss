@@ -101,10 +101,18 @@
     .cart_checkout_container{
       border: 2px solid black;
       // margin-top: 30px;
-      margin: 30px 25px auto;
+      // margin: auto;
+      // margin-right: 10vh;
+      margin: 25px 13% auto;
+      // padding-right: 15px;
+      // padding-left: 15px;
       box-shadow: 3px 3px #154734;
       border-radius: .25rem;
       display: flex;
+      position: relative;
+      // width: 100%;
+      // left: 50%;
+      // transform: translateX(-50%);
       max-width: 540px;
 
     }
@@ -152,7 +160,7 @@
         }
         &__size{
           position: absolute;
-          left: 215px;
+          left: 72%;
           top: 28px;
           font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
           font-size: 12px;
@@ -167,10 +175,15 @@
         }
         &__name{
           position: absolute;
+          white-space: nowrap;
+          width: 43%;
+          overflow: hidden;
+          text-overflow: ellipsis;
           margin-left: -28px;
           top: 28px;
           font-size: 12px;
-          left: 100px
+          left: 100px;
+          text-align: left;
         }
         &__close{
           position: absolute;
