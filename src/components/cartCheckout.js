@@ -13,17 +13,7 @@ const CartCheckout = ({ isMobile }) => {
     <div className="cart-checkout">
       {checkoutItems.map((item) => {
         return (
-          <CartItem
-            id={item.id}
-            name={item.name}
-            amount={item.amount}
-            price={item.price}
-            size={item.size}
-            image={item.image}
-            sku={item.sku}
-            key={item.sku}
-            isCheckout={true}
-          />
+          <CartItem { ...item} />
         );
       })}
     </div>

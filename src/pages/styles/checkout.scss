@@ -172,6 +172,16 @@
           color: black;
           font-size: 16px;
         }
+        &__noStock{
+          opacity: 0.5;
+          cursor: pointer;
+        }
+        &__noStockMsg{
+          position: absolute;
+          color:red;
+          width: 100px;
+          z-index: 100;
+        }
       }
     }
 

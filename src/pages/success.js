@@ -5,6 +5,7 @@ import Layout from '../components/layout';
 import './styles/success.scss';
 
 import CartItem from '../components/cartItem';
+import { transpileModule } from 'typescript';
 
 const Success = () => {
   const [userEmail, setUserEmail] = useState("")
@@ -42,15 +43,7 @@ const Success = () => {
       <div className="success-page-cart">
           {userPurchase.map((item) => {
               return (
-                <CartItem
-                  id={item.id}
-                  name={item.name}
-                  amount={item.amount}
-                  price={item.price}
-                  size={item.size}
-                  image={item.image}
-                  isCheckout={true}
-                />
+                <CartItem {...item} />
               );
             })}
       </div>
