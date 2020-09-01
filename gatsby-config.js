@@ -75,5 +75,12 @@ module.exports = {
         pagePaths: ['/cms'],
       },
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
+        trackingId: process.env.GATSBY_TRACKING_ID,
+      },
+    },
   ],
 };
