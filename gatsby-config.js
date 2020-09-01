@@ -46,21 +46,6 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-mongodb',
-      options: {
-        dbName: 'heroku_8pxd36bk',
-        collection: ['moodboards', 'stickers', 'products'],
-        server: {
-          address: 'ds163764.mlab.com',
-          port: 63764,
-        },
-        auth: {
-          user: process.env.GATSBY_DB_USER,
-          password: process.env.GATSBY_DB_PASSWORD,
-        },
-      },
-    },
-    {
       resolve: 'gatsby-source-stripe',
       options: {
         objects: ['Sku', 'Product'],

@@ -67,6 +67,10 @@ const Shop = ({ data }) => {
     }
   }, [extra, scroll]);
 
+  if (typeof window === `undefined`) {
+    return <></>;
+  }
+
   const shopAnimationClasses = classNames({
     'shop-wheel': !mobile,
     'shop-track': mobile,

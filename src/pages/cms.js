@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import {
   updateProduct,
   getProduct,
   createProduct,
 } from '../helpers/stripeHelper';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 
 import CreateModal from '../components/createModal';
 
@@ -146,6 +146,10 @@ const CMS = () => {
   const Alert = (props) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
+
+  if (typeof window === `undefined`) {
+    return <></>;
+  }
 
   return (
     <div className="cms">

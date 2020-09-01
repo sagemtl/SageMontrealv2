@@ -15,7 +15,6 @@ const LookbookMenu = ({ uri }) => {
       images: [
         'https://sageimagebank.s3.ca-central-1.amazonaws.com/heat-of-the-sun-lookbook.png',
       ],
-      position: 'bottom right',
     },
     {
       season: 'Capsule 01',

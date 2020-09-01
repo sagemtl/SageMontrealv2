@@ -75,15 +75,16 @@ exports.onCreateNode = async ({
           store,
           ext: '.jpg',
         });
+
+        // if the file was created, attach the new node to the parent node
+        if (fileNode) {
+          createParentChildLink({ parent: node, child: fileNode });
+          // console.log("fileNode is valid, attaching to parent node at: " + node.id);
+        }
         // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
       } catch (e) {
         // Ignore
         console.log(`*** error downloading media files: ${e}`);
-      }
-      // if the file was created, attach the new node to the parent node
-      if (fileNode) {
-        createParentChildLink({ parent: node, child: fileNode });
-        // console.log("fileNode is valid, attaching to parent node at: " + node.id);
       }
     }
     if (node.metadata.featuredImg) {
@@ -100,14 +101,14 @@ exports.onCreateNode = async ({
           ext: '.jpg',
         });
         // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+        if (fileNode) {
+          node.featuredImg___NODE = fileNode.id;
+        }
       } catch (e) {
         // Ignore
         console.log(`*** error downloading media files: ${e}`);
       }
       // if the file was created, attach the new node to the parent node
-      if (fileNode) {
-        node.featuredImg___NODE = fileNode.id;
-      }
     } else {
       try {
         fileNode = await createRemoteFileNode({
@@ -122,13 +123,13 @@ exports.onCreateNode = async ({
           ext: '.jpg',
         });
         // console.log("file node created for: " + node.id + "; file node id is: " + fileNode.id);
+        // if the file was created, attach the new node to the parent node
+        if (fileNode) {
+          node.featuredImg___NODE = fileNode.id;
+        }
       } catch (e) {
         // Ignore
         console.log(`*** error downloading media files: ${e}`);
-      }
-      // if the file was created, attach the new node to the parent node
-      if (fileNode) {
-        node.featuredImg___NODE = fileNode.id;
       }
     }
   }
