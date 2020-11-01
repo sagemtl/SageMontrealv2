@@ -19,7 +19,7 @@ const Contact = () => {
 
   const sendForm = async () => {
     try {
-      await axios.post('https://sagemtl-backend.herokuapp.com/contact', {
+      await axios.post('https://api.sagemontreal.com/contact', {
         name,
         subject,
         email,

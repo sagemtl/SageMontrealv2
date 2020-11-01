@@ -22,7 +22,7 @@ export const updateProduct = async (prod_id, product_info) => {
     body: JSON.stringify(product_info),
   };
   return fetch(
-    `https://sagemtl-backend.herokuapp.com/product/${prod_id}`,
+    `https://api.sagemontreal.com/product/${prod_id}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -42,7 +42,7 @@ export const getProduct = async (prod_id) => {
     redirect: 'follow',
   };
   return fetch(
-    `https://sagemtl-backend.herokuapp.com/product/${prod_id}`,
+    `https://api.sagemontreal.com/product/${prod_id}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -66,7 +66,7 @@ export const createProduct = async (product_info) => {
     body: JSON.stringify(product_info),
   };
   return fetch(
-    `https://sagemtl-backend.herokuapp.com/create/product`,
+    `https://api.sagemontreal.com/create/product`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -89,7 +89,7 @@ export const updateSkuInventory = async (item, color, size, quantity) => {
     body: JSON.stringify(qtyObj),
   };
   return fetch(
-    `https://sagemtl-backend.herokuapp.com/inventory/${item}-${color}-${size}`,
+    `https://api.sagemontreal.com/inventory/${item}-${color}-${size}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -109,7 +109,7 @@ export const getSkuInventory = async (item, color, size, skuId) => {
     redirect: 'follow',
   };
   return fetch(
-    `https://sagemtl-backend.herokuapp.com/inventory/${item}-${color}-${size}`,
+    `https://api.sagemontreal.com/inventory/${item}-${color}-${size}`,
     requestOptions,
   )
     .then((response) => response.json())

@@ -317,7 +317,7 @@ const Payment = () => {
     paymentRequest.on('shippingaddresschange', function(ev) {
         // Perform server-side request to fetch shipping options
         console.log(ev.shippingAddress)
-        fetch('https://sagemtl-backend.herokuapp.com/calculateShipping', {
+        fetch('https://api.sagemontreal.com/calculateShipping', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json',
@@ -365,7 +365,7 @@ const Payment = () => {
           carrier: event.shippingOption.label,
         },
       }
-      const res = await fetch('https://sagemtl-backend.herokuapp.com/payment_intent', {
+      const res = await fetch('https://api.sagemontreal.com/payment_intent', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -452,7 +452,7 @@ const Payment = () => {
           }
         }
         
-        const res = await fetch('https://sagemtl-backend.herokuapp.com/create_order', {
+        const res = await fetch('https://api.sagemontreal.com/create_order', {
             method: 'POST',
             headers: {
               'Content-type': 'application/json',
@@ -537,7 +537,7 @@ const Payment = () => {
     }
 
     // Request Client Secret to Server
-    const res = await fetch('https://sagemtl-backend.herokuapp.com/payment_intent', {
+    const res = await fetch('https://api.sagemontreal.com/payment_intent', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -615,7 +615,7 @@ const Payment = () => {
         }
       
         
-        const res = await fetch('https://sagemtl-backend.herokuapp.com/create_order', {
+        const res = await fetch('https://api.sagemontreal.com/create_order', {
             method: 'POST',
             headers: {
               'Content-type': 'application/json',
