@@ -25,25 +25,13 @@ const IndexPage = () => {
               top: '50%',
               transform: 'translateY(-50%)',
             }}
-            controls
             muted
             playsInline
             autoPlay
             loop
+            preload="auto"
           />
         </a>
-        <p
-          style={{
-            position: 'absolute',
-            bottom: '5vh',
-            width: '100vw',
-            textAlign: 'center',
-            fontWeight: 'bold',
-            animation: 'updown 1.5s ease-in-out infinite',
-          }}
-        >
-          Click or view the popup on desktop
-        </p>
       </Layout>
     );
   }
