@@ -12,10 +12,11 @@ const IndexPage = () => {
 
   if (mobile) {
     return (
-      <Layout footerTransparent footerColor="white">
+      <Layout footerTransparent footerColor="black">
         <SEO title="Home" />
         <a href="https://www.artsteps.com/view/5f2757d621909b55d48be154">
           <video
+            poster="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-vid-poster.png"
             src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-popup.mp4"
             style={{
               position: 'absolute',
@@ -24,6 +25,7 @@ const IndexPage = () => {
               top: '50%',
               transform: 'translateY(-50%)',
             }}
+            controls
             muted
             playsInline
             autoPlay
@@ -47,7 +49,7 @@ const IndexPage = () => {
   }
 
   return (
-    <Layout footerTransparent footerColor="white">
+    <Layout footerTransparent footerColor="black">
       <>
         <SEO title="Home" />
         <div className="artstep-wrapper">
@@ -56,15 +58,29 @@ const IndexPage = () => {
               <b>Sage Montreal</b>
             </h1>
           </div>
-          <iframe
-            title="Virtual Museum"
-            width="100%"
-            style={{ margin: 0 }}
-            height="100%"
-            src="https://www.artsteps.com/embed/5f2757d621909b55d48be154/560/315"
-            frameBorder="0"
-            allowFullScreen
-          />
+          <a
+            href="https://www.artsteps.com/view/5f2757d621909b55d48be154"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <video
+              poster="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-vid-poster.png"
+              src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-popup.mp4"
+              style={{
+                position: 'absolute',
+                height: '50vh',
+                width: 'auto',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+              muted
+              playsInline
+              autoPlay
+              loop
+              preload="auto"
+            />
+          </a>
         </div>
       </>
     </Layout>
