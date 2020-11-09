@@ -67,14 +67,14 @@ module.exports = {
         // Add any options here
       },
     },
-    {
-      resolve: '@mkitio/gatsby-theme-password-protect',
-      options: {
-        partialMatching: true,
-        password: process.env.GATSBY_PASSWORD, // delete or `undefined` to disable password protection
-        pagePaths: ['/cms'],
-      },
-    },
+    // {
+    //   resolve: '@mkitio/gatsby-theme-password-protect',
+    //   options: {
+    //     partialMatching: true,
+    //     password: process.env.GATSBY_PASSWORD, // delete or `undefined` to disable password protection
+    //     pagePaths: ['/cms'],
+    //   },
+    // },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
