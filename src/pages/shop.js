@@ -8,6 +8,9 @@ import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
+import sageAnimated from '../assets/sage-animated.gif';
+import sageBackgroundDesktop from '../assets/sage-shop-background.jpg';
+import sageBackgroundMobile from '../assets/sage-shop-background-mobile.jpg';
 
 const Shop = ({ data }) => {
   const [buttonPaused, setButtonPaused] = useState(false);
@@ -81,11 +84,7 @@ const Shop = ({ data }) => {
     <Layout>
       <div className="shop-scroll">
         <img
-          src={
-            mobile
-              ? 'https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-shop-background-mobile.jpg'
-              : 'https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-shop-background.jpg'
-          }
+          src={mobile ? sageBackgroundMobile : sageBackgroundDesktop}
           className="shop-scroll__background"
           alt="Shop Wheel Art"
         />
@@ -141,7 +140,7 @@ const Shop = ({ data }) => {
           <img
             style={{ margin: 0 }}
             className="shop-view__logo"
-            src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+            src={sageAnimated}
             alt="Sage Logo"
           />
           <div className="shop-view__text">

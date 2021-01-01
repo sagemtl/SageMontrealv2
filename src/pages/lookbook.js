@@ -6,14 +6,14 @@ import LookbookFront from '../components/lookbookFront';
 
 import './styles/lookbook.scss';
 
-const LookbookMenu = ({ uri }) => {
+const LookbookMenu = () => {
   const collections = [
     {
       season: 'Summer 20',
       cover:
-        'https://sageimagebank.s3.ca-central-1.amazonaws.com/heat-of-the-sun-cover.png',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1609534692/heat-of-the-sun-cover_jgr65g.png',
       images: [
-        'https://sageimagebank.s3.ca-central-1.amazonaws.com/heat-of-the-sun-lookbook.png',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1609534697/heat-of-the-sun-lookbook_kohiq4.png',
       ],
     },
     {

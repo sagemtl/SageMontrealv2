@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import './styles/lookbookFront.scss';
 import Fade from '@material-ui/core/Fade';
+import CloseIcon from '@material-ui/icons/Close';
 
 const LookbookFront = ({ season, images, cover, position }) => {
   const [open, setOpen] = useState(false);
@@ -11,6 +12,14 @@ const LookbookFront = ({ season, images, cover, position }) => {
   const modalContent = (
     <Fade in={open}>
       <div className="lookbook-modal-content">
+        <CloseIcon
+          className="close-modal"
+          fontSize="large"
+          stroke="white"
+          stroke-width={0.5}
+          onKeyDown={() => setOpen(false)}
+          onClick={() => setOpen(false)}
+        />
         {images.map((image) => {
           return (
             <img
