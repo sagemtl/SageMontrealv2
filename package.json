@@ -1,15 +1,14 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "sage-montreal",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "A ecommerce platform for Sage Montreal",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Sage Montreal <mercury@sagemontreal.com>",
   "dependencies": {
     "@loadable/component": "^5.13.1",
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "@mkitio/gatsby-theme-password-protect": "^2.1.2",
     "@reach/router": "^1.3.3",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.5.0",
@@ -29,13 +28,15 @@
     "gatsby-plugin-sharp": "^2.6.43",
     "gatsby-plugin-styled-components": "^3.3.10",
     "gatsby-plugin-typography": "^2.5.2",
-    "gatsby-source-filesystem": "^2.3.0",
+    "gatsby-source-filesystem": "^2.4.2",
     "gatsby-source-mongodb": "^2.3.1",
     "gatsby-source-stripe": "^3.0.7",
     "gatsby-transformer-sharp": "^2.5.0",
     "interactjs": "^1.9.19",
+    "js-cookie": "^2.2.1",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
+    "query-string": "^6.13.7",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.1",
     "react-country-region-selector": "^2.1.0",
@@ -76,9 +77,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/sagemtl/SageMontrealv2"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/sagemtl/SageMontrealv2/issues"
   }
 }
