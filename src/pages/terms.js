@@ -9,7 +9,7 @@ const terms = () => {
       <div className="terms">
         <div className="terms-column">
           <img
-            src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1596397009/contactCover_jrd5x3.png"
+            src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1609558954/contactCover_sm2kk3.png"
             className="terms__image"
             alt="terms Artwork"
           />

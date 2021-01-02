@@ -8,7 +8,7 @@ const NotFoundPage = () => (
   <Layout>
     <div className="not-found">
       <img
-        src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1596573724/404Octopus_rezqoj.png"
+        src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1609560228/404Octopus_mwhpuk.png"
         alt="404 Octopus"
       />
       <h1 className="not-found__header">404 | NOT FOUND</h1>
