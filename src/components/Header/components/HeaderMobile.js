@@ -4,6 +4,8 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import CloseIcon from '@material-ui/icons/Close';
 import Drawer from '@material-ui/core/Drawer';
 import { GlobalContext } from '../../../context/Provider';
+import sageAnimated from '../../../assets/sage-animated.gif';
+import shoppingBag from '../../../assets/shopping-bag.png';
 
 const routes = [
   {
@@ -73,7 +75,7 @@ const HeaderMobile = ({ setCart, cart }) => {
       >
         <img
           className="header-mobile__logo"
-          src="https://sageimagebank.s3.ca-central-1.amazonaws.com/sage-animated.gif"
+          src={sageAnimated}
           alt="Sage Mobile Logo"
         />
       </div>
@@ -93,7 +95,7 @@ const HeaderMobile = ({ setCart, cart }) => {
         ) : (
           <img
             className="header-mobile__cart"
-            src="https://sageimagebank.s3.ca-central-1.amazonaws.com/shopping-bag.png"
+            src={shoppingBag}
             alt="Sage Shopping Bag"
           />
         )}

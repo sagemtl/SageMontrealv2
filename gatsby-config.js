@@ -5,7 +5,7 @@ require('dotenv').config({
 module.exports = {
   siteMetadata: {
     title: `Sage Montreal`,
-    description: `ONLINE FLEA MARKET. REPPIN ASIA ONE CULTURE AT A TIME. SAGE MONTREAL.`,
+    description: `ONLINE FLEA MARKET. SAGE MONTREAL.`,
     author: `@sagetech`,
   },
   plugins: [
@@ -63,22 +63,11 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-styled-components`,
-      options: {
-        // Add any options here
-      },
+      options: {},
     },
-    // {
-    //   resolve: '@mkitio/gatsby-theme-password-protect',
-    //   options: {
-    //     partialMatching: true,
-    //     password: process.env.GATSBY_PASSWORD, // delete or `undefined` to disable password protection
-    //     pagePaths: ['/cms'],
-    //   },
-    // },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
         trackingId: process.env.GATSBY_TRACKING_ID,
       },
     },

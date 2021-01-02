@@ -1,8 +1,9 @@
 import { Link } from 'gatsby';
 import React, { useContext } from 'react';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { GlobalContext } from '../../../context/Provider';
 import { useLocation } from '@reach/router';
+import { GlobalContext } from '../../../context/Provider';
+import sageAnimated from '../../../assets/sage-animated.gif';
 
 const routes = [
   {
@@ -55,7 +56,7 @@ const HeaderDesktop = () => {
           >
             <video
               src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
-              poster="https://sageimagebank.s3.ca-central-1.amazonaws.com/poster.gif"
+              poster={sageAnimated}
               className="navbox__logo"
               muted
               playsInline
