@@ -25,9 +25,7 @@ const Layout = ({ children, footerColor }) => {
     <>
       {pathname !== '/checkout' && <Header setCart={setCart} cart={cart} />}
       {cart && pathname !== '/checkout' && <Cart isMobile={isMobile} />}
-      <div className="layout">
-        {children}
-      </div>
+      <div className="layout">{children}</div>
       <Footer color={footerColor} />
     </>
   );

@@ -5,16 +5,14 @@ import CartItem from './cartItem';
 
 import { GlobalContext } from '../context/Provider';
 
-const Cart = ({ isMobile }) => {
+const Cart = () => {
   const { state } = useContext(GlobalContext);
   const { checkoutItems } = state;
 
   return (
     <div className="cart">
       {checkoutItems.map((item) => {
-        return (
-          <CartItem { ...item } />
-        );
+        return <CartItem {...item} />;
       })}
       {checkoutItems.length > 0 && (
         <Link to="/checkout">

@@ -78,6 +78,7 @@ const HeaderDesktop = () => {
                   : 'navbox__link'
               }
               to={route.to}
+              key={route.to}
             >
               <h2 className="navbox__text">{route.label}</h2>
             </Link>

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import CloseIcon from '@material-ui/icons/Close';
@@ -44,7 +45,11 @@ const HeaderMobile = ({ setCart, cart }) => {
         <div className="header-mobile-drawer">
           {routes.map((route) => {
             return (
-              <Link className="header-mobile__link" to={route.to}>
+              <Link
+                className="header-mobile__link"
+                to={route.to}
+                key={route.to}
+              >
                 <h2>{route.label}</h2>
               </Link>
             );
@@ -52,7 +57,11 @@ const HeaderMobile = ({ setCart, cart }) => {
           <hr className="header-mobile__separator" />
           {footerRoutes.map((route) => {
             return (
-              <Link className="header-mobile__footer-link" to={route.to}>
+              <Link
+                className="header-mobile__footer-link"
+                to={route.to}
+                key={route.to}
+              >
                 <p>{route.label}</p>
               </Link>
             );
@@ -102,6 +111,11 @@ const HeaderMobile = ({ setCart, cart }) => {
       </div>
     </div>
   );
+};
+
+HeaderMobile.propTypes = {
+  setCart: PropTypes.func.isRequired,
+  cart: PropTypes.bool.isRequired,
 };
 
 export default HeaderMobile;
