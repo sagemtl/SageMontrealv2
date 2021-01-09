@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import ktvStudio from '../assets/ktv-studio.png';
 import './styles/floatingItem.scss';
 
-const FloatingItem = ({ speed }) => {
+const FloatingItem = ({ speed, itemName, itemWidth, itemHeight }) => {
   const [x, setX] = useState(0);
   const [y, setY] = useState(60);
   const [dimension, setDimension] = useState({});
@@ -33,9 +33,7 @@ const FloatingItem = ({ speed }) => {
   useEffect(() => {
     if (itemRef.current) {
       const { width, height } = itemRef.current.getBoundingClientRect();
-      console.log(width, height);
       setDimension({ width, height });
-      console.log(windowSize);
     }
   }, [windowSize]);
 
@@ -91,11 +89,11 @@ const FloatingItem = ({ speed }) => {
     <div>
       <img
         ref={itemRef}
-        width="200"
-        height="170"
+        width={itemWidth}
+        height={itemHeight}
         src={ktvStudio}
         className="floating-item"
-        alt="Sage Shopping Bag"
+        alt={itemName}
       />
     </div>
   );
@@ -103,6 +101,9 @@ const FloatingItem = ({ speed }) => {
 
 FloatingItem.propTypes = {
   speed: PropTypes.number.isRequired,
+  itemName: PropTypes.string.isRequired,
+  itemWidth: PropTypes.number.isRequired,
+  itemHeight: PropTypes.number.isRequired,
 };
 
 export default FloatingItem;
