@@ -39,10 +39,11 @@ const IndexPage = () => {
         </a>
       </div>
       <FloatingItem
-        speed={0.05}
+        speed={0.5}
         itemName="Sage KTV"
         itemWidth={200}
         itemHeight={170}
+        url="https://ktv.sagemontreal.com"
       />
     </Layout>
   );
