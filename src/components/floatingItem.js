@@ -9,6 +9,10 @@ import PropTypes from 'prop-types';
 import ktvStudio from '../assets/ktv-studio.png';
 import './styles/floatingItem.scss';
 
+const getRandomNumber = (min, max) => {
+  return Math.random() * (max - min) + min;
+};
+
 const FloatingItem = ({ speed, itemName, itemWidth, itemHeight, url }) => {
   const [x, setX] = useState(0);
   const [y, setY] = useState(60);
@@ -33,6 +37,8 @@ const FloatingItem = ({ speed, itemName, itemWidth, itemHeight, url }) => {
     if (itemRef.current) {
       const { width, height } = itemRef.current.getBoundingClientRect();
       setDimension({ width, height });
+      setX(getRandomNumber(0, windowSize.width - width));
+      setY(getRandomNumber(60, windowSize.height - height));
       rafRef.current.isVisible = !document.hidden;
     }
   }, [windowSize]);
