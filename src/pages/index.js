@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import './styles/index.scss';
 import '../components/styles/layout.scss';
+import FloatingItem from '../components/floatingItem';
 import videoPoster from '../assets/sage-vid-poster.png';
 import videoPopup from '../assets/sage-popup.mp4';
 
@@ -37,6 +38,13 @@ const IndexPage = () => {
           />
         </a>
       </div>
+      <FloatingItem
+        speed={1}
+        itemName="Sage KTV"
+        itemWidth={200}
+        itemHeight={170}
+        url="https://ktv.sagemontreal.com"
+      />
     </Layout>
   );
 };
