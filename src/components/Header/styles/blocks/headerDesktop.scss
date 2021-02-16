@@ -37,6 +37,19 @@
   border-top: 2px solid black;
 }
 
+.header-desktop {
+  &__close {
+    z-index: 50;
+    position: absolute;
+    left: 145px;
+    top: 2px;
+  }
+
+  &__icon {
+    color: #154734;
+  }
+}
+
 .cart{
   position: fixed;
   right: 30px;
