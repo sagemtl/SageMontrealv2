@@ -10,6 +10,7 @@ import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
 import sageAnimated from '../assets/sage-animated.gif';
 import sageBackgroundDesktop from '../assets/sage-shop-background.jpg';
+import sageBackgroundDesktopKtv from '../assets/shop-background-ktv.jpg';
 import sageBackgroundMobile from '../assets/sage-shop-background-mobile.jpg';
 
 const Shop = ({ data }) => {
@@ -84,7 +85,7 @@ const Shop = ({ data }) => {
     <Layout>
       <div className="shop-scroll">
         <img
-          src={mobile ? sageBackgroundMobile : sageBackgroundDesktop}
+          src={mobile ? sageBackgroundMobile : sageBackgroundDesktopKtv}
           className="shop-scroll__background"
           alt="Shop Wheel Art"
         />

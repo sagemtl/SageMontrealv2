@@ -21,32 +21,54 @@ const SizeChart = (props) => {
                     <th>XL</th>
                   </tr>
                   <tr>
-                    <th>Width</th>
-                    <th>49</th>
-                    <th>52</th>
-                    <th>56</th>
-                    <th>59</th>
-                  </tr>
-                  <tr>
                     <th>Shoulders</th>
                     <th>44</th>
-                    <th>46</th>
-                    <th>48</th>
-                    <th>51</th>
+                    <th>47</th>
+                    <th>50</th>
+                    <th>53</th>
+                  </tr>
+                  <tr>
+                    <th>Chest</th>
+                    <th>49</th>
+                    <th>52</th>
+                    <th>55</th>
+                    <th>58.5</th>
                   </tr>
                   <tr>
                     <th>Length</th>
-                    <th>65</th>
-                    <th>67</th>
+                    <th>66</th>
                     <th>70</th>
                     <th>73</th>
+                    <th>76</th>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <header className="size-guide__heading">
+                Sweatshirt (Centimeters)
+              </header>
+              <div>
+                <table>
+                  <tbody>
+                  <tr>
+                    <th> </th>
+                    <th>M</th>
+                    <th>L</th>
                   </tr>
                   <tr>
-                    <th>Sleeve</th>
-                    <th>23</th>
-                    <th>25</th>
-                    <th>26</th>
-                    <th>27</th>
+                    <th>Chest</th>
+                    <th>63</th>
+                    <th>66</th>
+                  </tr>
+                  <tr>
+                    <th>Sleeves</th>
+                    <th>54</th>
+                    <th>57</th>
+                  </tr>
+                  <tr>
+                    <th>Length</th>
+                    <th>67</th>
+                    <th>69</th>
                   </tr>
                   </tbody>
                 </table>
