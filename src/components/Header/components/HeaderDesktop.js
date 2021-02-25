@@ -9,10 +9,6 @@ import sageAnimated from '../../../assets/sage-animated.gif';
 
 const routes = [
   {
-    label: 'Home',
-    to: '/',
-  },
-  {
     label: 'Boutique',
     to: '/shop',
   },
@@ -57,13 +53,7 @@ const HeaderDesktop = () => {
         >
           <HighlightOffIcon fontSize="small" className="header-desktop__icon" />
         </IconButton>
-        <a
-          tabIndex={-1}
-          onClick={() => openNavbar(false)}
-          onKeyDown={() => openNavbar(false)}
-          className="navbox-logo-wrapper"
-          href="/"
-        >
+        <a tabIndex={-1} className="navbox-logo-wrapper" href="/">
           <video
             src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
             poster={sageAnimated}
