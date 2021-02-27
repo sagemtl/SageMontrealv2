@@ -65,6 +65,7 @@ export const createProduct = async (product_info) => {
     redirect: 'follow',
     body: JSON.stringify(product_info),
   };
+  console.log(`${process.env.GATSBY_BACKEND_URL}/inventory-api/create/product`);
   return fetch(
     `${process.env.GATSBY_BACKEND_URL}/inventory-api/create/product`,
     requestOptions,

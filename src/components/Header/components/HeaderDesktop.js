@@ -53,7 +53,7 @@ const HeaderDesktop = () => {
         >
           <HighlightOffIcon fontSize="small" className="header-desktop__icon" />
         </IconButton>
-        <a tabIndex={-1} className="navbox-logo-wrapper" href="/">
+        <Link tabIndex={-1} className="navbox-logo-wrapper" to="/">
           <video
             src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
             poster={sageAnimated}
@@ -66,7 +66,7 @@ const HeaderDesktop = () => {
             onMouseOut={(e) => e.target.pause()}
             onBlur={(e) => e.target.pause()}
           />
-        </a>
+        </Link>
         {routes.map((route) => {
           return (
             <Link

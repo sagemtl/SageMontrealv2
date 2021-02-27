@@ -2,10 +2,11 @@
   width: 100%;
   display: flex;
   overflow: hidden;
-  padding: 20px 50px;
+  // padding: 20px 50px;
   flex-wrap: wrap;
   position: relative;
   left: 10vw;
+  animation: fadein 3s;
 
   &__header {
     color: #154734;
