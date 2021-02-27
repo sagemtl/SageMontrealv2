@@ -1,13 +1,20 @@
-import React, { useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 // Stripe
 import { navigate } from 'gatsby';
 
-import { PaymentRequestButtonElement, CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import {
+  PaymentRequestButtonElement,
+  CardElement,
+  useElements,
+  useStripe,
+} from '@stripe/react-stripe-js';
 
-import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
-import CartCheckout from './cartCheckout'
+import {
+  CountryDropdown,
+  RegionDropdown,
+  CountryRegionData,
+} from 'react-country-region-selector';
 
-import { getSkuInventory, updateSkuInventory } from '../helpers/stripeHelper';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -27,11 +34,13 @@ import {
   Card,
   Button,
 } from 'react-bootstrap';
+import { LabelDetail, ItemDescription } from 'semantic-ui-react';
 import { GlobalContext } from '../context/Provider';
 
 import CartItem from './cartItem';
 import ModalError from './modalError';
-import { LabelDetail, ItemDescription } from 'semantic-ui-react';
+import { getSkuInventory, updateSkuInventory } from '../helpers/stripeHelper';
+import CartCheckout from './cartCheckout';
 
 // UI
 
@@ -41,26 +50,26 @@ const Payment = () => {
 
   const [paymentRequest, setPaymentRequest] = useState(null);
   const [cardError, setCardError] = useState(true);
-  const [displayCardError, setDisplayCardError] = useState(false)
+  const [displayCardError, setDisplayCardError] = useState(false);
 
   const [formData, setFormData] = useState({});
   const [validated, setValidated] = useState(false);
 
-  const [countryValue, setCountryValue] = useState("CA");
-  const [province, setProvince] = useState("Quebec");
+  const [countryValue, setCountryValue] = useState('CA');
+  const [province, setProvince] = useState('Quebec');
 
-  const[shippingMethod, setShippingMethod] = useState("")
+  const [shippingMethod, setShippingMethod] = useState('');
   const [isPickUp, setIsPickUp] = useState(false);
 
   const [modalShow, setModalShow] = useState(false);
-  const [modalErrorMessage, setModalErrorMessage] = useState("")
+  const [modalErrorMessage, setModalErrorMessage] = useState('');
 
   const handleModalShow = () => setModalShow(true);
   const handleModalClose = () => setModalShow(true);
 
   const handleErrorMessage = (message) => {
-    setModalErrorMessage(message)
-  }
+    setModalErrorMessage(message);
+  };
 
   const elements = useElements();
   const stripe = useStripe();
@@ -75,35 +84,33 @@ const Payment = () => {
   };
 
   const changeCountry = (val) => {
-    setCountryValue(val)
+    setCountryValue(val);
     setShippingMethod(null);
-  }
+  };
 
   const changeState = (val) => {
-    setProvince(val)
-  }
+    setProvince(val);
+  };
 
   const changeShippingMethod = (val) => {
     setShippingMethod(val);
   };
   const changeIsPickup = (val) => {
-    setIsPickUp(val)
+    setIsPickUp(val);
     if (val) {
-      setShippingMethod("Local Pickup");
+      setShippingMethod('Local Pickup');
+    } else {
+      setShippingMethod('');
     }
-    else {
-      setShippingMethod("");
-    }
-  }
+  };
 
   const stripeElementChange = (element) => {
     if (!element.complete) {
-      setCardError(true)
+      setCardError(true);
+    } else if (element.complete) {
+      setCardError(false);
     }
-    else if (element.complete) {
-      setCardError(false)
-    }
-  }
+  };
 
   // After checkout, reset the cart state
   const resetCart = () => {
@@ -126,7 +133,7 @@ const Payment = () => {
   };
 
   // After checkout, add items to success page
-  const setSuccessItems= (items) => {
+  const setSuccessItems = (items) => {
     dispatch({
       type: 'SET_SUCCESS_ITEMS',
       payload: {
@@ -137,28 +144,27 @@ const Payment = () => {
 
   const cartIsEmpty = () => {
     return checkoutItems.length <= 0;
-  }
+  };
 
   const getShippingPrice = () => {
-    let prices = {
-      "$5 - Expedited Parcel (2 - 4 Business Days)": 5,
-      "FREE - Mail (4 - 10 Business Days)": 0,
-      "$15 - Expedited Parcel (5 - 10 Business Days)": 15,
-      "$22 - Small Packet - Air (6 - 12 Business Days)": 22,
-      "FREE - Expedited Parcel (6 - 12 Business Days)": 0,
-      "FREE - Small Packet - Air (6 - 12 Business Days)": 0,
-      "Local Pickup": 0,
-    }
+    const prices = {
+      '$5 - Expedited Parcel (2 - 4 Business Days)': 5,
+      'FREE - Mail (4 - 10 Business Days)': 0,
+      '$15 - Expedited Parcel (5 - 10 Business Days)': 15,
+      '$22 - Small Packet - Air (6 - 12 Business Days)': 22,
+      'FREE - Expedited Parcel (6 - 12 Business Days)': 0,
+      'FREE - Small Packet - Air (6 - 12 Business Days)': 0,
+      'Local Pickup': 0,
+    };
     if (shippingMethod) {
-      return prices[shippingMethod]
+      return prices[shippingMethod];
     }
-    else {
-      return null
-    }
-  }
+
+    return null;
+  };
 
   const getStripeShippingPrice = (selectedOption) => {
-    let stripeShippingOptions = [
+    const stripeShippingOptions = [
       {
         id: 'free-shipping',
         label: 'Mail',
@@ -183,14 +189,13 @@ const Payment = () => {
         detail: 'Arrives in 6 to 12 business days',
         amount: 2000,
       },
-    ]
+    ];
 
     return stripeShippingOptions.filter(
-      option => option.id === selectedOption.id
+      (option) => option.id === selectedOption.id,
     )[0].amount;
-  }
-  
-  
+  };
+
   // function isPickup(){
   //   var checkbox = document.getElementById("111");
   //   if(checkbox.checked==true){
@@ -201,40 +206,43 @@ const Payment = () => {
   //   }
   //  };
 
-  const getTotal = () => {
+  const getTotal = useCallback(() => {
     let i;
     let totalPrice = 0;
     for (i = 0; i < checkoutItems.length; i += 1) {
       totalPrice += checkoutItems[i].amount * checkoutItems[i].price;
     }
     return totalPrice;
-  };
+  });
 
   const getDisplayItems = () => {
     let i;
-    let displayItems = []
+    const displayItems = [];
     for (i = 0; i < checkoutItems.length; i += 1) {
-      displayItems.push({amount: checkoutItems[i].amount, label: checkoutItems[i].name})
+      displayItems.push({
+        amount: checkoutItems[i].amount,
+        label: checkoutItems[i].name,
+      });
     }
-  }
+  };
 
   const getListOfSkus = () => {
     let i;
-    let skusList = []
+    const skusList = [];
     for (i = 0; i < checkoutItems.length; i += 1) {
-      var desc = checkoutItems[i].size + " " + checkoutItems[i].name
-      skusList.push({ 
-        "amount": checkoutItems[i].price * 100,
-        "currency": "cad",
-        "description": desc,
-        "parent": checkoutItems[i].skuId,
-        "quantity": checkoutItems[i].amount,
-        "type": "sku"
-      },)
+      const desc = `${checkoutItems[i].size} ${checkoutItems[i].name}`;
+      skusList.push({
+        amount: checkoutItems[i].price * 100,
+        currency: 'cad',
+        description: desc,
+        parent: checkoutItems[i].skuId,
+        quantity: checkoutItems[i].amount,
+        type: 'sku',
+      });
     }
-    console.log(skusList)
-    return skusList
-  }
+    console.log(skusList);
+    return skusList;
+  };
   const checkInventoryForAllCart = async () => {
     const invs = await Promise.all(
       successItems.map(async ({ item }) => {
@@ -248,17 +256,21 @@ const Payment = () => {
         return inv;
       }),
     );
-    const noStockArr = invs.filter((inv)=>{
+    const noStockArr = invs.filter((inv) => {
       if (inv[0] && inv[0].quantity <= 0) {
         return inv;
       }
     });
     // there are items out of stock
     if (noStockArr.length > 0) {
-      //give error banner
-      setSnack(true, 'error', 'One or more items are out of stock, please remove from cart');
+      // give error banner
+      setSnack(
+        true,
+        'error',
+        'One or more items are out of stock, please remove from cart',
+      );
     }
-  }
+  };
 
   const setSnack = (open, sev, msg) => {
     setSnackbarOpen(open);
@@ -271,22 +283,21 @@ const Payment = () => {
   };
 
   const decreaseInventory = async () => {
-    console.log(checkoutItems)
+    console.log(checkoutItems);
     const result = await Promise.all(
       checkoutItems.map(async (item) => {
         // the name of the sku is the size
-        console.log(item)
+        console.log(item);
         const inv = await updateSkuInventory(
           item.prodMetadata.item,
           item.prodMetadata.colour,
           item.size,
-          item.amount
+          item.amount,
         );
         return inv;
       }),
     );
-  }
-
+  };
 
   useEffect(() => {
     if (stripe) {
@@ -305,29 +316,31 @@ const Payment = () => {
       });
 
       // Check the availability of the Payment Request API.
-      pr.canMakePayment().then(result => {
+      pr.canMakePayment().then((result) => {
         if (result) {
           setPaymentRequest(pr);
         }
       });
     }
-  }, [stripe]);
+  }, [getDisplayItems, getTotal, stripe]);
 
   if (paymentRequest) {
-    paymentRequest.on('shippingaddresschange', function(ev) {
-        // Perform server-side request to fetch shipping options
-        console.log(ev.shippingAddress)
-        fetch('https://api.sagemontreal.com/orders-api/calculateShipping', {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            shippingAddress: ev.shippingAddress
-          })
-        }).then(function(response) {
+    paymentRequest.on('shippingaddresschange', function (ev) {
+      // Perform server-side request to fetch shipping options
+      console.log(ev.shippingAddress);
+      fetch(`${process.env.GATSBY_BACKEND_URL}/orders-api/calculateShipping`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          shippingAddress: ev.shippingAddress,
+        }),
+      })
+        .then(function (response) {
           return response.json();
-        }).then(function(result) {
+        })
+        .then(function (result) {
           ev.updateWith({
             status: 'success',
             shippingOptions: result.supportedShippingOptions,
@@ -337,11 +350,12 @@ const Payment = () => {
 
     // Callback when the shipping option is changed.
     paymentRequest.on('shippingoptionchange', async (event) => {
-      console.log(event)
+      console.log(event);
       event.updateWith({
         total: {
           label: 'Total',
-          amount: getTotal() * 100 + getStripeShippingPrice(event.shippingOption)
+          amount:
+            getTotal() * 100 + getStripeShippingPrice(event.shippingOption),
         },
         status: 'success',
       });
@@ -350,7 +364,8 @@ const Payment = () => {
     // Callback when a payment method is created.
     paymentRequest.on('paymentmethod', async (event) => {
       let information = {
-        price: (getTotal() + getStripeShippingPrice(event.shippingOption)) * 100,
+        price:
+          (getTotal() + getStripeShippingPrice(event.shippingOption)) * 100,
         receipt_email: event.payerEmail,
         shipping: {
           name: event.shippingAddress.recipient,
@@ -364,62 +379,63 @@ const Payment = () => {
           },
           carrier: event.shippingOption.label,
         },
-      }
-      const res = await fetch('https://api.sagemontreal.com/orders-api/payment_intent', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
+      };
+      const res = await fetch(
+        `${process.env.GATSBY_BACKEND_URL}/orders-api/payment_intent`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(information),
         },
-        body: JSON.stringify(information),
-      });
+      );
 
       const data = await res.json();
       const { client_secret } = data;
-      var successful = false
+      let successful = false;
 
       // Confirm the PaymentIntent with the payment method returned from the payment request.
-      const {error} = await stripe.confirmCardPayment(
+      const { error } = await stripe.confirmCardPayment(
         client_secret,
         {
           payment_method: event.paymentMethod.id,
         },
-        {handleActions: false}
+        { handleActions: false },
       );
       if (error) {
         // Report to the browser that the payment failed.
         event.complete('fail');
         console.log(error);
         window.alert(error);
-      } 
-      else {
+      } else {
         // Report to the browser that the confirmation was successful, prompting
         // it to close the browser payment method collection interface.
         event.complete('success');
         // Let Stripe.js handle the rest of the payment flow, including 3D Secure if needed.
-        const response = await stripe.confirmCardPayment(
-          client_secret
-        )
-        .then(function (result) {
-          if (result.error) {
-            // Show error to your customer (e.g., insufficient funds)
-            console.log(result.error.message);
-            window.alert(result.error.message);
-          } else {
-            // The payment has been processed!
-            if (result.paymentIntent.status === 'succeeded') {
-              // Show a success message to your customer
-              // There's a risk of the customer closing the window before callback
-              // execution. Set up a webhook or plugin to listen for the
-              // payment_intent.succeeded event that handles any business critical
-              // post-payment actions.
-              successful = true
-              // decrease inventory here
+        const response = await stripe
+          .confirmCardPayment(client_secret)
+          .then(function (result) {
+            if (result.error) {
+              // Show error to your customer (e.g., insufficient funds)
+              console.log(result.error.message);
+              window.alert(result.error.message);
+            } else {
+              // The payment has been processed!
+              if (result.paymentIntent.status === 'succeeded') {
+                // Show a success message to your customer
+                // There's a risk of the customer closing the window before callback
+                // execution. Set up a webhook or plugin to listen for the
+                // payment_intent.succeeded event that handles any business critical
+                // post-payment actions.
+                successful = true;
+                // decrease inventory here
+              }
             }
-          }
-        });
+          });
       }
 
-      console.log(event.shippingOption)
+      console.log(event.shippingOption);
       if (successful) {
         if (isPickUp) {
           information = {
@@ -427,14 +443,15 @@ const Payment = () => {
             shipping: {
               name: event.shippingAddress.recipient,
               address: {
-                line1: "N/A",
+                line1: 'N/A',
               },
             },
             orderItems: getListOfSkus(),
-            metadata: { "Shipping Method": event.shippingOption.label + " " + event.shippingOption.id + ": " + event.shippingOption.detail}
-          }
-        }
-        else {
+            metadata: {
+              'Shipping Method': `${event.shippingOption.label} ${event.shippingOption.id}: ${event.shippingOption.detail}`,
+            },
+          };
+        } else {
           information = {
             receipt_email: event.payerEmail,
             shipping: {
@@ -448,17 +465,22 @@ const Payment = () => {
               },
             },
             orderItems: getListOfSkus(),
-            metadata: { "Shipping Method": event.shippingOption.label + " " + event.shippingOption.id + ": " + event.shippingOption.detail}
-          }
+            metadata: {
+              'Shipping Method': `${event.shippingOption.label} ${event.shippingOption.id}: ${event.shippingOption.detail}`,
+            },
+          };
         }
-        
-        const res = await fetch('https://api.sagemontreal.com/orders-api/create_order', {
+
+        const res = await fetch(
+          `${process.env.GATSBY_BACKEND_URL}/orders-api/create_order`,
+          {
             method: 'POST',
             headers: {
               'Content-type': 'application/json',
             },
             body: JSON.stringify(information),
-        });
+          },
+        );
 
         navigate('/success');
 
@@ -478,32 +500,31 @@ const Payment = () => {
         type: 'default',
         // One of 'default', 'book', 'buy', or 'donate'
         // Defaults to 'default'
-  
+
         theme: 'dark',
         // One of 'dark', 'light', or 'light-outline'
         // Defaults to 'dark'
-  
+
         height: '44px',
         // Defaults to '40px'. The width is always '100%'.
-
       },
-    }
-  }
+    },
+  };
 
   const submit = async (e) => {
     const form = e.currentTarget;
-    console.log(form)
+    console.log(form);
     if (form.checkValidity() === false || cardError) {
       e.preventDefault();
       e.stopPropagation();
-      setDisplayCardError(true)
+      setDisplayCardError(true);
     }
 
     setValidated(true);
     if (form.checkValidity() === false || cardError) {
-      setDisplayCardError(true)
-      console.log(cardError)
-      console.log(displayCardError)
+      setDisplayCardError(true);
+      console.log(cardError);
+      console.log(displayCardError);
       return;
     }
 
@@ -511,14 +532,13 @@ const Payment = () => {
     e.preventDefault();
 
     // Billing Details
-    var information
+    var information;
     if (isPickUp) {
       information = {
         price: (getTotal() + getShippingPrice()) * 100,
         receipt_email: formData.email,
-      }
-    }
-    else {
+      };
+    } else {
       information = {
         price: (getTotal() + getShippingPrice()) * 100,
         receipt_email: formData.email,
@@ -532,22 +552,25 @@ const Payment = () => {
             postal_code: formData.postal_code,
           },
           carrier: shippingMethod,
-        }
-      }
+        },
+      };
     }
 
     // Request Client Secret to Server
-    const res = await fetch('https://api.sagemontreal.com/orders-api/payment_intent', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
+    const res = await fetch(
+      `${process.env.GATSBY_BACKEND_URL}/orders-api/payment_intent`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(information),
       },
-      body: JSON.stringify(information),
-    });
+    );
 
     const data = await res.json();
     const { client_secret } = data;
-    var successful = false
+    let successful = false;
     // Create cardElement
     const cardElement = elements.getElement(CardElement);
 
@@ -575,65 +598,64 @@ const Payment = () => {
             // execution. Set up a webhook or plugin to listen for the
             // payment_intent.succeeded event that handles any business critical
             // post-payment actions.
-            successful = true
+            successful = true;
             // decrease inventory here
             console.log(result);
           }
         }
       });
-      if (successful) {
-        var information
-        if (isPickUp) {
-          information = {
-            receipt_email: formData.email,
-            shipping: {
-              name: formData.name,
-              address: {
-                line1: "N/A",
-              },
+    if (successful) {
+      var information;
+      if (isPickUp) {
+        information = {
+          receipt_email: formData.email,
+          shipping: {
+            name: formData.name,
+            address: {
+              line1: 'N/A',
             },
-            orderItems: getListOfSkus(),
-            metadata: { "Shipping Method": shippingMethod}
-          }
-        }
-        else {
-          information = {
-            receipt_email: formData.email,
-            shipping: {
-              name: formData.name,
-              address: {
-                city: formData.city,
-                country: countryValue,
-                line1: formData.address,
-                state: province,
-                postal_code: formData.postal_code,
-              },
+          },
+          orderItems: getListOfSkus(),
+          metadata: { 'Shipping Method': shippingMethod },
+        };
+      } else {
+        information = {
+          receipt_email: formData.email,
+          shipping: {
+            name: formData.name,
+            address: {
+              city: formData.city,
+              country: countryValue,
+              line1: formData.address,
+              state: province,
+              postal_code: formData.postal_code,
             },
-            orderItems: getListOfSkus(),
-            metadata: { "Shipping Method": shippingMethod}
-          }
-        }
-      
-        
-        const res = await fetch('https://api.sagemontreal.com/orders-api/create_order', {
-            method: 'POST',
-            headers: {
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(information),
-        });
-
-        navigate('/success');
-
-        setSuccessEmail(formData.email);
-        setSuccessItems(checkoutItems);
-        resetCart();
-        const inventoryUpdate = await decreaseInventory();
-
+          },
+          orderItems: getListOfSkus(),
+          metadata: { 'Shipping Method': shippingMethod },
+        };
       }
-      else {
-        form.submitButton.disabled = false;
-      }
+
+      const res = await fetch(
+        `${process.env.GATSBY_BACKEND_URL}/orders-api/create_order`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(information),
+        },
+      );
+
+      navigate('/success');
+
+      setSuccessEmail(formData.email);
+      setSuccessItems(checkoutItems);
+      resetCart();
+      const inventoryUpdate = await decreaseInventory();
+    } else {
+      form.submitButton.disabled = false;
+    }
   };
 
   return (
@@ -646,15 +668,37 @@ const Payment = () => {
       <div className="cart_checkout_container">
         <div className="summary">
           <form action="#" id="shipping-method">
-            <input type="radio" id="shipping-method-button1" name="gender" defaultChecked onClick={() => changeIsPickup(false)}/>
-            <label for="shipping-method-button1">Shipping</label>
-            <input type="radio" id="shipping-method-button2" name="gender" onClick={() => changeIsPickup(true)}/>
-            <label for="shipping-method-button2">Pick Up</label>
+            <input
+              type="radio"
+              id="shipping-method-button1"
+              name="gender"
+              defaultChecked
+              onClick={() => changeIsPickup(false)}
+            />
+            <label htmlFor="shipping-method-button1">Shipping</label>
+            <input
+              type="radio"
+              id="shipping-method-button2"
+              name="gender"
+              onClick={() => changeIsPickup(true)}
+            />
+            <label htmlFor="shipping-method-button2">Pick Up</label>
           </form>
-          <CartCheckout></CartCheckout>
+          <CartCheckout />
           <b>Price: {getTotal()}$</b>
-          <p>Shipping: {getShippingPrice() === null ? "TBD" : getShippingPrice() == 0 ? "FREE" : getShippingPrice()+ "$"}</p>
-          <b>Total: {!getShippingPrice() ? getTotal() : getTotal() + getShippingPrice()}$</b>
+          <p>
+            Shipping:{' '}
+            {getShippingPrice() === null
+              ? 'TBD'
+              : getShippingPrice() == 0
+              ? 'FREE'
+              : `${getShippingPrice()}$`}
+          </p>
+          <b>
+            Total:{' '}
+            {!getShippingPrice() ? getTotal() : getTotal() + getShippingPrice()}
+            $
+          </b>
         </div>
       </div>
       <Snackbar
@@ -665,201 +709,317 @@ const Payment = () => {
         <Alert severity={snackSeverity}>{snackMessage}</Alert>
       </Snackbar>
       <div className="checkout">
-      {isPickUp == false ?
-      <Container className="py-4">
-      {paymentRequest ?
-      <div className="custom-apple-pay">
-      <div style={{width:"350px"}}>
-      <PaymentRequestButtonElement options={options} /></div></div> : <div></div>}
-      <Form noValidate validated={validated} method="POST" onSubmit={submit} className="checkout-form__form">
-        <Card className="checkout__checkout-form">
-          <Card.Body>
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Form.Label className="form-title-label"> Email </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="email"
-                      placeholder="sage@office.com"
-                      onChange={change}
-                      required
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label className="form-title-label"> Address </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text" 
-                      name="address" 
-                      placeholder="5463 W. 666th Ave"
-                      onChange={change} 
-                      required
-                      />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <FormGroup>
-                      <Form.Label className="form-title-label"> Country/Region </Form.Label>
-                      <CountryDropdown 
-                      value={countryValue}
-                      onChange={ (val) => changeCountry(val)}
-                      priorityOptions={["CA", "US"]}
-                      classes="checkout-form__select-form"
-                      valueType="short"
-                      required
-                      />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Form.Label className="form-title-label"> State / Province </Form.Label>
-                    <RegionDropdown
-                    value={province}
-                    country={countryValue}
-                    onChange={ (val) => changeState(val)}
-                    defaultOptionLabel="Select State/Province"
-                    classes="checkout-form__select-form"
-                    countryValueType="short"
-                    required
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
+        {isPickUp == false ? (
+          <Container className="py-4">
+            {paymentRequest ? (
+              <div className="custom-apple-pay">
+                <div style={{ width: '350px' }}>
+                  <PaymentRequestButtonElement options={options} />
+                </div>
+              </div>
+            ) : (
+              <div />
+            )}
+            <Form
+              noValidate
+              validated={validated}
+              method="POST"
+              onSubmit={submit}
+              className="checkout-form__form"
+            >
+              <Card className="checkout__checkout-form">
+                <Card.Body>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Form.Label className="form-title-label">
+                          {' '}
+                          Email{' '}
+                        </Form.Label>
+                        <FormControl
+                          className="checkout-form__form-control"
+                          type="text"
+                          name="email"
+                          placeholder="sage@office.com"
+                          onChange={change}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <Form.Label className="form-title-label">
+                          {' '}
+                          Address{' '}
+                        </Form.Label>
+                        <FormControl
+                          className="checkout-form__form-control"
+                          type="text"
+                          name="address"
+                          placeholder="5463 W. 666th Ave"
+                          onChange={change}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Form.Label className="form-title-label">
+                          {' '}
+                          Country/Region{' '}
+                        </Form.Label>
+                        <CountryDropdown
+                          value={countryValue}
+                          onChange={(val) => changeCountry(val)}
+                          priorityOptions={['CA', 'US']}
+                          classes="checkout-form__select-form"
+                          valueType="short"
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <Form.Label className="form-title-label">
+                          {' '}
+                          State / Province{' '}
+                        </Form.Label>
+                        <RegionDropdown
+                          value={province}
+                          country={countryValue}
+                          onChange={(val) => changeState(val)}
+                          defaultOptionLabel="Select State/Province"
+                          classes="checkout-form__select-form"
+                          countryValueType="short"
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
 
-              <Row>
-                <Col>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <Form.Label className="form-title-label">
+                          {' '}
+                          City{' '}
+                        </Form.Label>
+                        <FormControl
+                          className="checkout-form__form-control"
+                          type="text"
+                          name="city"
+                          placeholder="Montreal"
+                          onChange={change}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <Form.Label className="form-title-label">
+                          {' '}
+                          Postal Code{' '}
+                        </Form.Label>
+                        <FormControl
+                          className="checkout-form__form-control"
+                          type="text"
+                          name="postal_code"
+                          placeholder="S4G 3S4"
+                          onChange={change}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  {countryValue == 'CA' ? (
+                    <div id="canada-wrapper">
+                      <Form.Group>
+                        <Form.Label> Shipping Method </Form.Label>
+                        <Form.Check
+                          style={{ textAlign: 'center' }}
+                          type="radio"
+                          label="FREE - Mail (4 - 10 Business Days)"
+                          id="formHorizontalRadios1"
+                          name="shippingMethodCA"
+                          onChange={() =>
+                            changeShippingMethod(
+                              'FREE - Mail (4 - 10 Business Days)',
+                            )
+                          }
+                          required
+                        />
+                        <Form.Check
+                          style={{ textAlign: 'center' }}
+                          type="radio"
+                          label="$5 - Expedited Parcel (2 - 4 Business Days)"
+                          name="shippingMethodCA"
+                          id="formHorizontalRadios2"
+                          onChange={() =>
+                            changeShippingMethod(
+                              '$5 - Expedited Parcel (2 - 4 Business Days)',
+                            )
+                          }
+                          required
+                        />
+                      </Form.Group>
+                    </div>
+                  ) : countryValue == 'US' ? (
+                    <fieldset id="us-wrapper">
+                      <Form.Group>
+                        <Form.Label> Shipping Method </Form.Label>
+                        {getTotal() >= 70 && (
+                          <Form.Check
+                            style={{ textAlign: 'center' }}
+                            type="radio"
+                            label="FREE - Expedited Parcel (6 - 12 Business Days)"
+                            name="shippingMethodUS"
+                            id="formHorizontalRadios3"
+                            onChange={() =>
+                              changeShippingMethod(
+                                'FREE - Expedited Parcel (6 - 12 Business Days)',
+                              )
+                            }
+                            required
+                          />
+                        )}
+                        <Form.Check
+                          style={{ textAlign: 'center' }}
+                          type="radio"
+                          label="$15 - Expedited Parcel (5 - 10 Business Days)"
+                          name="shippingMethodUS"
+                          id="formHorizontalRadios4"
+                          onChange={() =>
+                            changeShippingMethod(
+                              '$15 - Expedited Parcel (5 - 10 Business Days)',
+                            )
+                          }
+                          required
+                        />
+                      </Form.Group>
+                    </fieldset>
+                  ) : (
+                    <Form.Group id="ww-wrapper">
+                      <Form.Label> Shipping Method </Form.Label>
+                      {getTotal() >= 70 && (
+                        <Form.Check
+                          style={{ textAlign: 'center' }}
+                          type="radio"
+                          label="FREE - Small Packet - Air (6 - 12 Business Days)"
+                          name="shippingMethodOther"
+                          id="formHorizontalRadios5"
+                          onChange={() =>
+                            changeShippingMethod(
+                              'FREE - Small Packet - Air (6 - 12 Business Days)',
+                            )
+                          }
+                          required
+                        />
+                      )}
+                      <Form.Check
+                        style={{ textAlign: 'center' }}
+                        type="radio"
+                        label="$22 - Small Packet - Air (6 - 12 Business Days)"
+                        name="shippingMethodOther"
+                        id="formHorizontalRadios6"
+                        onChange={() =>
+                          changeShippingMethod(
+                            '$22 - Small Packet - Air (6 - 12 Business Days)',
+                          )
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  )}
+                </Card.Body>
+              </Card>
+              <div className="custom-pay">
+                <div style={{ width: '80%', marginTop: '1.25rem' }}>
                   <FormGroup>
-                    <Form.Label className="form-title-label"> City </Form.Label>
-                    <FormControl className="checkout-form__form-control"
+                    <Form.Label className="form-title-label">
+                      {' '}
+                      Name on Card{' '}
+                    </Form.Label>
+                    <FormControl
+                      className="checkout-form__form-control"
                       type="text"
-                      name="city"
-                      placeholder="Montreal"
+                      placeholder="Sage"
+                      name="name"
                       onChange={change}
                       required
                     />
                   </FormGroup>
-                </Col>
-                <Col>
                   <FormGroup>
-                    <Form.Label className="form-title-label"> Postal Code </Form.Label>
-                    <FormControl className="checkout-form__form-control"
-                      type="text"
-                      name="postal_code"
-                      placeholder="S4G 3S4"
-                      onChange={change}
-                      required
-                    />
+                    <Form.Label className="form-title-label">
+                      {' '}
+                      Card Details{' '}
+                    </Form.Label>
+                    <div className="custom-stripe-element">
+                      <CardElement
+                        onChange={(element) => stripeElementChange(element)}
+                      >
+                        {' '}
+                      </CardElement>
+                    </div>
+                    {displayCardError && cardError && (
+                      <span
+                        id="card-errors"
+                        className="text-danger"
+                        role="alert"
+                      >
+                        Your card number is incomplete.
+                      </span>
+                    )}
+                    <Button
+                      type="submit"
+                      name="submitButton"
+                      style={{
+                        display: 'block',
+                        position: 'relative',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        marginTop: '20px',
+                        width: '50%',
+                      }}
+                    >
+                      {' '}
+                      Pay
+                    </Button>
                   </FormGroup>
-                </Col>
-              </Row>
-                {countryValue == "CA" ? 
-                <div id="canada-wrapper">
-                <Form.Group>
-                  <Form.Label> Shipping Method </Form.Label>
-                    <Form.Check 
-                    style={{textAlign: "center"}}
-                    type="radio"
-                    label="FREE - Mail (4 - 10 Business Days)"
-                    id="formHorizontalRadios1"
-                    name="shippingMethodCA"
-                    onChange={() => changeShippingMethod("FREE - Mail (4 - 10 Business Days)")}
-                    required
-                  />
-                  <Form.Check 
-                    style={{textAlign: "center"}}
-                    type="radio"
-                    label="$5 - Expedited Parcel (2 - 4 Business Days)"
-                    name="shippingMethodCA"
-                    id="formHorizontalRadios2"
-                    onChange={() => changeShippingMethod("$5 - Expedited Parcel (2 - 4 Business Days)")}
-                    required
-                  />
-                  </Form.Group>
-                  </div> : 
-                  countryValue == "US" ?
-                  <fieldset id="us-wrapper">
-                  <Form.Group>
-                    <Form.Label> Shipping Method </Form.Label>
-                    {getTotal() >= 70 && <Form.Check
-                      style={{textAlign: "center"}}
-                      type="radio"
-                      label="FREE - Expedited Parcel (6 - 12 Business Days)"
-                      name="shippingMethodUS"
-                      id="formHorizontalRadios3"
-                      onChange={() => changeShippingMethod("FREE - Expedited Parcel (6 - 12 Business Days)")}
-                      required
-                    />}
-                    <Form.Check
-                      style={{textAlign: "center"}}
-                      type="radio"
-                      label="$15 - Expedited Parcel (5 - 10 Business Days)"
-                      name="shippingMethodUS"
-                      id="formHorizontalRadios4"
-                      onChange={() => changeShippingMethod("$15 - Expedited Parcel (5 - 10 Business Days)")}
-                      required
-                    />
-                  </Form.Group>
-                  </fieldset>:
-                <Form.Group id="ww-wrapper">
-                  <Form.Label> Shipping Method </Form.Label>
-                  {getTotal() >= 70 && <Form.Check
-                    style={{textAlign: "center"}}
-                    type="radio"
-                    label="FREE - Small Packet - Air (6 - 12 Business Days)"
-                    name="shippingMethodOther"
-                    id="formHorizontalRadios5"
-                    onChange={() => changeShippingMethod("FREE - Small Packet - Air (6 - 12 Business Days)")}
-                    required
-                  /> }
-                  <Form.Check
-                    style={{textAlign: "center"}}
-                    type="radio"
-                    label="$22 - Small Packet - Air (6 - 12 Business Days)"
-                    name="shippingMethodOther"
-                    id="formHorizontalRadios6"
-                    onChange={() => changeShippingMethod("$22 - Small Packet - Air (6 - 12 Business Days)")}
-                    required
-                  /> 
-                </Form.Group>
-                }
-          </Card.Body>
-        </Card>
-        <div className="custom-pay">
-        <div style={{width:"80%", marginTop:"1.25rem"}}>
-        <FormGroup>
-          <Form.Label className="form-title-label"> Name on Card </Form.Label>
-          <FormControl className="checkout-form__form-control"
-            type="text"
-            placeholder="Sage"
-            name="name"
-            onChange={change}
-            required
-          />
-        </FormGroup>
-        <FormGroup >
-          <Form.Label className="form-title-label"> Card Details </Form.Label>
-          <div className="custom-stripe-element"><CardElement onChange={(element) => stripeElementChange(element)}> </CardElement></div>
-          {displayCardError && cardError && <span id="card-errors" className="text-danger" role="alert">Your card number is incomplete.</span>}
-          <Button type="submit" name="submitButton" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}} > Pay</Button>
-        </FormGroup>
-        </div>
-        </div>
-        </Form>
-        <Form.Label className="form-title-label"> * Free shipping on orders above $70.</Form.Label> 
-      </Container>
-        :
-         <Container className="py-4">
-          <Card className="checkout__checkout-form">
-            <Card.Body>
-              <div style={{display: "block", marginRight: "auto", marginLeft: "auto"}}>
-              <Form method="POST"  noValidate validated={validated} onSubmit={submit} className="checkout-form__form">
+                </div>
+              </div>
+            </Form>
+            <Form.Label className="form-title-label">
+              {' '}
+              * Free shipping on orders above $70.
+            </Form.Label>
+          </Container>
+        ) : (
+          <Container className="py-4">
+            <Card className="checkout__checkout-form">
+              <Card.Body>
+                <div
+                  style={{
+                    display: 'block',
+                    marginRight: 'auto',
+                    marginLeft: 'auto',
+                  }}
+                >
+                  <Form
+                    method="POST"
+                    noValidate
+                    validated={validated}
+                    onSubmit={submit}
+                    className="checkout-form__form"
+                  >
                     <FormGroup>
-                      <Form.Label className="form-title-label"> Name on Card </Form.Label>
-                      <FormControl className="checkout-form__form-control"
+                      <Form.Label className="form-title-label">
+                        {' '}
+                        Name on Card{' '}
+                      </Form.Label>
+                      <FormControl
+                        className="checkout-form__form-control"
                         type="text"
                         placeholder="Sage"
                         name="name"
@@ -868,8 +1028,12 @@ const Payment = () => {
                       />
                     </FormGroup>
                     <FormGroup>
-                      <Form.Label  className="form-title-label"> Email </Form.Label>
-                      <FormControl className="checkout-form__form-control"
+                      <Form.Label className="form-title-label">
+                        {' '}
+                        Email{' '}
+                      </Form.Label>
+                      <FormControl
+                        className="checkout-form__form-control"
                         type="text"
                         name="email"
                         placeholder="sage@office.com"
@@ -877,26 +1041,61 @@ const Payment = () => {
                         required
                       />
                     </FormGroup>
-                <FormGroup>
-                  <Form.Label className="form-title-label"> Card Details </Form.Label>
-                  <div className="custom-stripe-element"><CardElement onChange={(element) => stripeElementChange(element)}> </CardElement></div>
-                  {displayCardError && cardError && <span id="card-errors" className="text-danger" role="alert">Your card number is incomplete.</span>}
-                  <Button type="submit" name="submitButton" style={{display: "block", position: "relative", marginLeft: "auto", marginRight: "auto", marginTop: "20px", width: "50%"}}> Pay</Button>
-                </FormGroup>
-                </Form>
+                    <FormGroup>
+                      <Form.Label className="form-title-label">
+                        {' '}
+                        Card Details{' '}
+                      </Form.Label>
+                      <div className="custom-stripe-element">
+                        <CardElement
+                          onChange={(element) => stripeElementChange(element)}
+                        >
+                          {' '}
+                        </CardElement>
+                      </div>
+                      {displayCardError && cardError && (
+                        <span
+                          id="card-errors"
+                          className="text-danger"
+                          role="alert"
+                        >
+                          Your card number is incomplete.
+                        </span>
+                      )}
+                      <Button
+                        type="submit"
+                        name="submitButton"
+                        style={{
+                          display: 'block',
+                          position: 'relative',
+                          marginLeft: 'auto',
+                          marginRight: 'auto',
+                          marginTop: '20px',
+                          width: '50%',
+                        }}
+                      >
+                        {' '}
+                        Pay
+                      </Button>
+                    </FormGroup>
+                  </Form>
                 </div>
-            </Card.Body>
-          </Card>
-          <Form.Label className="form-title-label" style={{marginTop: "10px"}}> * Local pickup in Montreal downtown area. Pickup location will be sent by email. </Form.Label>
-        </Container>
-        } 
-        
-        
+              </Card.Body>
+            </Card>
+            <Form.Label
+              className="form-title-label"
+              style={{ marginTop: '10px' }}
+            >
+              {' '}
+              * Local pickup in Montreal downtown area. Pickup location will be
+              sent by email.{' '}
+            </Form.Label>
+          </Container>
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default Payment;
 // export const getTotal = () => {};
-  
