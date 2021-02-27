@@ -22,7 +22,7 @@ export const updateProduct = async (prod_id, product_info) => {
     body: JSON.stringify(product_info),
   };
   return fetch(
-    `${process.env.BACKEND_API}/inventory-api/product/${prod_id}`,
+    `${process.env.GATSBY_BACKEND_URL}/inventory-api/product/${prod_id}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -42,7 +42,7 @@ export const getProduct = async (prod_id) => {
     redirect: 'follow',
   };
   return fetch(
-    `${process.env.BACKEND_API}/inventory-api/product/${prod_id}`,
+    `${process.env.GATSBY_BACKEND_URL}/inventory-api/product/${prod_id}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -66,7 +66,7 @@ export const createProduct = async (product_info) => {
     body: JSON.stringify(product_info),
   };
   return fetch(
-    `${process.env.BACKEND_API}/inventory-api/create/product`,
+    `${process.env.GATSBY_BACKEND_URL}/inventory-api/create/product`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -89,7 +89,7 @@ export const updateSkuInventory = async (item, color, size, quantity) => {
     body: JSON.stringify(qtyObj),
   };
   return fetch(
-    `${process.env.BACKEND_API}/inventory-api/inventory/${item}-${color}-${size}`,
+    `${process.env.GATSBY_BACKEND_URL}/inventory-api/inventory/${item}-${color}-${size}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -109,7 +109,7 @@ export const getSkuInventory = async (item, color, size, skuId) => {
     redirect: 'follow',
   };
   return fetch(
-    `${process.env.BACKEND_API}/inventory-api/inventory/${item}-${color}-${size}`,
+    `${process.env.GATSBY_BACKEND_URL}/inventory-api/inventory/${item}-${color}-${size}`,
     requestOptions,
   )
     .then((response) => response.json())

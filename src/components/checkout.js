@@ -328,7 +328,7 @@ const Payment = () => {
     paymentRequest.on('shippingaddresschange', function (ev) {
       // Perform server-side request to fetch shipping options
       console.log(ev.shippingAddress);
-      fetch(`${process.env.BACKEND_API}/orders-api/calculateShipping`, {
+      fetch(`${process.env.GATSBY_BACKEND_URL}/orders-api/calculateShipping`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -381,7 +381,7 @@ const Payment = () => {
         },
       };
       const res = await fetch(
-        `${process.env.BACKEND_API}/orders-api/payment_intent`,
+        `${process.env.GATSBY_BACKEND_URL}/orders-api/payment_intent`,
         {
           method: 'POST',
           headers: {
@@ -472,7 +472,7 @@ const Payment = () => {
         }
 
         const res = await fetch(
-          `${process.env.BACKEND_API}/orders-api/create_order`,
+          `${process.env.GATSBY_BACKEND_URL}/orders-api/create_order`,
           {
             method: 'POST',
             headers: {
@@ -558,7 +558,7 @@ const Payment = () => {
 
     // Request Client Secret to Server
     const res = await fetch(
-      `${process.env.BACKEND_API}/orders-api/payment_intent`,
+      `${process.env.GATSBY_BACKEND_URL}/orders-api/payment_intent`,
       {
         method: 'POST',
         headers: {
@@ -637,7 +637,7 @@ const Payment = () => {
       }
 
       const res = await fetch(
-        `${process.env.BACKEND_API}/orders-api/create_order`,
+        `${process.env.GATSBY_BACKEND_URL}/orders-api/create_order`,
         {
           method: 'POST',
           headers: {
