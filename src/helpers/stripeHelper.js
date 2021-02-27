@@ -22,7 +22,7 @@ export const updateProduct = async (prod_id, product_info) => {
     body: JSON.stringify(product_info),
   };
   return fetch(
-    `https://api.sagemontreal.com/inventory-api/product/${prod_id}`,
+    `${process.env.BACKEND_API}/inventory-api/product/${prod_id}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -42,7 +42,7 @@ export const getProduct = async (prod_id) => {
     redirect: 'follow',
   };
   return fetch(
-    `https://api.sagemontreal.com/inventory-api/product/${prod_id}`,
+    `${process.env.BACKEND_API}/inventory-api/product/${prod_id}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -66,7 +66,7 @@ export const createProduct = async (product_info) => {
     body: JSON.stringify(product_info),
   };
   return fetch(
-    `https://api.sagemontreal.com/inventory-api/create/product`,
+    `${process.env.BACKEND_API}/inventory-api/create/product`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -77,7 +77,7 @@ export const createProduct = async (product_info) => {
 };
 
 export const updateSkuInventory = async (item, color, size, quantity) => {
-  var qtyObj = new Object();
+  const qtyObj = new Object();
   qtyObj.quantity = quantity;
   const requestOptions = {
     headers: {
@@ -89,7 +89,7 @@ export const updateSkuInventory = async (item, color, size, quantity) => {
     body: JSON.stringify(qtyObj),
   };
   return fetch(
-    `https://api.sagemontreal.com/inventory-api/inventory/${item}-${color}-${size}`,
+    `${process.env.BACKEND_API}/inventory-api/inventory/${item}-${color}-${size}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -109,7 +109,7 @@ export const getSkuInventory = async (item, color, size, skuId) => {
     redirect: 'follow',
   };
   return fetch(
-    `https://api.sagemontreal.com/inventory-api/inventory/${item}-${color}-${size}`,
+    `${process.env.BACKEND_API}/inventory-api/inventory/${item}-${color}-${size}`,
     requestOptions,
   )
     .then((response) => response.json())
