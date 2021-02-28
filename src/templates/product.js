@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import { TypePredicateKind } from 'typescript';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
@@ -89,6 +88,18 @@ const Product = ({ data }) => {
         skuId: selectedSku,
         prodMetadata: item.metadata,
       });
+
+      if (window.datadogLogs) {
+        window.datadogLogs.logger.info('Added to Cart', {
+          id: itemId,
+          name: item.name,
+          amount: 1,
+          price: filterPrice(selectedSku),
+          size: selectedSize,
+          skuId: selectedSku,
+          prodMetadata: item.metadata,
+        });
+      }
     }
     dispatch({
       type: 'SET_CHECKOUT_ITEMS',
@@ -102,7 +113,7 @@ const Product = ({ data }) => {
   const sortedSkus = sortSizes(skus.edges);
 
   const imgIcons = () => {
-    const icons = item.children.map((node) => {
+    const icons = item.children.map((node, ind) => {
       return (
         <img
           src={node.childImageSharp.fixed.src}
@@ -110,6 +121,7 @@ const Product = ({ data }) => {
           className="product-images__image--secondary"
           onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
           onKeyDown={() => setSelectedImage(node.childImageSharp.fixed.src)}
+          key={ind}
         />
       );
     });
@@ -135,6 +147,7 @@ const Product = ({ data }) => {
               setSelectedSku(nodeid);
               setSelectedSize(size);
             }}
+            onChange={() => {}}
             disabled={false || !hasStock}
           />
           <label htmlFor={size} className={className}>
@@ -149,8 +162,12 @@ const Product = ({ data }) => {
   const productDescription = (desc) => {
     const descArr = desc.split(',');
     const descComponent = descArr.map((text) => {
-      text = text.trim();
-      return <p className="product-details__point">{text}</p>;
+      const finalText = text.trim();
+      return (
+        <p className="product-details__point" key={text}>
+          {finalText}
+        </p>
+      );
     });
     return descComponent;
   };
@@ -230,6 +247,10 @@ const Product = ({ data }) => {
       </div>
     </Layout>
   );
+};
+
+Product.propTypes = {
+  data: PropTypes.shape().isRequired,
 };
 
 export default Product;

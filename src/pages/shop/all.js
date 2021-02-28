@@ -21,8 +21,8 @@ const ShopAll = ({ data }) => {
   return (
     <Layout>
       <div className="shop-all-container">
-        {getProducts().map((product) => {
-          return <ShopViewItem product={product} />;
+        {getProducts().map((product, index) => {
+          return <ShopViewItem product={product} key={index} />;
         })}
       </div>
       <Link className="back" to="/shop">
@@ -33,7 +33,7 @@ const ShopAll = ({ data }) => {
 };
 
 ShopAll.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  data: PropTypes.shape().isRequired,
 };
 
 export default ShopAll;

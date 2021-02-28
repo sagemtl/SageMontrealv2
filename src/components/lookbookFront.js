@@ -26,6 +26,7 @@ const LookbookFront = ({ season, images, cover, position }) => {
               src={image}
               className="lookbook-front__image"
               alt="Lookbook cover"
+              key={image}
             />
           );
         })}

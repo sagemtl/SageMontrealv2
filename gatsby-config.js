@@ -2,6 +2,8 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
+const IS_DEV = process.env.NODE_ENV === 'development';
+
 module.exports = {
   siteMetadata: {
     title: `Sage Montreal`,
@@ -69,6 +71,25 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: process.env.GATSBY_TRACKING_ID,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-datadog',
+      options: {
+        rum: {
+          applicationId: '00a96a5e-791b-448e-bda1-2103edba330d',
+          clientToken: 'pub0c5a5f338933acd6d50464cc92e7c214',
+          site: 'datadoghq.com',
+          service: 'Sage Montreal',
+          sampleRate: 100,
+          enabled: !IS_DEV,
+        },
+        logs: {
+          clientToken: 'pub0c5a5f338933acd6d50464cc92e7c214',
+          site: 'datadoghq.com',
+          service: 'Sage Montreal',
+          sampleRate: 100,
+        },
       },
     },
   ],

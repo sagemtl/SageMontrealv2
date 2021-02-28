@@ -29,9 +29,9 @@ const Layout = ({ children, footerColor }) => {
         {pathname.includes('/shop/') && (
           <div className="product-banner">
             <div className="product-banner-track">
-              {[...Array(10)].map(() => {
+              {[...Array(10)].map((val, ind) => {
                 return (
-                  <p className="product-banner__entry">
+                  <p className="product-banner__entry" key={ind}>
                     Free shipping across Canada on orders above $70
                   </p>
                 );

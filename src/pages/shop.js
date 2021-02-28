@@ -138,14 +138,16 @@ const Shop = ({ data }) => {
                 return (
                   <ShopItem
                     buttonPaused={buttonPaused}
-                    delay={delay}
+                    delay={delay.toString()}
                     paused={paused}
                     setPaused={setPaused}
                     windowWidth={windowWidth}
                     product={product}
+                    key={product.node.id + index.toString()}
                   />
                 );
               }
+              return <></>;
             })}
           </div>
           {mobile &&
@@ -154,14 +156,16 @@ const Shop = ({ data }) => {
                 return (
                   <ShopItem
                     buttonPaused={buttonPaused}
-                    delay={0}
+                    delay="0"
                     paused={paused}
                     setPaused={setPaused}
                     windowWidth={windowWidth}
                     product={product}
+                    key={product.node.id + index.toString()}
                   />
                 );
               }
+              return <></>;
             })}
           <div className="shop-buttons">
             <button
@@ -200,14 +204,16 @@ const Shop = ({ data }) => {
 };
 
 Shop.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  data: PropTypes.PropTypes.shape().isRequired,
 };
 
 export default Shop;
 
 export const query = graphql`
   query MyQuery {
-    allStripeProduct(filter: { active: { eq: true }, metadata: {onCarousel: {eq: "true"} }}) {
+    allStripeProduct(
+      filter: { active: { eq: true }, metadata: { onCarousel: { eq: "true" } } }
+    ) {
       edges {
         node {
           id

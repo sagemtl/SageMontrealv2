@@ -3,7 +3,6 @@ import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import Img from 'gatsby-image';
-import { useLocation } from '@reach/router';
 import { GlobalContext } from '../context/Provider';
 import { getSkuInventory } from '../helpers/stripeHelper';
 
@@ -18,7 +17,6 @@ const CheckoutItem = ({
   prodMetadata,
 }) => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { pathname } = useLocation();
 
   useEffect(() => {
     const getInventory = async () => {
@@ -31,7 +29,7 @@ const CheckoutItem = ({
     };
 
     getInventory();
-  }, []);
+  }, [prodMetadata.colour, prodMetadata.item, size, skuId]);
 
   const removeItem = (e) => {
     e.stopPropagation();
@@ -57,7 +55,7 @@ const CheckoutItem = ({
 
   const showAmount = () => {
     return <b>{amount}x</b>;
-  }
+  };
 
   return (
     <div
@@ -100,10 +98,10 @@ CheckoutItem.propTypes = {
   amount: PropTypes.number.isRequired,
   size: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  image: PropTypes.shape.isRequired,
+  image: PropTypes.shape().isRequired,
   id: PropTypes.string.isRequired,
   skuId: PropTypes.string.isRequired,
-  prodMetadata: PropTypes.object.isRequired,
+  prodMetadata: PropTypes.shape().isRequired,
 };
 
 export default CheckoutItem;
