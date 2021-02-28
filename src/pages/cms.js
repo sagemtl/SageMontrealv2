@@ -248,8 +248,8 @@ const CMS = () => {
           <p className="cms__label">Active</p>
           <div>
             <select onChange={(e)=>setActive(e.target.value)} value={active}>
-              <option value="true">true</option>
-              <option value="false">false</option>
+              <option value={true}>true</option>
+              <option value={false}>false</option>
             </select>
           </div>
         </div>
@@ -258,8 +258,8 @@ const CMS = () => {
           <p className="cms__label">Show On Carousel</p>
           <div>
             <select onChange={(e)=>setOnCarousel(e.target.value)} value={onCarousel}>
-              <option value="true">true</option>
-              <option value="false">false</option>
+              <option value={true}>true</option>
+              <option value={false}>false</option>
             </select>
           </div>
         </div>

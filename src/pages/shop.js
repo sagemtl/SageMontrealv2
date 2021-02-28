@@ -161,7 +161,7 @@ export default Shop;
 
 export const query = graphql`
   query MyQuery {
-    allStripeProduct(filter: { active: { eq: true } }) {
+    allStripeProduct(filter: { active: { eq: true }, metadata: {onCarousel: {eq: "true"} }}) {
       edges {
         node {
           id
