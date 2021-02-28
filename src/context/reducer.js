@@ -39,7 +39,7 @@ const globalReducer = (state, action) => {
     case 'SET_VISITED_PAGE': {
       return {
         ...state,
-        successItems: action.payload.successItems,
+        visitedPage: action.payload.visitedPage,
       };
     }
     default:

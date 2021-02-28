@@ -19,7 +19,7 @@ const IndexPage = () => {
         dispatch({
           type: 'SET_VISITED_PAGE',
           payload: {
-            checkoutItems: state.visitedPage.push('/'),
+            visitedPage: state.visitedPage.push('/'),
           },
         });
       }
