@@ -97,7 +97,7 @@ const CMS = () => {
       ? setFeaturedImg(prod.metadata.featuredImg)
       : null;
     prod.metadata.modelInfo ? setFeaturedImg(prod.metadata.modelInfo) : null;
-    prod.metadata.onCarousel ? setOnCarousel(prod.metadata.onCarousel) : false;
+    prod.metadata.onCarousel ? setOnCarousel(prod.metadata.onCarousel) : setOnCarousel(false);
   };
 
   const handleUpdateProduct = async () => {
@@ -247,7 +247,7 @@ const CMS = () => {
         <div className="cms__field">
           <p className="cms__label">Active</p>
           <div>
-            <select onChange={(e)=>setActive(e.target.value)} value={active}>
+            <select onChange={(e)=>setActive(e.target.value)} value={active} disabled={!edit}>
               <option value={true}>true</option>
               <option value={false}>false</option>
             </select>
@@ -257,7 +257,7 @@ const CMS = () => {
         <div className="cms__field">
           <p className="cms__label">Show On Carousel</p>
           <div>
-            <select onChange={(e)=>setOnCarousel(e.target.value)} value={onCarousel}>
+            <select onChange={(e)=>setOnCarousel(e.target.value)} value={onCarousel} disabled={!edit}>
               <option value={true}>true</option>
               <option value={false}>false</option>
             </select>
