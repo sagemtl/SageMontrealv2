@@ -454,6 +454,16 @@ const Payment = () => {
       setDisplayCardError(true);
     }
 
+    if (!shippingMethod) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleErrorMessage('Please choose a shipping method.');
+      handleModalShow();
+      setIsLoading(false);
+      form.submitButton.disabled = false;
+      return;
+    }
+
     setValidated(true);
     if (form.checkValidity() === false || cardError) {
       setDisplayCardError(true);
