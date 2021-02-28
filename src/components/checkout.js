@@ -124,12 +124,11 @@ const Payment = () => {
 
   const getShippingPrice = () => {
     const prices = {
-      '$5 - Expedited Parcel (2 - 4 Business Days)': 5,
-      'FREE - Mail (4 - 10 Business Days)': 0,
-      '$15 - Expedited Parcel (5 - 10 Business Days)': 15,
-      '$22 - Small Packet - Air (6 - 12 Business Days)': 22,
-      'FREE - Expedited Parcel (6 - 12 Business Days)': 0,
-      'FREE - Small Packet - Air (6 - 12 Business Days)': 0,
+      '$5 - Mail (5 - 10 Business Days)': 5,
+      'FREE - Tracked Parcel (2 - 4 Business Days)': 0,
+      '$10 - Tracked Parcel (2 - 4 Business Days)': 10,
+      '$20 - Tracked Parcel (7-14 business days)': 20,
+      '$40 - Tracked Parcel (1-3 weeks)': 40,
     };
     if (shippingMethod) {
       return prices[shippingMethod];
@@ -137,31 +136,50 @@ const Payment = () => {
     return null;
   };
 
+  const canShipByMail = () => {
+    const total = checkoutItems.reduce((accumulator, item) => {
+      return accumulator + item.amount;
+    }, 0);
+
+    if (total !== 1) {
+      return false;
+    }
+
+    const itemType = checkoutItems[0].prodMetadata.item;
+    return itemType === 'tshirt' || itemType === 'hat' || itemType === 'tote';
+  };
+
   const getStripeShippingPrice = (selectedOption) => {
     const stripeShippingOptions = [
       {
         id: 'free-shipping',
-        label: 'Mail',
-        detail: 'Arrives in 4 to 10 business days',
+        label: 'Tracked Parcel',
+        detail: 'Arrives in 2 to 4 business days',
         amount: 0,
       },
       {
-        id: 'expedited-shipping',
-        label: 'Expedited Parcel',
-        detail: 'Arrives in 2 to 4 business days',
+        id: 'mail-shipping',
+        label: 'Mail',
+        detail: 'Arrives in 5 to 10 business days',
         amount: 500,
       },
       {
-        id: 'expedited-shipping-us',
-        label: '"Expedited Parcel',
-        detail: 'Arrives in 5 to 10 business days',
-        amount: 1500,
+        id: 'tracked-parcel',
+        label: 'Tracked Parcel',
+        detail: 'Arrives in 2 to 4 business days',
+        amount: 1000,
       },
       {
-        id: 'small-packet-shipping',
-        label: 'Small Packet - Air',
-        detail: 'Arrives in 6 to 12 business days',
+        id: 'tracked-parcel-us',
+        label: 'Tracked Parcel',
+        detail: 'Arrives in 7 to 14 business days',
         amount: 2000,
+      },
+      {
+        id: 'tracked-parcel-intl',
+        label: 'Tracked Parcel',
+        detail: 'Arrives in 7 to 21 business days',
+        amount: 4000,
       },
     ];
 
@@ -175,7 +193,6 @@ const Payment = () => {
     checkoutItems.forEach((item) => {
       totalPrice += item.amount * item.price;
     });
-
     return totalPrice;
   };
 
@@ -191,7 +208,7 @@ const Payment = () => {
     const skusList = [];
 
     checkoutItems.forEach((item) => {
-      const desc = `${item.size}/${item.name}/${item.prodMetadata.colour} ${item.prodMetadata.item}`;
+      const desc = `${item.size}/${item.name}/${item.prodMetadata.colour}/${item.prodMetadata.item}`;
       skusList.push({
         amount: item.price * 100,
         currency: 'cad',
@@ -258,13 +275,15 @@ const Payment = () => {
   if (paymentRequest) {
     paymentRequest.on('shippingaddresschange', (ev) => {
       // Perform server-side request to fetch shipping options
-      fetch('https://api.sagemontreal.com/orders-api/calculateShipping', {
+      fetch(`${process.env.GATSBY_BACKEND_URL}/orders-api/calculate_shipping`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
         },
         body: JSON.stringify({
           shippingAddress: ev.shippingAddress,
+          total: getTotal(),
+          shipByMail: canShipByMail(),
         }),
       })
         .then((response) => {
@@ -274,6 +293,12 @@ const Payment = () => {
           ev.updateWith({
             status: 'success',
             shippingOptions: result.supportedShippingOptions,
+            total: {
+              label: 'Total',
+              amount:
+                getTotal() * 100 +
+                getStripeShippingPrice(result.supportedShippingOptions[0]),
+            },
           });
         });
     });
@@ -310,7 +335,7 @@ const Payment = () => {
         },
       };
       const res = await fetch(
-        'https://api.sagemontreal.com/orders-api/payment_intent',
+        `${process.env.GATSBY_BACKEND_URL}/orders-api/payment_intent`,
         {
           method: 'POST',
           headers: {
@@ -383,13 +408,16 @@ const Payment = () => {
           },
         };
 
-        await fetch('https://api.sagemontreal.com/orders-api/create_order', {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
+        await fetch(
+          `${process.env.GATSBY_BACKEND_URL}/orders-api/create_order`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            body: JSON.stringify(information),
           },
-          body: JSON.stringify(information),
-        });
+        );
 
         navigate('/success');
 
@@ -455,7 +483,7 @@ const Payment = () => {
 
     // Request Client Secret to Server
     const res = await fetch(
-      'https://api.sagemontreal.com/orders-api/payment_intent',
+      `${process.env.GATSBY_BACKEND_URL}/orders-api/payment_intent`,
       {
         method: 'POST',
         headers: {
@@ -516,7 +544,7 @@ const Payment = () => {
         orderItems: getListOfSkus(),
         metadata: { 'Shipping Method': shippingMethod },
       };
-      await fetch('https://api.sagemontreal.com/orders-api/create_order', {
+      await fetch(`${process.env.GATSBY_BACKEND_URL}/orders-api/create_order`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -708,32 +736,50 @@ const Payment = () => {
                         <Form.Label>
                           <strong>Shipping Method</strong>
                         </Form.Label>
-                        <Form.Check
-                          style={{ textAlign: 'center' }}
-                          type="radio"
-                          label="FREE - Mail (4 - 10 Business Days)"
-                          id="formHorizontalRadios1"
-                          name="shippingMethodCA"
-                          onChange={() =>
-                            changeShippingMethod(
-                              'FREE - Mail (4 - 10 Business Days)',
-                            )
-                          }
-                          required
-                        />
-                        <Form.Check
-                          style={{ textAlign: 'center' }}
-                          type="radio"
-                          label="$5 - Expedited Parcel (2 - 4 Business Days)"
-                          name="shippingMethodCA"
-                          id="formHorizontalRadios2"
-                          onChange={() =>
-                            changeShippingMethod(
-                              '$5 - Expedited Parcel (2 - 4 Business Days)',
-                            )
-                          }
-                          required
-                        />
+                        {canShipByMail() && (
+                          <Form.Check
+                            style={{ textAlign: 'center' }}
+                            type="radio"
+                            label="$5 - Mail (5 - 10 Business Days)"
+                            name="shippingMethodCA"
+                            id="formHorizontalRadios1"
+                            onChange={() =>
+                              changeShippingMethod(
+                                '$5 - Mail (5 - 10 Business Days)',
+                              )
+                            }
+                            required
+                          />
+                        )}
+                        {getTotal() >= 70 ? (
+                          <Form.Check
+                            style={{ textAlign: 'center' }}
+                            type="radio"
+                            label="FREE - Tracked Parcel (2 - 4 Business Days)"
+                            id="formHorizontalRadios2"
+                            name="shippingMethodCA"
+                            onChange={() =>
+                              changeShippingMethod(
+                                'FREE - Tracked Parcel (2 - 4 Business Days)',
+                              )
+                            }
+                            required
+                          />
+                        ) : (
+                          <Form.Check
+                            style={{ textAlign: 'center' }}
+                            type="radio"
+                            label="$10 - Tracked Parcel (2 - 4 Business Days)"
+                            name="shippingMethodCA"
+                            id="formHorizontalRadios3"
+                            onChange={() =>
+                              changeShippingMethod(
+                                '$10 - Tracked Parcel (2 - 4 Business Days)',
+                              )
+                            }
+                            required
+                          />
+                        )}
                       </Form.Group>
                     </div>
                   ) : countryValue === 'US' ? (
@@ -742,30 +788,15 @@ const Payment = () => {
                         <Form.Label>
                           <strong>Shipping Method</strong>
                         </Form.Label>
-                        {getTotal() >= 70 && (
-                          <Form.Check
-                            style={{ textAlign: 'center' }}
-                            type="radio"
-                            label="FREE - Expedited Parcel (6 - 12 Business Days)"
-                            name="shippingMethodUS"
-                            id="formHorizontalRadios3"
-                            onChange={() =>
-                              changeShippingMethod(
-                                'FREE - Expedited Parcel (6 - 12 Business Days)',
-                              )
-                            }
-                            required
-                          />
-                        )}
                         <Form.Check
                           style={{ textAlign: 'center' }}
                           type="radio"
-                          label="$15 - Expedited Parcel (5 - 10 Business Days)"
+                          label="$20 - Tracked Parcel (7-14 business days)"
                           name="shippingMethodUS"
                           id="formHorizontalRadios4"
                           onChange={() =>
                             changeShippingMethod(
-                              '$15 - Expedited Parcel (5 - 10 Business Days)',
+                              '$20 - Tracked Parcel (7-14 business days)',
                             )
                           }
                           required
@@ -777,30 +808,15 @@ const Payment = () => {
                       <Form.Label>
                         <strong>Shipping Method</strong>
                       </Form.Label>
-                      {getTotal() >= 70 && (
-                        <Form.Check
-                          style={{ textAlign: 'center' }}
-                          type="radio"
-                          label="FREE - Small Packet - Air (6 - 12 Business Days)"
-                          name="shippingMethodOther"
-                          id="formHorizontalRadios5"
-                          onChange={() =>
-                            changeShippingMethod(
-                              'FREE - Small Packet - Air (6 - 12 Business Days)',
-                            )
-                          }
-                          required
-                        />
-                      )}
                       <Form.Check
                         style={{ textAlign: 'center' }}
                         type="radio"
-                        label="$22 - Small Packet - Air (6 - 12 Business Days)"
+                        label="$40 - Tracked Parcel (1-3 weeks)"
                         name="shippingMethodOther"
                         id="formHorizontalRadios6"
                         onChange={() =>
                           changeShippingMethod(
-                            '$22 - Small Packet - Air (6 - 12 Business Days)',
+                            '$40 - Tracked Parcel (1-3 weeks)',
                           )
                         }
                         required
