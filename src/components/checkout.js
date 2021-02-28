@@ -318,8 +318,7 @@ const Payment = () => {
     // Callback when a payment method is created.
     paymentRequest.on('paymentmethod', async (event) => {
       let information = {
-        price:
-          (getTotal() + getStripeShippingPrice(event.shippingOption)) * 100,
+        price: getTotal() * 100 + getStripeShippingPrice(event.shippingOption),
         receipt_email: event.payerEmail,
         shipping: {
           name: event.shippingAddress.recipient,
@@ -505,6 +504,14 @@ const Payment = () => {
       type: 'card',
       card: cardElement,
     });
+
+    if (paymentReqMethod.error) {
+      handleErrorMessage('An error has occured. Please try again.');
+      handleModalShow();
+      setIsLoading(false);
+      form.submitButton.disabled = false;
+      return;
+    }
     // Confirm the Payment
     const confirmCardPayment = await stripe
       .confirmCardPayment(client_secret, {

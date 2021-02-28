@@ -172,8 +172,19 @@
 .MuiPaper-elevation24 {
   background-color: transparent !important;
   box-shadow: none !important;
+  overflow: hidden;
 }
 
 .MuiBackdrop-root {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.MuiDialog-paper {
+  height: 500px;
+  overflow: hidden;
+}
+
+.cigarette-case {
+  max-height: 500px;
+  height: 500px;
 }
