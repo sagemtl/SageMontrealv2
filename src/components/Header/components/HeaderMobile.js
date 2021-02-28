@@ -99,7 +99,7 @@ const HeaderMobile = ({ setCart, cart }) => {
           <CloseIcon
             fontSize="large"
             className="header-mobile__icon"
-            style={{ 'margin-right': 15 }}
+            style={{ marginRight: 15 }}
           />
         ) : (
           <img
