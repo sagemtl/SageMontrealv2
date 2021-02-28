@@ -69,7 +69,7 @@
   }
 }
 
-@media only screen and (max-width: 750px){
+@media only screen and (max-width: 900px){
 
     div.checkout{
         position: static;
@@ -96,25 +96,21 @@
 
     .flexbox-checkout {
       position: relative;
+
+      &__hidden {
+        display: none;
+      }
     }
 
     .cart_checkout_container{
       border: 2px solid black;
-      // margin-top: 30px;
-      // margin: auto;
-      // margin-right: 10vh;
-      margin: 25px 13% auto;
-      // padding-right: 15px;
-      // padding-left: 15px;
+      margin: 25px auto auto;
       box-shadow: 3px 3px #154734;
       border-radius: .25rem;
       display: flex;
       position: relative;
-      // width: 100%;
-      // left: 50%;
-      // transform: translateX(-50%);
-      max-width: 540px;
-
+      margin-left: 3%;
+      margin-right: 3%;
     }
 
     .cart-checkout{
@@ -130,6 +126,18 @@
       text-align: center;
       width: 90%;
 
+    }
+
+    .prices-flexbox {
+      display: flex;
+      justify-content: space-between;
+      margin-right: 5%;
+      margin-left: 5%;
+    }
+
+    .prices-hr {
+      margin-top: 0 !important;
+      border-top: 2px solid black;
     }
 
     .cart_checkout{
@@ -210,43 +218,52 @@
     }
 } 
 
-@media only screen and (min-width: 750px){
+@media only screen and (min-width: 900px){
     div.checkout{        
-        position: absolute;
-        left: 30%;
-        width: 65%;
-        &__checkout-form{
-            border: 2px solid black;
-            overflow: hidden;
-            box-shadow: 3px 3px #154734;
+      width: 65%;
+      &__checkout-form{
+          border: 2px solid black;
+          overflow: hidden;
+          box-shadow: 3px 3px #154734;
 
-            &__form{
-                font-weight: bold;
-            }
-            &__form-control{
-                    border: 2px solid black;
-            }
-        }
+          &__form{
+              font-weight: bold;
+          }
+          &__form-control{
+                  border: 2px solid black;
+          }
+      }
     }
 
     .flexbox-checkout {
-        display: flex;
-        position: relative;
+      display: flex;
+      position: relative;
+      justify-content: space-evenly;
+      
+      &__hidden {
+        display: none;
+      }
+    }
+
+    .prices-flexbox {
+      display: flex;
+      justify-content: space-between;
+      margin-right: 10%;
+      margin-left: 10%;
+    }
+
+    .prices-hr {
+      margin-top: 0 !important;
+      border-top: 2px solid black;
     }
 
     .cart_checkout_container{
-      position: absolute;
-      width: 178px;
-      top: 30px;
-      left: 7.5%;
-      margin-right: 20px;
+      width: 20%;
+      min-width: 300px;
+      padding-top: 1.5rem;
     }
 
     .summary{
-      position: relative;
-      top: 40px;
-      margin-top: 10px;
-
       &__shipping-method{
         position: static;
       }
@@ -260,6 +277,7 @@
       box-shadow: 3px 3px #154734;
       border-radius: 6px;
       margin-bottom: 30px;
+      width: 100%;
       
 
       .cart_checkout{
@@ -267,40 +285,49 @@
         &__item{
           position: relative;
           background-color: white;
-          width: 175px;
+          width: 100%;
           height: 75px;
+          border: none;
           border-bottom: 2px solid black;
+          border-radius: 0px;
+          box-shadow: none;
           color: black;
           outline: none;
           margin-bottom: -1px;
+
           &__amount{
             position: absolute;
-            left: 10px;
+            left: 70px;
             top: 28px;
             font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
             font-size: 12px;
           }
           &__image{
             margin-top: 10px;
-            margin-left: 30px;
-            height: 100px;
+            margin-left: 10px;
           }
           &__size{
             position: absolute;
-            left: 115px;
-            top: 28px;
+            left: 100px;
+            top: 40px;
             font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
             font-size: 12px;
           }
           &__price{
             position: absolute;
             right: 10px;
-            bottom: 10px;
+            bottom: 5px;
             font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
             font-size: 12px;
           }
           &__name{
-            display: none;
+            position: absolute;
+            left: 100px;
+            top: 20px;
+            font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
+            font-size: 12px;
+            overflow: hidden;
+            width: 200px;
           }
           &__close{
             position: absolute;
@@ -414,6 +441,7 @@ label {
         width: 100%;
         border-radius: .25rem;
         padding: .375rem .75rem;
+        background-color: white;
     }
 }
 

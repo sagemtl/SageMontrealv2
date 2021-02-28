@@ -9,6 +9,22 @@ import './styles/lookbook.scss';
 const LookbookMenu = () => {
   const collections = [
     {
+      season: 'Spring 21',
+      cover:
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217340/Lookbooks/Spring_21/cover_njsyjf.png',
+      images: [
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217337/Lookbooks/Spring_21/1_yg5bm7.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217339/Lookbooks/Spring_21/2_eiun6p.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217339/Lookbooks/Spring_21/3_qlebmp.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217338/Lookbooks/Spring_21/4_coiwwi.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217340/Lookbooks/Spring_21/5_dkzqfh.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217340/Lookbooks/Spring_21/6_gdhfdr.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217341/Lookbooks/Spring_21/7_earwry.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217341/Lookbooks/Spring_21/8_hyawyg.jpg',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217341/Lookbooks/Spring_21/9_fjyexk.jpg',
+      ],
+    },
+    {
       season: 'Summer 20',
       cover:
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1609534692/heat-of-the-sun-cover_jgr65g.png',

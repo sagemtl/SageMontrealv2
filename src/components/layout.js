@@ -21,11 +21,26 @@ const Layout = ({ children, footerColor }) => {
 
   const isMobile = width < 900;
 
+  console.log(pathname);
+
   return (
     <>
       {pathname !== '/checkout' && <Header setCart={setCart} cart={cart} />}
       {cart && pathname !== '/checkout' && <Cart isMobile={isMobile} />}
-      <div className="layout">{children}</div>
+      <div className="layout">
+        {pathname.includes('/shop/') && (
+          <div className="product-banner">
+            <div className="product-banner-track">
+              {[...Array(10)].map((e, i) => {
+                return (
+                  <p className="product-banner__entry">$80+ Free Shipping</p>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        {children}
+      </div>
       <Footer color={footerColor} />
     </>
   );

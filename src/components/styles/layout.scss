@@ -14,3 +14,42 @@
 button:focus {
   outline: none !important;
 }
+
+.product-banner {
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  background: white;
+  z-index: 10;
+
+  &__entry {
+    min-width: 200px;
+    width: 200px;
+    margin: 0 60px;
+    font-weight: 540;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+}
+
+.product-banner-track {
+  width: calc(300px * 12);
+  display: flex;
+  animation: horizontal 15s linear infinite;
+  align-items: center;
+}
+
+@keyframes horizontal {
+	0% { transform: translateX(0); }
+	100% { transform: translateX(calc(-320px * 5))}
+}
+
+@media screen and (max-width: 900px) {
+  .product-banner {
+    top: 60px;
+  }
+}

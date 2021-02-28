@@ -1,4 +1,4 @@
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 900px) {
     .success-align-middle {
         margin-left: 25%;
         margin-right: 25%;
@@ -29,7 +29,7 @@
 
           &__amount{
             position: absolute;
-            left: 10px;
+            left: 15%;
             top: 28px;
             font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
             font-size: 12px;
@@ -40,7 +40,7 @@
           }
           &__size{
             position: absolute;
-            left: 115px;
+            left: 70%;
             top: 28px;
             font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
             font-size: 12px;
@@ -54,7 +54,7 @@
           }
           &__name{
             position: absolute;
-            right: 50px;
+            left: 25%;
             top: 28px;
             font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
             font-size: 12px;
@@ -68,7 +68,7 @@
 
 
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 900px) {
     .success-align-middle {
         margin-left: 10%;
         margin-right: 10%;
@@ -84,17 +84,31 @@
         border-radius: .25rem;
     }
     .success-page-cart .cart_checkout {
-        &__item__name{
-            display: block !important;
+        &__item{
+          &__size{
             position: absolute;
-            right: 50px;
-            bottom: 10px;
+            left: 40%;
+            top: 38px;
             font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
             font-size: 12px;
-        }
-
-        &__item__close{
+            margin-left: -28px;
+          }
+          &__name{
+            display: block !important;
+            position: absolute;
+            left: 40%;
+            top: 20px;
+            font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;;
+            font-size: 12px;
+            white-space: nowrap;
+            width: 43%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
+          }
+          &__close{
             display: none;
+          }
         }
     }
 }
