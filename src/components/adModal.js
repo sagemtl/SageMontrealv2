@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
-import cigaretteCase from '../assets/cigarette.gif';
+import cigaretteCase from '../assets/cigarette_white.gif';
 import { GlobalContext } from '../context/Provider';
 
 const Transition = React.forwardRef((props, ref) => (
@@ -43,6 +43,7 @@ const AdModal = () => {
         maxWidth="xs"
         transitionDuration={{ enter: 2000, exit: 1000 }}
         fullWidth
+        onClick={closeModal}
       >
         <video
           src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1614535841/cigarette_case_xdoram.mp4"
