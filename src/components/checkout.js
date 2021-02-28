@@ -446,22 +446,11 @@ const Payment = () => {
   };
 
   const submit = async (e) => {
-    setIsLoading(true);
     const form = e.currentTarget;
     if (form.checkValidity() === false || cardError) {
       e.preventDefault();
       e.stopPropagation();
       setDisplayCardError(true);
-    }
-
-    if (!shippingMethod) {
-      e.preventDefault();
-      e.stopPropagation();
-      handleErrorMessage('Please choose a shipping method.');
-      handleModalShow();
-      setIsLoading(false);
-      form.submitButton.disabled = false;
-      return;
     }
 
     setValidated(true);
@@ -470,6 +459,7 @@ const Payment = () => {
       return;
     }
 
+    setIsLoading(true);
     form.submitButton.disabled = true;
     e.preventDefault();
 
