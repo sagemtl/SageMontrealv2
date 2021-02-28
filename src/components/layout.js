@@ -21,8 +21,6 @@ const Layout = ({ children, footerColor }) => {
 
   const isMobile = width < 900;
 
-  console.log(pathname);
-
   return (
     <>
       {pathname !== '/checkout' && <Header setCart={setCart} cart={cart} />}

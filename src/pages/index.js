@@ -12,7 +12,6 @@ import { GlobalContext } from '../context/Provider';
 const IndexPage = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const [showLoading, setShowLoading] = useState(true);
-  console.log(state);
 
   useEffect(() => {
     return () => {
@@ -28,7 +27,6 @@ const IndexPage = () => {
   }, [dispatch, state.visitedPage]);
 
   useEffect(() => {
-    console.log(!state.visitedPage.includes('/'));
     setShowLoading(!state.visitedPage.includes('/'));
   }, [setShowLoading, state.visitedPage]);
 
