@@ -21,8 +21,6 @@ const Layout = ({ children, footerColor }) => {
 
   const isMobile = width < 900;
 
-  console.log(pathname);
-
   return (
     <>
       {pathname !== '/checkout' && <Header setCart={setCart} cart={cart} />}
@@ -31,9 +29,11 @@ const Layout = ({ children, footerColor }) => {
         {pathname.includes('/shop/') && (
           <div className="product-banner">
             <div className="product-banner-track">
-              {[...Array(10)].map((e, i) => {
+              {[...Array(10)].map(() => {
                 return (
-                  <p className="product-banner__entry">$80+ Free Shipping</p>
+                  <p className="product-banner__entry">
+                    Free shipping across Canada for orders above $70
+                  </p>
                 );
               })}
             </div>

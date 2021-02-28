@@ -16,6 +16,7 @@
   display: flex;
   overflow-x: scroll;
   width: calc(650px * 7);
+  animation: fadein 3s;
 
   &__icon {
     &--right {
@@ -61,4 +62,3 @@
     display: none;
   }
 }
-

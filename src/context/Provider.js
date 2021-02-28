@@ -8,6 +8,9 @@ let localState;
 
 if (typeof window !== `undefined`) {
   localState = JSON.parse(localStorage.getItem('cart-items'));
+  if (localState) {
+    localState.visitedPage = [];
+  }
 }
 
 export const GlobalContext = createContext(initialState);

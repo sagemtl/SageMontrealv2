@@ -11,7 +11,6 @@ export const sortSizes = (skus) => {
 };
 
 export const updateProduct = async (prod_id, product_info) => {
-  console.log(product_info);
   const requestOptions = {
     headers: {
       Accept: 'application/json',
