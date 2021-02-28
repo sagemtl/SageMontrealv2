@@ -2,7 +2,7 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const IS_DEV = process.env.NODE_ENV === 'development';
+const DATADOG_ENABLE = process.env.GATSBY_DATADOG === 'TRUE';
 
 module.exports = {
   siteMetadata: {
@@ -82,7 +82,7 @@ module.exports = {
           site: 'datadoghq.com',
           service: 'Sage Montreal',
           sampleRate: 100,
-          enabled: !IS_DEV,
+          enabled: DATADOG_ENABLE,
         },
         logs: {
           clientToken: 'pub0c5a5f338933acd6d50464cc92e7c214',

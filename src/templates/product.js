@@ -18,11 +18,9 @@ const Product = ({ data }) => {
   const skus = data.allStripeSku;
 
   const getFeaturedImgInChild = () => {
-    console.log('in getFeaturedImg');
     const coverPhoto = item.children.find(
       (node) => node.id === item.featuredImg.id,
     );
-    console.log(`coverphoto id ${coverPhoto.id}`);
     return coverPhoto.childImageSharp.fixed.src;
   };
 
@@ -154,7 +152,6 @@ const Product = ({ data }) => {
               setSelectedSku(nodeid);
               setSelectedSize(size);
             }}
-            onChange={() => {}}
             disabled={false || !hasStock}
           />
           <label htmlFor={size} className={className}>
