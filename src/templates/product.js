@@ -2,11 +2,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, graphql } from 'gatsby';
-import PropTypes from 'prop-types';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import { TypePredicateKind } from 'typescript';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
@@ -18,10 +16,17 @@ const Product = ({ data }) => {
   const item = data.stripeProduct;
   const skus = data.allStripeSku;
 
+  const getFeaturedImgInChild = () => {
+    console.log('in getFeaturedImg');
+    const coverPhoto = item.children.find((node)=>node.id==item.featuredImg.id);
+    console.log(`coverphoto id ${coverPhoto.id}`);
+    return coverPhoto.childImageSharp.fixed.src;
+  }
+
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedSku, setSelectedSku] = useState('');
   const [selectedImage, setSelectedImage] = useState(
-    item.children[0].childImageSharp.fixed.src,
+    getFeaturedImgInChild
   );
   const [zoomOpen, setZoomOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -131,7 +136,7 @@ const Product = ({ data }) => {
             id={size}
             value={size}
             checked={selectedSize === size}
-            onClick={() => {
+            onChange={() => {
               setSelectedSku(nodeid);
               setSelectedSize(size);
             }}
@@ -249,6 +254,7 @@ export const query = graphql`
         colour
       }
       featuredImg {
+        id
         childImageSharp {
           fixed(height: 50, toFormat: PNG) {
             ...GatsbyImageSharpFixed
@@ -274,13 +280,6 @@ export const query = graphql`
           price
           attributes {
             name
-          }
-          featuredImg {
-            childImageSharp {
-              fixed(height: 750, toFormat: PNG) {
-                ...GatsbyImageSharpFixed
-              }
-            }
           }
         }
       }
