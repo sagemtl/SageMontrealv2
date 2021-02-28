@@ -4,6 +4,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, graphql } from 'gatsby';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
+import PropTypes from 'prop-types';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
@@ -18,16 +19,16 @@ const Product = ({ data }) => {
 
   const getFeaturedImgInChild = () => {
     console.log('in getFeaturedImg');
-    const coverPhoto = item.children.find((node)=>node.id==item.featuredImg.id);
+    const coverPhoto = item.children.find(
+      (node) => node.id === item.featuredImg.id,
+    );
     console.log(`coverphoto id ${coverPhoto.id}`);
     return coverPhoto.childImageSharp.fixed.src;
-  }
+  };
 
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedSku, setSelectedSku] = useState('');
-  const [selectedImage, setSelectedImage] = useState(
-    getFeaturedImgInChild
-  );
+  const [selectedImage, setSelectedImage] = useState(getFeaturedImgInChild);
   const [zoomOpen, setZoomOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [inventories, setInventories] = useState([]);
