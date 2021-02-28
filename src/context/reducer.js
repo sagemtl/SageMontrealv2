@@ -36,12 +36,6 @@ const globalReducer = (state, action) => {
         successItems: action.payload.successItems,
       };
     }
-    case 'SET_VISITED_PAGE': {
-      return {
-        ...state,
-        visitedPage: action.payload.visitedPage,
-      };
-    }
     default:
       return state;
   }

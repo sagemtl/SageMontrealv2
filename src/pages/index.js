@@ -16,19 +16,14 @@ const IndexPage = () => {
   useEffect(() => {
     return () => {
       if (!state.visitedPage.includes('/')) {
-        dispatch({
-          type: 'SET_VISITED_PAGE',
-          payload: {
-            visitedPage: state.visitedPage.push('/'),
-          },
-        });
+        state.visitedPage.push('/');
       }
     };
   }, [dispatch, state.visitedPage]);
 
   useEffect(() => {
     setShowLoading(!state.visitedPage.includes('/'));
-  }, [setShowLoading, state.visitedPage]);
+  }, [setShowLoading, state, state.visitedPage]);
 
   if (typeof window === `undefined`) {
     return <></>;
