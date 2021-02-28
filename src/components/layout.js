@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from '@reach/router';
 
 import Header from './Header';
 import Footer from './footer';
 import Cart from './cart';
 import './styles/layout.scss';
 
-const Layout = ({ children, footerColor }) => {
+const Layout = ({ children, footerColor, location }) => {
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 0;
+  const { pathname } = location;
   const [width, setWidth] = useState(widthVal);
-  const { pathname } = useLocation();
   const [cart, setCart] = useState(true);
 
   useEffect(() => {
@@ -21,12 +20,14 @@ const Layout = ({ children, footerColor }) => {
 
   const isMobile = width < 900;
 
+  console.log(pathname);
+
   return (
     <>
       {pathname !== '/checkout' && <Header setCart={setCart} cart={cart} />}
       {cart && pathname !== '/checkout' && <Cart isMobile={isMobile} />}
       <div className="layout">
-        {pathname.includes('/shop/') && (
+        {(pathname.includes('/shop/') || pathname === '/shop') && (
           <div className="product-banner">
             <div className="product-banner-track">
               {[...Array(10)].map(() => {

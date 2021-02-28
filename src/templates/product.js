@@ -14,7 +14,7 @@ import { sortSizes, getSkuInventory } from '../helpers/stripeHelper';
 
 import './styles/product.scss';
 
-const Product = ({ data }) => {
+const Product = ({ data, location }) => {
   const item = data.stripeProduct;
   const skus = data.allStripeSku;
 
@@ -156,7 +156,7 @@ const Product = ({ data }) => {
   };
 
   return (
-    <Layout>
+    <Layout location={location}>
       <div className="product">
         <div className="product-images">
           <img

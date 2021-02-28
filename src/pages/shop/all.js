@@ -7,7 +7,7 @@ import ShopViewItem from '../../components/ShopViewItem';
 
 import './style/all.scss';
 
-const ShopAll = ({ data }) => {
+const ShopAll = ({ data, location }) => {
   const getProducts = () => {
     const stripeProducts = data.allStripeProduct.edges.filter(
       (node) => node.node.featuredImg,
@@ -19,7 +19,7 @@ const ShopAll = ({ data }) => {
   };
 
   return (
-    <Layout>
+    <Layout location={location}>
       <div className="shop-all-container">
         {getProducts().map((product) => {
           return <ShopViewItem product={product} />;

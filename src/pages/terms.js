@@ -3,9 +3,9 @@ import Layout from '../components/layout';
 
 import './styles/terms.scss';
 
-const terms = () => {
+const terms = ({ location }) => {
   return (
-    <Layout>
+    <Layout location={location}>
       <div className="terms">
         <div className="terms-column">
           <img
@@ -44,9 +44,7 @@ const terms = () => {
             <p className="terms__text">$5</p>
           </div>
           <div className="terms-row">
-            <p className="terms__text">
-              Tracked Parcel (2 - 4 Business Days)
-            </p>
+            <p className="terms__text">Tracked Parcel (2 - 4 Business Days)</p>
             <p className="terms__text">$10</p>
           </div>
           <br />
@@ -54,9 +52,7 @@ const terms = () => {
             <u>USA</u>
           </p>
           <div className="terms-row">
-            <p className="terms__text">
-              Tracked Parcel (7 - 14 Business Days)
-            </p>
+            <p className="terms__text">Tracked Parcel (7 - 14 Business Days)</p>
             <p className="terms__text">$20</p>
           </div>
           <br />
@@ -64,9 +60,7 @@ const terms = () => {
             <u>International</u>
           </p>
           <div className="terms-row">
-            <p className="terms__text">
-              Tracked Parcel (1 - 3 Weeks)
-            </p>
+            <p className="terms__text">Tracked Parcel (1 - 3 Weeks)</p>
             <p className="terms__text">$40</p>
           </div>
           <br />
@@ -86,8 +80,8 @@ const terms = () => {
           <p className="terms__header--2">Returns & exchanges</p>
           <p className="terms__text">
             If you received a package that is defective or incorrect, you may
-            return the package within 14 days after its reception by contacting us
-            at info@sagemontreal.com and using the return label inside your
+            return the package within 14 days after its reception by contacting
+            us at info@sagemontreal.com and using the return label inside your
             order.
           </p>
           <br />

@@ -18,7 +18,7 @@ import ShopAudio2 from '../assets/ShopAudio2.mp3';
 import sageBackgroundDesktop from '../assets/sage-shop-cornfield-background.png';
 import sageBackgroundMobile from '../assets/sage-shop-cornfield-background-mobile.png';
 
-const Shop = ({ data }) => {
+const Shop = ({ data, location }) => {
   const [buttonPaused, setButtonPaused] = useState(false);
   const [paused, setPaused] = useState(false);
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 1200;
@@ -118,7 +118,7 @@ const Shop = ({ data }) => {
   });
 
   return (
-    <Layout footerColor="white">
+    <Layout footerColor="white" location={location}>
       <AdModal />
       <div className="shop-scroll">
         {audio && (
@@ -209,7 +209,9 @@ export default Shop;
 
 export const query = graphql`
   query MyQuery {
-    allStripeProduct(filter: { active: { eq: true }, metadata: {onCarousel: {eq: "true"} }}) {
+    allStripeProduct(
+      filter: { active: { eq: true }, metadata: { onCarousel: { eq: "true" } } }
+    ) {
       edges {
         node {
           id
