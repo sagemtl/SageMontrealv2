@@ -35,7 +35,7 @@ exports.onCreateNode = async ({
   createNodeId,
 }) => {
   const { createNodeField, createNode, createParentChildLink } = actions;
-  if (node.internal.type === `StripeProduct`) {
+  if (node.internal.type === `StripeProduct` && node.active===true) {
     const slug = generateSlug(node.name);
     createNodeField({
       node,
@@ -43,7 +43,7 @@ exports.onCreateNode = async ({
       value: slug,
     });
   }
-  if (node.internal.type === `StripeProduct`) {
+  if (node.internal.type === `StripeProduct` && node.active===true) {
     node.images.forEach(async (img) => {
       try {
         const fileNode = await createRemoteFileNode({
