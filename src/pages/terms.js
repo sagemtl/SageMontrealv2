@@ -25,7 +25,7 @@ const terms = () => {
         <div className="terms-column">
           <p className="terms__header--2">Shipping</p>
           <p className="terms__text">
-            All orders are shipped within 1-2 business days
+            All orders are shipped within 2-3 business days
           </p>
           <p className="terms__text">
             Orders made in the downtown Montreal area may be eligible for same
@@ -40,14 +40,14 @@ const terms = () => {
             <u>Canada</u>
           </p>
           <div className="terms-row">
-            <p className="terms__text">Mail (4 - 10 Business Days)</p>
-            <p className="terms__text">Free</p>
+            <p className="terms__text">Mail (5 - 10 Business Days)</p>
+            <p className="terms__text">$5</p>
           </div>
           <div className="terms-row">
             <p className="terms__text">
-              Expedited Parcel (2 - 4 Business Days)
+              Tracked Parcel (2 - 4 Business Days)
             </p>
-            <p className="terms__text">$5</p>
+            <p className="terms__text">$10</p>
           </div>
           <br />
           <p className="terms__text">
@@ -55,9 +55,9 @@ const terms = () => {
           </p>
           <div className="terms-row">
             <p className="terms__text">
-              Expedited Parcel (5 - 10 Business Days)
+              Tracked Parcel (7 - 14 Business Days)
             </p>
-            <p className="terms__text">$15</p>
+            <p className="terms__text">$20</p>
           </div>
           <br />
           <p className="terms__text">
@@ -65,13 +65,13 @@ const terms = () => {
           </p>
           <div className="terms-row">
             <p className="terms__text">
-              Small Packet - Air (6 - 12 Business Days)
+              Tracked Parcel (1 - 3 Weeks)
             </p>
-            <p className="terms__text">$22</p>
+            <p className="terms__text">$40</p>
           </div>
           <br />
           <p className="terms__text">
-            *Orders above $80 have free expedited shipping
+            *Orders above $70 have free expedited shipping
           </p>
           <br />
           <p className="terms__header--2">Payments</p>
@@ -86,7 +86,7 @@ const terms = () => {
           <p className="terms__header--2">Returns & exchanges</p>
           <p className="terms__text">
             If you received a package that is defective or incorrect, you may
-            return the package within 14 days after its reception by termsing us
+            return the package within 14 days after its reception by contacting us
             at info@sagemontreal.com and using the return label inside your
             order.
           </p>

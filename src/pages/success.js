@@ -23,10 +23,12 @@ const Success = () => {
           {' '}
           <strong>Your order has been placed!</strong> <br />
           Your payment has been successfully processed and a receipt has been
-          sent to {successEmail}.
+          sent to <strong>{successEmail}</strong>.
+          <br />
           <br />
           Your items will be shipped the following day and should arrive within
           a week.
+          <br />
           <br />
           Thank you for shopping with us!!{' '}
         </p>

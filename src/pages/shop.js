@@ -9,6 +9,7 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import MusicOffIcon from '@material-ui/icons/MusicOff';
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
+import AdModal from '../components/adModal';
 import './styles/shop.scss';
 import sageAnimated from '../assets/sage-animated.gif';
 import { GlobalContext } from '../context/Provider';
@@ -118,6 +119,7 @@ const Shop = ({ data }) => {
 
   return (
     <Layout footerColor="white">
+      <AdModal />
       <div className="shop-scroll">
         {audio && (
           <audio autoPlay loop muted={audioPaused}>
