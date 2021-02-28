@@ -81,7 +81,7 @@ const Shop = ({ data }) => {
   });
 
   return (
-    <Layout>
+    <Layout footerColor='white'>
       <div className="shop-scroll">
         <img
           src={mobile ? sageBackgroundMobile : sageBackgroundDesktop}
