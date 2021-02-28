@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql, Link } from 'gatsby';
 import classNames from 'classnames';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ForwardRoundedIcon from '@material-ui/icons/ForwardRounded';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import MusicOffIcon from '@material-ui/icons/MusicOff';
 import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
 import sageAnimated from '../assets/sage-animated.gif';
 import sageBackgroundDesktop from '../assets/sage-shop-background.jpg';
 import sageBackgroundMobile from '../assets/sage-shop-background-mobile.jpg';
+import { GlobalContext } from '../context/Provider';
+import ShopAudio1 from '../assets/ShopAudio1.mp3';
+import ShopAudio2 from '../assets/ShopAudio2.mp3';
 
 const Shop = ({ data }) => {
   const [buttonPaused, setButtonPaused] = useState(false);
@@ -21,6 +26,18 @@ const Shop = ({ data }) => {
   const pageYOffset = typeof window !== `undefined` ? window.pageYOffset : 0;
   const [scroll, setScroll] = useState(pageYOffset);
   const mobile = windowWidth < 1200;
+
+  const { state, dispatch } = useContext(GlobalContext);
+  const { audioPaused, audio } = state;
+
+  const setAudioPaused = (isPaused) => {
+    dispatch({
+      type: 'SET_AUDIO_PAUSED',
+      payload: {
+        audioPaused: isPaused,
+      },
+    });
+  };
 
   const getProducts = () => {
     const stripeProducts = data.allStripeProduct.edges.filter(
@@ -36,6 +53,25 @@ const Shop = ({ data }) => {
     products.push(...stripeProducts.slice(0, remainder));
     return products;
   };
+
+  useEffect(() => {
+    const setAudio = (audioFile) => {
+      dispatch({
+        type: 'SET_AUDIO',
+        payload: {
+          audio: audioFile,
+        },
+      });
+    };
+
+    if (!audio) {
+      if (Math.random() < 0.5) {
+        setAudio(ShopAudio1);
+      } else {
+        setAudio(ShopAudio2);
+      }
+    }
+  }, [audio, dispatch]);
 
   useEffect(() => {
     if (typeof window !== `undefined`) {
@@ -83,6 +119,11 @@ const Shop = ({ data }) => {
   return (
     <Layout>
       <div className="shop-scroll">
+        {audio && (
+          <audio autoPlay loop muted={audioPaused}>
+            <source type="audio/mp3" src={audio} />
+          </audio>
+        )}
         <img
           src={mobile ? sageBackgroundMobile : sageBackgroundDesktop}
           className="shop-scroll__background"
@@ -122,17 +163,22 @@ const Shop = ({ data }) => {
                 );
               }
             })}
-          <button
-            type="button"
-            className="shop-scroll__button"
-            onClick={() => setButtonPaused(!buttonPaused)}
-          >
-            {buttonPaused ? (
-              <PlayArrowIcon />
-            ) : (
-              <PauseIcon style={{ verticalAlign: 'center' }} />
-            )}
-          </button>
+          <div className="shop-buttons">
+            <button
+              type="button"
+              className="shop-scroll__button"
+              onClick={() => setAudioPaused(!audioPaused)}
+            >
+              {audioPaused ? <MusicOffIcon /> : <MusicNoteIcon />}
+            </button>
+            <button
+              type="button"
+              className="shop-scroll__button"
+              onClick={() => setButtonPaused(!buttonPaused)}
+            >
+              {buttonPaused ? <PlayArrowIcon /> : <PauseIcon />}
+            </button>
+          </div>
         </div>
       </div>
       <Link to="/shop/all">
