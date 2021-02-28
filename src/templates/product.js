@@ -180,7 +180,7 @@ const Product = ({ data }) => {
           ) : null}
           <br />
           <p className="product-details__price">
-            $ {skus.edges[0].node.price / 100}.00 CAD
+            $ {skus.edges[0].node.price / 100} CAD
           </p>
           {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>
@@ -204,10 +204,7 @@ const Product = ({ data }) => {
           </button>
         </div>
         <Link className="product-details__back" to="/shop/all">
-          <KeyboardBackspaceIcon
-            style={{ color: '#154734' }}
-            fontSize="large"
-          />
+          <KeyboardBackspaceIcon className="product-back" fontSize="large" />
         </Link>
         <Modal
           open={zoomOpen}
