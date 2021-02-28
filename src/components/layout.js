@@ -26,7 +26,7 @@ const Layout = ({ children, footerColor }) => {
       {pathname !== '/checkout' && <Header setCart={setCart} cart={cart} />}
       {cart && pathname !== '/checkout' && <Cart isMobile={isMobile} />}
       <div className="layout">
-        {pathname.includes('/shop/') && (
+        {pathname.includes('/shop') && (
           <div className="product-banner">
             <div className="product-banner-track">
               {[...Array(10)].map((val, ind) => {

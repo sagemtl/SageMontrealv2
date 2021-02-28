@@ -41,6 +41,7 @@ const AdModal = () => {
         aria-describedby="alert-dialog-slide-description"
         onClose={closeModal}
         maxWidth="xs"
+        style={{ overflow: 'hidden' }}
         transitionDuration={{ enter: 2000, exit: 1000 }}
         fullWidth
         onClick={closeModal}

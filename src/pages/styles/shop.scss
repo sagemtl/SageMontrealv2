@@ -25,12 +25,9 @@
     font-weight: 500;
     display: flex;
     justify-content: center;
+    margin: 10px 0;
     box-shadow: -6px -6px 10px rgba(155, 143, 143, 0.8),
       2px 6px 10px rgba(0, 0, 0, 0.2);
-
-    &__above {
-      margin-bottom: 30px;
-    }
 
     &:active {
       opacity: 1;
