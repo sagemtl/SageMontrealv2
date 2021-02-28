@@ -25,9 +25,6 @@
     font-weight: 500;
     display: flex;
     justify-content: center;
-    position: absolute;
-    left: 2em;
-    bottom: 70px;
     box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
       2px 6px 10px rgba(0, 0, 0, 0.2);
 
@@ -45,6 +42,14 @@
   overflow: hidden;
   position: fixed;
   animation: fadein 5s;
+}
+
+.shop-buttons {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 70px;
+  left: 40px;
 }
 
 .shop-view {
@@ -84,6 +89,14 @@
     color: black;
     animation: fadeinout 2s ease-in-out infinite;
   }
+}
+
+.shop-buttons {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 40px;
+  bottom: 70px;
 }
 
 .shop-wheel {

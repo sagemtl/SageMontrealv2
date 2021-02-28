@@ -12,6 +12,18 @@ const globalReducer = (state, action) => {
         buttonPaused: action.payload.buttonPaused,
       };
     }
+    case 'SET_AUDIO_PAUSED': {
+      return {
+        ...state,
+        audioPaused: action.payload.audioPaused,
+      };
+    }
+    case 'SET_AUDIO': {
+      return {
+        ...state,
+        audio: action.payload.audio,
+      };
+    }
     case 'RESET_CHECKOUT_ITEMS': {
       return {
         ...state,
