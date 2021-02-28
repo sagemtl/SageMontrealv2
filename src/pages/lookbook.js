@@ -6,7 +6,7 @@ import LookbookFront from '../components/lookbookFront';
 
 import './styles/lookbook.scss';
 
-const LookbookMenu = ({ location }) => {
+const LookbookMenu = () => {
   const collections = [
     {
       season: 'Spring 21',
@@ -126,11 +126,7 @@ const LookbookMenu = ({ location }) => {
   };
 
   return (
-    <Layout
-      footerColor="white"
-      location={location}
-      style={{ alignItems: 'flex-start' }}
-    >
+    <Layout footerColor="white" style={{ alignItems: 'flex-start' }}>
       <div className="lookbook">
         <ArrowForwardIosIcon
           className="lookbook__icon--right"

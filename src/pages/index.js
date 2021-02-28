@@ -9,7 +9,7 @@ import videoPoster from '../assets/sage-vid-poster.png';
 import videoPopup from '../assets/sage.mp4';
 import { GlobalContext } from '../context/Provider';
 
-const IndexPage = ({ location }) => {
+const IndexPage = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const [showLoading, setShowLoading] = useState(true);
 
@@ -30,7 +30,7 @@ const IndexPage = ({ location }) => {
   }
 
   return (
-    <Layout footerTransparent footerColor="black" location={location}>
+    <Layout footerTransparent footerColor="black">
       <SEO title="Home" />
       <div className="home-wrapper">
         {showLoading && <Loading />}

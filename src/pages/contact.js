@@ -3,7 +3,7 @@ import axios from 'axios';
 import Layout from '../components/layout';
 import './styles/contact.scss';
 
-const Contact = ({ location }) => {
+const Contact = () => {
   const [name, setName] = useState('');
   const [subject, setSubject] = useState('');
   const [email, setEmail] = useState('');
@@ -33,7 +33,7 @@ const Contact = ({ location }) => {
   };
 
   return (
-    <Layout location={location}>
+    <Layout>
       {!sent ? (
         <div className="contact">
           <h1>Contact Us</h1>

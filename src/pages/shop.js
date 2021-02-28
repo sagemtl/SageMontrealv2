@@ -18,7 +18,7 @@ import ShopAudio2 from '../assets/ShopAudio2.mp3';
 import sageBackgroundDesktop from '../assets/sage-shop-cornfield-background.png';
 import sageBackgroundMobile from '../assets/sage-shop-cornfield-background-mobile.png';
 
-const Shop = ({ data, location }) => {
+const Shop = ({ data }) => {
   const [buttonPaused, setButtonPaused] = useState(false);
   const [paused, setPaused] = useState(false);
   const widthVal = typeof window !== `undefined` ? window.innerWidth : 1200;
@@ -118,7 +118,7 @@ const Shop = ({ data, location }) => {
   });
 
   return (
-    <Layout footerColor="white" location={location}>
+    <Layout footerColor="white">
       <AdModal />
       <div className="shop-scroll">
         {audio && (

@@ -3,8 +3,8 @@ import Layout from '../components/layout';
 
 import './styles/404.scss';
 
-const NotFoundPage = ({ location }) => (
-  <Layout location={location}>
+const NotFoundPage = () => (
+  <Layout>
     <div className="not-found">
       <img
         src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1609560228/404Octopus_mwhpuk.png"
