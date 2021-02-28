@@ -37,7 +37,7 @@ button:focus {
 }
 
 .product-banner-track {
-  width: calc(300px * 12);
+  width: calc(470px * 12);
   display: flex;
   animation: horizontal 15s linear infinite;
   align-items: center;
@@ -45,7 +45,7 @@ button:focus {
 
 @keyframes horizontal {
 	0% { transform: translateX(0); }
-	100% { transform: translateX(calc(-320px * 5))}
+	100% { transform: translateX(calc(-470px * 5))}
 }
 
 @media screen and (max-width: 900px) {

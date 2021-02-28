@@ -32,7 +32,7 @@ const Layout = ({ children, footerColor }) => {
               {[...Array(10)].map(() => {
                 return (
                   <p className="product-banner__entry">
-                    Free shipping across Canada for orders above $70
+                    Free shipping across Canada on orders above $70
                   </p>
                 );
               })}
