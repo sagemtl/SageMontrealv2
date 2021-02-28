@@ -26,7 +26,7 @@ const ShopAll = ({ data }) => {
         })}
       </div>
       <Link className="back" to="/shop">
-        <KeyboardBackspaceIcon style={{ color: '#154734' }} fontSize="large" />
+        <KeyboardBackspaceIcon className="product-back" fontSize="large" />
       </Link>
     </Layout>
   );

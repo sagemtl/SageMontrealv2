@@ -11,6 +11,11 @@
   background-color: white;
 }
 
+.product-back {
+  color: #154734;
+  margin-bottom: 30px;
+}
+
 button:focus {
   outline: none !important;
 }
@@ -50,6 +55,6 @@ button:focus {
 
 @media screen and (max-width: 900px) {
   .product-banner {
-    top: 60px;
+    top: 80px;
   }
 }

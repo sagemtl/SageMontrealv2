@@ -204,10 +204,7 @@ const Product = ({ data }) => {
           </button>
         </div>
         <Link className="product-details__back" to="/shop/all">
-          <KeyboardBackspaceIcon
-            style={{ color: '#154734' }}
-            fontSize="large"
-          />
+          <KeyboardBackspaceIcon className="product-back" fontSize="large" />
         </Link>
         <Modal
           open={zoomOpen}
