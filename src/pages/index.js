@@ -6,7 +6,7 @@ import '../components/styles/layout.scss';
 import FloatingItem from '../components/floatingItem';
 import Loading from '../components/loading';
 import videoPoster from '../assets/sage-vid-poster.png';
-import videoPopup from '../assets/sage-popup.mp4';
+import videoPopup from '../assets/sage.mp4';
 import { GlobalContext } from '../context/Provider';
 
 const IndexPage = () => {
