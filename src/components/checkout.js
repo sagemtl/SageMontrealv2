@@ -201,7 +201,6 @@ const Payment = () => {
         type: 'sku',
       });
     });
-    console.log(skusList);
     return skusList;
   };
 
@@ -217,11 +216,9 @@ const Payment = () => {
   };
 
   const decreaseInventory = async () => {
-    console.log(checkoutItems);
     await Promise.all(
       checkoutItems.map(async (item) => {
         // the name of the sku is the size
-        console.log(item);
         const inv = await updateSkuInventory(
           item.prodMetadata.item,
           item.prodMetadata.colour,
@@ -261,7 +258,6 @@ const Payment = () => {
   if (paymentRequest) {
     paymentRequest.on('shippingaddresschange', (ev) => {
       // Perform server-side request to fetch shipping options
-      console.log(ev.shippingAddress);
       fetch('http://localhost:5000/orders-api/calculateShipping', {
         method: 'POST',
         headers: {
@@ -284,7 +280,6 @@ const Payment = () => {
 
     // Callback when the shipping option is changed.
     paymentRequest.on('shippingoptionchange', async (event) => {
-      console.log(event);
       event.updateWith({
         total: {
           label: 'Total',
@@ -341,7 +336,6 @@ const Payment = () => {
       if (error) {
         // Report to the browser that the payment failed.
         event.complete('fail');
-        console.log(error);
       } else {
         // Report to the browser that the confirmation was successful, prompting
         // it to close the browser payment method collection interface.
@@ -352,7 +346,6 @@ const Payment = () => {
           .then((result) => {
             if (result.error) {
               // Show error to your customer (e.g., insufficient funds)
-              console.log(result.error.message);
               // eslint-disable-next-line no-alert
               window.alert(result.error.message);
             } else {
@@ -371,7 +364,6 @@ const Payment = () => {
           });
       }
 
-      console.log(event.shippingOption);
       if (successful) {
         information = {
           receipt_email: event.payerEmail,
@@ -429,7 +421,6 @@ const Payment = () => {
   const submit = async (e) => {
     setIsLoading(true);
     const form = e.currentTarget;
-    console.log(form);
     if (form.checkValidity() === false || cardError) {
       e.preventDefault();
       e.stopPropagation();
@@ -439,8 +430,6 @@ const Payment = () => {
     setValidated(true);
     if (form.checkValidity() === false || cardError) {
       setDisplayCardError(true);
-      console.log(cardError);
-      console.log(displayCardError);
       return;
     }
 
@@ -493,7 +482,6 @@ const Payment = () => {
       .then((result) => {
         if (result.error) {
           // Show error to your customer (e.g., insufficient funds)
-          console.log(result.error.message);
           handleErrorMessage(result.error.message);
           handleModalShow();
         } else {
@@ -506,7 +494,6 @@ const Payment = () => {
             // post-payment actions.
             successful = true;
             // decrease inventory here
-            console.log(result);
           }
         }
       });
@@ -576,7 +563,7 @@ const Payment = () => {
                   : ` ${getShippingPrice()}$`}
               </p>
             </div>
-            <hr className="prices-hr"/>
+            <hr className="prices-hr" />
             <div className="prices-flexbox">
               <b>Total:</b>
               <b>

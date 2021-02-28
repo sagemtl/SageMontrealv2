@@ -8,11 +8,7 @@ import { GlobalContext } from '../context/Provider';
 const CartCheckout = () => {
   const { state } = useContext(GlobalContext);
   const { checkoutItems } = state;
-
-  useEffect(() => {
-    console.log(checkoutItems);
-  });
-
+  
   return (
     <div className="cart-checkout">
       {checkoutItems.map((item) => {
