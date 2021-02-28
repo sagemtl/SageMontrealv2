@@ -1,4 +1,4 @@
-.artstep-wrapper {
+.home-wrapper {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -6,30 +6,6 @@
   align-items: center;
   background: white;
   overflow: hidden;
-
-  &__header {
-    font-size: 0rem;
-    text-align: center;
-    color: black;
-    text-shadow: 2px 2px grey;
-    animation: updown 1s ease-in-out infinite, zoomInOut 2s ease-in-out 1s;
-  }
-}
-
-.artstep-overlay {
-  background: white;
-  width: 100%;
-  height: 100%;
-  animation: fadeOut 2s ease-in-out 4s;
-  animation-fill-mode: forwards;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0;
-  z-index: 5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .video-homepage {
@@ -39,49 +15,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-@keyframes updown {
-  0%, 100% {
-    transform: translatey(1rem); 
-  }
-  50% {
-    transform: translatey(-1rem);
-  }
-} 
-
-@keyframes zoomInOut {
-  0%, 100% {
-    font-size: 0px;
-  }
-  20%, 80% {
-    font-size: 3rem;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  @keyframes zoomInOut {
-    0%, 100% {
-      font-size: 0px;
-    }
-    5%, 95% {
-      font-size: 2rem;
-    }
-  }
+  animation: fadein 3s;
 }
 
 @media screen and (max-width: 900px) {
-  .artstep-wrapper {
+  .home-wrapper {
     padding: 0;
     margin-top: 60px;
     height: calc(100vh - 60px);
