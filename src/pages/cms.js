@@ -16,6 +16,7 @@ const CMS = () => {
   const [productId, setProductId] = useState('');
   const [name, setName] = useState('');
   const [active, setActive] = useState(false);
+  const [onCarousel, setOnCarousel] = useState(false);
   const [desc, setDesc] = useState('');
   // for the separated images url thingy, i was thinking we
   // could just take the whole string and break it into
@@ -96,6 +97,7 @@ const CMS = () => {
       ? setFeaturedImg(prod.metadata.featuredImg)
       : null;
     prod.metadata.modelInfo ? setFeaturedImg(prod.metadata.modelInfo) : null;
+    prod.metadata.onCarousel ? setOnCarousel(prod.metadata.onCarousel) : false;
   };
 
   const handleUpdateProduct = async () => {
@@ -111,6 +113,7 @@ const CMS = () => {
     newProduct.metadata = {
       featuredImg,
       modelInfo,
+      onCarousel,
     };
     const prod = await updateProduct(productId, newProduct);
     prod.statusCode
@@ -240,19 +243,24 @@ const CMS = () => {
           </div>
         </div>
 
+
         <div className="cms__field">
           <p className="cms__label">Active</p>
           <div>
-            <input
-              placeholder="true/false"
-              type="checkbox"
-              checked={active}
-              onChange={() => {
-                setActive(!active);
-              }}
-              disabled={!edit}
-              className="cms__checkbox"
-            />
+            <select onChange={(e)=>setActive(e.target.value)} value={active}>
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="cms__field">
+          <p className="cms__label">Show On Carousel</p>
+          <div>
+            <select onChange={(e)=>setOnCarousel(e.target.value)} value={onCarousel}>
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
           </div>
         </div>
 
