@@ -26,12 +26,12 @@ const Layout = ({ children, footerColor }) => {
       {pathname !== '/checkout' && <Header setCart={setCart} cart={cart} />}
       {cart && pathname !== '/checkout' && <Cart isMobile={isMobile} />}
       <div className="layout">
-        {pathname.includes('/shop/') && (
+        {pathname.includes('/shop') && (
           <div className="product-banner">
             <div className="product-banner-track">
-              {[...Array(10)].map(() => {
+              {[...Array(10)].map((val, ind) => {
                 return (
-                  <p className="product-banner__entry">
+                  <p className="product-banner__entry" key={ind.toString()}>
                     Free shipping across Canada on orders above $70
                   </p>
                 );

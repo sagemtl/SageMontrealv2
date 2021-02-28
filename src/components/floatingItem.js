@@ -103,9 +103,17 @@ const FloatingItem = ({ speed, itemName, itemWidth, itemHeight, url }) => {
     };
   }, [animate]);
 
+  const goToKTV = () => {
+    if (window.datadogLogs) {
+      window.datadogLogs.logger.info('KTV click', {
+        name: itemName,
+      });
+    }
+  };
+
   return (
     <div>
-      <a href={url}>
+      <a href={url} onClick={goToKTV}>
         <img
           ref={itemRef}
           width={itemWidth}

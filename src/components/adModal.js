@@ -6,7 +6,7 @@ import { GlobalContext } from '../context/Provider';
 
 const Transition = React.forwardRef((props, ref) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
-  <Slide direction="up" ref={ref} {...props} />
+  <Slide direction="down" ref={ref} {...props} />
 ));
 
 const AdModal = () => {
@@ -41,6 +41,7 @@ const AdModal = () => {
         aria-describedby="alert-dialog-slide-description"
         onClose={closeModal}
         maxWidth="xs"
+        style={{ overflow: 'hidden' }}
         transitionDuration={{ enter: 2000, exit: 1000 }}
         fullWidth
         onClick={closeModal}

@@ -44,9 +44,7 @@ const terms = () => {
             <p className="terms__text">$5</p>
           </div>
           <div className="terms-row">
-            <p className="terms__text">
-              Tracked Parcel (2 - 4 Business Days)
-            </p>
+            <p className="terms__text">Tracked Parcel (2 - 4 Business Days)</p>
             <p className="terms__text">$10</p>
           </div>
           <br />
@@ -54,9 +52,7 @@ const terms = () => {
             <u>USA</u>
           </p>
           <div className="terms-row">
-            <p className="terms__text">
-              Tracked Parcel (7 - 14 Business Days)
-            </p>
+            <p className="terms__text">Tracked Parcel (7 - 14 Business Days)</p>
             <p className="terms__text">$20</p>
           </div>
           <br />
@@ -64,9 +60,7 @@ const terms = () => {
             <u>International</u>
           </p>
           <div className="terms-row">
-            <p className="terms__text">
-              Tracked Parcel (1 - 3 Weeks)
-            </p>
+            <p className="terms__text">Tracked Parcel (1 - 3 Weeks)</p>
             <p className="terms__text">$40</p>
           </div>
           <br />
@@ -86,8 +80,8 @@ const terms = () => {
           <p className="terms__header--2">Returns & exchanges</p>
           <p className="terms__text">
             If you received a package that is defective or incorrect, you may
-            return the package within 14 days after its reception by contacting us
-            at info@sagemontreal.com and using the return label inside your
+            return the package within 14 days after its reception by contacting
+            us at info@sagemontreal.com and using the return label inside your
             order.
           </p>
           <br />
@@ -110,13 +104,6 @@ const terms = () => {
             fulfilment, fraud suspicion, or any discrepancies on an item's
             description or price. We will notify you if your order cannot be
             fulfilled and a full refund will be issued.
-          </p>
-          <br />
-          <p className="terms__header--2">Local Pickup</p>
-          <p className="terms__text">
-            Pickups are only offered to Montreal residents. We will contact you
-            by email about the pickup location and meeting time once the payment
-            has been processed.
           </p>
         </div>
       </div>

@@ -2,11 +2,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, graphql } from 'gatsby';
-import PropTypes from 'prop-types';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
+import PropTypes from 'prop-types';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import { TypePredicateKind } from 'typescript';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
@@ -18,11 +17,18 @@ const Product = ({ data }) => {
   const item = data.stripeProduct;
   const skus = data.allStripeSku;
 
+  const getFeaturedImgInChild = () => {
+    console.log('in getFeaturedImg');
+    const coverPhoto = item.children.find(
+      (node) => node.id === item.featuredImg.id,
+    );
+    console.log(`coverphoto id ${coverPhoto.id}`);
+    return coverPhoto.childImageSharp.fixed.src;
+  };
+
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedSku, setSelectedSku] = useState('');
-  const [selectedImage, setSelectedImage] = useState(
-    item.children[0].childImageSharp.fixed.src,
-  );
+  const [selectedImage, setSelectedImage] = useState(getFeaturedImgInChild);
   const [zoomOpen, setZoomOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [inventories, setInventories] = useState([]);
@@ -89,6 +95,18 @@ const Product = ({ data }) => {
         skuId: selectedSku,
         prodMetadata: item.metadata,
       });
+
+      if (window.datadogLogs) {
+        window.datadogLogs.logger.info('Added to Cart', {
+          id: itemId,
+          name: item.name,
+          amount: 1,
+          price: filterPrice(selectedSku),
+          size: selectedSize,
+          skuId: selectedSku,
+          prodMetadata: item.metadata,
+        });
+      }
     }
     dispatch({
       type: 'SET_CHECKOUT_ITEMS',
@@ -102,7 +120,7 @@ const Product = ({ data }) => {
   const sortedSkus = sortSizes(skus.edges);
 
   const imgIcons = () => {
-    const icons = item.children.map((node) => {
+    const icons = item.children.map((node, ind) => {
       return (
         <img
           src={node.childImageSharp.fixed.src}
@@ -110,6 +128,7 @@ const Product = ({ data }) => {
           className="product-images__image--secondary"
           onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
           onKeyDown={() => setSelectedImage(node.childImageSharp.fixed.src)}
+          key={ind.toString()}
         />
       );
     });
@@ -131,10 +150,11 @@ const Product = ({ data }) => {
             id={size}
             value={size}
             checked={selectedSize === size}
-            onClick={() => {
+            onChange={() => {
               setSelectedSku(nodeid);
               setSelectedSize(size);
             }}
+            onChange={() => {}}
             disabled={false || !hasStock}
           />
           <label htmlFor={size} className={className}>
@@ -149,8 +169,12 @@ const Product = ({ data }) => {
   const productDescription = (desc) => {
     const descArr = desc.split(',');
     const descComponent = descArr.map((text) => {
-      text = text.trim();
-      return <p className="product-details__point">{text}</p>;
+      const finalText = text.trim();
+      return (
+        <p className="product-details__point" key={text}>
+          {finalText}
+        </p>
+      );
     });
     return descComponent;
   };
@@ -232,6 +256,10 @@ const Product = ({ data }) => {
   );
 };
 
+Product.propTypes = {
+  data: PropTypes.shape().isRequired,
+};
+
 export default Product;
 
 export const query = graphql`
@@ -249,6 +277,7 @@ export const query = graphql`
         colour
       }
       featuredImg {
+        id
         childImageSharp {
           fixed(height: 50, toFormat: PNG) {
             ...GatsbyImageSharpFixed
@@ -274,13 +303,6 @@ export const query = graphql`
           price
           attributes {
             name
-          }
-          featuredImg {
-            childImageSharp {
-              fixed(height: 750, toFormat: PNG) {
-                ...GatsbyImageSharpFixed
-              }
-            }
           }
         }
       }
