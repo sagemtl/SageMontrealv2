@@ -270,7 +270,7 @@ const Payment = () => {
         }
       });
     }
-  }, [getDisplayItems, getTotal, stripe]);
+  }, [stripe]);
 
   if (paymentRequest) {
     paymentRequest.on('shippingaddresschange', (ev) => {
