@@ -172,7 +172,7 @@ const Shop = ({ data }) => {
           <div className="shop-buttons">
             <button
               type="button"
-              className="shop-scroll__button"
+              className="shop-scroll__button shop-scroll__button__above"
               onClick={() => setAudioPaused(!audioPaused)}
             >
               {audioPaused ? <MusicOffIcon /> : <MusicNoteIcon />}

@@ -121,7 +121,7 @@ const Product = ({ data }) => {
           className="product-images__image--secondary"
           onClick={() => setSelectedImage(node.childImageSharp.fixed.src)}
           onKeyDown={() => setSelectedImage(node.childImageSharp.fixed.src)}
-          key={ind}
+          key={ind.toString()}
         />
       );
     });

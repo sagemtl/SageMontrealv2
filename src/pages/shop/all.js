@@ -22,7 +22,7 @@ const ShopAll = ({ data }) => {
     <Layout>
       <div className="shop-all-container">
         {getProducts().map((product, index) => {
-          return <ShopViewItem product={product} key={index} />;
+          return <ShopViewItem product={product} key={index.toString()} />;
         })}
       </div>
       <Link className="back" to="/shop">
