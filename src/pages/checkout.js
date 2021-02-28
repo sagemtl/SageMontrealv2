@@ -42,7 +42,7 @@ const CheckoutPage = () => {
           />
         </div>
       )}
-      <div className={cartEmpty && 'empty-checkout-page'}>
+      <div className={cartEmpty ? 'empty-checkout-page' : undefined}>
         <Elements stripe={stripePromise}>
           <Payment />
         </Elements>

@@ -1,29 +1,20 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable no-lonely-if */
+/* eslint-disable no-unused-vars */
 import React, { useState, useContext, useEffect } from 'react';
-// Stripe
 import { navigate } from 'gatsby';
-
 import {
   PaymentRequestButtonElement,
   CardElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
-
-import {
-  CountryDropdown,
-  RegionDropdown,
-  CountryRegionData,
-} from 'react-country-region-selector';
-
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import * as MaterialFormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-
 import {
   Container,
   Form,
@@ -34,16 +25,13 @@ import {
   Card,
   Button,
 } from 'react-bootstrap';
-import { LabelDetail, ItemDescription } from 'semantic-ui-react';
 import { GlobalContext } from '../context/Provider';
-
-import CartItem from './cartItem';
 import ModalError from './modalError';
 import { getSkuInventory, updateSkuInventory } from '../helpers/stripeHelper';
 import CartCheckout from './cartCheckout';
+import LoadingScreen from './loadingScreen';
 
 // UI
-
 const Payment = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const { checkoutItems } = state;
@@ -59,13 +47,13 @@ const Payment = () => {
   const [province, setProvince] = useState('Quebec');
 
   const [shippingMethod, setShippingMethod] = useState('');
-  const [isPickUp, setIsPickUp] = useState(false);
 
   const [modalShow, setModalShow] = useState(false);
   const [modalErrorMessage, setModalErrorMessage] = useState('');
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleModalShow = () => setModalShow(true);
-  const handleModalClose = () => setModalShow(true);
 
   const handleErrorMessage = (message) => {
     setModalErrorMessage(message);
@@ -94,14 +82,6 @@ const Payment = () => {
 
   const changeShippingMethod = (val) => {
     setShippingMethod(val);
-  };
-  const changeIsPickup = (val) => {
-    setIsPickUp(val);
-    if (val) {
-      setShippingMethod('Local Pickup');
-    } else {
-      setShippingMethod('');
-    }
   };
 
   const stripeElementChange = (element) => {
@@ -142,10 +122,6 @@ const Payment = () => {
     });
   };
 
-  const cartIsEmpty = () => {
-    return checkoutItems.length <= 0;
-  };
-
   const getShippingPrice = () => {
     const prices = {
       '$5 - Expedited Parcel (2 - 4 Business Days)': 5,
@@ -154,12 +130,10 @@ const Payment = () => {
       '$22 - Small Packet - Air (6 - 12 Business Days)': 22,
       'FREE - Expedited Parcel (6 - 12 Business Days)': 0,
       'FREE - Small Packet - Air (6 - 12 Business Days)': 0,
-      'Local Pickup': 0,
     };
     if (shippingMethod) {
       return prices[shippingMethod];
     }
-
     return null;
   };
 
@@ -196,80 +170,38 @@ const Payment = () => {
     )[0].amount;
   };
 
-  // function isPickup(){
-  //   var checkbox = document.getElementById("111");
-  //   if(checkbox.checked==true){
-  //     return false;
-  //   }
-  //   else {
-  //     return true;
-  //   }
-  //  };
-
-  const getTotal = useCallback(() => {
-    let i;
+  const getTotal = () => {
     let totalPrice = 0;
-    for (i = 0; i < checkoutItems.length; i += 1) {
-      totalPrice += checkoutItems[i].amount * checkoutItems[i].price;
-    }
+    checkoutItems.forEach((item) => {
+      totalPrice += item.amount * item.price;
+    });
+
     return totalPrice;
-  });
+  };
 
   const getDisplayItems = () => {
-    let i;
     const displayItems = [];
-    for (i = 0; i < checkoutItems.length; i += 1) {
-      displayItems.push({
-        amount: checkoutItems[i].amount,
-        label: checkoutItems[i].name,
-      });
-    }
+
+    checkoutItems.forEach((item) => {
+      displayItems.push({ amount: item.amount, label: item.name });
+    });
   };
 
   const getListOfSkus = () => {
-    let i;
     const skusList = [];
-    for (i = 0; i < checkoutItems.length; i += 1) {
-      const desc = `${checkoutItems[i].size} ${checkoutItems[i].name}`;
+
+    checkoutItems.forEach((item) => {
+      const desc = `${item.size}/${item.name}/${item.prodMetadata.colour} ${item.prodMetadata.item}`;
       skusList.push({
-        amount: checkoutItems[i].price * 100,
+        amount: item.price * 100,
         currency: 'cad',
         description: desc,
-        parent: checkoutItems[i].skuId,
-        quantity: checkoutItems[i].amount,
+        parent: item.skuId,
+        quantity: item.amount,
         type: 'sku',
       });
-    }
-    console.log(skusList);
-    return skusList;
-  };
-  const checkInventoryForAllCart = async () => {
-    const invs = await Promise.all(
-      successItems.map(async ({ item }) => {
-        // the name of the sku is the size
-        const inv = await getSkuInventory(
-          item.prodMetadata.item,
-          item.prodMetadata.colour,
-          item.size,
-          item.skuId,
-        );
-        return inv;
-      }),
-    );
-    const noStockArr = invs.filter((inv) => {
-      if (inv[0] && inv[0].quantity <= 0) {
-        return inv;
-      }
     });
-    // there are items out of stock
-    if (noStockArr.length > 0) {
-      // give error banner
-      setSnack(
-        true,
-        'error',
-        'One or more items are out of stock, please remove from cart',
-      );
-    }
+    return skusList;
   };
 
   const setSnack = (open, sev, msg) => {
@@ -279,15 +211,14 @@ const Payment = () => {
   };
 
   const Alert = (props) => {
+    // eslint-disable-next-line react/jsx-props-no-spreading
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 
   const decreaseInventory = async () => {
-    console.log(checkoutItems);
-    const result = await Promise.all(
+    await Promise.all(
       checkoutItems.map(async (item) => {
         // the name of the sku is the size
-        console.log(item);
         const inv = await updateSkuInventory(
           item.prodMetadata.item,
           item.prodMetadata.colour,
@@ -325,10 +256,9 @@ const Payment = () => {
   }, [getDisplayItems, getTotal, stripe]);
 
   if (paymentRequest) {
-    paymentRequest.on('shippingaddresschange', function (ev) {
+    paymentRequest.on('shippingaddresschange', (ev) => {
       // Perform server-side request to fetch shipping options
-      console.log(ev.shippingAddress);
-      fetch(`${process.env.GATSBY_BACKEND_URL}/orders-api/calculateShipping`, {
+      fetch('https://api.sagemontreal.com/orders-api/calculateShipping', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -337,10 +267,10 @@ const Payment = () => {
           shippingAddress: ev.shippingAddress,
         }),
       })
-        .then(function (response) {
+        .then((response) => {
           return response.json();
         })
-        .then(function (result) {
+        .then((result) => {
           ev.updateWith({
             status: 'success',
             shippingOptions: result.supportedShippingOptions,
@@ -350,7 +280,6 @@ const Payment = () => {
 
     // Callback when the shipping option is changed.
     paymentRequest.on('shippingoptionchange', async (event) => {
-      console.log(event);
       event.updateWith({
         total: {
           label: 'Total',
@@ -381,7 +310,7 @@ const Payment = () => {
         },
       };
       const res = await fetch(
-        `${process.env.GATSBY_BACKEND_URL}/orders-api/payment_intent`,
+        'https://api.sagemontreal.com/orders-api/payment_intent',
         {
           method: 'POST',
           headers: {
@@ -392,6 +321,7 @@ const Payment = () => {
       );
 
       const data = await res.json();
+      // eslint-disable-next-line camelcase
       const { client_secret } = data;
       let successful = false;
 
@@ -406,8 +336,6 @@ const Payment = () => {
       if (error) {
         // Report to the browser that the payment failed.
         event.complete('fail');
-        console.log(error);
-        window.alert(error);
       } else {
         // Report to the browser that the confirmation was successful, prompting
         // it to close the browser payment method collection interface.
@@ -415,13 +343,14 @@ const Payment = () => {
         // Let Stripe.js handle the rest of the payment flow, including 3D Secure if needed.
         const response = await stripe
           .confirmCardPayment(client_secret)
-          .then(function (result) {
+          .then((result) => {
             if (result.error) {
               // Show error to your customer (e.g., insufficient funds)
-              console.log(result.error.message);
+              // eslint-disable-next-line no-alert
               window.alert(result.error.message);
             } else {
               // The payment has been processed!
+              // eslint-disable-next-line no-lonely-if
               if (result.paymentIntent.status === 'succeeded') {
                 // Show a success message to your customer
                 // There's a risk of the customer closing the window before callback
@@ -435,59 +364,39 @@ const Payment = () => {
           });
       }
 
-      console.log(event.shippingOption);
       if (successful) {
-        if (isPickUp) {
-          information = {
-            receipt_email: event.payerEmail,
-            shipping: {
-              name: event.shippingAddress.recipient,
-              address: {
-                line1: 'N/A',
-              },
+        information = {
+          receipt_email: event.payerEmail,
+          shipping: {
+            name: event.shippingAddress.recipient,
+            address: {
+              line1: event.shippingAddress.addressLine[0],
+              city: event.shippingAddress.city,
+              postal_code: event.shippingAddress.postalCode,
+              state: event.shippingAddress.region,
+              country: event.shippingAddress.country,
             },
-            orderItems: getListOfSkus(),
-            metadata: {
-              'Shipping Method': `${event.shippingOption.label} ${event.shippingOption.id}: ${event.shippingOption.detail}`,
-            },
-          };
-        } else {
-          information = {
-            receipt_email: event.payerEmail,
-            shipping: {
-              name: event.shippingAddress.recipient,
-              address: {
-                line1: event.shippingAddress.addressLine[0],
-                city: event.shippingAddress.city,
-                postal_code: event.shippingAddress.postalCode,
-                state: event.shippingAddress.region,
-                country: event.shippingAddress.country,
-              },
-            },
-            orderItems: getListOfSkus(),
-            metadata: {
-              'Shipping Method': `${event.shippingOption.label} ${event.shippingOption.id}: ${event.shippingOption.detail}`,
-            },
-          };
-        }
-
-        const res = await fetch(
-          `${process.env.GATSBY_BACKEND_URL}/orders-api/create_order`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(information),
           },
-        );
+          orderItems: getListOfSkus(),
+          metadata: {
+            'Shipping Method': `${event.shippingOption.label} ${event.shippingOption.id}: ${event.shippingOption.detail}`,
+          },
+        };
+
+        await fetch('https://api.sagemontreal.com/orders-api/create_order', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(information),
+        });
 
         navigate('/success');
 
         setSuccessEmail(formData.email);
         setSuccessItems(checkoutItems);
         resetCart();
-        const inventoryUpdate = await decreaseInventory();
+        await decreaseInventory();
       }
     });
   }
@@ -500,11 +409,9 @@ const Payment = () => {
         type: 'default',
         // One of 'default', 'book', 'buy', or 'donate'
         // Defaults to 'default'
-
         theme: 'dark',
         // One of 'dark', 'light', or 'light-outline'
         // Defaults to 'dark'
-
         height: '44px',
         // Defaults to '40px'. The width is always '100%'.
       },
@@ -512,8 +419,8 @@ const Payment = () => {
   };
 
   const submit = async (e) => {
+    setIsLoading(true);
     const form = e.currentTarget;
-    console.log(form);
     if (form.checkValidity() === false || cardError) {
       e.preventDefault();
       e.stopPropagation();
@@ -523,8 +430,6 @@ const Payment = () => {
     setValidated(true);
     if (form.checkValidity() === false || cardError) {
       setDisplayCardError(true);
-      console.log(cardError);
-      console.log(displayCardError);
       return;
     }
 
@@ -532,33 +437,25 @@ const Payment = () => {
     e.preventDefault();
 
     // Billing Details
-    var information;
-    if (isPickUp) {
-      information = {
-        price: (getTotal() + getShippingPrice()) * 100,
-        receipt_email: formData.email,
-      };
-    } else {
-      information = {
-        price: (getTotal() + getShippingPrice()) * 100,
-        receipt_email: formData.email,
-        shipping: {
-          name: formData.name,
-          address: {
-            city: formData.city,
-            country: countryValue,
-            line1: formData.address,
-            state: province,
-            postal_code: formData.postal_code,
-          },
-          carrier: shippingMethod,
+    const information = {
+      price: (getTotal() + getShippingPrice()) * 100,
+      receipt_email: formData.email,
+      shipping: {
+        name: formData.name,
+        address: {
+          city: formData.city,
+          country: countryValue,
+          line1: formData.address,
+          state: province,
+          postal_code: formData.postal_code,
         },
-      };
-    }
+        carrier: shippingMethod,
+      },
+    };
 
     // Request Client Secret to Server
     const res = await fetch(
-      `${process.env.GATSBY_BACKEND_URL}/orders-api/payment_intent`,
+      'https://api.sagemontreal.com/orders-api/payment_intent',
       {
         method: 'POST',
         headers: {
@@ -569,6 +466,7 @@ const Payment = () => {
     );
 
     const data = await res.json();
+    // eslint-disable-next-line camelcase
     const { client_secret } = data;
     let successful = false;
     // Create cardElement
@@ -584,10 +482,9 @@ const Payment = () => {
       .confirmCardPayment(client_secret, {
         payment_method: paymentReqMethod.paymentMethod.id,
       })
-      .then(function (result) {
+      .then((result) => {
         if (result.error) {
           // Show error to your customer (e.g., insufficient funds)
-          console.log(result.error.message);
           handleErrorMessage(result.error.message);
           handleModalShow();
         } else {
@@ -600,52 +497,32 @@ const Payment = () => {
             // post-payment actions.
             successful = true;
             // decrease inventory here
-            console.log(result);
           }
         }
       });
     if (successful) {
-      var information;
-      if (isPickUp) {
-        information = {
-          receipt_email: formData.email,
-          shipping: {
-            name: formData.name,
-            address: {
-              line1: 'N/A',
-            },
+      const information = {
+        receipt_email: formData.email,
+        shipping: {
+          name: formData.name,
+          address: {
+            city: formData.city,
+            country: countryValue,
+            line1: formData.address,
+            state: province,
+            postal_code: formData.postal_code,
           },
-          orderItems: getListOfSkus(),
-          metadata: { 'Shipping Method': shippingMethod },
-        };
-      } else {
-        information = {
-          receipt_email: formData.email,
-          shipping: {
-            name: formData.name,
-            address: {
-              city: formData.city,
-              country: countryValue,
-              line1: formData.address,
-              state: province,
-              postal_code: formData.postal_code,
-            },
-          },
-          orderItems: getListOfSkus(),
-          metadata: { 'Shipping Method': shippingMethod },
-        };
-      }
-
-      const res = await fetch(
-        `${process.env.GATSBY_BACKEND_URL}/orders-api/create_order`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(information),
         },
-      );
+        orderItems: getListOfSkus(),
+        metadata: { 'Shipping Method': shippingMethod },
+      };
+      await fetch('https://api.sagemontreal.com/orders-api/create_order', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(information),
+      });
 
       navigate('/success');
 
@@ -656,61 +533,60 @@ const Payment = () => {
     } else {
       form.submitButton.disabled = false;
     }
+    setIsLoading(false);
   };
 
   return (
-    <div className="flexbox-checkout">
-      <ModalError
-        modalShow={modalShow}
-        setModalShow={setModalShow}
-        message={modalErrorMessage}
-      />
-      <div className="cart_checkout_container">
-        <div className="summary">
-          <form action="#" id="shipping-method">
-            <input
-              type="radio"
-              id="shipping-method-button1"
-              name="gender"
-              defaultChecked
-              onClick={() => changeIsPickup(false)}
-            />
-            <label htmlFor="shipping-method-button1">Shipping</label>
-            <input
-              type="radio"
-              id="shipping-method-button2"
-              name="gender"
-              onClick={() => changeIsPickup(true)}
-            />
-            <label htmlFor="shipping-method-button2">Pick Up</label>
-          </form>
-          <CartCheckout />
-          <b>Price: {getTotal()}$</b>
-          <p>
-            Shipping:{' '}
-            {getShippingPrice() === null
-              ? 'TBD'
-              : getShippingPrice() == 0
-              ? 'FREE'
-              : `${getShippingPrice()}$`}
-          </p>
-          <b>
-            Total:{' '}
-            {!getShippingPrice() ? getTotal() : getTotal() + getShippingPrice()}
-            $
-          </b>
-        </div>
-      </div>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={4000}
-        onClose={() => setSnackbarOpen(false)}
+    <>
+      {isLoading && <LoadingScreen />}
+      <div
+        className={`flexbox-checkout ${
+          isLoading ? 'flexbox-checkout__hidden' : ''
+        }`}
       >
-        <Alert severity={snackSeverity}>{snackMessage}</Alert>
-      </Snackbar>
-      <div className="checkout">
-        {isPickUp == false ? (
-          <Container className="py-4">
+        <ModalError
+          modalShow={modalShow}
+          setModalShow={setModalShow}
+          message={modalErrorMessage}
+        />
+        <div className="cart_checkout_container">
+          <div className="summary">
+            <CartCheckout />
+            <div className="prices-flexbox">
+              <b>Price: </b>
+              <b>{getTotal()}$</b>
+            </div>
+            <div className="prices-flexbox">
+              <p>Shipping: </p>
+              <p>
+                {getShippingPrice() === null
+                  ? ' TBD'
+                  : getShippingPrice() === 0
+                  ? ' FREE'
+                  : ` ${getShippingPrice()}$`}
+              </p>
+            </div>
+            <hr className="prices-hr" />
+            <div className="prices-flexbox">
+              <b>Total:</b>
+              <b>
+                {!getShippingPrice()
+                  ? ` ${getTotal()}`
+                  : ` ${getTotal() + getShippingPrice()}`}
+                $
+              </b>
+            </div>
+          </div>
+        </div>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={4000}
+          onClose={() => setSnackbarOpen(false)}
+        >
+          <Alert severity={snackSeverity}>{snackMessage}</Alert>
+        </Snackbar>
+        <div className="checkout">
+          <div className="py-4">
             {paymentRequest ? (
               <div className="custom-apple-pay">
                 <div style={{ width: '350px' }}>
@@ -718,7 +594,7 @@ const Payment = () => {
                 </div>
               </div>
             ) : (
-              <div />
+              <></>
             )}
             <Form
               noValidate
@@ -733,8 +609,7 @@ const Payment = () => {
                     <Col>
                       <FormGroup>
                         <Form.Label className="form-title-label">
-                          {' '}
-                          Email{' '}
+                          Email
                         </Form.Label>
                         <FormControl
                           className="checkout-form__form-control"
@@ -749,8 +624,7 @@ const Payment = () => {
                     <Col>
                       <FormGroup>
                         <Form.Label className="form-title-label">
-                          {' '}
-                          Address{' '}
+                          Address
                         </Form.Label>
                         <FormControl
                           className="checkout-form__form-control"
@@ -767,8 +641,7 @@ const Payment = () => {
                     <Col>
                       <FormGroup>
                         <Form.Label className="form-title-label">
-                          {' '}
-                          Country/Region{' '}
+                          Country/Region
                         </Form.Label>
                         <CountryDropdown
                           value={countryValue}
@@ -783,8 +656,7 @@ const Payment = () => {
                     <Col>
                       <FormGroup>
                         <Form.Label className="form-title-label">
-                          {' '}
-                          State / Province{' '}
+                          State / Province
                         </Form.Label>
                         <RegionDropdown
                           value={province}
@@ -798,13 +670,11 @@ const Payment = () => {
                       </FormGroup>
                     </Col>
                   </Row>
-
                   <Row>
                     <Col>
                       <FormGroup>
                         <Form.Label className="form-title-label">
-                          {' '}
-                          City{' '}
+                          City
                         </Form.Label>
                         <FormControl
                           className="checkout-form__form-control"
@@ -819,8 +689,7 @@ const Payment = () => {
                     <Col>
                       <FormGroup>
                         <Form.Label className="form-title-label">
-                          {' '}
-                          Postal Code{' '}
+                          Postal Code
                         </Form.Label>
                         <FormControl
                           className="checkout-form__form-control"
@@ -833,10 +702,12 @@ const Payment = () => {
                       </FormGroup>
                     </Col>
                   </Row>
-                  {countryValue == 'CA' ? (
+                  {countryValue === 'CA' ? (
                     <div id="canada-wrapper">
                       <Form.Group>
-                        <Form.Label> Shipping Method </Form.Label>
+                        <Form.Label>
+                          <strong>Shipping Method</strong>
+                        </Form.Label>
                         <Form.Check
                           style={{ textAlign: 'center' }}
                           type="radio"
@@ -865,10 +736,12 @@ const Payment = () => {
                         />
                       </Form.Group>
                     </div>
-                  ) : countryValue == 'US' ? (
+                  ) : countryValue === 'US' ? (
                     <fieldset id="us-wrapper">
                       <Form.Group>
-                        <Form.Label> Shipping Method </Form.Label>
+                        <Form.Label>
+                          <strong>Shipping Method</strong>
+                        </Form.Label>
                         {getTotal() >= 70 && (
                           <Form.Check
                             style={{ textAlign: 'center' }}
@@ -901,7 +774,9 @@ const Payment = () => {
                     </fieldset>
                   ) : (
                     <Form.Group id="ww-wrapper">
-                      <Form.Label> Shipping Method </Form.Label>
+                      <Form.Label>
+                        <strong>Shipping Method</strong>
+                      </Form.Label>
                       {getTotal() >= 70 && (
                         <Form.Check
                           style={{ textAlign: 'center' }}
@@ -938,8 +813,7 @@ const Payment = () => {
                 <div style={{ width: '80%', marginTop: '1.25rem' }}>
                   <FormGroup>
                     <Form.Label className="form-title-label">
-                      {' '}
-                      Name on Card{' '}
+                      Name on Card
                     </Form.Label>
                     <FormControl
                       className="checkout-form__form-control"
@@ -952,15 +826,12 @@ const Payment = () => {
                   </FormGroup>
                   <FormGroup>
                     <Form.Label className="form-title-label">
-                      {' '}
-                      Card Details{' '}
+                      Card Details
                     </Form.Label>
                     <div className="custom-stripe-element">
                       <CardElement
                         onChange={(element) => stripeElementChange(element)}
-                      >
-                        {' '}
-                      </CardElement>
+                      />
                     </div>
                     {displayCardError && cardError && (
                       <span
@@ -983,7 +854,6 @@ const Payment = () => {
                         width: '50%',
                       }}
                     >
-                      {' '}
                       Pay
                     </Button>
                   </FormGroup>
@@ -991,111 +861,13 @@ const Payment = () => {
               </div>
             </Form>
             <Form.Label className="form-title-label">
-              {' '}
               * Free shipping on orders above $70.
             </Form.Label>
-          </Container>
-        ) : (
-          <Container className="py-4">
-            <Card className="checkout__checkout-form">
-              <Card.Body>
-                <div
-                  style={{
-                    display: 'block',
-                    marginRight: 'auto',
-                    marginLeft: 'auto',
-                  }}
-                >
-                  <Form
-                    method="POST"
-                    noValidate
-                    validated={validated}
-                    onSubmit={submit}
-                    className="checkout-form__form"
-                  >
-                    <FormGroup>
-                      <Form.Label className="form-title-label">
-                        {' '}
-                        Name on Card{' '}
-                      </Form.Label>
-                      <FormControl
-                        className="checkout-form__form-control"
-                        type="text"
-                        placeholder="Sage"
-                        name="name"
-                        onChange={change}
-                        required
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <Form.Label className="form-title-label">
-                        {' '}
-                        Email{' '}
-                      </Form.Label>
-                      <FormControl
-                        className="checkout-form__form-control"
-                        type="text"
-                        name="email"
-                        placeholder="sage@office.com"
-                        onChange={change}
-                        required
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <Form.Label className="form-title-label">
-                        {' '}
-                        Card Details{' '}
-                      </Form.Label>
-                      <div className="custom-stripe-element">
-                        <CardElement
-                          onChange={(element) => stripeElementChange(element)}
-                        >
-                          {' '}
-                        </CardElement>
-                      </div>
-                      {displayCardError && cardError && (
-                        <span
-                          id="card-errors"
-                          className="text-danger"
-                          role="alert"
-                        >
-                          Your card number is incomplete.
-                        </span>
-                      )}
-                      <Button
-                        type="submit"
-                        name="submitButton"
-                        style={{
-                          display: 'block',
-                          position: 'relative',
-                          marginLeft: 'auto',
-                          marginRight: 'auto',
-                          marginTop: '20px',
-                          width: '50%',
-                        }}
-                      >
-                        {' '}
-                        Pay
-                      </Button>
-                    </FormGroup>
-                  </Form>
-                </div>
-              </Card.Body>
-            </Card>
-            <Form.Label
-              className="form-title-label"
-              style={{ marginTop: '10px' }}
-            >
-              {' '}
-              * Local pickup in Montreal downtown area. Pickup location will be
-              sent by email.{' '}
-            </Form.Label>
-          </Container>
-        )}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default Payment;
-// export const getTotal = () => {};

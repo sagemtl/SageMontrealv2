@@ -1,15 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useStaticQuery, graphql, navigate } from 'gatsby';
+import React, { useContext, useEffect } from 'react';
+import { navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import Img from 'gatsby-image';
-import { GlobalContext } from '../context/Provider';
 import { useLocation } from '@reach/router';
+import { GlobalContext } from '../context/Provider';
 import { getSkuInventory } from '../helpers/stripeHelper';
 
-const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata, isCheckout }) => {
+const CheckoutItem = ({
+  name,
+  amount,
+  size,
+  price,
+  image,
+  id,
+  skuId,
+  prodMetadata,
+}) => {
   const { state, dispatch } = useContext(GlobalContext);
-  const [inStock, setInStock] = useState(true);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -18,12 +26,8 @@ const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata, i
         prodMetadata.item,
         prodMetadata.colour,
         size,
-        skuId
-      )
-      // will show out of stock
-      if (inv.quantity < 1) {
-        setInStock(false);
-      }
+        skuId,
+      );
     };
 
     getInventory();
@@ -51,53 +55,47 @@ const CartItem = ({ name, amount, size, price, image, id, skuId, prodMetadata, i
     navigate(`/shop/${name.replace(/ +/g, '-')}`);
   };
 
-  //will show out of stock if no stock
   const showAmount = () => {
-    if(inStock) {
-      return (
-        <b>{amount}x</b>
-      );
-    } else {
-      return (
-        <b className="cart__item__noStockMsg">Out of stock</b>
-      );
-    }
+    return <b>{amount}x</b>;
   }
 
   return (
     <div
-      className={inStock ? 'cart__item' : 'cart__item cart__item__noStock'}
+      className="cart_checkout__item"
       onClick={() => handleClick()}
       onKeyDown={() => handleClick()}
       role="button"
       tabIndex={0}
     >
-      <div className="cart__item__amount">{showAmount()}</div>
+      <div className="cart_checkout__item__amount">{showAmount()}</div>
       <div className="image-wrapper">
         <Img
-          style={{display: "block", position: "absolute"}}
-          className="cart__item__image"
+          style={{ display: 'block', position: 'absolute' }}
+          className="cart_checkout__item__image"
           height="50"
           fixed={image}
           alt="cart item"
         />
       </div>
-      <div className="cart__item__size">
+      <div className="cart_checkout__item__name">
+        <b>{name}</b>
+      </div>
+      <div className="cart_checkout__item__size">
         <b>{size}</b>
       </div>
-      <div className="cart__item__price">
+      <div className="cart_checkout__item__price">
         <b>${price}</b>
       </div>
       <ClearRoundedIcon
         fontSize="small"
-        className="cart__item__close"
+        className="cart_checkout__item__close"
         onClick={removeItem}
       />
     </div>
   );
 };
 
-CartItem.propTypes = {
+CheckoutItem.propTypes = {
   name: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   size: PropTypes.string.isRequired,
@@ -108,4 +106,4 @@ CartItem.propTypes = {
   prodMetadata: PropTypes.object.isRequired,
 };
 
-export default CartItem;
+export default CheckoutItem;

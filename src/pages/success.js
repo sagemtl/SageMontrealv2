@@ -4,12 +4,10 @@ import Img from 'gatsby-image';
 import Layout from '../components/layout';
 import './styles/success.scss';
 
-import CartItem from '../components/cartItem';
-import { transpileModule } from 'typescript';
+import CheckoutItem from '../components/checkoutItem';
 import { GlobalContext } from '../context/Provider';
 
 const Success = () => {
-
   const { state, dispatch } = useContext(GlobalContext);
   const { successEmail, successItems } = state;
 
@@ -18,15 +16,14 @@ const Success = () => {
       <div className="text-center success-align-middle">
         <img
           className="success-sage-logo"
-          src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1598851891/mr-frog-png_nsfobb.png"
+          src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1614452514/frog.png"
           alt="Success"
         />
         <p>
           {' '}
-          Your order has been placed! <br />
+          <strong>Your order has been placed!</strong> <br />
           Your payment has been successfully processed and a receipt has been
-          sent to{' '}
-          {successEmail}.
+          sent to {successEmail}.
           <br />
           Your items will be shipped the following day and should arrive within
           a week.
@@ -36,21 +33,20 @@ const Success = () => {
       </div>
 
       <div className="success-page-cart">
-          {successItems.map((item) => {
-              return (
-                <CartItem
-                  name={item.name}
-                  amount={item.amount}
-                  size={item.size}
-                  price={item.price}
-                  image={item.image}
-                  id={item.id}
-                  skuId={item.sku}
-                  prodMetadata={item.prodMetadata}
-                  isCheckout={true}
-                />
-              );
-            })}
+        {successItems.map((item) => {
+          return (
+            <CheckoutItem
+              name={item.name}
+              amount={item.amount}
+              size={item.size}
+              price={item.price}
+              image={item.image}
+              id={item.id}
+              skuId={item.sku}
+              prodMetadata={item.prodMetadata}
+            />
+          );
+        })}
       </div>
     </Layout>
   );
