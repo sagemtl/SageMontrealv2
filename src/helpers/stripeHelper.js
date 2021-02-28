@@ -1,7 +1,7 @@
 // not fully tested yet
 export const sortSizes = (skus) => {
   const ordering = {}; // map for efficient lookup of sortIndex
-  const sortOrder = ['XS', 'S', 'M', 'L', 'XL', 'Onesize'];
+  const sortOrder = ['XS', 'S', 'M', 'L', 'XL', 'OS'];
   for (let i = 0; i < sortOrder.length; i++) ordering[sortOrder[i]] = i;
   skus.sort(function (a, b) {
     return ordering[a.node.attributes.name] - ordering[b.node.attributes.name];

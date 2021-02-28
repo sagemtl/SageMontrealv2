@@ -11,11 +11,11 @@ import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
 import sageAnimated from '../assets/sage-animated.gif';
-import sageBackgroundDesktop from '../assets/sage-shop-background.jpg';
-import sageBackgroundMobile from '../assets/sage-shop-background-mobile.jpg';
 import { GlobalContext } from '../context/Provider';
 import ShopAudio1 from '../assets/ShopAudio1.mp3';
 import ShopAudio2 from '../assets/ShopAudio2.mp3';
+import sageBackgroundDesktop from '../assets/sage-shop-cornfield-background.png';
+import sageBackgroundMobile from '../assets/sage-shop-cornfield-background-mobile.png';
 
 const Shop = ({ data }) => {
   const [buttonPaused, setButtonPaused] = useState(false);
@@ -117,7 +117,7 @@ const Shop = ({ data }) => {
   });
 
   return (
-    <Layout>
+    <Layout footerColor="white">
       <div className="shop-scroll">
         {audio && (
           <audio autoPlay loop muted={audioPaused}>
