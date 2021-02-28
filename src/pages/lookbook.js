@@ -11,7 +11,7 @@ const LookbookMenu = () => {
     {
       season: 'Spring 21',
       cover:
-        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217340/Lookbooks/Spring_21/cover_njsyjf.png',
+        'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614534769/Lookbooks/Spring_21/154390268_429997921618841_6920424006267164636_n_kccu4m.png',
       images: [
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217337/Lookbooks/Spring_21/1_yg5bm7.jpg',
         'https://res.cloudinary.com/sagemontreal-com/image/upload/v1614217339/Lookbooks/Spring_21/2_eiun6p.jpg',
