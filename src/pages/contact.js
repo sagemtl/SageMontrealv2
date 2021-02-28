@@ -19,7 +19,7 @@ const Contact = () => {
 
   const sendForm = async () => {
     try {
-      await axios.post('https://api.sagemontreal.com/contact', {
+      await axios.post(`${process.env.GATSBY_BACKEND_URL}/contact`, {
         name,
         subject,
         email,

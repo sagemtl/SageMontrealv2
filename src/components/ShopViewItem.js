@@ -18,10 +18,12 @@ const ShopViewItem = ({ product }) => {
           alt={`Product-${node.id}`}
           key={0}
         />
-        <span className="shop-view-all-item__name">{product.node.name}</span>
+        <span className="shop-view-all-item__name">
+          {product.node.name.toUpperCase()}
+        </span>
         <br />
         <span className="shop-view-all-item__price">
-          ${product.node.metadata.price}.00 CAD
+          ${product.node.metadata.price} CAD
         </span>
       </div>
     </Link>

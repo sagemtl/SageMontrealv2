@@ -262,7 +262,7 @@ const Payment = () => {
     paymentRequest.on('shippingaddresschange', (ev) => {
       // Perform server-side request to fetch shipping options
       console.log(ev.shippingAddress);
-      fetch('https://api.sagemontreal.com/orders-api/calculateShipping', {
+      fetch('http://localhost:5000/orders-api/calculateShipping', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -315,7 +315,7 @@ const Payment = () => {
         },
       };
       const res = await fetch(
-        'https://api.sagemontreal.com/orders-api/payment_intent',
+        'http://localhost:5000/orders-api/payment_intent',
         {
           method: 'POST',
           headers: {
@@ -391,7 +391,7 @@ const Payment = () => {
           },
         };
 
-        await fetch('https://api.sagemontreal.com/orders-api/create_order', {
+        await fetch('http://localhost:5000/orders-api/create_order', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json',
@@ -465,16 +465,13 @@ const Payment = () => {
     };
 
     // Request Client Secret to Server
-    const res = await fetch(
-      'https://api.sagemontreal.com/orders-api/payment_intent',
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(information),
+    const res = await fetch('http://localhost:5000/orders-api/payment_intent', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
       },
-    );
+      body: JSON.stringify(information),
+    });
 
     const data = await res.json();
     // eslint-disable-next-line camelcase
@@ -529,7 +526,7 @@ const Payment = () => {
         orderItems: getListOfSkus(),
         metadata: { 'Shipping Method': shippingMethod },
       };
-      await fetch('https://api.sagemontreal.com/orders-api/create_order', {
+      await fetch('http://localhost:5000/orders-api/create_order', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -579,7 +576,7 @@ const Payment = () => {
                   : ` ${getShippingPrice()}$`}
               </p>
             </div>
-            <hr className="prices-hr" />
+            <hr className="prices-hr"/>
             <div className="prices-flexbox">
               <b>Total:</b>
               <b>
