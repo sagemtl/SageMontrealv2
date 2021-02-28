@@ -180,7 +180,7 @@ const Product = ({ data }) => {
           ) : null}
           <br />
           <p className="product-details__price">
-            $ {skus.edges[0].node.price / 100}.00 CAD
+            $ {skus.edges[0].node.price / 100} CAD
           </p>
           {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>
