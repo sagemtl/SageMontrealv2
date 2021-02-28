@@ -29,7 +29,7 @@
     left: 2em;
     bottom: 70px;
     box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
-    2px 6px 10px rgba(0, 0, 0, 0.2);
+      2px 6px 10px rgba(0, 0, 0, 0.2);
 
     &:active {
       opacity: 1;
@@ -87,8 +87,8 @@
 }
 
 .shop-wheel {
-  width:100vw;
-  height:100vh;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   top: 25vh;
 
@@ -110,25 +110,45 @@
 }
 
 @keyframes fadein {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeinout {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes straight {
-	0% { transform: translateY(0); }
-	100% { transform: translateY(calc(-300px * 16))}
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(-300px * 16));
+  }
 }
 
 @keyframes pointer {
-  0% {right: 15px}
-  50% {right: 0px}
-  100% {right: 15px}
+  0% {
+    right: 15px;
+  }
+  50% {
+    right: 0px;
+  }
+  100% {
+    right: 15px;
+  }
 }
 
 ::-webkit-scrollbar {

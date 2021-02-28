@@ -9,9 +9,8 @@ import Layout from '../components/layout';
 import ShopItem from '../components/ShopItem';
 import './styles/shop.scss';
 import sageAnimated from '../assets/sage-animated.gif';
-import sageBackgroundDesktop from '../assets/sage-shop-background.jpg';
-import sageBackgroundDesktopKtv from '../assets/shop-background-ktv.jpg';
-import sageBackgroundMobile from '../assets/sage-shop-background-mobile.jpg';
+import sageBackgroundDesktop from '../assets/sage-shop-cornfield-background.png';
+import sageBackgroundMobile from '../assets/sage-shop-cornfield-background-mobile.png';
 
 const Shop = ({ data }) => {
   const [buttonPaused, setButtonPaused] = useState(false);
@@ -85,7 +84,7 @@ const Shop = ({ data }) => {
     <Layout>
       <div className="shop-scroll">
         <img
-          src={mobile ? sageBackgroundMobile : sageBackgroundDesktopKtv}
+          src={mobile ? sageBackgroundMobile : sageBackgroundDesktop}
           className="shop-scroll__background"
           alt="Shop Wheel Art"
         />
