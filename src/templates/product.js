@@ -21,6 +21,7 @@ const Product = ({ data }) => {
     const coverPhoto = item.children.find(
       (node) => node.id === item.featuredImg.id,
     );
+    if(coverPhoto==undefined) return item.children[0].childImageSharp.fixed.src;
     return coverPhoto.childImageSharp.fixed.src;
   };
 
@@ -199,6 +200,11 @@ const Product = ({ data }) => {
           {item.metadata.modelInfo ? (
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
+          {(item.metadata.item=="hoodie")?
+            (<b className="product-details__point" key="backorder-disclaimer">
+              * This product is currently in backorder, item will ship in 2-3 weeks.
+            </b>) : null
+           }
           <br />
           <p className="product-details__price">
             $ {skus.edges[0].node.price / 100} CAD
