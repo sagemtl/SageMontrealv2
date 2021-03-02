@@ -4,6 +4,8 @@ import Slide from '@material-ui/core/Slide';
 import cigaretteCase from '../assets/cigarette_white.gif';
 import { GlobalContext } from '../context/Provider';
 
+import './styles/adModal.scss';
+
 const Transition = React.forwardRef((props, ref) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Slide direction="down" ref={ref} {...props} />
@@ -42,6 +44,9 @@ const AdModal = () => {
         onClose={closeModal}
         maxWidth="xs"
         style={{ overflow: 'hidden' }}
+        classes={{
+          paper: 'ad-modal',
+        }}
         transitionDuration={{ enter: 2000, exit: 1000 }}
         fullWidth
         onClick={closeModal}
