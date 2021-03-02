@@ -1,6 +1,8 @@
 .ad-modal {
   background-color: transparent !important;
   box-shadow: none !important;
+  overflow: hidden;
+  height: 500px;
 }
 
 .MuiBackdrop-root {

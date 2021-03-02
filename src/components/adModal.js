@@ -34,7 +34,7 @@ const AdModal = () => {
   }, [state.visitedPage]);
 
   return (
-    <>
+    <div className="ad-modal-dialog">
       <Dialog
         open={modal}
         TransitionComponent={Transition}
@@ -60,7 +60,7 @@ const AdModal = () => {
           loop
         />
       </Dialog>
-    </>
+    </div>
   );
 };
 
