@@ -31,9 +31,14 @@ const Layout = ({ children, footerColor }) => {
             <div className="product-banner-track">
               {[...Array(10)].map((val, ind) => {
                 return (
-                  <p className="product-banner__entry" key={ind.toString()}>
-                    Free shipping across Canada on orders above $70
-                  </p>
+                  <div className="product-banner__div" key={ind.toString()}>
+                    <p className="product-banner__entry">
+                      Free shipping across Canada on orders above $70
+                    </p>
+                    <p className="product-banner__entry">
+                      Free shipping in the US on orders above $90
+                    </p>
+                  </div>
                 );
               })}
             </div>

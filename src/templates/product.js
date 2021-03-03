@@ -192,7 +192,9 @@ const Product = ({ data }) => {
               setZoomOpen(true);
             }}
           />
-          <div className="product-images-secondary">{imgIcons()}</div>
+          <div className="product-images-secondary">
+            <div className="product-scroll">{imgIcons()}</div>
+          </div>
         </div>
         <div className="product-details">
           <h1 className="product-details__header">{item.name}</h1>

@@ -39,6 +39,10 @@ button:focus {
     text-align: center;
     font-size: 0.8rem;
   }
+
+  &__div {
+    display: flex;
+  }
 }
 
 .product-banner-track {

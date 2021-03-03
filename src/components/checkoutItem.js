@@ -18,19 +18,6 @@ const CheckoutItem = ({
 }) => {
   const { state, dispatch } = useContext(GlobalContext);
 
-  useEffect(() => {
-    const getInventory = async () => {
-      const inv = await getSkuInventory(
-        prodMetadata.item,
-        prodMetadata.colour,
-        size,
-        skuId,
-      );
-    };
-
-    getInventory();
-  }, [prodMetadata.colour, prodMetadata.item, size, skuId]);
-
   const removeItem = (e) => {
     e.stopPropagation();
     const itemsCopy = Array.from(state.checkoutItems);
@@ -47,6 +34,7 @@ const CheckoutItem = ({
         checkoutItems: itemsCopy,
       },
     });
+    window.location.reload();
   };
 
   const handleClick = () => {
