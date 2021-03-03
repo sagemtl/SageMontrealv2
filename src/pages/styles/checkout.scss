@@ -561,6 +561,12 @@ label.form-check-label {
   margin-left: 0%;
 }
 
+.form-check-label {
+  border: 1px solid black;
+  box-shadow: 3px 3px #154734;
+  border-radius: 3px;
+}
+
 #shipping-method input[type="radio"]:checked + label,
 #canada-wrapper input[type="radio"]:checked + label,
 #us-wrapper input[type="radio"]:checked + label,
