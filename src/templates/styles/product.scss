@@ -196,6 +196,11 @@ input[type="radio"]:checked + label {
    }
 }
 
+.product-scroll {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 td, th {
   border: 1px solid #dddddd;
   text-align: center;
