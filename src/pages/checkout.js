@@ -12,41 +12,11 @@ import { GlobalContext } from '../context/Provider';
 const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLIC);
 
 const CheckoutPage = () => {
-  const { state } = useContext(GlobalContext);
-  const { checkoutItems } = state;
-  const [cartEmpty, setCartEmpty] = useState(false);
-
-  const isCartEmpty = () => {
-    if (
-      typeof window !== `undefined` &&
-      cartEmpty !== checkoutItems.length <= 0
-    ) {
-      setCartEmpty(checkoutItems.length <= 0);
-    }
-    return cartEmpty;
-  };
-
-  isCartEmpty();
-
   return (
     <>
-      {cartEmpty && (
-        <div className="empty-cart">
-          <a className="empty-cart__link" href="/shop">
-            <p>CART EMPTY, CLICK TO RETURN TO SHOP</p>
-          </a>
-          <img
-            className="empty-cart__image"
-            src="https://res.cloudinary.com/sage-montreal/image/upload/v1588341601/LOGO_x1kbox.png"
-            alt="Sage logo empty"
-          />
-        </div>
-      )}
-      <div className={cartEmpty ? 'empty-checkout-page' : undefined}>
-        <Elements stripe={stripePromise}>
-          <Payment />
-        </Elements>
-      </div>
+      <Elements stripe={stripePromise}>
+        <Payment />
+      </Elements>
     </>
   );
 };
