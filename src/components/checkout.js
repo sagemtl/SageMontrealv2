@@ -203,6 +203,10 @@ const Payment = () => {
     return totalPrice;
   };
 
+  const isCartEmpty = () => {
+    return checkoutItems.length <= 0;
+  };
+
   const getDisplayItems = () => {
     const displayItems = [];
 
@@ -581,10 +585,23 @@ const Payment = () => {
   return (
     <>
       {isLoading && <LoadingScreen />}
+      {isCartEmpty() && (
+        <div className="empty-cart">
+          <a className="empty-cart__link" href="/shop">
+            <p>CART EMPTY</p>
+            <p>CLICK TO RETURN TO SHOP</p>
+          </a>
+          <img
+            className="empty-cart__image"
+            src="https://res.cloudinary.com/sage-montreal/image/upload/v1588341601/LOGO_x1kbox.png"
+            alt="Sage logo empty"
+          />
+        </div>
+      )}
       <div
         className={`flexbox-checkout ${
           isLoading ? 'flexbox-checkout__hidden' : ''
-        }`}
+        } ${isCartEmpty() ? 'flexbox-checkout__disabled' : ''}`}
       >
         <ModalError
           modalShow={modalShow}

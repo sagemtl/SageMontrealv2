@@ -46,6 +46,7 @@
   top: 0px;
   left: 0px;
   text-align: center;
+  background-color: rgba(255,255,255,0.8);
 
   &__link {
     position: relative; 
@@ -99,6 +100,10 @@
 
       &__hidden {
         display: none;
+      }
+
+      &__disabled {
+        pointer-events: none;
       }
     }
 
