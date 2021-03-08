@@ -278,7 +278,7 @@ export const query = graphql`
       featuredImg {
         id
         childImageSharp {
-          fixed(height: 50, toFormat: PNG) {
+          fixed(height: 750, toFormat: PNG, quality: 100) {
             ...GatsbyImageSharpFixed
           }
         }
@@ -288,7 +288,7 @@ export const query = graphql`
           name
           id
           childImageSharp {
-            fixed(height: 750, toFormat: PNG) {
+            fixed(height: 750, toFormat: PNG, quality: 100) {
               ...GatsbyImageSharpFixed
             }
           }
