@@ -127,7 +127,8 @@ const Payment = () => {
       '$5 - Mail (5 - 10 Business Days)': 5,
       'FREE - Tracked Parcel (2 - 4 Business Days)': 0,
       '$10 - Tracked Parcel (2 - 4 Business Days)': 10,
-      '$20 - Tracked Parcel (7-14 business days)': 20,
+      'FREE - Tracked Parcel (7-14 business days)': 0,
+      '$15 - Tracked Parcel (7-14 business days)': 15,
       '$40 - Tracked Parcel (1-3 weeks)': 40,
     };
     if (shippingMethod) {
@@ -170,10 +171,16 @@ const Payment = () => {
         amount: 1000,
       },
       {
+        id: 'free-shipping-us',
+        label: 'Tracked Parcel',
+        detail: 'Arrives in 7 to 14 business days',
+        amount: 0,
+      },
+      {
         id: 'tracked-parcel-us',
         label: 'Tracked Parcel',
         detail: 'Arrives in 7 to 14 business days',
-        amount: 2000,
+        amount: 1500,
       },
       {
         id: 'tracked-parcel-intl',
@@ -194,6 +201,10 @@ const Payment = () => {
       totalPrice += item.amount * item.price;
     });
     return totalPrice;
+  };
+
+  const isCartEmpty = () => {
+    return checkoutItems.length <= 0;
   };
 
   const getDisplayItems = () => {
@@ -574,10 +585,23 @@ const Payment = () => {
   return (
     <>
       {isLoading && <LoadingScreen />}
+      {isCartEmpty() && (
+        <div className="empty-cart">
+          <a className="empty-cart__link" href="/shop">
+            <p>CART EMPTY</p>
+            <p>CLICK TO RETURN TO SHOP</p>
+          </a>
+          <img
+            className="empty-cart__image"
+            src="https://res.cloudinary.com/sage-montreal/image/upload/v1588341601/LOGO_x1kbox.png"
+            alt="Sage logo empty"
+          />
+        </div>
+      )}
       <div
         className={`flexbox-checkout ${
           isLoading ? 'flexbox-checkout__hidden' : ''
-        }`}
+        } ${isCartEmpty() ? 'flexbox-checkout__disabled' : ''}`}
       >
         <ModalError
           modalShow={modalShow}
@@ -795,19 +819,35 @@ const Payment = () => {
                         <Form.Label>
                           <strong>Shipping Method</strong>
                         </Form.Label>
-                        <Form.Check
-                          style={{ textAlign: 'center' }}
-                          type="radio"
-                          label="$20 - Tracked Parcel (7-14 business days)"
-                          name="shippingMethodUS"
-                          id="formHorizontalRadios4"
-                          onChange={() =>
-                            changeShippingMethod(
-                              '$20 - Tracked Parcel (7-14 business days)',
-                            )
-                          }
-                          required
-                        />
+                        {getTotal() >= 90 ? (
+                          <Form.Check
+                            style={{ textAlign: 'center' }}
+                            type="radio"
+                            label="FREE - Tracked Parcel (7-14 business days)"
+                            name="shippingMethodUS4"
+                            id="formHorizontalRadios4"
+                            onChange={() =>
+                              changeShippingMethod(
+                                'FREE - Tracked Parcel (7-14 business days)',
+                              )
+                            }
+                            required
+                          />
+                        ) : (
+                          <Form.Check
+                            style={{ textAlign: 'center' }}
+                            type="radio"
+                            label="$15 - Tracked Parcel (7-14 business days)"
+                            name="shippingMethodUS5"
+                            id="formHorizontalRadios5"
+                            onChange={() =>
+                              changeShippingMethod(
+                                '$15 - Tracked Parcel (7-14 business days)',
+                              )
+                            }
+                            required
+                          />
+                        )}
                       </Form.Group>
                     </fieldset>
                   ) : (
@@ -819,7 +859,7 @@ const Payment = () => {
                         style={{ textAlign: 'center' }}
                         type="radio"
                         label="$40 - Tracked Parcel (1-3 weeks)"
-                        name="shippingMethodOther"
+                        name="shippingMethodOther6"
                         id="formHorizontalRadios6"
                         onChange={() =>
                           changeShippingMethod(

@@ -54,7 +54,7 @@ const ShopItem = ({
 
 ShopItem.propTypes = {
   buttonPaused: PropTypes.bool.isRequired,
-  delay: PropTypes.string.isRequired,
+  delay: PropTypes.number.isRequired,
   paused: PropTypes.bool.isRequired,
   setPaused: PropTypes.func.isRequired,
   windowWidth: PropTypes.number.isRequired,

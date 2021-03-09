@@ -46,6 +46,7 @@
   top: 0px;
   left: 0px;
   text-align: center;
+  background-color: rgba(255,255,255,0.8);
 
   &__link {
     position: relative; 
@@ -99,6 +100,10 @@
 
       &__hidden {
         display: none;
+      }
+
+      &__disabled {
+        pointer-events: none;
       }
     }
 
@@ -559,6 +564,12 @@ label.form-check-label {
 #us-wrapper input[type="radio"]{
   display: none;
   margin-left: 0%;
+}
+
+.form-check-label {
+  border: 1px solid black;
+  box-shadow: 3px 3px #154734;
+  border-radius: 3px;
 }
 
 #shipping-method input[type="radio"]:checked + label,

@@ -49,12 +49,20 @@ const terms = () => {
           </div>
           <br />
           <p className="terms__text">
+            Orders above $70 have free expedited shipping across Canada
+          </p>
+          <br />
+          <p className="terms__text">
             <u>USA</u>
           </p>
           <div className="terms-row">
             <p className="terms__text">Tracked Parcel (7 - 14 Business Days)</p>
-            <p className="terms__text">$20</p>
+            <p className="terms__text">$15</p>
           </div>
+          <br />
+          <p className="terms__text">
+            Orders above $90 have free expedited shipping in the United States
+          </p>
           <br />
           <p className="terms__text">
             <u>International</u>
@@ -64,9 +72,6 @@ const terms = () => {
             <p className="terms__text">$40</p>
           </div>
           <br />
-          <p className="terms__text">
-            *Orders above $70 have free expedited shipping
-          </p>
           <br />
           <p className="terms__header--2">Payments</p>
           <p className="terms__text">

@@ -140,7 +140,7 @@ const Shop = ({ data }) => {
                 return (
                   <ShopItem
                     buttonPaused={buttonPaused}
-                    delay={delay.toString()}
+                    delay={delay}
                     paused={paused}
                     setPaused={setPaused}
                     windowWidth={windowWidth}
@@ -158,7 +158,7 @@ const Shop = ({ data }) => {
                 return (
                   <ShopItem
                     buttonPaused={buttonPaused}
-                    delay="0"
+                    delay={0}
                     paused={paused}
                     setPaused={setPaused}
                     windowWidth={windowWidth}
