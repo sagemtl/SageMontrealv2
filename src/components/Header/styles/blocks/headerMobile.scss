@@ -16,7 +16,6 @@
   left: 0;
   width: 100vw;
   height: 60px;
-  padding: 0 0 0 20px;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
@@ -44,7 +43,7 @@
   }
 
   &__logo {
-    width: 55px;
+    width: 45px;
     height: auto;
     color: #154734;
     margin: 0;
@@ -54,9 +53,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    color: black;
     z-index: 100;
+    background: white;
+    border-radius: 50%;
+    border: 2px solid #154734;
+    padding: 5px;
+    width: 55px;
+    height: 55px;
+    position: relative;
+    left: 20px;
+    top: 3px;
 
     &:hover {
       cursor: pointer;
