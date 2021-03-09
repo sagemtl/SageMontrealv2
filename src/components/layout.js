@@ -27,20 +27,22 @@ const Layout = ({ children, footerColor }) => {
       {cart && pathname !== '/checkout' && <Cart isMobile={isMobile} />}
       <div className="layout">
         {pathname.includes('/shop') && (
-          <div className="product-banner">
-            <div className="product-banner-track">
-              {[...Array(10)].map((val, ind) => {
-                return (
-                  <div className="product-banner__div" key={ind.toString()}>
-                    <p className="product-banner__entry">
-                      Free shipping across Canada on orders above $70
-                    </p>
-                    <p className="product-banner__entry">
-                      Free shipping in the US on orders above $90
-                    </p>
-                  </div>
-                );
-              })}
+          <div className="product-banner-wrapper">
+            <div className="product-banner">
+              <div className="product-banner-track">
+                {[...Array(10)].map((val, ind) => {
+                  return (
+                    <div className="product-banner__div" key={ind.toString()}>
+                      <p className="product-banner__entry">
+                        Free shipping across Canada on orders above $70
+                      </p>
+                      <p className="product-banner__entry">
+                        Free shipping in the US on orders above $90
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         )}

@@ -1,5 +1,4 @@
 .layout {
-  // display: flex;
   position: absolute;
   justify-content: center;
   align-items: center;
@@ -8,7 +7,6 @@
   height: 100vh;
   background-color: white;
   top: 0px;
-  background-color: white;
 }
 
 .product-back {
@@ -23,21 +21,19 @@ button:focus {
 .product-banner {
   width: 100%;
   overflow: hidden;
-  border-bottom: 2px solid black;
-  border-top: 2px solid black;
   padding: 10px 0;
   position: fixed;
   top: 0;
-  background: white;
   z-index: 10;
+  color: white;
 
   &__entry {
-    min-width: 350px;
-    width: 350px;
-    margin: 0 60px;
     font-weight: 540;
     text-align: center;
     font-size: 0.8rem;
+    width: 350px;
+    min-width: 350px;
+    margin: 0 60px;
   }
 
   &__div {
@@ -46,19 +42,27 @@ button:focus {
 }
 
 .product-banner-track {
-  width: calc(470px * 12);
+  width: calc(940px * 12);
   display: flex;
-  animation: horizontal 15s linear infinite;
+  animation: horizontal 30s linear infinite;
   align-items: center;
 }
 
 @keyframes horizontal {
 	0% { transform: translateX(0); }
-	100% { transform: translateX(calc(-470px * 5))}
+	100% { transform: translateX(calc(-940px * 5))}
 }
 
 @media screen and (max-width: 900px) {
   .product-banner {
-    top: 80px;
+    top: 10px;
+    width: 60%;
+    margin: 0 auto;
+  }
+
+  .product-banner-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }
