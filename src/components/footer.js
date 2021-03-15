@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GlobalContext } from '../context/Provider';
+
 import PropTypes from 'prop-types';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import './styles/footer.scss';
+import Canada from '../assets/canada.svg'
 
 const Footer = ({ color }) => {
+  const { state, dispatch } = useContext(GlobalContext);
+
+  const handleChangeCurrency = (newCur) => {
+    if (newCur === 'CAD') {
+      dispatch({
+        type: 'SET_CURRENCY_CAD',
+      });
+    }
+    else if (newCur === 'USD') {
+      dispatch({
+        type: 'SET_CURRENCY_USD',
+      });
+    }
+  }
+
   return (
     <div className="footer-desktop">
       <div className="footer-desktop-text">
@@ -16,6 +34,12 @@ const Footer = ({ color }) => {
         <a className="footer-desktop__link" style={{ color }} href="/terms">
           Terms & Conditions
         </a>
+        <div className="footer-desktop__header" style={{ color }}>
+          <select onChange={(e)=>handleChangeCurrency(e.target.value)} value={state.currency}>
+            <option value='CAD'>🇨🇦&emsp;CAD</option>
+            <option value='USD'>🇺🇸&emsp;USD</option>
+          </select>
+        </div>
       </div>
       <a
         href="https://www.instagram.com/sagemtl/"
