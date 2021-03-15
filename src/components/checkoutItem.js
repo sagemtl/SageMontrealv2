@@ -11,6 +11,7 @@ const CheckoutItem = ({
   amount,
   size,
   price,
+  priceUSD,
   image,
   id,
   skuId,
@@ -45,6 +46,13 @@ const CheckoutItem = ({
     return <b>{amount}x</b>;
   };
 
+  const renderPrice = () => {
+    if(state.currency === 'USD') {
+      return priceUSD;
+    }
+    return price;
+  }
+
   return (
     <div
       className="cart_checkout__item"
@@ -70,7 +78,7 @@ const CheckoutItem = ({
         <b>{size}</b>
       </div>
       <div className="cart_checkout__item__price">
-        <b>${price}</b>
+        <b>${renderPrice()}</b>
       </div>
       <ClearRoundedIcon
         fontSize="small"
@@ -86,6 +94,7 @@ CheckoutItem.propTypes = {
   amount: PropTypes.number.isRequired,
   size: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  priceUSD: PropTypes.number.isRequired,
   image: PropTypes.shape().isRequired,
   id: PropTypes.string.isRequired,
   skuId: PropTypes.string.isRequired,

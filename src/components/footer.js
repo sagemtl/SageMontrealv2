@@ -4,7 +4,6 @@ import { GlobalContext } from '../context/Provider';
 import PropTypes from 'prop-types';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import './styles/footer.scss';
-import Canada from '../assets/canada.svg'
 
 const Footer = ({ color }) => {
   const { state, dispatch } = useContext(GlobalContext);
