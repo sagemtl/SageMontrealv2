@@ -11,6 +11,7 @@ const CartItem = ({
   amount,
   size,
   price,
+  priceUSD,
   image,
   id,
   skuId,
@@ -66,6 +67,13 @@ const CartItem = ({
     return <b className="cart__item__noStockMsg">Out of stock</b>;
   };
 
+  const renderPrice = () => {
+    if(state.currency === 'USD') {
+      return priceUSD;
+    }
+    return price;
+  }
+
   return (
     <div
       className={inStock ? 'cart__item' : 'cart__item cart__item__noStock'}
@@ -88,7 +96,7 @@ const CartItem = ({
         <b>{size}</b>
       </div>
       <div className="cart__item__price">
-        <b>${price}</b>
+        <b>${renderPrice()}</b>
       </div>
       <ClearRoundedIcon
         fontSize="small"
@@ -104,6 +112,7 @@ CartItem.propTypes = {
   amount: PropTypes.number.isRequired,
   size: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  priceUSD: PropTypes.number,
   image: PropTypes.shape().isRequired,
   id: PropTypes.string.isRequired,
   skuId: PropTypes.string.isRequired,

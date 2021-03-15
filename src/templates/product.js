@@ -9,7 +9,7 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
-import { sortSizes, getSkuInventory } from '../helpers/stripeHelper';
+import { sortSizes, getSkuInventory, convertCadToUsd } from '../helpers/stripeHelper';
 
 import './styles/product.scss';
 
@@ -90,6 +90,7 @@ const Product = ({ data }) => {
         name: item.name,
         amount: 1,
         price: filterPrice(selectedSku),
+        priceUSD: convertCadToUsd(filterPrice(selectedSku)),
         size: selectedSize,
         image: item.featuredImg.childImageSharp.fixed,
         skuId: selectedSku,
@@ -178,10 +179,11 @@ const Product = ({ data }) => {
     return descComponent;
   };
 
-  const getPrice = (price) => {
-    if(state.currency === 'CAD') {
-      return ""
+  const renderPrice = (price) => {
+    if(state.currency === 'USD') {
+      return `$ ${convertCadToUsd(price)} USD`;
     }
+    return `$ ${price} CAD`;
   }
 
   return (
@@ -217,7 +219,7 @@ const Product = ({ data }) => {
           ) : null}
           <br />
           <p className="product-details__price">
-            $ {skus.edges[0].node.price / 100} CAD
+            {renderPrice(skus.edges[0].node.price / 100)}
           </p>
           {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>
