@@ -205,8 +205,8 @@ const Product = ({ data }) => {
           ) : null}
           {item.metadata.item == 'hoodie' ? (
             <b className="product-details__point" key="backorder-disclaimer">
-              * This product is currently in backorder, item will ship in 2-3
-              weeks.
+              * This product is currently in backorder, item will ship in 1
+              week.
             </b>
           ) : null}
           <br />
