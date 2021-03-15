@@ -178,6 +178,12 @@ const Product = ({ data }) => {
     return descComponent;
   };
 
+  const getPrice = (price) => {
+    if(state.currency === 'CAD') {
+      return ""
+    }
+  }
+
   return (
     <Layout>
       <div className="product">

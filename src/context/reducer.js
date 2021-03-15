@@ -48,6 +48,18 @@ const globalReducer = (state, action) => {
         successItems: action.payload.successItems,
       };
     }
+    case 'SET_CAD': {
+      return {
+        ...state,
+        currency: 'CAD',
+      };
+    }
+    case 'SET_USD': {
+      return {
+        ...state,
+        currency: 'USD',
+      };
+    }
     default:
       return state;
   }

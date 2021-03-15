@@ -7,6 +7,7 @@ const initialState = {
   audioPaused: true,
   navOpen: true,
   audio: null,
+  currency:'CAD'
 };
 
 export default initialState;
