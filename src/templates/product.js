@@ -179,7 +179,7 @@ const Product = ({ data }) => {
     return descComponent;
   };
 
-  const renderPrice = (price) => {
+  const renderPriceAndCurrency = (price) => {
     if(state.currency === 'USD') {
       return `$ ${convertCadToUsd(price)} USD`;
     }
@@ -219,7 +219,7 @@ const Product = ({ data }) => {
           ) : null}
           <br />
           <p className="product-details__price">
-            {renderPrice(skus.edges[0].node.price / 100)}
+            {renderPriceAndCurrency(skus.edges[0].node.price / 100)}
           </p>
           {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>

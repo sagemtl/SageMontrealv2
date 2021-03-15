@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GlobalContext } from '../context/Provider';
+
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import Img from 'gatsby-image';
+import { convertCadToUsd } from '../helpers/stripeHelper';
 
 import './styles/shopViewItem.scss';
 
 const ShopViewItem = ({ product }) => {
   const { node } = product;
   const productImage = node.featuredImg.childImageSharp.fixed;
+  const { state } = useContext(GlobalContext);
+
+  const renderPriceAndCurrency = (price) => {
+    if(state.currency === 'USD') {
+      return `$ ${convertCadToUsd(price)} USD`;
+    }
+    return `$ ${price} CAD`;
+  }
+
 
   return (
     <Link to={`/shop/${node.fields.slug}`}>
@@ -23,7 +35,7 @@ const ShopViewItem = ({ product }) => {
         </span>
         <br />
         <span className="shop-view-all-item__price">
-          ${product.node.metadata.price} CAD
+          {renderPriceAndCurrency(product.node.metadata.price)}
         </span>
       </div>
     </Link>
