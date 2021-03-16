@@ -8,6 +8,7 @@ const initialState = {
   navOpen: true,
   audio: null,
   currency: 'USD',
+  version: '1.0.0',
 };
 
 export default initialState;
