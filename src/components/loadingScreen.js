@@ -13,6 +13,7 @@ const LoadingScreen = () => {
         playsInline
         loop
       />
+      <div className="loading-screen__text">Confirming your order...</div>
     </div>
   );
 };

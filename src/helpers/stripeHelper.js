@@ -118,3 +118,13 @@ export const getSkuInventory = async (item, color, size, skuId) => {
     })
     .catch((error) => console.log('error', error));
 };
+
+export const convertCadToUsd = (cadPrice) => {
+  const conversion = {
+    59: 49,
+    34: 29,
+    29: 24,
+    24: 19
+  };
+  return conversion[cadPrice];
+}

@@ -9,7 +9,11 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
-import { sortSizes, getSkuInventory } from '../helpers/stripeHelper';
+import {
+  sortSizes,
+  getSkuInventory,
+  convertCadToUsd,
+} from '../helpers/stripeHelper';
 
 import './styles/product.scss';
 
@@ -21,7 +25,7 @@ const Product = ({ data }) => {
     const coverPhoto = item.children.find(
       (node) => node.id === item.featuredImg.id,
     );
-    if (coverPhoto == undefined)
+    if (coverPhoto === undefined)
       return item.children[0].childImageSharp.fixed.src;
     return coverPhoto.childImageSharp.fixed.src;
   };
@@ -90,6 +94,7 @@ const Product = ({ data }) => {
         name: item.name,
         amount: 1,
         price: filterPrice(selectedSku),
+        priceUSD: convertCadToUsd(filterPrice(selectedSku)),
         size: selectedSize,
         image: item.featuredImg.childImageSharp.fixed,
         skuId: selectedSku,
@@ -178,6 +183,13 @@ const Product = ({ data }) => {
     return descComponent;
   };
 
+  const renderPriceAndCurrency = (price) => {
+    if (state.currency === 'USD') {
+      return `$ ${convertCadToUsd(price)} USD`;
+    }
+    return `$ ${price} CAD`;
+  };
+
   return (
     <Layout>
       <div className="product">
@@ -203,7 +215,7 @@ const Product = ({ data }) => {
           {item.metadata.modelInfo ? (
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
-          {item.metadata.item == 'hoodie' ? (
+          {item.metadata.item === 'hoodie' ? (
             <b className="product-details__point" key="backorder-disclaimer">
               * This product is currently in backorder, item will ship in 1
               week.
@@ -211,7 +223,7 @@ const Product = ({ data }) => {
           ) : null}
           <br />
           <p className="product-details__price">
-            $ {skus.edges[0].node.price / 100} CAD
+            {renderPriceAndCurrency(skus.edges[0].node.price / 100)}
           </p>
           {/* sku/size selection */}
           <div className="product-details-sizes">{renderSizesFromSku()}</div>

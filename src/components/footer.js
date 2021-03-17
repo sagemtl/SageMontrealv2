@@ -1,6 +1,8 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import InstagramIcon from '@material-ui/icons/Instagram';
+import Currency from './currency';
 import './styles/footer.scss';
 
 const Footer = ({ color }) => {
@@ -16,6 +18,9 @@ const Footer = ({ color }) => {
         <a className="footer-desktop__link" style={{ color }} href="/terms">
           Terms & Conditions
         </a>
+        <div className="footer-desktop__header" style={{ color }}>
+          <Currency />
+        </div>
       </div>
       <a
         href="https://www.instagram.com/sagemtl/"

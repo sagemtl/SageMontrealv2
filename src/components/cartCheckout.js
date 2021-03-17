@@ -18,6 +18,7 @@ const CartCheckout = () => {
             amount={item.amount}
             size={item.size}
             price={item.price}
+            priceUSD={item.priceUSD}
             image={item.image}
             id={item.id}
             skuId={item.skuId}

@@ -11,6 +11,10 @@ const Success = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const { successEmail, successItems } = state;
 
+  useEffect(() => {
+    console.log(successItems);
+  });
+
   return (
     <Layout>
       <div className="text-center success-align-middle">
@@ -42,10 +46,12 @@ const Success = () => {
               amount={item.amount}
               size={item.size}
               price={item.price}
+              priceUSD={item.priceUSD}
               image={item.image}
               id={item.id}
-              skuId={item.sku}
+              skuId={item.skuId}
               prodMetadata={item.prodMetadata}
+              key={item.id}
             />
           );
         })}
