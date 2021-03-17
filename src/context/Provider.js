@@ -22,7 +22,7 @@ let localState;
 
 if (typeof window !== `undefined`) {
   localState = JSON.parse(localStorage.getItem('cart-items'));
-  if (localState && localState.version !== '1.0.0') {
+  if (localState && localState.version !== process.env.GATSBY_VERSION) {
     localState = null;
   }
 }
