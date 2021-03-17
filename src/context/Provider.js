@@ -4,12 +4,26 @@ import PropTypes from 'prop-types';
 import initialState from './initialState';
 import globalReducer from './reducer';
 
+const getCountry = async () => {
+  return fetch('http://ip-api.com/json')
+    .then((res) => res.json())
+    .then((res) => {
+      localStorage.setItem('country', JSON.stringify(res.country));
+      return res.country;
+    })
+    .catch(() => {
+      const defaultCountry = 'Canada';
+      localStorage.setItem('country', JSON.stringify(defaultCountry));
+      return defaultCountry;
+    });
+};
+
 let localState;
 
 if (typeof window !== `undefined`) {
   localState = JSON.parse(localStorage.getItem('cart-items'));
-  if (localState) {
-    localState.visitedPage = [];
+  if (localState && localState.version !== '1.0.0') {
+    localState = null;
   }
 }
 
@@ -22,6 +36,31 @@ const GlobalContextProvider = ({ children }) => {
   );
 
   const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch]);
+
+  useEffect(() => {
+    const updateCurrency = async () => {
+      const countryLocalStorage = JSON.parse(localStorage.getItem('country'));
+      let country;
+
+      if (countryLocalStorage) {
+        country = countryLocalStorage;
+      } else {
+        country = await getCountry();
+      }
+
+      if (country === 'Canada') {
+        dispatch({
+          type: 'SET_CURRENCY_CAD',
+        });
+      } else {
+        dispatch({
+          type: 'SET_CURRENCY_USD',
+        });
+      }
+    };
+
+    updateCurrency();
+  }, []);
 
   useEffect(() => {
     if (typeof window !== `undefined`) {

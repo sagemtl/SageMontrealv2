@@ -7,6 +7,7 @@ import Drawer from '@material-ui/core/Drawer';
 import { GlobalContext } from '../../../context/Provider';
 import sageAnimated from '../../../assets/sage-animated.gif';
 import shoppingBag from '../../../assets/shopping-bag.png';
+import Currency from '../../currency';
 
 const routes = [
   {
@@ -66,6 +67,9 @@ const HeaderMobile = ({ setCart, cart }) => {
               </Link>
             );
           })}
+          <div className="header-mobile__currency">
+            <Currency />
+          </div>
           <a
             href="https://www.instagram.com/sagemtl/"
             target="_blank"

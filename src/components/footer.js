@@ -1,26 +1,11 @@
-import React, { useContext } from 'react';
-import { GlobalContext } from '../context/Provider';
+import React from 'react';
 
 import PropTypes from 'prop-types';
 import InstagramIcon from '@material-ui/icons/Instagram';
+import Currency from './currency';
 import './styles/footer.scss';
 
 const Footer = ({ color }) => {
-  const { state, dispatch } = useContext(GlobalContext);
-
-  const handleChangeCurrency = (newCur) => {
-    if (newCur === 'CAD') {
-      dispatch({
-        type: 'SET_CURRENCY_CAD',
-      });
-    }
-    else if (newCur === 'USD') {
-      dispatch({
-        type: 'SET_CURRENCY_USD',
-      });
-    }
-  }
-
   return (
     <div className="footer-desktop">
       <div className="footer-desktop-text">
@@ -34,10 +19,7 @@ const Footer = ({ color }) => {
           Terms & Conditions
         </a>
         <div className="footer-desktop__header" style={{ color }}>
-          <select onChange={(e)=>handleChangeCurrency(e.target.value)} value={state.currency}>
-            <option value='CAD'>🇨🇦&emsp;CAD</option>
-            <option value='USD'>🇺🇸&emsp;USD</option>
-          </select>
+          <Currency />
         </div>
       </div>
       <a
