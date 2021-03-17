@@ -20,6 +20,7 @@ const Layout = ({ children, footerColor }) => {
   }, []);
 
   const isMobile = width < 900;
+  const bannerColor = pathname === '/shop' ? 'white' : 'black';
 
   return (
     <>
@@ -28,7 +29,7 @@ const Layout = ({ children, footerColor }) => {
       <div className="layout">
         {pathname.includes('/shop') && (
           <div className="product-banner-wrapper">
-            <div className="product-banner">
+            <div className="product-banner" style={{ color: bannerColor }}>
               <div className="product-banner-track">
                 {[...Array(10)].map((val, ind) => {
                   return (
