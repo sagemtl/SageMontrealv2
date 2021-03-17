@@ -23,6 +23,7 @@ let localState;
 if (typeof window !== `undefined`) {
   localState = JSON.parse(localStorage.getItem('cart-items'));
   if (localState && localState.version !== process.env.GATSBY_VERSION) {
+    localStorage.clear();
     localState = null;
   }
 }
@@ -38,7 +39,7 @@ const GlobalContextProvider = ({ children }) => {
   const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
   useEffect(() => {
-    const updateCurrency = async () => {
+    const setDefaultCurrency = async () => {
       const countryLocalStorage = JSON.parse(localStorage.getItem('country'));
       let country;
 
@@ -59,8 +60,10 @@ const GlobalContextProvider = ({ children }) => {
       }
     };
 
-    updateCurrency();
-  }, []);
+    if (!state.currency) {
+      setDefaultCurrency();
+    }
+  }, [state.currency]);
 
   useEffect(() => {
     if (typeof window !== `undefined`) {

@@ -9,7 +9,11 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import Layout from '../components/layout';
 import SizeChart from '../components/sizeChart';
 import { GlobalContext } from '../context/Provider';
-import { sortSizes, getSkuInventory, convertCadToUsd } from '../helpers/stripeHelper';
+import {
+  sortSizes,
+  getSkuInventory,
+  convertCadToUsd,
+} from '../helpers/stripeHelper';
 
 import './styles/product.scss';
 
@@ -21,7 +25,7 @@ const Product = ({ data }) => {
     const coverPhoto = item.children.find(
       (node) => node.id === item.featuredImg.id,
     );
-    if (coverPhoto == undefined)
+    if (coverPhoto === undefined)
       return item.children[0].childImageSharp.fixed.src;
     return coverPhoto.childImageSharp.fixed.src;
   };
@@ -180,11 +184,11 @@ const Product = ({ data }) => {
   };
 
   const renderPriceAndCurrency = (price) => {
-    if(state.currency === 'USD') {
+    if (state.currency === 'USD') {
       return `$ ${convertCadToUsd(price)} USD`;
     }
     return `$ ${price} CAD`;
-  }
+  };
 
   return (
     <Layout>
@@ -211,7 +215,7 @@ const Product = ({ data }) => {
           {item.metadata.modelInfo ? (
             <p className="product-details__point">{item.metadata.modelInfo}</p>
           ) : null}
-          {item.metadata.item == 'hoodie' ? (
+          {item.metadata.item === 'hoodie' ? (
             <b className="product-details__point" key="backorder-disclaimer">
               * This product is currently in backorder, item will ship in 1
               week.

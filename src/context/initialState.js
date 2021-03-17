@@ -7,7 +7,7 @@ const initialState = {
   audioPaused: true,
   navOpen: true,
   audio: null,
-  currency: 'USD',
+  currency: null,
   version: '1.0.0',
 };
 
