@@ -8,7 +8,6 @@ const getCountry = async () => {
   return fetch('http://ip-api.com/json')
     .then((res) => res.json())
     .then((res) => {
-      console.log(res.country);
       localStorage.setItem('country', JSON.stringify(res.country));
       return res.country;
     })
