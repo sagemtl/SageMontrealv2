@@ -15,8 +15,9 @@ import sageAnimated from '../assets/sage-animated.gif';
 import { GlobalContext } from '../context/Provider';
 import ShopAudio1 from '../assets/ShopAudio1.mp3';
 import ShopAudio2 from '../assets/ShopAudio2.mp3';
-import sageBackgroundDesktop from '../assets/sage-shop-cornfield-background.jpg';
-import sageBackgroundMobile from '../assets/sage-shop-cornfield-background-mobile.jpg';
+import ShopBackground from '../components/shopBackground';
+// import sageBackgroundDesktop from '../assets/sage-shop-cornfield-background.jpg';
+// import sageBackgroundMobile from '../assets/sage-shop-cornfield-background-mobile.jpg';
 
 const Shop = ({ data }) => {
   const [buttonPaused, setButtonPaused] = useState(false);
@@ -126,11 +127,7 @@ const Shop = ({ data }) => {
             <source type="audio/mp3" src={audio} />
           </audio>
         )}
-        <img
-          src={mobile ? sageBackgroundMobile : sageBackgroundDesktop}
-          className="shop-scroll__background"
-          alt="Shop Wheel Art"
-        />
+        <ShopBackground mobile={mobile} />
         <div className="shop">
           <div className={shopAnimationClasses}>
             {getProducts().map((product, index) => {
