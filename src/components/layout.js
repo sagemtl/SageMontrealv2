@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from '@reach/router';
 
+import { GlobalContext } from '../context/Provider';
 import Header from './Header';
 import Footer from './footer';
 import Cart from './cart';
@@ -12,6 +13,10 @@ const Layout = ({ children, footerColor }) => {
   const [width, setWidth] = useState(widthVal);
   const { pathname } = useLocation();
   const [cart, setCart] = useState(true);
+  const { state } = useContext(GlobalContext);
+
+  const cadFreeShipping = state.currency === 'CAD' ? '70' : '55';
+  const usdFreeShipping = state.currency === 'CAD' ? '90' : '75';
 
   useEffect(() => {
     if (typeof window !== `undefined`) {
@@ -35,10 +40,12 @@ const Layout = ({ children, footerColor }) => {
                   return (
                     <div className="product-banner__div" key={ind.toString()}>
                       <p className="product-banner__entry">
-                        Free shipping across Canada on orders above $70
+                        Free shipping across Canada on orders above $
+                        {cadFreeShipping}
                       </p>
                       <p className="product-banner__entry">
-                        Free shipping in the US on orders above $90
+                        Free shipping in the US on orders above $
+                        {usdFreeShipping}
                       </p>
                     </div>
                   );

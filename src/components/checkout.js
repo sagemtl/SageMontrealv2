@@ -790,9 +790,6 @@ const Payment = () => {
                 </div>
               </div>
             </Form>
-            <Form.Label className="form-title-label">
-              * Free shipping across Canada on orders above $70
-            </Form.Label>
           </div>
         </div>
       </div>
