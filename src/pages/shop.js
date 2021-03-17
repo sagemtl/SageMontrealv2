@@ -16,8 +16,6 @@ import { GlobalContext } from '../context/Provider';
 import ShopAudio1 from '../assets/ShopAudio1.mp3';
 import ShopAudio2 from '../assets/ShopAudio2.mp3';
 import ShopBackground from '../components/shopBackground';
-// import sageBackgroundDesktop from '../assets/sage-shop-cornfield-background.jpg';
-// import sageBackgroundMobile from '../assets/sage-shop-cornfield-background-mobile.jpg';
 
 const Shop = ({ data }) => {
   const [buttonPaused, setButtonPaused] = useState(false);
