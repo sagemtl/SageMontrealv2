@@ -27,11 +27,16 @@ import {
 } from 'react-bootstrap';
 import { GlobalContext } from '../context/Provider';
 import ModalError from './modalError';
-import { getSkuInventory, updateSkuInventory } from '../helpers/stripeHelper';
+import {
+  getSkuInventory,
+  updateSkuInventory,
+  convertCadToUsd,
+} from '../helpers/stripeHelper';
 import CartCheckout from './cartCheckout';
 import LoadingScreen from './loadingScreen';
+import CadShippingMethods from './cadShippingMethod';
+import UsdShippingMethods from './usdShippingMethod';
 
-// UI
 const Payment = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const { checkoutItems } = state;
@@ -47,6 +52,7 @@ const Payment = () => {
   const [province, setProvince] = useState('Quebec');
 
   const [shippingMethod, setShippingMethod] = useState('');
+  const [shippingPrice, setShippingPrice] = useState(null);
 
   const [modalShow, setModalShow] = useState(false);
   const [modalErrorMessage, setModalErrorMessage] = useState('');
@@ -74,14 +80,16 @@ const Payment = () => {
   const changeCountry = (val) => {
     setCountryValue(val);
     setShippingMethod(null);
+    setShippingPrice(null);
   };
 
   const changeState = (val) => {
     setProvince(val);
   };
 
-  const changeShippingMethod = (val) => {
+  const changeShippingMethod = (val, price) => {
     setShippingMethod(val);
+    setShippingPrice(price);
   };
 
   const stripeElementChange = (element) => {
@@ -122,21 +130,6 @@ const Payment = () => {
     });
   };
 
-  const getShippingPrice = () => {
-    const prices = {
-      '$5 - Mail (5 - 10 Business Days)': 5,
-      'FREE - Tracked Parcel (2 - 4 Business Days)': 0,
-      '$10 - Tracked Parcel (2 - 4 Business Days)': 10,
-      'FREE - Tracked Parcel (7-14 business days)': 0,
-      '$15 - Tracked Parcel (7-14 business days)': 15,
-      '$40 - Tracked Parcel (1-3 weeks)': 40,
-    };
-    if (shippingMethod) {
-      return prices[shippingMethod];
-    }
-    return null;
-  };
-
   const canShipByMail = () => {
     const total = checkoutItems.reduce((accumulator, item) => {
       return accumulator + item.amount;
@@ -151,54 +144,15 @@ const Payment = () => {
   };
 
   const getStripeShippingPrice = (selectedOption) => {
-    const stripeShippingOptions = [
-      {
-        id: 'free-shipping',
-        label: 'Tracked Parcel',
-        detail: 'Arrives in 2 to 4 business days',
-        amount: 0,
-      },
-      {
-        id: 'mail-shipping',
-        label: 'Mail',
-        detail: 'Arrives in 5 to 10 business days',
-        amount: 500,
-      },
-      {
-        id: 'tracked-parcel',
-        label: 'Tracked Parcel',
-        detail: 'Arrives in 2 to 4 business days',
-        amount: 1000,
-      },
-      {
-        id: 'free-shipping-us',
-        label: 'Tracked Parcel',
-        detail: 'Arrives in 7 to 14 business days',
-        amount: 0,
-      },
-      {
-        id: 'tracked-parcel-us',
-        label: 'Tracked Parcel',
-        detail: 'Arrives in 7 to 14 business days',
-        amount: 1500,
-      },
-      {
-        id: 'tracked-parcel-intl',
-        label: 'Tracked Parcel',
-        detail: 'Arrives in 7 to 21 business days',
-        amount: 4000,
-      },
-    ];
-
-    return stripeShippingOptions.filter(
-      (option) => option.id === selectedOption.id,
-    )[0].amount;
+    return selectedOption.amount;
   };
 
   const getTotal = () => {
     let totalPrice = 0;
     checkoutItems.forEach((item) => {
-      totalPrice += item.amount * item.price;
+      totalPrice +=
+        item.amount *
+        (state.currency === 'USD' ? convertCadToUsd(item.price) : item.price);
     });
     return totalPrice;
   };
@@ -221,8 +175,11 @@ const Payment = () => {
     checkoutItems.forEach((item) => {
       const desc = `${item.size}/${item.name}/${item.prodMetadata.colour}/${item.prodMetadata.item}`;
       skusList.push({
-        amount: item.price * 100,
-        currency: 'cad',
+        amount:
+          (state.currency === 'USD'
+            ? convertCadToUsd(item.price)
+            : item.price) * 100,
+        currency: state.currency.toLowerCase(),
         description: desc,
         parent: item.skuId,
         quantity: item.amount,
@@ -262,7 +219,7 @@ const Payment = () => {
     if (stripe) {
       const pr = stripe.paymentRequest({
         country: 'CA',
-        currency: 'cad',
+        currency: state.currency.toLowerCase(),
         total: {
           label: 'SageMontreal',
           amount: getTotal() * 100,
@@ -295,6 +252,7 @@ const Payment = () => {
           shippingAddress: ev.shippingAddress,
           total: getTotal(),
           shipByMail: canShipByMail(),
+          currency: state.currency,
         }),
       })
         .then((response) => {
@@ -416,6 +374,7 @@ const Payment = () => {
           metadata: {
             'Shipping Method': `${event.shippingOption.label} ${event.shippingOption.id}: ${event.shippingOption.detail}`,
           },
+          currency: state.currency.toLowerCase(),
         };
 
         await fetch(
@@ -476,7 +435,7 @@ const Payment = () => {
 
     // Billing Details
     const information = {
-      price: (getTotal() + getShippingPrice()) * 100,
+      price: (getTotal() + shippingPrice) * 100,
       receipt_email: formData.email,
       shipping: {
         name: formData.name,
@@ -489,6 +448,7 @@ const Payment = () => {
         },
         carrier: shippingMethod,
       },
+      currency: state.currency.toLowerCase(),
     };
 
     // Request Client Secret to Server
@@ -561,6 +521,7 @@ const Payment = () => {
         },
         orderItems: getListOfSkus(),
         metadata: { 'Shipping Method': shippingMethod },
+        currency: state.currency.toLowerCase(),
       };
       await fetch(`${process.env.GATSBY_BACKEND_URL}/orders-api/create_order`, {
         method: 'POST',
@@ -618,20 +579,20 @@ const Payment = () => {
             <div className="prices-flexbox">
               <p>Shipping: </p>
               <p>
-                {getShippingPrice() === null
+                {shippingPrice === null
                   ? ' TBD'
-                  : getShippingPrice() === 0
+                  : shippingPrice === 0
                   ? ' FREE'
-                  : ` ${getShippingPrice()}$`}
+                  : ` ${shippingPrice}$`}
               </p>
             </div>
             <hr className="prices-hr" />
             <div className="prices-flexbox">
               <b>Total:</b>
               <b>
-                {!getShippingPrice()
-                  ? ` ${getTotal()}`
-                  : ` ${getTotal() + getShippingPrice()}`}
+                {!shippingPrice
+                  ? ` ${state.currency} ${getTotal()}`
+                  : ` ${state.currency} ${getTotal() + shippingPrice}`}
                 $
               </b>
             </div>
@@ -761,114 +722,20 @@ const Payment = () => {
                       </FormGroup>
                     </Col>
                   </Row>
-                  {countryValue === 'CA' ? (
-                    <div id="canada-wrapper">
-                      <Form.Group>
-                        <Form.Label>
-                          <strong>Shipping Method</strong>
-                        </Form.Label>
-                        {canShipByMail() && (
-                          <Form.Check
-                            style={{ textAlign: 'center' }}
-                            type="radio"
-                            label="$5 - Mail (5 - 10 Business Days)"
-                            name="shippingMethodCA"
-                            id="formHorizontalRadios1"
-                            onChange={() =>
-                              changeShippingMethod(
-                                '$5 - Mail (5 - 10 Business Days)',
-                              )
-                            }
-                            required
-                          />
-                        )}
-                        {getTotal() >= 70 ? (
-                          <Form.Check
-                            style={{ textAlign: 'center' }}
-                            type="radio"
-                            label="FREE - Tracked Parcel (2 - 4 Business Days)"
-                            id="formHorizontalRadios2"
-                            name="shippingMethodCA"
-                            onChange={() =>
-                              changeShippingMethod(
-                                'FREE - Tracked Parcel (2 - 4 Business Days)',
-                              )
-                            }
-                            required
-                          />
-                        ) : (
-                          <Form.Check
-                            style={{ textAlign: 'center' }}
-                            type="radio"
-                            label="$10 - Tracked Parcel (2 - 4 Business Days)"
-                            name="shippingMethodCA"
-                            id="formHorizontalRadios3"
-                            onChange={() =>
-                              changeShippingMethod(
-                                '$10 - Tracked Parcel (2 - 4 Business Days)',
-                              )
-                            }
-                            required
-                          />
-                        )}
-                      </Form.Group>
-                    </div>
-                  ) : countryValue === 'US' ? (
-                    <fieldset id="us-wrapper">
-                      <Form.Group>
-                        <Form.Label>
-                          <strong>Shipping Method</strong>
-                        </Form.Label>
-                        {getTotal() >= 90 ? (
-                          <Form.Check
-                            style={{ textAlign: 'center' }}
-                            type="radio"
-                            label="FREE - Tracked Parcel (7-14 business days)"
-                            name="shippingMethodUS4"
-                            id="formHorizontalRadios4"
-                            onChange={() =>
-                              changeShippingMethod(
-                                'FREE - Tracked Parcel (7-14 business days)',
-                              )
-                            }
-                            required
-                          />
-                        ) : (
-                          <Form.Check
-                            style={{ textAlign: 'center' }}
-                            type="radio"
-                            label="$15 - Tracked Parcel (7-14 business days)"
-                            name="shippingMethodUS5"
-                            id="formHorizontalRadios5"
-                            onChange={() =>
-                              changeShippingMethod(
-                                '$15 - Tracked Parcel (7-14 business days)',
-                              )
-                            }
-                            required
-                          />
-                        )}
-                      </Form.Group>
-                    </fieldset>
+                  {state.currency === 'CAD' ? (
+                    <CadShippingMethods
+                      countryValue={countryValue}
+                      canShipByMail={canShipByMail()}
+                      total={getTotal()}
+                      changeShippingMethod={changeShippingMethod}
+                    />
                   ) : (
-                    <Form.Group id="ww-wrapper">
-                      <Form.Label>
-                        <strong>Shipping Method</strong>
-                      </Form.Label>
-                      <Form.Check
-                        style={{ textAlign: 'center' }}
-                        type="radio"
-                        label="$40 - Tracked Parcel (1-3 weeks)"
-                        name="shippingMethodOther6"
-                        id="formHorizontalRadios6"
-                        onChange={() =>
-                          changeShippingMethod(
-                            '$40 - Tracked Parcel (1-3 weeks)',
-                          )
-                        }
-                        required
-                      />
-                    </Form.Group>
+                    <UsdShippingMethods
+                      countryValue={countryValue}
+                      canShipByMail={canShipByMail()}
+                      total={getTotal()}
+                      changeShippingMethod={changeShippingMethod}
+                    />
                   )}
                 </Card.Body>
               </Card>
