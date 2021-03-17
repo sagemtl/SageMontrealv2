@@ -47,11 +47,11 @@ const CheckoutItem = ({
   };
 
   const renderPrice = () => {
-    if(state.currency === 'USD') {
+    if (state.currency === 'USD') {
       return priceUSD;
     }
     return price;
-  }
+  };
 
   return (
     <div
