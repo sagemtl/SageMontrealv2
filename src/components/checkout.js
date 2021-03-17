@@ -30,7 +30,6 @@ import ModalError from './modalError';
 import {
   getSkuInventory,
   updateSkuInventory,
-  convertCadToUsd,
 } from '../helpers/stripeHelper';
 import CartCheckout from './cartCheckout';
 import LoadingScreen from './loadingScreen';
@@ -151,8 +150,7 @@ const Payment = () => {
     let totalPrice = 0;
     checkoutItems.forEach((item) => {
       totalPrice +=
-        item.amount *
-        (state.currency === 'USD' ? convertCadToUsd(item.price) : item.price);
+        item.amount * (state.currency === 'USD' ? item.priceUSD : item.price);
     });
     return totalPrice;
   };
@@ -175,10 +173,7 @@ const Payment = () => {
     checkoutItems.forEach((item) => {
       const desc = `${item.size}/${item.name}/${item.prodMetadata.colour}/${item.prodMetadata.item}`;
       skusList.push({
-        amount:
-          (state.currency === 'USD'
-            ? convertCadToUsd(item.price)
-            : item.price) * 100,
+        amount: (state.currency === 'USD' ? item.priceUSD : item.price) * 100,
         currency: state.currency.toLowerCase(),
         description: desc,
         parent: item.skuId,
