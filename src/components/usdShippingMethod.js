@@ -91,13 +91,13 @@ const UsdShippingMethods = ({
               <Form.Check
                 style={{ textAlign: 'center' }}
                 type="radio"
-                label="$12 USD - Tracked Parcel (7-14 business days)"
+                label="$5 USD - Tracked Parcel (7-14 business days)"
                 name="shippingMethodUS5"
                 id="formHorizontalRadios5"
                 onChange={() =>
                   changeShippingMethod(
-                    '$12 USD - Tracked Parcel (7-14 business days)',
-                    12,
+                    '$5 USD - Tracked Parcel (7-14 business days)',
+                    5,
                   )
                 }
                 required
