@@ -5,14 +5,19 @@ import initialState from './initialState';
 import globalReducer from './reducer';
 
 const getCountry = async () => {
-  return fetch('http://ip-api.com/json')
+  return fetch(
+    `https://api.ipregistry.co/?key=${process.env.GATSBY_IP_REGISTRY_KEY}`,
+  )
     .then((res) => res.json())
     .then((res) => {
-      localStorage.setItem('country', JSON.stringify(res.country));
+      localStorage.setItem(
+        'country',
+        JSON.stringify(res.location.country.name),
+      );
       return res.country;
     })
     .catch(() => {
-      const defaultCountry = 'Canada';
+      const defaultCountry = 'United States';
       localStorage.setItem('country', JSON.stringify(defaultCountry));
       return defaultCountry;
     });
