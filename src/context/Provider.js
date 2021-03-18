@@ -5,7 +5,7 @@ import initialState from './initialState';
 import globalReducer from './reducer';
 
 const getCountry = async () => {
-  return fetch(
+  const country = await fetch(
     `https://api.ipregistry.co/?key=${process.env.GATSBY_IP_REGISTRY_KEY}`,
   )
     .then((res) => res.json())
@@ -14,13 +14,14 @@ const getCountry = async () => {
         'country',
         JSON.stringify(res.location.country.name),
       );
-      return res.country;
+      return res.location.country.name;
     })
     .catch(() => {
       const defaultCountry = 'United States';
       localStorage.setItem('country', JSON.stringify(defaultCountry));
       return defaultCountry;
     });
+  return country;
 };
 
 let localState;
