@@ -91,13 +91,13 @@ const CadShippingMethods = ({
               <Form.Check
                 style={{ textAlign: 'center' }}
                 type="radio"
-                label="$15 CAD - Tracked Parcel (7-14 business days)"
+                label="$6 CAD - Tracked Parcel (7-14 business days)"
                 name="shippingMethodUS5"
                 id="formHorizontalRadios5"
                 onChange={() =>
                   changeShippingMethod(
-                    '$15 CAD - Tracked Parcel (7-14 business days)',
-                    15,
+                    '$6 CAD - Tracked Parcel (7-14 business days)',
+                    6,
                   )
                 }
                 required
