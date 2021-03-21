@@ -642,7 +642,7 @@ const Payment = () => {
                           className="checkout-form__form-control"
                           type="text"
                           name="address"
-                          placeholder="5463 W. 666th Ave"
+                          placeholder="5463 W. 666th Ave Apt 6"
                           onChange={change}
                           required
                         />
