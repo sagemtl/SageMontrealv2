@@ -43,8 +43,6 @@ export default function ShopBackground({ mobile }) {
     }
   `);
 
-  console.log(data);
-  console.log(mobile);
   return mobile ? (
     <Img
       className="shop-background"

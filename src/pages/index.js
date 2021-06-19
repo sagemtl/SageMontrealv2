@@ -29,8 +29,6 @@ const IndexPage = () => {
     return <></>;
   }
 
-  console.log(process.env.GATSBY_MAINTENANCE);
-
   return (
     <Layout footerTransparent footerColor="black">
       <SEO title="Home" />
