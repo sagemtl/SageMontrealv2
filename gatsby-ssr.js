@@ -10,8 +10,7 @@ import PasswordProtect from './src/components/passwordProtect';
 
 const password = process.env.GATSBY_PASSWORD;
 const partialMatching = true;
-const pagePaths = ['/cms'];
-
+const pagePaths = process.env.GATSBY_MAINTENANCE === 'TRUE' ? ['/'] : ['/cms'];
 export const wrapRootElement = ({ element }) => {
   return <GlobalContextProvider>{element}</GlobalContextProvider>;
 };
