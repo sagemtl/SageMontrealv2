@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
-import Img from 'gatsby-image';
+import React, { useContext } from 'react';
 import Layout from '../components/layout';
 import './styles/success.scss';
 
@@ -8,12 +6,8 @@ import CheckoutItem from '../components/checkoutItem';
 import { GlobalContext } from '../context/Provider';
 
 const Success = () => {
-  const { state, dispatch } = useContext(GlobalContext);
+  const { state } = useContext(GlobalContext);
   const { successEmail, successItems } = state;
-
-  useEffect(() => {
-    console.log(successItems);
-  });
 
   return (
     <Layout>
