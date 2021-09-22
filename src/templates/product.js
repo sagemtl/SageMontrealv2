@@ -240,7 +240,7 @@ const Product = ({ data }) => {
             Add to cart
           </button>
         </div>
-        <Link className="product-details__back" to="/shop/all">
+        <Link className="product-details__back" to="/shop">
           <KeyboardBackspaceIcon className="product-back" fontSize="large" />
         </Link>
         <Modal

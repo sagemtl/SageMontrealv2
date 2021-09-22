@@ -26,3 +26,157 @@
     position: relative;
   }
 }
+
+.shop-scroll {
+  height: 20000px;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+
+  &__button {
+    padding: 10px;
+    border-radius: 50%;
+    outline: black;
+    background: white;
+    border: 2px bold black;
+    color: #154734;
+    z-index: 100;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    box-shadow: 2px 2px #154734;
+  }
+}
+
+.shop {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  animation: fadein 5s;
+}
+
+.shop-buttons {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 50px;
+  left: 20px;
+}
+
+.shop-view {
+  position: fixed;
+  float: right;
+  width: 125px;
+  height: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  cursor: pointer;
+
+  &__arrow {
+    position: fixed;
+    float: right;
+    margin-top: 10px;
+    color: #154734;
+    right: 15px;
+    animation: pointer 1s ease-in-out infinite;
+  }
+
+  &__logo {
+    position: fixed;
+    float: right;
+    width: 55px;
+    height: auto;
+    right: 50px;
+  }
+
+  &__text {
+    position: fixed;
+    float: right;
+    margin-top: 50px;
+    width: 100px;
+    height: auto;
+    right: 10px;
+    color: black;
+    animation: fadeinout 2s ease-in-out infinite;
+  }
+}
+
+.shop-wheel {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 25vh;
+
+  &__image {
+    max-height: 60%;
+    width: auto;
+  }
+}
+
+.shop-track {
+  height: calc(300px * 32);
+  display: flex;
+  flex-direction: column;
+  animation: straight 25s linear infinite;
+}
+
+.shop-paused {
+  animation-play-state: paused;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeinout {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes straight {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(-300px * 16));
+  }
+}
+
+@keyframes pointer {
+  0% {
+    right: 15px;
+  }
+  50% {
+    right: 0px;
+  }
+  100% {
+    right: 15px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+@media only screen and (max-width: 700px) {
+  .shop-buttons {
+    bottom: 30px;
+  }
+}
