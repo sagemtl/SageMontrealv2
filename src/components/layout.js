@@ -25,14 +25,14 @@ const Layout = ({ children, footerColor }) => {
   }, []);
 
   const isMobile = width < 900;
-  const bannerColor = pathname === '/shop' ? 'white' : 'black';
+  const bannerColor = pathname === '/' ? 'white' : 'black';
 
   return (
     <>
       {pathname !== '/checkout' && <Header setCart={setCart} cart={cart} />}
       {cart && pathname !== '/checkout' && <Cart isMobile={isMobile} />}
       <div className="layout">
-        {pathname.includes('/shop') && (
+        {(pathname === '/' || pathname.includes('/shop')) && (
           <div className="product-banner-wrapper">
             <div className="product-banner" style={{ color: bannerColor }}>
               <div className="product-banner-track">
