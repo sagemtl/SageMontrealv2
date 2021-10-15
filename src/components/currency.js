@@ -22,8 +22,8 @@ const Currency = () => {
       onChange={(e) => handleChangeCurrency(e.target.value)}
       value={state.currency}
     >
-      <option value="CAD">🇨🇦&emsp;CAD</option>
-      <option value="USD">🇺🇸&emsp;USD</option>
+      <option value="CAD">$ CAD</option>
+      <option value="USD">$ USD</option>
     </select>
   );
 };
