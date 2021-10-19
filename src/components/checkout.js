@@ -162,6 +162,8 @@ const Payment = () => {
     checkoutItems.forEach((item) => {
       displayItems.push({ amount: item.amount, label: item.name });
     });
+
+    return displayItems;
   };
 
   const getOrderItems = () => {
