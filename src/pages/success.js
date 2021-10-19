@@ -28,7 +28,7 @@ const Success = () => {
           a week.
           <br />
           <br />
-          Thank you for shopping with us!!{' '}
+          Thank you for shopping with us!{' '}
         </p>
       </div>
 
