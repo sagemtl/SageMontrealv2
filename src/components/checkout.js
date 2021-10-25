@@ -27,7 +27,7 @@ import {
 } from 'react-bootstrap';
 import { GlobalContext } from '../context/Provider';
 import ModalError from './modalError';
-import { getSkuInventory, updateSkuInventory } from '../helpers/stripeHelper';
+import { getSkuInventory } from '../helpers/stripeHelper';
 import CartCheckout from './cartCheckout';
 import LoadingScreen from './loadingScreen';
 import CadShippingMethods from './cadShippingMethod';
@@ -160,25 +160,27 @@ const Payment = () => {
     const displayItems = [];
 
     checkoutItems.forEach((item) => {
-      displayItems.push({ amount: item.amount, label: item.name });
+      displayItems.push({ amount: item.price * 100, label: item.name });
     });
+
+    return displayItems;
   };
 
-  const getListOfSkus = () => {
-    const skusList = [];
+  const getOrderItems = () => {
+    const orderItems = [];
 
     checkoutItems.forEach((item) => {
-      const desc = `${item.size}/${item.name}/${item.prodMetadata.colour}/${item.prodMetadata.item}`;
-      skusList.push({
-        amount: (state.currency === 'USD' ? item.priceUSD : item.price) * 100,
-        currency: state.currency.toLowerCase(),
-        description: desc,
-        parent: item.skuId,
+      // const desc = `${item.size}/${item.name}/${item.prodMetadata.colour}/${item.prodMetadata.item}`;
+      orderItems.push({
+        adjusted_price:
+          (state.currency === 'USD' ? item.priceUSD : item.price) *
+          100 *
+          item.amount,
+        sku_id: item.skuId,
         quantity: item.amount,
-        type: 'sku',
       });
     });
-    return skusList;
+    return orderItems;
   };
 
   const setSnack = (open, sev, msg) => {
@@ -190,21 +192,6 @@ const Payment = () => {
   const Alert = (props) => {
     // eslint-disable-next-line react/jsx-props-no-spreading
     return <MuiAlert elevation={6} variant="filled" {...props} />;
-  };
-
-  const decreaseInventory = async () => {
-    await Promise.all(
-      checkoutItems.map(async (item) => {
-        // the name of the sku is the size
-        const inv = await updateSkuInventory(
-          item.prodMetadata.item,
-          item.prodMetadata.colour,
-          item.size,
-          item.amount,
-        );
-        return inv;
-      }),
-    );
   };
 
   useEffect(() => {
@@ -235,7 +222,7 @@ const Payment = () => {
   if (paymentRequest) {
     paymentRequest.on('shippingaddresschange', (ev) => {
       // Perform server-side request to fetch shipping options
-      fetch(`${process.env.GATSBY_BACKEND_URL}/orders/calculate_shipping`, {
+      fetch(`${process.env.GATSBY_BACKEND_URL}/orders/calculate_shipping/`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -278,7 +265,7 @@ const Payment = () => {
 
     // Callback when a payment method is created.
     paymentRequest.on('paymentmethod', async (event) => {
-      let information = {
+      const information = {
         price: getTotal() * 100 + getStripeShippingPrice(event.shippingOption),
         receipt_email: event.payerEmail,
         shipping: {
@@ -293,9 +280,10 @@ const Payment = () => {
           },
           carrier: event.shippingOption.label,
         },
+        currency: state.currency.toLowerCase(),
       };
       const res = await fetch(
-        `${process.env.GATSBY_BACKEND_URL}/orders/payment_intent`,
+        `${process.env.GATSBY_BACKEND_URL}/orders/payment_intent/`,
         {
           method: 'POST',
           headers: {
@@ -344,48 +332,50 @@ const Payment = () => {
                 // post-payment actions.
                 successful = true;
                 // decrease inventory here
+                const information = {
+                  orderInfo: {
+                    // Order items
+                    total: result.paymentIntent.amount,
+                    currency: result.paymentIntent.currency,
+                    order_state: 'new',
+                    address: result.paymentIntent.shipping.address.line1,
+                    address_2: result.paymentIntent.shipping.address.line2,
+                    city: result.paymentIntent.shipping.address.city,
+                    state: result.paymentIntent.shipping.address.state,
+                    country: result.paymentIntent.shipping.address.country,
+                    postal_code:
+                      result.paymentIntent.shipping.address.postal_code,
+                    shipping_method: event.shippingOption.label,
+                    shipping_price: getStripeShippingPrice(
+                      event.shippingOption,
+                    ),
+
+                    // Customer items
+                    full_name: result.paymentIntent.shipping.name,
+                    email: result.paymentIntent.receipt_email,
+                    billing_postal_code:
+                      result.paymentIntent.shipping.address.postal_code,
+                  },
+                  orderItems: getOrderItems(),
+                };
+
+                fetch(`${process.env.GATSBY_BACKEND_URL}/orders`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-type': 'application/json',
+                  },
+                  body: JSON.stringify(information),
+                });
               }
             }
           });
       }
 
       if (successful) {
-        information = {
-          receipt_email: event.payerEmail,
-          shipping: {
-            name: event.shippingAddress.recipient,
-            address: {
-              line1: event.shippingAddress.addressLine[0],
-              city: event.shippingAddress.city,
-              postal_code: event.shippingAddress.postalCode,
-              state: event.shippingAddress.region,
-              country: event.shippingAddress.country,
-            },
-          },
-          orderItems: getListOfSkus(),
-          metadata: {
-            'Shipping Method': `${event.shippingOption.label} ${event.shippingOption.id}: ${event.shippingOption.detail}`,
-          },
-          currency: state.currency.toLowerCase(),
-        };
-
-        await fetch(
-          `${process.env.GATSBY_BACKEND_URL}/orders/create_order`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(information),
-          },
-        );
-
         navigate('/success');
-
         setSuccessEmail(formData.email);
         setSuccessItems(checkoutItems);
         resetCart();
-        await decreaseInventory();
       }
     });
   }
@@ -495,40 +485,61 @@ const Payment = () => {
             // post-payment actions.
             successful = true;
             // decrease inventory here
+
+            const information = {
+              orderInfo: {
+                // Order items
+                total: result.paymentIntent.amount,
+                currency: result.paymentIntent.currency,
+                order_state: 'new',
+                address: result.paymentIntent.shipping.address.line1,
+                address_2: result.paymentIntent.shipping.address.line2,
+                city: result.paymentIntent.shipping.address.city,
+                state: result.paymentIntent.shipping.address.state,
+                country: result.paymentIntent.shipping.address.country,
+                postal_code: result.paymentIntent.shipping.address.postal_code,
+                shipping_method: shippingMethod,
+                shipping_price: shippingPrice,
+
+                // Customer items
+                full_name: result.paymentIntent.shipping.name,
+                email: result.paymentIntent.receipt_email,
+                billing_postal_code:
+                  result.paymentIntent.shipping.address.postal_code,
+              },
+              orderItems: getOrderItems(),
+              // receipt_email: formData.email,
+              // shipping: {
+              //   name: formData.name,
+              //   address: {
+              //     city: formData.city,
+              //     country: countryValue,
+              //     line1: formData.address,
+              //     state: province,
+              //     postal_code: formData.postal_code,
+              //   },
+              // },
+              // orderItems: getListOfSkus(),
+              // metadata: { 'Shipping Method': shippingMethod },
+              // currency: state.currency.toLowerCase(),
+            };
+
+            fetch(`${process.env.GATSBY_BACKEND_URL}/orders`, {
+              method: 'POST',
+              headers: {
+                'Content-type': 'application/json',
+              },
+              body: JSON.stringify(information),
+            });
           }
         }
       });
     if (successful) {
-      const information = {
-        receipt_email: formData.email,
-        shipping: {
-          name: formData.name,
-          address: {
-            city: formData.city,
-            country: countryValue,
-            line1: formData.address,
-            state: province,
-            postal_code: formData.postal_code,
-          },
-        },
-        orderItems: getListOfSkus(),
-        metadata: { 'Shipping Method': shippingMethod },
-        currency: state.currency.toLowerCase(),
-      };
-      await fetch(`${process.env.GATSBY_BACKEND_URL}/orders/create_order`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(information),
-      });
-
       navigate('/success');
 
       setSuccessEmail(formData.email);
       setSuccessItems(checkoutItems);
       resetCart();
-      const inventoryUpdate = await decreaseInventory();
     } else {
       form.submitButton.disabled = false;
     }
