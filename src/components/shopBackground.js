@@ -7,9 +7,7 @@ import './styles/shopBackground.scss';
 export default function ShopBackground({ mobile }) {
   const data = useStaticQuery(graphql`
     query {
-      desktop: allFile(
-        filter: { relativePath: { eq: "sage-shop-cornfield-background.jpg" } }
-      ) {
+      desktop: allFile(filter: { relativePath: { eq: "sage-samcha.png" } }) {
         edges {
           node {
             childImageSharp {
@@ -23,11 +21,7 @@ export default function ShopBackground({ mobile }) {
         }
       }
 
-      mobile: allFile(
-        filter: {
-          relativePath: { eq: "sage-shop-cornfield-background-mobile.jpg" }
-        }
-      ) {
+      mobile: allFile(filter: { relativePath: { eq: "sage-samcha.png" } }) {
         edges {
           node {
             childImageSharp {
