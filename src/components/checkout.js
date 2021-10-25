@@ -160,7 +160,7 @@ const Payment = () => {
     const displayItems = [];
 
     checkoutItems.forEach((item) => {
-      displayItems.push({ amount: item.amount, label: item.name });
+      displayItems.push({ amount: item.price * 100, label: item.name });
     });
 
     return displayItems;
@@ -177,7 +177,7 @@ const Payment = () => {
           100 *
           item.amount,
         // TO UPDATE: Hardcoded sku for now since none of the skus are working
-        sku_id: '551bd01f-0fe6-48bf-a5e9-1ab230832fa2', // item.skuId,
+        sku_id: item.skuId,
         quantity: item.amount,
       });
     });
@@ -238,7 +238,7 @@ const Payment = () => {
   if (paymentRequest) {
     paymentRequest.on('shippingaddresschange', (ev) => {
       // Perform server-side request to fetch shipping options
-      fetch(`${process.env.GATSBY_BACKEND_URL}/orders/calculate_shipping`, {
+      fetch(`${process.env.GATSBY_BACKEND_URL}/orders/calculate_shipping/`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -298,7 +298,7 @@ const Payment = () => {
         },
       };
       const res = await fetch(
-        `${process.env.GATSBY_BACKEND_URL}/orders/payment_intent`,
+        `${process.env.GATSBY_BACKEND_URL}/orders/payment_intent/`,
         {
           method: 'POST',
           headers: {
