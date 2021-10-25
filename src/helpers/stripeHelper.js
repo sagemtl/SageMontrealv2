@@ -21,7 +21,7 @@ export const updateProduct = async (prod_id, product_info) => {
     body: JSON.stringify(product_info),
   };
   return fetch(
-    `${process.env.GATSBY_BACKEND_URL}/inventory-api/product/${prod_id}`,
+    `${process.env.GATSBY_BACKEND_URL}/products/stripe/${prod_id}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -41,7 +41,7 @@ export const getProduct = async (prod_id) => {
     redirect: 'follow',
   };
   return fetch(
-    `${process.env.GATSBY_BACKEND_URL}/inventory-api/product/${prod_id}`,
+    `${process.env.GATSBY_BACKEND_URL}/products/stripe/${prod_id}`,
     requestOptions,
   )
     .then((response) => response.json())
@@ -65,7 +65,7 @@ export const createProduct = async (product_info) => {
     body: JSON.stringify(product_info),
   };
   return fetch(
-    `${process.env.GATSBY_BACKEND_URL}/inventory-api/create/product`,
+    `${process.env.GATSBY_BACKEND_URL}/products/stripe/create`,
     requestOptions,
   )
     .then((response) => response.json())
