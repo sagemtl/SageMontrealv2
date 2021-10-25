@@ -27,7 +27,7 @@ import {
 } from 'react-bootstrap';
 import { GlobalContext } from '../context/Provider';
 import ModalError from './modalError';
-import { getSkuInventory, updateSkuInventory } from '../helpers/stripeHelper';
+import { getSkuInventory } from '../helpers/stripeHelper';
 import CartCheckout from './cartCheckout';
 import LoadingScreen from './loadingScreen';
 import CadShippingMethods from './cadShippingMethod';
@@ -176,7 +176,6 @@ const Payment = () => {
           (state.currency === 'USD' ? item.priceUSD : item.price) *
           100 *
           item.amount,
-        // TO UPDATE: Hardcoded sku for now since none of the skus are working
         sku_id: item.skuId,
         quantity: item.amount,
       });
@@ -193,21 +192,6 @@ const Payment = () => {
   const Alert = (props) => {
     // eslint-disable-next-line react/jsx-props-no-spreading
     return <MuiAlert elevation={6} variant="filled" {...props} />;
-  };
-
-  const decreaseInventory = async () => {
-    await Promise.all(
-      checkoutItems.map(async (item) => {
-        // the name of the sku is the size
-        const inv = await updateSkuInventory(
-          item.prodMetadata.item,
-          item.prodMetadata.colour,
-          item.size,
-          item.amount,
-        );
-        return inv;
-      }),
-    );
   };
 
   useEffect(() => {
@@ -296,6 +280,7 @@ const Payment = () => {
           },
           carrier: event.shippingOption.label,
         },
+        currency: state.currency.toLowerCase(),
       };
       const res = await fetch(
         `${process.env.GATSBY_BACKEND_URL}/orders/payment_intent/`,
@@ -360,8 +345,10 @@ const Payment = () => {
                     country: result.paymentIntent.shipping.address.country,
                     postal_code:
                       result.paymentIntent.shipping.address.postal_code,
-                    shipping_method: shippingMethod,
-                    shipping_price: shippingPrice,
+                    shipping_method: event.shippingOption.label,
+                    shipping_price: getStripeShippingPrice(
+                      event.shippingOption,
+                    ),
 
                     // Customer items
                     full_name: result.paymentIntent.shipping.name,
@@ -389,7 +376,6 @@ const Payment = () => {
         setSuccessEmail(formData.email);
         setSuccessItems(checkoutItems);
         resetCart();
-        await decreaseInventory();
       }
     });
   }
@@ -554,7 +540,6 @@ const Payment = () => {
       setSuccessEmail(formData.email);
       setSuccessItems(checkoutItems);
       resetCart();
-      const inventoryUpdate = await decreaseInventory();
     } else {
       form.submitButton.disabled = false;
     }

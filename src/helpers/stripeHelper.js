@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 // not fully tested yet
 export const sortSizes = (skus) => {
   const ordering = {}; // map for efficient lookup of sortIndex
@@ -75,29 +77,6 @@ export const createProduct = async (product_info) => {
     .catch((error) => console.log('error', error));
 };
 
-export const updateSkuInventory = async (item, color, size, quantity) => {
-  const qtyObj = new Object();
-  qtyObj.quantity = quantity;
-  const requestOptions = {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-    redirect: 'follow',
-    body: JSON.stringify(qtyObj),
-  };
-  return fetch(
-    `${process.env.GATSBY_BACKEND_URL}/inventory-api/inventory/${item}-${color}-${size}`,
-    requestOptions,
-  )
-    .then((response) => response.json())
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => console.log('error', error));
-};
-
 export const getSkuInventory = async (item, color, size, skuId) => {
   const requestOptions = {
     headers: {
@@ -107,24 +86,21 @@ export const getSkuInventory = async (item, color, size, skuId) => {
     method: 'GET',
     redirect: 'follow',
   };
-  return fetch(
-    `${process.env.GATSBY_BACKEND_URL}/inventory-api/inventory/${item}-${color}-${size}`,
-    requestOptions,
-  )
-    .then((response) => response.json())
-    .then((result) => {
-      // result.sku_id = skuId;
-      return { quantity: result.quantity, sku_id: skuId };
-    })
-    .catch((error) => console.log('error', error));
+  const res = await axios.get(
+    `${process.env.GATSBY_BACKEND_URL}/products/inventory/${skuId}`,
+  );
+
+  return { quantity: res.data.inventory, sku_id: skuId };
 };
 
 export const convertCadToUsd = (cadPrice) => {
   const conversion = {
+    89: 79,
     59: 49,
+    44: 39,
     34: 29,
     29: 24,
-    24: 19
+    24: 19,
   };
   return conversion[cadPrice];
-}
+};
