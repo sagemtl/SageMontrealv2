@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Layout from '../components/layout';
 import './styles/success.scss';
+import orderFrog from '../assets/order-frog.png'
 
 import CheckoutItem from '../components/checkoutItem';
 import { GlobalContext } from '../context/Provider';
@@ -14,7 +15,7 @@ const Success = () => {
       <div className="text-center success-align-middle">
         <img
           className="success-sage-logo"
-          src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1614452514/frog.png"
+          src={orderFrog}
           alt="Success"
         />
         <p>

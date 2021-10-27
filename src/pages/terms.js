@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../components/layout';
+import termsCover from '../assets/terms-cover.png';
 
 import './styles/terms.scss';
 
@@ -9,7 +10,7 @@ const terms = () => {
       <div className="terms">
         <div className="terms-column">
           <img
-            src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1609558954/contactCover_sm2kk3.png"
+            src={termsCover}
             className="terms__image"
             alt="terms Artwork"
           />

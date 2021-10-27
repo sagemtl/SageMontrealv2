@@ -4,10 +4,18 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
 
+import collectionSeven from '../assets/lookbooks/collection-7-tofu-house';
+
 import './styles/lookbook.scss';
 
 const LookbookMenu = () => {
   const collections = [
+    {
+      season: 'Fall 21',
+      cover:
+        collectionSeven.cover,
+      images: collectionSeven.images,
+    },
     {
       season: 'Spring 21',
       cover:
