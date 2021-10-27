@@ -46,6 +46,28 @@
   background: transparent;
 }
 
+.hand-gesture {
+  position: fixed;
+  top: 20%;
+  right: 10%;
+  width: 50px;
+  animation: scrollmove 2s 2 linear forwards;
+}
+
+@keyframes scrollmove {
+  from {
+    right: 10%;
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    right: 50%;
+    transform: rotate(-20deg);
+    opacity: 0;
+    display: none;
+  }
+}
+
 @media (max-width: 450px) {
   .lookbook {
     top: 60px;

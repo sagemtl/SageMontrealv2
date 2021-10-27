@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import { GlobalContext } from '../context/Provider';
+import './styles/currency.scss';
 
 const Currency = () => {
   const { state, dispatch } = useContext(GlobalContext);
@@ -21,6 +22,7 @@ const Currency = () => {
     <select
       onChange={(e) => handleChangeCurrency(e.target.value)}
       value={state.currency}
+      className="currency-select"
     >
       <option value="CAD">$ CAD</option>
       <option value="USD">$ USD</option>

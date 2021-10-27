@@ -14,6 +14,7 @@ import { collectionSeven } from '../assets/lookbooks/collection-7-tofu-house';
 
 import { capsuleOne } from '../assets/lookbooks/capsule-1-swish';
 
+import hand from '../assets/hand.png';
 import './styles/lookbook.scss';
 
 const LookbookMenu = () => {
@@ -85,6 +86,7 @@ const LookbookMenu = () => {
 
   return (
     <Layout footerColor="white" style={{ alignItems: 'flex-start' }}>
+      <img src={hand} className="hand-gesture" alt="hand gesture" />
       <div className="lookbook">
         <ArrowForwardIosIcon
           className="lookbook__icon--right"

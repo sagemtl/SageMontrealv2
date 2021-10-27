@@ -17,6 +17,10 @@ const routes = [
     label: 'Lookbook',
     to: '/lookbook',
   },
+  {
+    label: 'Post-it Board',
+    to: 'https://samcha.sagemontreal.com',
+  }
 ];
 
 const HeaderDesktop = () => {
