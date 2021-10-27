@@ -17,7 +17,7 @@ const getCountry = async () => {
       return res.location.country.name;
     })
     .catch(() => {
-      const defaultCountry = 'United States';
+      const defaultCountry = 'Canada';
       localStorage.setItem('country', JSON.stringify(defaultCountry));
       return defaultCountry;
     });
