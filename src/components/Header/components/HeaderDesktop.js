@@ -6,6 +6,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { useLocation } from '@reach/router';
 import { GlobalContext } from '../../../context/Provider';
 import sageAnimated from '../../../assets/sage-animated.gif';
+import logoVid from '../../../assets/logo.mp4';
 
 const routes = [
   {
@@ -55,7 +56,7 @@ const HeaderDesktop = () => {
         </IconButton>
         <Link tabIndex={-1} className="navbox-logo-wrapper" to="/">
           <video
-            src="https://res.cloudinary.com/sagemontreal-com/video/upload/v1596165122/Logo_vyryy9.mp4"
+            src={logoVid}
             poster={sageAnimated}
             className="navbox__logo"
             muted
