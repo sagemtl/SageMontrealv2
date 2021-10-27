@@ -16,7 +16,6 @@ import picture14 from './images/14.jpeg';
 import picture15 from './images/15.jpeg';
 import picture16 from './images/16.jpeg';
 import picture17 from './images/17.jpeg';
-import picture12 from './images/12.jpeg';
 
 export const collectionThree = {
   cover: cover,
