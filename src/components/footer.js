@@ -19,7 +19,7 @@ const Footer = ({ color }) => {
           Terms & Conditions
         </a>
         <div className="footer-desktop__header" style={{ color }}>
-          <Currency />
+          <Currency color={color} />
         </div>
       </div>
       <a

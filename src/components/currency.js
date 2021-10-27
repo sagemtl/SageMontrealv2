@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { GlobalContext } from '../context/Provider';
 import './styles/currency.scss';
 
-const Currency = () => {
+const Currency = ({ color }) => {
   const { state, dispatch } = useContext(GlobalContext);
 
   const handleChangeCurrency = (newCur) => {
@@ -23,11 +23,16 @@ const Currency = () => {
       onChange={(e) => handleChangeCurrency(e.target.value)}
       value={state.currency}
       className="currency-select"
+      style={{ color }}
     >
       <option value="CAD">$ CAD</option>
       <option value="USD">$ USD</option>
     </select>
   );
+};
+
+Currency.propTypes = {
+  color: PropTypes.string.isRequired,
 };
 
 export default Currency;
