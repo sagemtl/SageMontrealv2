@@ -12,7 +12,7 @@ import picture10 from './images/10.jpg';
 import picture11 from './images/11.jpg';
 import picture12 from './images/12.jpg';
 
-export default collectionSeven = {
+export const collectionSeven = {
   cover: cover,
   images: [
     picture1,
