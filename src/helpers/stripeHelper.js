@@ -95,10 +95,10 @@ export const getSkuInventory = async (item, color, size, skuId) => {
 
 export const convertCadToUsd = (cadPrice) => {
   const conversion = {
-    89: 79,
+    89: 74,
     59: 49,
-    44: 39,
-    34: 29,
+    44: 38,
+    34: 28,
     29: 24,
     24: 19,
   };

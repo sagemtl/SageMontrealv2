@@ -15,8 +15,8 @@ const Layout = ({ children, footerColor }) => {
   const [cart, setCart] = useState(true);
   const { state } = useContext(GlobalContext);
 
-  const cadFreeShipping = state.currency === 'CAD' ? '70' : '55';
-  const usdFreeShipping = state.currency === 'CAD' ? '90' : '75';
+  const cadFreeShipping = state.currency === 'CAD' ? '120' : '100';
+  const usdFreeShipping = state.currency === 'CAD' ? '150' : '120';
 
   useEffect(() => {
     if (typeof window !== `undefined`) {
@@ -41,11 +41,11 @@ const Layout = ({ children, footerColor }) => {
                     <div className="product-banner__div" key={ind.toString()}>
                       <p className="product-banner__entry">
                         Free shipping across Canada on orders above $
-                        {cadFreeShipping}
+                        {cadFreeShipping} {state.currency}
                       </p>
                       <p className="product-banner__entry">
                         Free shipping in the US on orders above $
-                        {usdFreeShipping}
+                        {usdFreeShipping} {state.currency}
                       </p>
                     </div>
                   );

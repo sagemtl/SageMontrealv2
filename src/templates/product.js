@@ -32,6 +32,7 @@ const Product = ({ data }) => {
 
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedSku, setSelectedSku] = useState('');
+  const [isFetching, setIsFetching] = useState(true);
   const [selectedImage, setSelectedImage] = useState(getFeaturedImgInChild);
   const [zoomOpen, setZoomOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -39,6 +40,7 @@ const Product = ({ data }) => {
   const { state, dispatch } = useContext(GlobalContext);
 
   useEffect(() => {
+    setIsFetching(true);
     const getAllInventory = async () => {
       const invs = await Promise.all(
         skus.edges.map(async ({ node }) => {
@@ -54,6 +56,7 @@ const Product = ({ data }) => {
       );
       if (invs) {
         setInventories(invs);
+        setIsFetching(false);
       }
     };
 
@@ -159,7 +162,7 @@ const Product = ({ data }) => {
               setSelectedSku(nodeid);
               setSelectedSize(size);
             }}
-            disabled={false || !hasStock}
+            disabled={isFetching || !hasStock}
           />
           <label htmlFor={size} className={className}>
             {size}

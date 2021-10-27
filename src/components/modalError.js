@@ -12,7 +12,7 @@ const ModalError = ({ modalShow, setModalShow, message}) => {
     <>
         <Modal show={modalShow} onHide={() => setModalShow(false)} centered={true}>
         <Modal.Header closeButton>
-          <img src="https://res.cloudinary.com/sagemontreal-com/image/upload/v1609560228/404Octopus_mwhpuk.png" width="100" className="error-image"/>
+          <img src="https://res.cloudinary.com/die52atcc/image/upload/v1613361014/output-onlinepngtools_lshu3u.png" width="100" className="error-image"/>
         </Modal.Header>
         <Modal.Body style={{textAlign: "center"}}>{message}</Modal.Body>
         <Modal.Footer>
