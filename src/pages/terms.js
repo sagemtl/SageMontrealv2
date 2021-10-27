@@ -30,10 +30,10 @@ const terms = () => {
           </p>
           <p className="terms__text">
             Orders made in the downtown Montreal area may be eligible for same
-            day shipping
+            day shipping.
           </p>
           <p className="terms__text">
-            Orders shipped outside of Canada may possibly incur duties and taxes
+            Orders shipped outside of Canada may possibly incur duties and taxes.
           </p>
           <br />
           <p className="terms__header--2">Shipping rates</p>
@@ -41,16 +41,12 @@ const terms = () => {
             <u>Canada</u>
           </p>
           <div className="terms-row">
-            <p className="terms__text">Mail (5 - 10 Business Days)</p>
-            <p className="terms__text">$5</p>
-          </div>
-          <div className="terms-row">
             <p className="terms__text">Tracked Parcel (2 - 4 Business Days)</p>
             <p className="terms__text">$10</p>
           </div>
           <br />
           <p className="terms__text">
-            Orders above $70 have free expedited shipping across Canada
+            Orders above $120 have free expedited shipping across Canada
           </p>
           <br />
           <p className="terms__text">
@@ -58,20 +54,12 @@ const terms = () => {
           </p>
           <div className="terms-row">
             <p className="terms__text">Tracked Parcel (7 - 14 Business Days)</p>
-            <p className="terms__text">$15</p>
+            <p className="terms__text">$20</p>
           </div>
           <br />
           <p className="terms__text">
-            Orders above $90 have free expedited shipping in the United States
+            Orders above $150 have free expedited shipping in the United States
           </p>
-          <br />
-          <p className="terms__text">
-            <u>International</u>
-          </p>
-          <div className="terms-row">
-            <p className="terms__text">Tracked Parcel (1 - 3 Weeks)</p>
-            <p className="terms__text">$40</p>
-          </div>
           <br />
           <br />
           <p className="terms__header--2">Payments</p>
