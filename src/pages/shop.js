@@ -25,9 +25,6 @@ const ShopAll = ({ data }) => {
           return <ShopViewItem product={product} key={index.toString()} />;
         })}
       </div>
-      <Link className="back" to="/shop">
-        <KeyboardBackspaceIcon className="product-back" fontSize="large" />
-      </Link>
     </Layout>
   );
 };

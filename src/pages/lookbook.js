@@ -15,6 +15,7 @@ const LookbookMenu = () => {
       cover:
         collectionSeven.cover,
       images: collectionSeven.images,
+      position: 'top left',
     },
     {
       season: 'Spring 21',
