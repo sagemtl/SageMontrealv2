@@ -55,7 +55,7 @@ const HeaderMobile = ({ setCart, cart }) => {
                 to={route.to}
                 key={route.to}
               >
-                <h2>{route.label}</h2>
+                <h2 className="header-mobile__link__text">{route.label}</h2>
               </Link>
             );
           })}
