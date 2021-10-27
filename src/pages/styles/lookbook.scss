@@ -51,7 +51,8 @@
   top: 20%;
   right: 10%;
   width: 50px;
-  animation: scrollmove 2s 4 linear forwards;
+  z-index: 1000;
+  animation: scrollmove 2s 3 linear forwards;
 }
 
 @keyframes scrollmove {

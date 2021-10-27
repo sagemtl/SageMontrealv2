@@ -65,7 +65,7 @@
     width: 55px;
     height: 55px;
     position: relative;
-    left: 20px;
+    left: 10px;
     top: 3px;
 
     &:hover {
@@ -100,11 +100,11 @@
 
   &__link {
     color: #154734;
-    margin-bottom: 25px;
 
     &__text {
       font-weight: bold;
       font-size: 1.5em;
+      margin-bottom: 20px;
     }
 
     &:hover {
