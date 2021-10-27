@@ -41,11 +41,11 @@ const Layout = ({ children, footerColor }) => {
                     <div className="product-banner__div" key={ind.toString()}>
                       <p className="product-banner__entry">
                         Free shipping across Canada on orders above $
-                        {cadFreeShipping}
+                        {cadFreeShipping} {state.currency}
                       </p>
                       <p className="product-banner__entry">
                         Free shipping in the US on orders above $
-                        {usdFreeShipping}
+                        {usdFreeShipping} {state.currency}
                       </p>
                     </div>
                   );

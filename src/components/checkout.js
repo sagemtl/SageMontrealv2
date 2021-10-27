@@ -145,7 +145,10 @@ const Payment = () => {
     const displayItems = [];
 
     checkoutItems.forEach((item) => {
-      displayItems.push({ amount: item.price * 100, label: item.name });
+      displayItems.push({
+        amount: item.price * 100,
+        label: `${item.name} × ${item.amount}`,
+      });
     });
 
     return displayItems;
