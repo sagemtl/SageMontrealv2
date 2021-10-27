@@ -5,7 +5,7 @@ import Layout from '../components/layout';
 import LookbookFront from '../components/lookbookFront';
 
 import { collectionOne } from '../assets/lookbooks/collection-1-sage';
-import { collectionTwo } from '../assets/lookbooks/collection-1-sage';
+import { collectionTwo } from '../assets/lookbooks/collection-2-20666';
 import { collectionThree } from '../assets/lookbooks/collection-3-transit';
 import { collectionFour } from '../assets/lookbooks/collection-4-steam';
 import { collectionFive } from '../assets/lookbooks/collection-5-heat-of-the-sun';
