@@ -101,6 +101,7 @@ export const convertCadToUsd = (cadPrice) => {
     34: 28,
     29: 24,
     24: 19,
+    5: 4,
   };
   return conversion[cadPrice];
 };

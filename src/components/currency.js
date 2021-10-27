@@ -23,8 +23,7 @@ const Currency = ({ color }) => {
     <select
       onChange={(e) => handleChangeCurrency(e.target.value)}
       value={state.currency}
-      className="currency-select"
-      style={{ color }}
+      className={color === 'white' ? "currency-select currency-white" : "currency-select currency-black"}
     >
       <option value="CAD">$ CAD</option>
       <option value="USD">$ USD</option>
