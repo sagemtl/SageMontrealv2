@@ -15,8 +15,8 @@ const Layout = ({ children, footerColor }) => {
   const [cart, setCart] = useState(true);
   const { state } = useContext(GlobalContext);
 
-  const cadFreeShipping = state.currency === 'CAD' ? '70' : '55';
-  const usdFreeShipping = state.currency === 'CAD' ? '90' : '75';
+  const cadFreeShipping = state.currency === 'CAD' ? '120' : '100';
+  const usdFreeShipping = state.currency === 'CAD' ? '150' : '120';
 
   useEffect(() => {
     if (typeof window !== `undefined`) {

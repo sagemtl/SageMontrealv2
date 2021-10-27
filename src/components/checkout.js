@@ -16,7 +16,6 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import {
-  Container,
   Form,
   FormGroup,
   FormControl,
@@ -27,7 +26,6 @@ import {
 } from 'react-bootstrap';
 import { GlobalContext } from '../context/Provider';
 import ModalError from './modalError';
-import { getSkuInventory } from '../helpers/stripeHelper';
 import CartCheckout from './cartCheckout';
 import LoadingScreen from './loadingScreen';
 import CadShippingMethods from './cadShippingMethod';
@@ -126,19 +124,6 @@ const Payment = () => {
     });
   };
 
-  const canShipByMail = () => {
-    const total = checkoutItems.reduce((accumulator, item) => {
-      return accumulator + item.amount;
-    }, 0);
-
-    if (total !== 1) {
-      return false;
-    }
-
-    const itemType = checkoutItems[0].prodMetadata.item;
-    return itemType === 'tshirt' || itemType === 'hat' || itemType === 'tote';
-  };
-
   const getStripeShippingPrice = (selectedOption) => {
     return selectedOption.amount;
   };
@@ -230,7 +215,6 @@ const Payment = () => {
         body: JSON.stringify({
           shippingAddress: ev.shippingAddress,
           total: getTotal(),
-          shipByMail: canShipByMail(),
           currency: state.currency,
         }),
       })
@@ -647,7 +631,7 @@ const Payment = () => {
                     <Col>
                       <FormGroup>
                         <Form.Label className="form-title-label">
-                          Address
+                          Address (Incl. Apt)
                         </Form.Label>
                         <FormControl
                           className="checkout-form__form-control"
@@ -669,7 +653,7 @@ const Payment = () => {
                         <CountryDropdown
                           value={countryValue}
                           onChange={(val) => changeCountry(val)}
-                          priorityOptions={['CA', 'US']}
+                          whitelist={['CA', 'US']}
                           classes="checkout-form__select-form"
                           valueType="short"
                           required
@@ -728,14 +712,12 @@ const Payment = () => {
                   {state.currency === 'CAD' ? (
                     <CadShippingMethods
                       countryValue={countryValue}
-                      canShipByMail={canShipByMail()}
                       total={getTotal()}
                       changeShippingMethod={changeShippingMethod}
                     />
                   ) : (
                     <UsdShippingMethods
                       countryValue={countryValue}
-                      canShipByMail={canShipByMail()}
                       total={getTotal()}
                       changeShippingMethod={changeShippingMethod}
                     />
