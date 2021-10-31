@@ -40,6 +40,7 @@ const Product = ({ data }) => {
   const { state, dispatch } = useContext(GlobalContext);
 
   useEffect(() => {
+    console.log(item);
     setIsFetching(true);
     const getAllInventory = async () => {
       const invs = await Promise.all(
@@ -61,7 +62,7 @@ const Product = ({ data }) => {
     };
 
     getAllInventory();
-  }, [item.metadata.colour, item.metadata.item, skus.edges]);
+  }, [item, item.metadata.colour, item.metadata.item, skus.edges]);
 
   const checkIsInStock = (skuId) => {
     const inv = inventories.filter(
@@ -242,6 +243,12 @@ const Product = ({ data }) => {
           >
             Add to cart
           </button>
+          {item.metadata.item === 'hoodie' && (
+            <div className="product-details__backorder">
+              *This item is backordered and will be shipped 4-6 weeks after
+              ordering.
+            </div>
+          )}
         </div>
         <Link className="product-details__back" to="/shop">
           <KeyboardBackspaceIcon className="product-back" fontSize="large" />

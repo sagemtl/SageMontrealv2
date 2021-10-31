@@ -94,6 +94,11 @@ const Payment = () => {
     }
   };
 
+  const canShipByMail = () => {
+    const isNotStickers = (item) => item.prodMetadata.item !== 'stickers';
+    return !checkoutItems.some(isNotStickers);
+  };
+
   // After checkout, reset the cart state
   const resetCart = () => {
     dispatch({
@@ -218,6 +223,7 @@ const Payment = () => {
         body: JSON.stringify({
           shippingAddress: ev.shippingAddress,
           total: getTotal(),
+          shipByMail: canShipByMail(),
           currency: state.currency,
         }),
       })
@@ -716,12 +722,14 @@ const Payment = () => {
                     <CadShippingMethods
                       countryValue={countryValue}
                       total={getTotal()}
+                      canShipByMail={canShipByMail()}
                       changeShippingMethod={changeShippingMethod}
                     />
                   ) : (
                     <UsdShippingMethods
                       countryValue={countryValue}
                       total={getTotal()}
+                      canShipByMail={canShipByMail()}
                       changeShippingMethod={changeShippingMethod}
                     />
                   )}
