@@ -245,7 +245,7 @@ const Product = ({ data }) => {
           </button>
           {item.metadata.item === 'hoodie' && (
             <div className="product-details__backorder">
-              *This item is backordered and will be shipped 4-6 weeks after
+              *This item is back-ordered and will be shipped 4-6 weeks after
               ordering.
             </div>
           )}
