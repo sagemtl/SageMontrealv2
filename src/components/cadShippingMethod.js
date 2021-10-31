@@ -3,7 +3,12 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const CadShippingMethods = ({ countryValue, total, changeShippingMethod }) => {
+const CadShippingMethods = ({
+  countryValue,
+  total,
+  canShipByMail,
+  changeShippingMethod,
+}) => {
   return (
     <>
       {countryValue === 'CA' ? (
@@ -12,6 +17,22 @@ const CadShippingMethods = ({ countryValue, total, changeShippingMethod }) => {
             <Form.Label>
               <strong>Shipping Method</strong>
             </Form.Label>
+            {canShipByMail && (
+              <Form.Check
+                style={{ textAlign: 'center' }}
+                type="radio"
+                label="$2 CAD - Mail (5 - 10 Business Days)"
+                name="shippingMethodCA"
+                id="formHorizontalRadios1"
+                onChange={() =>
+                  changeShippingMethod(
+                    '$2 CAD - Mail (5 - 10 Business Days)',
+                    2,
+                  )
+                }
+                required
+              />
+            )}
             {total >= 120 ? (
               <Form.Check
                 style={{ textAlign: 'center' }}
@@ -51,6 +72,22 @@ const CadShippingMethods = ({ countryValue, total, changeShippingMethod }) => {
             <Form.Label>
               <strong>Shipping Method</strong>
             </Form.Label>
+            {canShipByMail && (
+              <Form.Check
+                style={{ textAlign: 'center' }}
+                type="radio"
+                label="$3 CAD - Mail (5 - 10 Business Days)"
+                name="shippingMethodCA"
+                id="formHorizontalRadios1"
+                onChange={() =>
+                  changeShippingMethod(
+                    '$3 CAD - Mail (5 - 10 Business Days)',
+                    3,
+                  )
+                }
+                required
+              />
+            )}
             {total >= 150 ? (
               <Form.Check
                 style={{ textAlign: 'center' }}
@@ -92,6 +129,7 @@ const CadShippingMethods = ({ countryValue, total, changeShippingMethod }) => {
 CadShippingMethods.propTypes = {
   countryValue: PropTypes.string.isRequired,
   total: PropTypes.number.isRequired,
+  canShipByMail: PropTypes.bool.isRequired,
   changeShippingMethod: PropTypes.func.isRequired,
 };
 
