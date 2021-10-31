@@ -402,6 +402,14 @@ const Payment = () => {
     form.submitButton.disabled = true;
     e.preventDefault();
 
+    if (true) {
+      handleErrorMessage('Some items in your cart are sold out.');
+      handleModalShow();
+      setIsLoading(false);
+      form.submitButton.disabled = false;
+      return;
+    }
+
     // Billing Details
     const information = {
       price: (getTotal() + shippingPrice) * 100,
